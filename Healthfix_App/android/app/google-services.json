@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "585923097949",
+    "project_id": "siteux-healthfix",
+    "storage_bucket": "siteux-healthfix.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:585923097949:android:90f954ba6406515f8ce4b4",
+        "android_client_info": {
+          "package_name": "com.siteux.healthfix"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "585923097949-t59hcorhknv0olkatd6qdte43to7mtn5.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAvz6_aeDkFtSat69OVDUzFwmXN_wTjXNg"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "585923097949-t59hcorhknv0olkatd6qdte43to7mtn5.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
