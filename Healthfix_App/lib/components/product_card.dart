@@ -23,14 +23,18 @@ class ProductCard extends StatelessWidget {
     return GestureDetector(
       onTap: press,
       child: Container(
-        margin: noSpacing ?? false ? null : EdgeInsets.only(left: getProportionateScreenWidth(12)),
+        margin: noSpacing ?? false
+            ? null
+            : EdgeInsets.only(left: getProportionateScreenWidth(12)),
         decoration: BoxDecoration(
           color: Colors.white,
           border: Border.all(color: kTextColor.withOpacity(0.15)),
           borderRadius: BorderRadius.all(Radius.circular(5)),
         ),
         child: Padding(
-          padding: EdgeInsets.symmetric(horizontal: getProportionateScreenHeight(12), vertical: getProportionateScreenHeight(12)),
+          padding: EdgeInsets.symmetric(
+              horizontal: getProportionateScreenHeight(12),
+              vertical: getProportionateScreenHeight(12)),
           child: FutureBuilder<Product>(
             future: ProductDatabaseHelper().getProductWithID(productId),
             builder: (context, snapshot) {
@@ -96,7 +100,8 @@ class ProductCard extends StatelessWidget {
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      Text("\Rs. ${product.originalPrice}", style: cusPdctOriPriceStyle()),
+                      Text("\Rs. ${product.originalPrice}",
+                          style: cusPdctOriPriceStyle()),
                       Text(
                         "${product.calculatePercentageDiscount()}% OFF",
                         style: TextStyle(

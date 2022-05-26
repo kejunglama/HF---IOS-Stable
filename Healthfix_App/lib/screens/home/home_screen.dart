@@ -23,11 +23,13 @@ class _HomeScreenState extends State<HomeScreen> {
   var _selectedIndex = 0;
   num _counter = 0;
   PageController _tabsPageController;
-  final FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin = FlutterLocalNotificationsPlugin();
+  final FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin =
+      FlutterLocalNotificationsPlugin();
   AndroidNotificationChannel channel = AndroidNotificationChannel(
       'high_importance_channel', // id
       'High Importance Notifications', // title
-      description: 'This channel is used for important notifications.', // description
+      description:
+          'This channel is used for important notifications.', // description
       importance: Importance.high,
       playSound: true);
 
@@ -47,7 +49,6 @@ class _HomeScreenState extends State<HomeScreen> {
       prefs.setString("app-name", "healthfix");
     }
   }
-
 
   @override
   void initState() {
@@ -125,7 +126,11 @@ class _HomeScreenState extends State<HomeScreen> {
       "How you doing?",
       NotificationDetails(
         android: AndroidNotificationDetails(channel.id, channel.name,
-            channelDescription: channel.description, importance: Importance.high, color: Colors.blue, playSound: true, icon: '@mipmap/ic_launcher'),
+            channelDescription: channel.description,
+            importance: Importance.high,
+            color: Colors.blue,
+            playSound: true,
+            icon: '@mipmap/ic_launcher'),
       ),
     );
   }
@@ -142,7 +147,7 @@ class _HomeScreenState extends State<HomeScreen> {
         statusBarColor: kPrimaryColor,
         // For iOS.
         // Use [dark] for white status bar and [light] for black status bar.
-        statusBarBrightness: Brightness.dark,
+        statusBarBrightness: Brightness.light,
       ),
       child: Scaffold(
         body: PageView(

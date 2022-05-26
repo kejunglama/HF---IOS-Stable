@@ -12,7 +12,7 @@ class ExploreScreen extends StatelessWidget {
     "https://exceedmasterclass.com/wp-content/uploads/2016/09/nutrition-consultation-fitness-trainer.png",
     "https://cdn.thewirecutter.com/wp-content/uploads/2020/03/onlineworkout-lowres-2x1-1.jpg?auto=webp&quality=75&crop=2:1&width=1024",
     "https://www.theindustry.fashion/wp-content/uploads/2021/10/Gymshark-Heroines-1024x859.jpg",
-    "https://scontent.fktm3-1.fna.fbcdn.net/v/t1.6435-9/117606726_146077287179586_8052778541144942665_n.jpg?stp=c0.25.525.274a_dst-jpg_p235x350&_nc_cat=103&ccb=1-5&_nc_sid=e3f864&_nc_ohc=ptal8Z1Xt74AX_2KLMv&_nc_ht=scontent.fktm3-1.fna&oh=00_AT_oW75zjuIOZjVk6z-W0Xv9hfUuWnHBWvgObSCLekdL5A&oe=627BBD77",
+    "https://media.glamour.com/photos/5f0ded3c6ebfe4554e35b781/master/w_1600%2Cc_limit/Freshly-MealGroup_2160x1500.jpg",
   ];
 
   List captionList = [
@@ -72,7 +72,8 @@ class ExploreScreen extends StatelessWidget {
 
     return Scaffold(
       appBar: AppBar(
-        title: Text("Explore Fitness with Healthfix", style: cusCenterHeadingStyle(Colors.white)),
+        title: Text("Explore Fitness with Healthfix",
+            style: cusCenterHeadingStyle(Colors.white)),
         backgroundColor: kPrimaryColor.withOpacity(0.9),
       ),
       body: SafeArea(
@@ -148,18 +149,21 @@ class ExploreCard extends StatelessWidget {
               // direction: Axis.vertical,
               children: [
                 Container(
-                  margin: EdgeInsets.only(bottom: getProportionateScreenHeight(8)),
+                  margin:
+                      EdgeInsets.only(bottom: getProportionateScreenHeight(8)),
                   child: Text(
                     text,
                     maxLines: 2,
-                    style: cusHeadingStyle(getProportionateScreenHeight(18), Colors.white),
+                    style: cusHeadingStyle(
+                        getProportionateScreenHeight(18), Colors.white),
                   ),
                 ),
                 // SizedBox(height: getProportionateScreenHeight()),
                 Text(
                   caption,
                   maxLines: 2,
-                  style: cusBodyStyle(getProportionateScreenHeight(14), null, Colors.white),
+                  style: cusBodyStyle(
+                      getProportionateScreenHeight(14), null, Colors.white),
                 ),
                 // SizedBox(height: getProportionateScreenHeight(8)),
                 // cusButton(text: "Learn More"),
@@ -198,7 +202,8 @@ class cusButton extends StatelessWidget {
             ),
             TextButton(
               style: TextButton.styleFrom(
-                padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 2),
+                padding:
+                    const EdgeInsets.symmetric(horizontal: 16, vertical: 2),
                 primary: Colors.white,
                 // fixedSize: ,
                 // textStyle: const TextStyle(fontSize: 20),

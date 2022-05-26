@@ -35,21 +35,24 @@ class HomeHeader extends StatelessWidget {
               // Logo
               GestureDetector(
                 child: Container(
-                  margin: EdgeInsets.only(left: getProportionateScreenWidth(12)),
+                  margin:
+                      EdgeInsets.only(left: getProportionateScreenWidth(12)),
                   height: getProportionateScreenHeight(30),
                   child: Image.asset('assets/logo/HF-logo.png'),
                 ),
                 onTap: () {
                   Navigator.push(
                     context,
-                    MaterialPageRoute(builder: (context) => AuthenticationWrapper()),
+                    MaterialPageRoute(
+                        builder: (context) => AuthenticationWrapper()),
                   );
                 },
               ),
 
               // Icons
               Container(
-                margin: EdgeInsets.symmetric(horizontal: getProportionateScreenWidth(8)),
+                margin: EdgeInsets.symmetric(
+                    horizontal: getProportionateScreenWidth(8)),
                 child: Row(
                   children: [
                     // Btn - Search
@@ -89,11 +92,14 @@ class HomeHeader extends StatelessWidget {
                           prefs.hasUser().then((hasUser) => hasUser
                               ? Navigator.push(
                                   context,
-                                  MaterialPageRoute(builder: (context) => HomeScreenDrawer()),
+                                  MaterialPageRoute(
+                                      builder: (context) => HomeScreenDrawer()),
                                 )
                               : Navigator.push(
                                   context,
-                                  MaterialPageRoute(builder: (context) => AuthenticationWrapper()),
+                                  MaterialPageRoute(
+                                      builder: (context) =>
+                                          AuthenticationWrapper()),
                                 ));
                         },
                         icon: Icon(Icons.account_circle_outlined),
@@ -155,7 +161,8 @@ class HomeHeader extends StatelessWidget {
         );
       },
       child: Container(
-        margin: EdgeInsets.symmetric(horizontal: getProportionateScreenHeight(8)),
+        margin:
+            EdgeInsets.symmetric(horizontal: getProportionateScreenHeight(8)),
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(5),
           border: Border.all(width: 0.3, color: Colors.grey),
@@ -174,7 +181,8 @@ class HomeHeader extends StatelessWidget {
                 margin: EdgeInsets.only(left: getProportionateScreenWidth(10)),
                 child: Text(
                   "Search Products, Brands, Vendors",
-                  style: cusHeadingStyle(14, Colors.grey, null, FontWeight.w400),
+                  style: cusHeadingStyle(getProportionateScreenHeight(14),
+                      Colors.grey, null, FontWeight.w400),
                 ),
               ),
             ],

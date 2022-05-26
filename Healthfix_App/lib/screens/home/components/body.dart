@@ -65,12 +65,16 @@ class _BodyState extends State<Body> {
     'https://upload.wikimedia.org/wikipedia/commons/thumb/5/53/Reebok_2019_logo.svg/1200px-Reebok_2019_logo.svg.png',
   ];
 
-  final String dietPlanBanner = "https://fitclic.net/wp-content/uploads/2021/10/custom-keto-diet-banner.png";
+  final String dietPlanBanner =
+      "https://fitclic.net/wp-content/uploads/2021/10/custom-keto-diet-banner.png";
 
-  final FavouriteProductsStream favouriteProductsStream = FavouriteProductsStream();
+  final FavouriteProductsStream favouriteProductsStream =
+      FavouriteProductsStream();
   final AllProductsStream allProductsStream = AllProductsStream();
-  final FeaturedProductsStream featuredProductsStream = FeaturedProductsStream();
-  final FlashSalesProductsStream flashSalesProductsStream = FlashSalesProductsStream();
+  final FeaturedProductsStream featuredProductsStream =
+      FeaturedProductsStream();
+  final FlashSalesProductsStream flashSalesProductsStream =
+      FlashSalesProductsStream();
 
   @override
   void initState() {
@@ -109,7 +113,8 @@ class _BodyState extends State<Body> {
                   if (query.length <= 0) return;
                   List<String> searchedProductsId;
                   try {
-                    searchedProductsId = await ProductDatabaseHelper().searchInProducts(query.toLowerCase());
+                    searchedProductsId = await ProductDatabaseHelper()
+                        .searchInProducts(query.toLowerCase());
                     if (searchedProductsId != null) {
                       await Navigator.push(
                         context,
@@ -138,11 +143,13 @@ class _BodyState extends State<Body> {
                 onCartButtonPressed: () async {
                   bool allowed = AuthentificationService().currentUserVerified;
                   if (!allowed) {
-                    final reVerify = await showConfirmationDialog(
-                        context, "You haven't verified your email address. This action is only allowed for verified users.",
-                        positiveResponse: "Resend verification email", negativeResponse: "Go back");
+                    final reVerify = await showConfirmationDialog(context,
+                        "You haven't verified your email address. This action is only allowed for verified users.",
+                        positiveResponse: "Resend verification email",
+                        negativeResponse: "Go back");
                     if (reVerify) {
-                      final future = AuthentificationService().sendVerificationEmailToCurrentUser();
+                      final future = AuthentificationService()
+                          .sendVerificationEmailToCurrentUser();
                       await showDialog(
                         context: context,
                         builder: (context) {
@@ -268,7 +275,7 @@ class _BodyState extends State<Body> {
 
   Container trendingProducts() {
     return Container(
-      height: getProportionateScreenHeight(260),
+      height: getProportionateScreenHeight(280),
       child: ProductsSection(
         sectionTitle: "Trending Products",
         productsStreamController: featuredProductsStream,
@@ -280,27 +287,27 @@ class _BodyState extends State<Body> {
 
   Container flashSalesProducts() {
     return Container(
-      height: getProportionateScreenHeight(260),
+      height: getProportionateScreenHeight(280),
       child: ProductsSection(
         sectionTitle: "Flash Sales",
         productsStreamController: flashSalesProductsStream,
         emptyListMessage: "Looks like all Stores are closed",
         onProductCardTapped: onProductCardTapped,
-          onSeeMorePress: (){
-            Navigator.push(
-              context,
-              MaterialPageRoute(
-                builder: (context) => OfferProductsScreen(),
-              ),
-            );
-          },
+        onSeeMorePress: () {
+          Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (context) => OfferProductsScreen(),
+            ),
+          );
+        },
       ),
     );
   }
 
   Container exploreProducts() {
     return Container(
-      height: getProportionateScreenHeight(260),
+      height: getProportionateScreenHeight(280),
       child: ProductsSection(
         sectionTitle: "Explore All Products",
         productsStreamController: allProductsStream,

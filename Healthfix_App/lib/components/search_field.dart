@@ -32,15 +32,21 @@ class SearchField extends StatelessWidget {
           decoration: InputDecoration(
             fillColor: Colors.white,
             filled: true,
-            focusedBorder: OutlineInputBorder(borderSide: BorderSide(color: Colors.white), borderRadius: BorderRadius.circular(10)),
-            enabledBorder: OutlineInputBorder(borderSide: BorderSide(color: Colors.white), borderRadius: BorderRadius.circular(10)),
+            focusedBorder: OutlineInputBorder(
+                borderSide: BorderSide(color: Colors.white),
+                borderRadius: BorderRadius.circular(10)),
+            enabledBorder: OutlineInputBorder(
+                borderSide: BorderSide(color: Colors.white),
+                borderRadius: BorderRadius.circular(10)),
             hintText: "Search Products, Brands, Vendors",
+            hintStyle: TextStyle(fontSize: getProportionateScreenHeight(14)),
             prefixIcon: Icon(
               Icons.search_rounded,
               color: Colors.cyan,
               size: getProportionateScreenHeight(25),
             ),
-            contentPadding: EdgeInsets.symmetric(horizontal: getProportionateScreenWidth(20)),
+            contentPadding: EdgeInsets.symmetric(
+                horizontal: getProportionateScreenWidth(20)),
           ),
           // onSubmitted: onSubmit,
           onFieldSubmitted: onSubmit,

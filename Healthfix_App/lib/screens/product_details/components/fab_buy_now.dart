@@ -21,18 +21,23 @@ class BuyNowFAB extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return FloatingActionButton.extended(
-      heroTag: "buyNow",
-      backgroundColor: Colors.white,
-      shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.all(new Radius.circular(40.0)),
-        side: BorderSide(color: kPrimaryColor, width: 1),
-      ),
-      onPressed: onTap,
-      elevation: 0,
-      label: Text(
-        "Buy Now",
-        style: cusHeadingStyle(getProportionateScreenWidth(14), kPrimaryColor),
+    return Container(
+      height: getProportionateScreenHeight(40),
+      child: FloatingActionButton.extended(
+        extendedPadding: EdgeInsets.all(getProportionateScreenHeight(12)),
+        heroTag: "buyNow",
+        backgroundColor: Colors.white,
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.all(new Radius.circular(40.0)),
+          side: BorderSide(color: kPrimaryColor, width: 1),
+        ),
+        onPressed: onTap,
+        elevation: 0,
+        label: Text(
+          "Buy Now",
+          style:
+              cusHeadingStyle(getProportionateScreenHeight(14), kPrimaryColor),
+        ),
       ),
     );
   }

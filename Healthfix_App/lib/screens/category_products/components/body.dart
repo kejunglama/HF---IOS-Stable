@@ -28,7 +28,8 @@ class Body extends StatefulWidget {
   });
 
   @override
-  _BodyState createState() => _BodyState(categoryProductsStream: CategoryProductsStream(productType));
+  _BodyState createState() =>
+      _BodyState(categoryProductsStream: CategoryProductsStream(productType));
 }
 
 class _BodyState extends State<Body> {
@@ -49,17 +50,21 @@ class _BodyState extends State<Body> {
     // print(widget.productTypes);
 
     // Fetch Category
-    category = widget.productTypes.where((type) => type["product_type"] == widget.productType).first;
+    category = widget.productTypes
+        .where((type) => type["product_type"] == widget.productType)
+        .first;
     _categoryName = category["title"];
 
     // Fetch All Product Types
     widget.productTypes.forEach((pt) {
-      _categoryList.add([EnumToString.convertToString(pt['product_type']), pt["title"]]);
+      _categoryList
+          .add([EnumToString.convertToString(pt['product_type']), pt["title"]]);
     });
 
     // Fetch Sub Categories
     fetchSubCategories(_categoryName);
-    _selectedSubCat = (widget.subProductType != null) ? widget.subProductType : "";
+    _selectedSubCat =
+        (widget.subProductType != null) ? widget.subProductType : "";
     // if (category["product_type"] == ProductType.All) {}
   }
 
@@ -77,7 +82,8 @@ class _BodyState extends State<Body> {
         child: SingleChildScrollView(
           physics: AlwaysScrollableScrollPhysics(),
           child: Padding(
-            padding: EdgeInsets.symmetric(horizontal: getProportionateScreenWidth(screenPadding)),
+            padding: EdgeInsets.symmetric(
+                horizontal: getProportionateScreenWidth(screenPadding)),
             child: SizedBox(
               width: double.infinity,
               child: Column(
@@ -135,7 +141,10 @@ class _BodyState extends State<Body> {
                 margin: EdgeInsets.only(right: 20),
                 child: Text(
                   _subCat,
-                  style: _selectedSubCat == _subCat ? cusBodyStyle(14, FontWeight.w500, kPrimaryColor, 0.5) : cusBodyStyle(14),
+                  style: _selectedSubCat == _subCat
+                      ? cusBodyStyle(getProportionateScreenHeight(14),
+                          FontWeight.w500, kPrimaryColor, 0.5)
+                      : cusBodyStyle(getProportionateScreenHeight(14)),
                 ),
               ),
             ),
@@ -157,7 +166,9 @@ class _BodyState extends State<Body> {
                 height: SizeConfig.screenHeight * 0.5,
                 child: Center(
                   child: NothingToShowContainer(
-                    secondaryMessage: widget.productType == null ? "No Products to show." : "No Products in ${EnumToString.convertToString(widget.productType)}",
+                    secondaryMessage: widget.productType == null
+                        ? "No Products to show."
+                        : "No Products in ${EnumToString.convertToString(widget.productType)}",
                   ),
                 ),
               );
@@ -247,7 +258,8 @@ class _BodyState extends State<Body> {
                       ? Text('Dropdown')
                       : Text(
                           _categoryName,
-                          style: cusHeadingStyle(getProportionateScreenHeight(20), kPrimaryColor),
+                          style: cusHeadingStyle(
+                              getProportionateScreenHeight(20), kPrimaryColor),
                         ),
                   // isExpanded: true,
                   iconSize: getProportionateScreenHeight(20),
@@ -296,7 +308,8 @@ class _BodyState extends State<Body> {
   reInitProductStream([String selectedSubCat, String searchString]) {
     categoryProductsStream.dispose();
     widget.productType = category["product_type"];
-    categoryProductsStream = CategoryProductsStream(widget.productType, selectedSubCat ?? null, searchString ?? null);
+    categoryProductsStream = CategoryProductsStream(
+        widget.productType, selectedSubCat ?? null, searchString ?? null);
     // print(categoryProductsStream.stream.first);
     categoryProductsStream.init();
 
@@ -340,8 +353,8 @@ class _BodyState extends State<Body> {
   Widget buildProductsGrid(List<String> productsId) {
     return Container(
       padding: EdgeInsets.symmetric(
-        vertical: 16,
-        horizontal: 8,
+        vertical: getProportionateScreenHeight(16),
+        horizontal: getProportionateScreenWidth(8),
       ),
       decoration: BoxDecoration(
         // color: Color(0xFFF5F6F9),
@@ -375,9 +388,9 @@ class _BodyState extends State<Body> {
         },
         gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
           crossAxisCount: 2,
-          childAspectRatio: 0.84,
-          mainAxisSpacing: 8,
-          crossAxisSpacing: 8,
+          childAspectRatio: 0.95,
+          mainAxisSpacing: getProportionateScreenWidth(8),
+          crossAxisSpacing: getProportionateScreenWidth(8),
         ),
         padding: EdgeInsets.symmetric(
           // horizontal: 4,
@@ -446,7 +459,10 @@ class _BodyState extends State<Body> {
     // print(name == "All" ? "Wow" : "");
     category = (typeName == "All")
         ? {"title": "All Products"}
-        : widget.productTypes.where((type) => EnumToString.convertToString(type["product_type"]) == typeName).first;
+        : widget.productTypes
+            .where((type) =>
+                EnumToString.convertToString(type["product_type"]) == typeName)
+            .first;
   }
 
   fetchSubCategories(String cat) {

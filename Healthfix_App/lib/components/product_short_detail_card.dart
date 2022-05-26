@@ -36,7 +36,7 @@ class ProductShortDetailCard extends StatelessWidget {
             return Row(
               children: [
                 SizedBox(
-                  width: getProportionateScreenWidth(88),
+                  width: getProportionateScreenWidth(76),
                   child: AspectRatio(
                     aspectRatio: 1,
                     child: Container(
@@ -44,7 +44,7 @@ class ProductShortDetailCard extends StatelessWidget {
                         borderRadius: BorderRadius.circular(5),
                         color: Colors.grey.withOpacity(0.03),
                       ),
-                      margin: EdgeInsets.all(10),
+                      margin: EdgeInsets.all(getProportionateScreenHeight(10)),
                       child: product.images.length > 0
                           ? Image.network(
                               product.images[0],
@@ -79,7 +79,9 @@ class ProductShortDetailCard extends StatelessWidget {
                       Visibility(
                         visible: (variation != null && variation.isNotEmpty),
                         child: Text(
-                          (variation != null && variation.isNotEmpty) ? "${variation["size"]} - ${variation["color"]["name"]}" : "",
+                          (variation != null && variation.isNotEmpty)
+                              ? "${variation["size"]} - ${variation["color"]["name"]}"
+                              : "",
                           style: cusPdctNameStyle,
                         ),
                       ),
@@ -89,7 +91,9 @@ class ProductShortDetailCard extends StatelessWidget {
                           text: "\Rs. ${product.discountPrice}  ",
                           style: cusPdctDisPriceStyle(),
                           children: [
-                            TextSpan(text: "\Rs. ${product.originalPrice}", style: cusPdctOriPriceStyle()),
+                            TextSpan(
+                                text: "\Rs. ${product.originalPrice}",
+                                style: cusPdctOriPriceStyle()),
                           ],
                         ),
                       ),

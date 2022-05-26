@@ -11,13 +11,14 @@ class AppBackBtn extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: (){
+      onTap: () {
         Navigator.pop(context);
       },
       child: Container(
         margin: EdgeInsets.all(getProportionateScreenHeight(8)),
         child: Icon(
           Icons.keyboard_backspace_rounded,
+          size: getProportionateScreenHeight(30),
           color: Colors.white,
         ),
         color: kPrimaryColor,

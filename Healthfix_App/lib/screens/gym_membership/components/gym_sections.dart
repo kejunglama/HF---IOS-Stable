@@ -48,15 +48,19 @@ class GymSection extends StatelessWidget {
   }
 
   Widget buildGymGrid(List<String> gymsIDs) {
-    return Column(
-      children: [
-        buildHeader(),
-        sizedBoxOfHeight(28),
-        // Card Lists
-        Column(
-          children: [for (String gymID in gymsIDs) GymShortDetailsCard(gymID)],
-        ),
-      ],
+    return SingleChildScrollView(
+      child: Column(
+        children: [
+          buildHeader(),
+          sizedBoxOfHeight(28),
+          // Card Lists
+          Column(
+            children: [
+              for (String gymID in gymsIDs) GymShortDetailsCard(gymID)
+            ],
+          ),
+        ],
+      ),
     );
   }
 
@@ -70,7 +74,8 @@ class GymSection extends StatelessWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Text("Popular Gyms", style: cusHeadingStyle(28)),
+              Text("Popular Gyms",
+                  style: cusHeadingStyle(getProportionateScreenHeight(28))),
               Text("in Kathmandu", style: cusHeadingStyle()),
               sizedBoxOfHeight(8),
             ],
@@ -81,22 +86,30 @@ class GymSection extends StatelessWidget {
             // Search Field
             Expanded(
               child: Container(
-                margin: EdgeInsets.symmetric(horizontal: getProportionateScreenHeight(12)),
+                margin: EdgeInsets.symmetric(
+                    horizontal: getProportionateScreenHeight(12)),
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(5),
                   color: Colors.grey.shade100,
                 ),
                 child: Container(
                   padding: EdgeInsets.all(getProportionateScreenHeight(10)),
-                  height: getProportionateScreenHeight(40),
+                  height: getProportionateScreenHeight(60),
                   child: Row(
                     children: [
-                      Icon(Icons.search_rounded, color: Colors.grey, size: getProportionateScreenHeight(20)),
+                      Icon(Icons.search_rounded,
+                          color: Colors.grey,
+                          size: getProportionateScreenHeight(20)),
                       Container(
-                        margin: EdgeInsets.only(left: getProportionateScreenWidth(10)),
+                        margin: EdgeInsets.only(
+                            left: getProportionateScreenWidth(10)),
                         child: Text(
                           "Search Products, Brands, Vendors",
-                          style: cusHeadingStyle(14, Colors.grey, null, FontWeight.w400),
+                          style: cusHeadingStyle(
+                              getProportionateScreenHeight(14),
+                              Colors.grey,
+                              null,
+                              FontWeight.w400),
                         ),
                       ),
                     ],
@@ -106,7 +119,7 @@ class GymSection extends StatelessWidget {
             ),
             // Filter Btn
             Container(
-              height: getProportionateScreenHeight(40),
+              height: getProportionateScreenHeight(60),
               // margin: EdgeInsets.only(right: getProportionateScreenHeight(10)),
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(3),

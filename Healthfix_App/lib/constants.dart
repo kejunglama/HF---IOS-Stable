@@ -21,17 +21,18 @@ const kAnimationDuration = Duration(milliseconds: 200);
 const double screenPadding = 10;
 
 final headingStyle = TextStyle(
-  fontSize: getProportionateScreenWidth(28),
+  fontSize: getProportionateScreenHeight(28),
   fontWeight: FontWeight.bold,
   color: Colors.black,
   height: 1.5,
 );
 
 // Custom Font Styles
-cusHeadingStyle([double fs, Color color, bool hasShadow, FontWeight fw]) => GoogleFonts.poppins(
+cusHeadingStyle([double fs, Color color, bool hasShadow, FontWeight fw]) =>
+    GoogleFonts.poppins(
       textStyle: TextStyle(
         color: color ?? Colors.black,
-        fontSize: fs ?? getProportionateScreenWidth(20),
+        fontSize: fs ?? getProportionateScreenHeight(20),
         fontWeight: fw ?? FontWeight.w500,
         letterSpacing: 0.5,
         shadows: <Shadow>[
@@ -51,10 +52,11 @@ cusHeadingStyle([double fs, Color color, bool hasShadow, FontWeight fw]) => Goog
       ),
     );
 
-cusBodyStyle([double fs, FontWeight fw, Color color, double ls]) => GoogleFonts.poppins(
+cusBodyStyle([double fs, FontWeight fw, Color color, double ls]) =>
+    GoogleFonts.poppins(
       textStyle: TextStyle(
         color: color ?? Colors.black,
-        fontSize: fs ?? getProportionateScreenWidth(14),
+        fontSize: fs ?? getProportionateScreenHeight(14),
         fontWeight: fw ?? FontWeight.w300,
         letterSpacing: ls ?? 0.4,
       ),
@@ -67,10 +69,11 @@ var cusHeadingLinkStyle = GoogleFonts.poppins(
   ),
 );
 
-cusCenterHeadingStyle([Color color, FontWeight fw, num fs]) => GoogleFonts.poppins(
+cusCenterHeadingStyle([Color color, FontWeight fw, num fs]) =>
+    GoogleFonts.poppins(
       textStyle: TextStyle(
         color: color ?? Colors.black,
-        fontSize: fs ?? getProportionateScreenWidth(20),
+        fontSize: fs ?? getProportionateScreenHeight(20),
         fontWeight: fw ?? FontWeight.w500,
         letterSpacing: 0.5,
       ),
@@ -79,7 +82,7 @@ cusCenterHeadingStyle([Color color, FontWeight fw, num fs]) => GoogleFonts.poppi
 var cusCenterHeadingAccentStyle = GoogleFonts.poppins(
   textStyle: TextStyle(
     color: kSecondaryColor,
-    fontSize: getProportionateScreenWidth(20),
+    fontSize: getProportionateScreenHeight(20),
   ),
 );
 
@@ -132,7 +135,8 @@ var cusPdctNameStyle = GoogleFonts.montserrat(
 const defaultDuration = Duration(milliseconds: 250);
 
 // Form Error
-final RegExp emailValidatorRegExp = RegExp(r"^[a-zA-Z0-9.]+@[a-zA-Z0-9]+\.[a-zA-Z]+");
+final RegExp emailValidatorRegExp =
+    RegExp(r"^[a-zA-Z0-9.]+@[a-zA-Z0-9]+\.[a-zA-Z]+");
 const String kEmailNullError = "Please Enter your email";
 const String kInvalidEmailError = "Please Enter Valid Email";
 const String kPassNullError = "Please Enter your password";
@@ -144,7 +148,8 @@ const String kAddressNullError = "Please Enter your address";
 const String FIELD_REQUIRED_MSG = "This field is required";
 
 final otpInputDecoration = InputDecoration(
-  contentPadding: EdgeInsets.symmetric(vertical: getProportionateScreenWidth(15)),
+  contentPadding:
+      EdgeInsets.symmetric(vertical: getProportionateScreenHeight(15)),
   border: outlineInputBorder(),
   focusedBorder: outlineInputBorder(),
   enabledBorder: outlineInputBorder(),
@@ -152,7 +157,7 @@ final otpInputDecoration = InputDecoration(
 
 OutlineInputBorder outlineInputBorder() {
   return OutlineInputBorder(
-    borderRadius: BorderRadius.circular(getProportionateScreenWidth(15)),
+    borderRadius: BorderRadius.circular(getProportionateScreenHeight(15)),
     borderSide: BorderSide(color: kTextColor),
   );
 }
@@ -163,7 +168,8 @@ extension StringExtension on String {
   }
 }
 
-var currency = new NumberFormat.currency(locale: "en_US", symbol: "Rs. ", decimalDigits: 0);
+var currency = new NumberFormat.currency(
+    locale: "en_US", symbol: "Rs. ", decimalDigits: 0);
 
 DateTime now = new DateTime.now();
 

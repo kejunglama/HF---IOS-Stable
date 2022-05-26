@@ -107,7 +107,8 @@ class _BodyState extends State<Body> {
                               SizedBox(
                                 height: getProportionateScreenHeight(50),
                                 child: Row(
-                                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
                                   children: [
                                     RoundedIconButton(
                                       iconData: Icons.arrow_back_ios_rounded,
@@ -115,19 +116,25 @@ class _BodyState extends State<Body> {
                                         Navigator.pop(context);
                                       },
                                     ),
-                                    SizedBox(width: getProportionateScreenWidth(15)),
+                                    SizedBox(
+                                        width: getProportionateScreenWidth(15)),
                                     Expanded(
                                       child: Container(
                                         margin: EdgeInsets.zero,
                                         alignment: Alignment.centerLeft,
-                                        height: getProportionateScreenHeight(30),
-                                        child: Image.asset('assets/logo/HF-logo.png'),
+                                        height:
+                                            getProportionateScreenHeight(30),
+                                        child: Image.asset(
+                                            'assets/logo/HF-logo.png'),
                                       ),
                                     ),
                                     Row(
                                       children: [
                                         Container(
-                                          margin: EdgeInsets.only(right: getProportionateScreenWidth(8)),
+                                          margin: EdgeInsets.only(
+                                              right:
+                                                  getProportionateScreenWidth(
+                                                      8)),
                                           child: Icon(
                                             Icons.search_rounded,
                                             color: kPrimaryColor,
@@ -137,11 +144,16 @@ class _BodyState extends State<Body> {
                                           onTap: () {
                                             Navigator.push(
                                               context,
-                                              MaterialPageRoute(builder: (context) => CartScreen()),
+                                              MaterialPageRoute(
+                                                  builder: (context) =>
+                                                      CartScreen()),
                                             );
                                           },
                                           child: Container(
-                                            margin: EdgeInsets.only(right: getProportionateScreenWidth(8)),
+                                            margin: EdgeInsets.only(
+                                                right:
+                                                    getProportionateScreenWidth(
+                                                        8)),
                                             child: Icon(
                                               Icons.shopping_bag,
                                               color: kPrimaryColor,
@@ -154,8 +166,11 @@ class _BodyState extends State<Body> {
                                 ),
                               ),
                               ProductImages(product: product),
-                              ProductActionsSection(product: product, setSelectedVariant: setSelectedVariant),
-                              SizedBox(height: getProportionateScreenHeight(80)),
+                              ProductActionsSection(
+                                  product: product,
+                                  setSelectedVariant: setSelectedVariant),
+                              SizedBox(
+                                  height: getProportionateScreenHeight(80)),
                             ],
                           ),
                         ),
@@ -192,7 +207,8 @@ class _BodyState extends State<Body> {
       left: 0,
       child: Container(
         decoration: BoxDecoration(
-          borderRadius: BorderRadius.only(topLeft: Radius.circular(10), topRight: Radius.circular(10)),
+          borderRadius: BorderRadius.only(
+              topLeft: Radius.circular(10), topRight: Radius.circular(10)),
           color: Colors.white,
           boxShadow: [
             BoxShadow(
@@ -203,7 +219,8 @@ class _BodyState extends State<Body> {
             ),
           ],
         ),
-        padding: EdgeInsets.symmetric(horizontal: getProportionateScreenWidth(20)),
+        padding:
+            EdgeInsets.symmetric(horizontal: getProportionateScreenWidth(20)),
         height: getProportionateScreenHeight(70),
         width: SizeConfig.screenWidth,
         child: Row(
@@ -218,7 +235,8 @@ class _BodyState extends State<Body> {
                     children: [
                       Text(
                         "Rs. ${numFormat.format(_productDisPrice)}  ",
-                        style: cusPdctPageDisPriceStyle(getProportionateScreenWidth(26), Colors.black),
+                        style: cusPdctPageDisPriceStyle(
+                            getProportionateScreenHeight(26), Colors.black),
                       ),
                       Row(
                         crossAxisAlignment: CrossAxisAlignment.start,
@@ -226,7 +244,8 @@ class _BodyState extends State<Body> {
                         children: [
                           Text(
                             "Rs. ${numFormat.format(_productOriPrice)}",
-                            style: cusPdctOriPriceStyle(getProportionateScreenWidth(12)),
+                            style: cusPdctOriPriceStyle(
+                                getProportionateScreenHeight(12)),
                           ),
                           sizedBoxOfWidth(8),
                           Text(
@@ -235,9 +254,10 @@ class _BodyState extends State<Body> {
                             style: GoogleFonts.poppins(
                               textStyle: TextStyle(
                                 color: Colors.red,
-                                fontSize: getProportionateScreenWidth(12),
+                                fontSize: getProportionateScreenHeight(12),
                                 fontWeight: FontWeight.w600,
-                                letterSpacing: getProportionateScreenWidth(0.5),
+                                letterSpacing:
+                                    getProportionateScreenHeight(0.5),
                               ),
                             ),
                           ),
@@ -270,14 +290,16 @@ class _BodyState extends State<Body> {
                         MaterialPageRoute(
                           builder: (context) => CheckoutScreen(
                             selectedCartItems: [product.id],
-                            onCheckoutPressed: selectedCheckoutButtonFromBuyNowCallback,
+                            onCheckoutPressed:
+                                selectedCheckoutButtonFromBuyNowCallback,
                             isBuyNow: true,
                           ),
                         ),
                       )
                     : Navigator.push(
                         context,
-                        MaterialPageRoute(builder: (context) => AuthenticationWrapper()),
+                        MaterialPageRoute(
+                            builder: (context) => AuthenticationWrapper()),
                       ));
               },
             ),
@@ -294,23 +316,29 @@ class _BodyState extends State<Body> {
     });
   }
 
-  Future<void> selectedCheckoutButtonFromBuyNowCallback(Map orderDetails, List selectedProductsUid) async {
+  Future<void> selectedCheckoutButtonFromBuyNowCallback(
+      Map orderDetails, List selectedProductsUid) async {
     if (selectedProductsUid != null) {
       // print(orderedProductsUid);
       final dateTime = DateTime.now();
-      final formatedDateTime = "${dateTime.day}-${dateTime.month}-${dateTime.year}";
+      final formatedDateTime =
+          "${dateTime.day}-${dateTime.month}-${dateTime.year}";
       List orderedProducts = [];
       orderedProducts.add({
         OrderedProduct.PRODUCT_UID_KEY: selectedProductsUid[0],
         OrderedProduct.ITEM_COUNT_KEY: 1,
       });
-      OrderedProduct order = OrderedProduct(null, products: orderedProducts, orderDate: formatedDateTime, orderDetails: orderDetails);
+      OrderedProduct order = OrderedProduct(null,
+          products: orderedProducts,
+          orderDate: formatedDateTime,
+          orderDetails: orderDetails);
       print(order);
 
       bool addedProductsToMyProducts = false;
       String snackbarmMessage;
       try {
-        addedProductsToMyProducts = await UserDatabaseHelper().addToMyOrders(order);
+        addedProductsToMyProducts =
+            await UserDatabaseHelper().addToMyOrders(order);
         if (addedProductsToMyProducts) {
           snackbarmMessage = "Products ordered Successfully";
         } else {

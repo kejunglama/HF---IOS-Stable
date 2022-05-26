@@ -25,7 +25,8 @@ class GymShortDetailsCard extends StatelessWidget {
 
     return GestureDetector(
       onTap: () {
-        Navigator.push(context, MaterialPageRoute(builder: (context) => GymDetailsScreen(gym)));
+        Navigator.push(context,
+            MaterialPageRoute(builder: (context) => GymDetailsScreen(gym)));
       },
       child: FutureBuilder(
         future: GymDatabaseHelper().getGymWithID(gymID),
@@ -33,7 +34,8 @@ class GymShortDetailsCard extends StatelessWidget {
           if (snapshot.hasData) {
             gym = snapshot.data;
             return Container(
-              padding: EdgeInsets.symmetric(horizontal: getProportionateScreenWidth(12)),
+              padding: EdgeInsets.symmetric(
+                  horizontal: getProportionateScreenWidth(12)),
               child: Column(
                 children: [
                   Stack(
@@ -52,14 +54,26 @@ class GymShortDetailsCard extends StatelessWidget {
                           mainAxisAlignment: MainAxisAlignment.end,
                           children: [
                             Container(
-                              padding: EdgeInsets.all(getProportionateScreenWidth(8)),
-                              margin: EdgeInsets.all(getProportionateScreenWidth(12)),
+                              padding: EdgeInsets.all(
+                                  getProportionateScreenWidth(8)),
+                              margin: EdgeInsets.all(
+                                  getProportionateScreenWidth(12)),
                               child: Column(
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
-                                  Text("Opening Time:", style: GoogleFonts.poppins(color: Colors.white, fontSize: 12)),
+                                  Text("Opening Time:",
+                                      style: GoogleFonts.poppins(
+                                          color: Colors.white,
+                                          fontSize:
+                                              getProportionateScreenHeight(
+                                                  12))),
                                   Text(gym.openingTime,
-                                      style: GoogleFonts.poppins(color: Colors.white, fontSize: 12, fontWeight: FontWeight.w600, letterSpacing: 0.5)),
+                                      style: GoogleFonts.poppins(
+                                          color: Colors.white,
+                                          fontSize:
+                                              getProportionateScreenHeight(12),
+                                          fontWeight: FontWeight.w600,
+                                          letterSpacing: 0.5)),
                                 ],
                               ),
                               color: kPrimaryColor,
@@ -70,22 +84,27 @@ class GymShortDetailsCard extends StatelessWidget {
                     ],
                   ),
                   Container(
-                    padding: EdgeInsets.symmetric(vertical: getProportionateScreenWidth(12)),
-                    margin: EdgeInsets.only(bottom: getProportionateScreenWidth(8)),
+                    padding: EdgeInsets.symmetric(
+                        vertical: getProportionateScreenWidth(12)),
+                    margin:
+                        EdgeInsets.only(bottom: getProportionateScreenWidth(8)),
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       // crossAxisAlignment: CrossAxisAlignment.center,
                       children: [
-                        Text(gym.name, style: cusHeadingStyle(20)),
+                        Text(gym.name,
+                            style: cusHeadingStyle(
+                                getProportionateScreenHeight(20))),
                         Row(
                           children: [
                             Icon(
                               Icons.location_on,
                               color: kPrimaryColor,
-                              size: 16,
+                              size: getProportionateScreenHeight(16),
                             ),
                             sizedBoxOfWidth(4),
-                            Text(gym.location[LOCATION_NAME_KEY], style: cusHeadingLinkStyle),
+                            Text(gym.location[LOCATION_NAME_KEY],
+                                style: cusHeadingLinkStyle),
                           ],
                         ),
                       ],
@@ -111,7 +130,6 @@ class GymShortDetailsCard extends StatelessWidget {
             ),
           );
         },
-
       ),
     );
   }

@@ -23,7 +23,10 @@ class FitnessTrainerDetailsCard extends StatelessWidget {
 
     return GestureDetector(
       onTap: () {
-        Navigator.push(context, MaterialPageRoute(builder: (context) => FitnessTrainerDetailsScreen(trainer)));
+        Navigator.push(
+            context,
+            MaterialPageRoute(
+                builder: (context) => FitnessTrainerDetailsScreen(trainer)));
       },
       child: FutureBuilder(
         future: TrainersDatabaseHelper().getTrainerWithID(trainerID),
@@ -45,28 +48,41 @@ class FitnessTrainerDetailsCard extends StatelessWidget {
                           ClipRRect(
                             borderRadius: BorderRadius.circular(50),
                             child: Container(
-                              width: 96,
-                              height: 96,
+                              width: getProportionateScreenHeight(96),
+                              height: getProportionateScreenHeight(96),
                               color: Colors.blue,
-                              child: Image.network(trainer.imageURL, fit: BoxFit.cover, alignment: Alignment.topCenter),
+                              child: Image.network(trainer.imageURL,
+                                  fit: BoxFit.cover,
+                                  alignment: Alignment.topCenter),
                             ),
                           ),
                           sizedBoxOfWidth(16),
                           Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                              Text(trainer.name, style: cusHeadingStyle(20)),
-                              Text(trainer.title, style: cusHeadingStyle(16, Colors.blue, null, FontWeight.w400)),
+                              Text(trainer.name,
+                                  style: cusHeadingStyle(
+                                      getProportionateScreenHeight(20))),
+                              Text(trainer.title,
+                                  style: cusHeadingStyle(
+                                      getProportionateScreenHeight(16),
+                                      Colors.blue,
+                                      null,
+                                      FontWeight.w400)),
                               sizedBoxOfHeight(8),
                               Row(
                                 children: [
                                   Icon(
                                     Icons.verified,
                                     color: Colors.blue,
-                                    size: 20,
+                                    size: getProportionateScreenHeight(20),
                                   ),
                                   sizedBoxOfWidth(4),
-                                  Text(trainer.experience, style: cusBodyStyle(getProportionateScreenWidth(12), null, Colors.black54)),
+                                  Text(trainer.experience,
+                                      style: cusBodyStyle(
+                                          getProportionateScreenHeight(12),
+                                          null,
+                                          Colors.black54)),
                                 ],
                               ),
                               sizedBoxOfHeight(4),
@@ -75,11 +91,16 @@ class FitnessTrainerDetailsCard extends StatelessWidget {
                                   Icon(
                                     Icons.access_time_filled_rounded,
                                     color: Colors.blue,
-                                    size: 20,
+                                    size: getProportionateScreenHeight(20),
                                   ),
                                   sizedBoxOfWidth(4),
-                                  Text("Next Available Time: ${trainer.timings[0]}",
-                                      style: cusBodyStyle(getProportionateScreenWidth(12), null, Colors.black54)),
+                                  Text(
+                                      "Next Available Time: ${trainer.timings[0]}",
+                                      overflow: TextOverflow.ellipsis,
+                                      style: cusBodyStyle(
+                                          getProportionateScreenHeight(12),
+                                          null,
+                                          Colors.black54)),
                                 ],
                               ),
                             ],

@@ -17,7 +17,8 @@ class Body extends StatelessWidget {
 
   Future scrollToCat([GlobalKey key]) async {
     final context = key.currentContext;
-    await Scrollable.ensureVisible(context, duration: Duration(milliseconds: 500), alignment: 1);
+    await Scrollable.ensureVisible(context,
+        duration: Duration(milliseconds: 500), alignment: 1);
   }
 
   @override
@@ -67,7 +68,11 @@ class CategoryHierarchyList extends StatelessWidget {
                 children: [
                   Container(
                     alignment: Alignment.centerLeft,
-                    margin: EdgeInsets.fromLTRB(40, 20, 20, 10),
+                    margin: EdgeInsets.fromLTRB(
+                        getProportionateScreenWidth(40),
+                        getProportionateScreenHeight(20),
+                        getProportionateScreenWidth(20),
+                        getProportionateScreenHeight(10)),
                     child: GestureDetector(
                         onTap: () {
                           // print(j++);
@@ -75,23 +80,34 @@ class CategoryHierarchyList extends StatelessWidget {
                               context,
                               MaterialPageRoute(
                                 builder: (context) => CategoryProductsScreen(
-                                  productType: pdctCategories.where((ele) => ele[TITLE_KEY] == entry.key).first[PRODUCT_TYPE_KEY],
+                                  productType: pdctCategories
+                                      .where(
+                                          (ele) => ele[TITLE_KEY] == entry.key)
+                                      .first[PRODUCT_TYPE_KEY],
                                   productTypes: pdctCategories,
                                 ),
                               ));
                         },
-                        child: Text(entry.key, style: cusHeadingStyle(18, kPrimaryColor))),
+                        child: Text(entry.key,
+                            style: cusHeadingStyle(
+                                getProportionateScreenHeight(18),
+                                kPrimaryColor))),
                   ),
                   for (var arrValue in entry.value)
                     Container(
-                      margin: EdgeInsets.symmetric(vertical: 8, horizontal: 40),
+                      margin: EdgeInsets.symmetric(
+                          vertical: getProportionateScreenHeight(8),
+                          horizontal: getProportionateScreenWidth(40)),
                       child: GestureDetector(
                         onTap: () {
                           Navigator.push(
                               context,
                               MaterialPageRoute(
                                 builder: (context) => CategoryProductsScreen(
-                                  productType: pdctCategories.where((ele) => ele[TITLE_KEY] == entry.key).first[PRODUCT_TYPE_KEY],
+                                  productType: pdctCategories
+                                      .where(
+                                          (ele) => ele[TITLE_KEY] == entry.key)
+                                      .first[PRODUCT_TYPE_KEY],
                                   productTypes: pdctCategories,
                                   subProductType: arrValue,
                                 ),
@@ -99,7 +115,7 @@ class CategoryHierarchyList extends StatelessWidget {
                         },
                         child: Text(
                           arrValue,
-                          style: cusBodyStyle(16),
+                          style: cusBodyStyle(getProportionateScreenHeight(16)),
                         ),
                       ),
                     ),
@@ -155,19 +171,26 @@ class CategoryList extends StatelessWidget {
                   child: Center(
                     child: Container(
                       height: getProportionateScreenHeight(120),
-                      padding: EdgeInsets.symmetric(horizontal: getProportionateScreenHeight(20)),
+                      padding: EdgeInsets.symmetric(
+                          horizontal: getProportionateScreenHeight(20)),
                       child: Column(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
                           Container(
                             width: getProportionateScreenHeight(430),
                             height: getProportionateScreenHeight(50),
-                            margin: EdgeInsets.only(bottom: getProportionateScreenHeight(12)),
-                            child: Image.asset(categories[i][IMAGE_LOCATION_KEY]),
+                            margin: EdgeInsets.only(
+                                bottom: getProportionateScreenHeight(12)),
+                            child:
+                                Image.asset(categories[i][IMAGE_LOCATION_KEY]),
                           ),
                           Text(
                             categories[i][TITLE_KEY],
-                            style: cusHeadingStyle(getProportionateScreenHeight(14), kPrimaryColor, null, FontWeight.w300),
+                            style: cusHeadingStyle(
+                                getProportionateScreenHeight(14),
+                                kPrimaryColor,
+                                null,
+                                FontWeight.w300),
                             textAlign: TextAlign.center,
                           ),
                         ],

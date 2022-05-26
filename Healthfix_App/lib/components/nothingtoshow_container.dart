@@ -27,19 +27,19 @@ class NothingToShowContainer extends StatelessWidget {
             color: kTextColor,
             width: getProportionateScreenWidth(75),
           ),
-          SizedBox(height: 16),
+          SizedBox(height: getProportionateScreenHeight(16)),
           Text(
             "$primaryMessage",
             style: TextStyle(
               color: kTextColor,
-              fontSize: 15,
+              fontSize: getProportionateScreenHeight(15),
             ),
           ),
           Text(
             "$secondaryMessage",
             style: TextStyle(
               color: kTextColor,
-              fontSize: 18,
+              fontSize: getProportionateScreenHeight(18),
               fontWeight: FontWeight.bold,
             ),
           ),

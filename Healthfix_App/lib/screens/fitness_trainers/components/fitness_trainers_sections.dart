@@ -54,7 +54,10 @@ class FitnessTrainersSection extends StatelessWidget {
         sizedBoxOfHeight(28),
         // Card Lists
         Column(
-          children: [for (String trainerID in trainerIDs) FitnessTrainerDetailsCard(trainerID)],
+          children: [
+            for (String trainerID in trainerIDs)
+              FitnessTrainerDetailsCard(trainerID)
+          ],
         ),
       ],
     );
@@ -91,7 +94,9 @@ class FitnessTrainersSection extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(name, style: cusHeadingStyle(20)),
-                      Text(title, style: cusHeadingStyle(16, Colors.blue, null, FontWeight.w400)),
+                      Text(title,
+                          style: cusHeadingStyle(
+                              16, Colors.blue, null, FontWeight.w400)),
                       sizedBoxOfHeight(8),
                       Row(
                         children: [
@@ -101,7 +106,8 @@ class FitnessTrainersSection extends StatelessWidget {
                             size: 20,
                           ),
                           sizedBoxOfWidth(4),
-                          Text(experience, style: cusBodyStyle(null, null, Colors.black54)),
+                          Text(experience,
+                              style: cusBodyStyle(null, null, Colors.black54)),
                         ],
                       ),
                       sizedBoxOfHeight(4),
@@ -113,7 +119,8 @@ class FitnessTrainersSection extends StatelessWidget {
                             size: 20,
                           ),
                           sizedBoxOfWidth(4),
-                          Text("Next Available Time: $availableTime", style: cusBodyStyle(null, null, Colors.black54)),
+                          Text("Next Available Time: $availableTime",
+                              style: cusBodyStyle(null, null, Colors.black54)),
                         ],
                       ),
                     ],
@@ -137,7 +144,8 @@ class FitnessTrainersSection extends StatelessWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Text("Popular Trainer", style: cusHeadingStyle(28)),
+              Text("Popular Trainer",
+                  style: cusHeadingStyle(getProportionateScreenHeight(28))),
               Text("in Kathmandu", style: cusHeadingStyle()),
               sizedBoxOfHeight(8),
             ],
@@ -148,22 +156,30 @@ class FitnessTrainersSection extends StatelessWidget {
             // Search Field
             Expanded(
               child: Container(
-                margin: EdgeInsets.symmetric(horizontal: getProportionateScreenHeight(12)),
+                margin: EdgeInsets.symmetric(
+                    horizontal: getProportionateScreenHeight(12)),
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(5),
                   color: Colors.grey.shade100,
                 ),
                 child: Container(
                   padding: EdgeInsets.all(getProportionateScreenHeight(10)),
-                  height: getProportionateScreenHeight(40),
+                  height: getProportionateScreenHeight(60),
                   child: Row(
                     children: [
-                      Icon(Icons.search_rounded, color: Colors.grey, size: getProportionateScreenHeight(20)),
+                      Icon(Icons.search_rounded,
+                          color: Colors.grey,
+                          size: getProportionateScreenHeight(20)),
                       Container(
-                        margin: EdgeInsets.only(left: getProportionateScreenWidth(10)),
+                        margin: EdgeInsets.only(
+                            left: getProportionateScreenWidth(10)),
                         child: Text(
                           "Search Products, Brands, Vendors",
-                          style: cusHeadingStyle(14, Colors.grey, null, FontWeight.w400),
+                          style: cusHeadingStyle(
+                              getProportionateScreenHeight(14),
+                              Colors.grey,
+                              null,
+                              FontWeight.w400),
                         ),
                       ),
                     ],
@@ -173,7 +189,7 @@ class FitnessTrainersSection extends StatelessWidget {
             ),
             // Filter Btn
             Container(
-              height: getProportionateScreenHeight(40),
+              height: getProportionateScreenHeight(60),
               // margin: EdgeInsets.only(right: getProportionateScreenHeight(10)),
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(3),

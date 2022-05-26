@@ -37,25 +37,36 @@ class Body extends StatelessWidget {
                           height: SizeConfig.screenWidth * 0.6,
                           color: Colors.blue,
                         ),
-                        sizedBoxOfHeight(getProportionateScreenHeight(56)),
-                        Text(name, style: cusHeadingStyle(28)),
+                        sizedBoxOfHeight(getProportionateScreenHeight(100)),
+                        Text(name,
+                            style: cusHeadingStyle(
+                                getProportionateScreenHeight(28))),
                         // sizedBoxOfHeight(4),
-                        Text(title, style: cusHeadingStyle(20, Colors.blue)),
+                        Text(title,
+                            style: cusHeadingStyle(
+                                getProportionateScreenHeight(20), Colors.blue)),
                         sizedBoxOfHeight(8),
-                        Text(experience, style: cusHeadingStyle(16, Colors.black54, null, FontWeight.w400)),
+                        Text(experience,
+                            style: cusHeadingStyle(
+                                getProportionateScreenHeight(16),
+                                Colors.black54,
+                                null,
+                                FontWeight.w400)),
                         sizedBoxOfHeight(12),
                       ],
                     ),
-                    buildAboutTrainer(fName, description, specialization, timings),
+                    buildAboutTrainer(
+                        fName, description, specialization, timings),
                   ],
                 ),
                 Positioned(
-                  top: SizeConfig.screenWidth * 0.6 - getProportionateScreenHeight(60),
+                  top: SizeConfig.screenWidth * 0.6 -
+                      getProportionateScreenHeight(60),
                   child: ClipRRect(
                     borderRadius: BorderRadius.circular(80),
                     child: Container(
-                      width: 120,
-                      height: 120,
+                      width: getProportionateScreenHeight(120),
+                      height: getProportionateScreenHeight(120),
                       color: kPrimaryColor,
                       child: Image.network(
                         imageURL,
@@ -74,9 +85,11 @@ class Body extends StatelessWidget {
     );
   }
 
-  Widget buildAboutTrainer(String fName, String description, String specialization, List timings) {
+  Widget buildAboutTrainer(
+      String fName, String description, String specialization, List timings) {
     return Container(
-      padding: EdgeInsets.symmetric(horizontal: getProportionateScreenWidth(20)),
+      padding:
+          EdgeInsets.symmetric(horizontal: getProportionateScreenWidth(20)),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -87,8 +100,14 @@ class Body extends StatelessWidget {
             children: [
               Icon(Icons.verified_user_outlined, color: Colors.blue, size: 16),
               sizedBoxOfWidth(4),
-              Text("Specialization: ", style: cusHeadingStyle(16, Colors.blue)),
-              Text(specialization, style: cusHeadingStyle(16)),
+              Text("Specialization: ",
+                  style: cusHeadingStyle(
+                      getProportionateScreenHeight(16), Colors.blue)),
+              Expanded(
+                child: Text(specialization,
+                    maxLines: 2,
+                    style: cusHeadingStyle(getProportionateScreenHeight(16))),
+              ),
             ],
           ),
           sizedBoxOfHeight(8),
@@ -97,11 +116,16 @@ class Body extends StatelessWidget {
             children: [
               Icon(Icons.schedule_rounded, color: Colors.blue, size: 16),
               sizedBoxOfWidth(4),
-              Text("Available Timings: ", style: cusHeadingStyle(16, Colors.blue)),
+              Text("Available Timings: ",
+                  style: cusHeadingStyle(
+                      getProportionateScreenHeight(16), Colors.blue)),
               sizedBoxOfWidth(4),
               Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
-                children: timings.map((e) => Text(e, style: cusBodyStyle(16))).toList(),
+                children: timings
+                    .map((e) => Text(e,
+                        style: cusBodyStyle(getProportionateScreenHeight(16))))
+                    .toList(),
               ),
             ],
           ),
@@ -110,9 +134,11 @@ class Body extends StatelessWidget {
             children: [
               Container(
                 height: getProportionateScreenHeight(56),
-                padding: EdgeInsets.symmetric(horizontal: getProportionateScreenWidth(12)),
+                padding: EdgeInsets.symmetric(
+                    horizontal: getProportionateScreenWidth(12)),
                 decoration: BoxDecoration(
-                  border: Border.all(color: Colors.grey.withOpacity(0.5), width: 0.5),
+                  border: Border.all(
+                      color: Colors.grey.withOpacity(0.5), width: 0.5),
                   borderRadius: BorderRadius.circular(3),
                 ),
                 child: Column(
@@ -128,9 +154,11 @@ class Body extends StatelessWidget {
               sizedBoxOfWidth(8),
               Container(
                 height: getProportionateScreenHeight(56),
-                padding: EdgeInsets.symmetric(horizontal: getProportionateScreenWidth(12)),
+                padding: EdgeInsets.symmetric(
+                    horizontal: getProportionateScreenWidth(12)),
                 decoration: BoxDecoration(
-                  border: Border.all(color: Colors.grey.withOpacity(0.5), width: 0.5),
+                  border: Border.all(
+                      color: Colors.grey.withOpacity(0.5), width: 0.5),
                   borderRadius: BorderRadius.circular(3),
                 ),
                 child: Column(
@@ -145,8 +173,10 @@ class Body extends StatelessWidget {
                         itemSize: 16,
                         ratingWidget: RatingWidget(
                           full: Icon(Icons.star_rounded, color: Colors.orange),
-                          half: Icon(Icons.star_half_rounded, color: Colors.orange),
-                          empty: Icon(Icons.star_outline_rounded, color: Colors.orange),
+                          half: Icon(Icons.star_half_rounded,
+                              color: Colors.orange),
+                          empty: Icon(Icons.star_outline_rounded,
+                              color: Colors.orange),
                         ),
                       ),
                     ),
@@ -166,7 +196,10 @@ class Body extends StatelessWidget {
 
   List<Map> features = [
     {"text": "Live Group\nSession", "icon": Icons.online_prediction_rounded},
-    {"text": "Diet Plan\nConsultation", "icon": Icons.emoji_food_beverage_rounded},
+    {
+      "text": "Diet Plan\nConsultation",
+      "icon": Icons.emoji_food_beverage_rounded
+    },
     {"text": "Personal\nTraining", "icon": Icons.fitness_center_rounded},
   ];
 
@@ -176,7 +209,8 @@ class Body extends StatelessWidget {
       margin: EdgeInsets.symmetric(vertical: getProportionateScreenHeight(20)),
       color: kPrimaryColor.withOpacity(0.1),
       child: Row(
-        children: features.map((e) => buildFeature(e["text"], e["icon"])).toList(),
+        children:
+            features.map((e) => buildFeature(e["text"], e["icon"])).toList(),
       ),
     );
   }
@@ -184,14 +218,15 @@ class Body extends StatelessWidget {
   Widget buildFeature(String title, IconData icon) {
     return Expanded(
       child: Container(
-        margin: EdgeInsets.all(4),
-        padding: EdgeInsets.all(8),
+        margin: EdgeInsets.all(getProportionateScreenHeight(4)),
+        padding: EdgeInsets.all(getProportionateScreenHeight(8)),
         color: Colors.white,
         child: Row(
           children: [
-            Icon(icon, color: Colors.blue),
+            Icon(icon,
+                size: getProportionateScreenHeight(28), color: Colors.blue),
             sizedBoxOfWidth(8),
-            Text(title, style: cusBodyStyle(getProportionateScreenWidth(12))),
+            Text(title, style: cusBodyStyle(getProportionateScreenHeight(12))),
           ],
         ),
       ),

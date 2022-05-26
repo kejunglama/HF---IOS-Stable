@@ -29,7 +29,10 @@ class Body extends StatefulWidget {
 
 class _BodyState extends State<Body> {
   List<Map> services = [
-    {"name": "Certified\nSupervision", "icon": Icons.supervised_user_circle_outlined},
+    {
+      "name": "Certified\nSupervision",
+      "icon": Icons.supervised_user_circle_outlined
+    },
     {"name": "Diet\nConsultation", "icon": Icons.no_food_outlined},
     {"name": "Hot/Cold\nBath & Sauna", "icon": Icons.bathtub_outlined},
     {"name": "Routine\nExercise", "icon": Icons.calendar_today_rounded},
@@ -83,7 +86,10 @@ class _BodyState extends State<Body> {
               // _______________________________________________
               // Heading Information
               Container(
-                padding: EdgeInsets.fromLTRB(getProportionateScreenWidth(24), getProportionateScreenWidth(24), getProportionateScreenWidth(24),
+                padding: EdgeInsets.fromLTRB(
+                    getProportionateScreenWidth(24),
+                    getProportionateScreenWidth(24),
+                    getProportionateScreenWidth(24),
                     getProportionateScreenWidth(12)),
                 margin: EdgeInsets.only(bottom: getProportionateScreenWidth(8)),
                 child: Row(
@@ -93,31 +99,53 @@ class _BodyState extends State<Body> {
                     Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Text(widget.gym.name, style: cusHeadingStyle(25)),
-                        Text("Opening Time: ${widget.gym.openingTime}", style: GoogleFonts.poppins()),
+                        Text(widget.gym.name,
+                            style: cusHeadingStyle(
+                                getProportionateScreenHeight(25))),
+                        Text("Opening Time: ${widget.gym.openingTime}",
+                            style: GoogleFonts.poppins(
+                                fontSize: getProportionateScreenHeight(12))),
                         // Text(gymDetails["time"], style: GoogleFonts.poppins(fontWeight: FontWeight.w600, letterSpacing: 0.5)),
                       ],
                     ),
                     GestureDetector(
-                      onTap: () => launch(widget.gym.location[LOCATION_LINK_KEY]),
-                      child: Row(
-                        children: [
-                          Icon(
-                            Icons.location_on,
-                            color: kPrimaryColor,
-                            size: 16,
-                          ),
-                          sizedBoxOfWidth(4),
-                          Container(child: Text(widget.gym.location[LOCATION_NAME_KEY], style: cusHeadingLinkStyle)),
-                        ],
+                      onTap: () =>
+                          launch(widget.gym.location[LOCATION_LINK_KEY]),
+                      child: Container(
+                        width: SizeConfig.screenWidth * 0.3,
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.end,
+                          children: [
+                            Icon(
+                              Icons.location_on,
+                              color: kPrimaryColor,
+                              size: getProportionateScreenHeight(16),
+                            ),
+                            sizedBoxOfWidth(4),
+                            Flexible(
+                              child: Container(
+                                child: Text(
+                                  widget.gym.location[LOCATION_NAME_KEY],
+                                  style: cusHeadingLinkStyle,
+                                  overflow: TextOverflow.ellipsis,
+                                  maxLines: 2,
+                                ),
+                              ),
+                            ),
+                          ],
+                        ),
                       ),
                     ),
                   ],
                 ),
               ),
               Padding(
-                padding: EdgeInsets.symmetric(horizontal: getProportionateScreenHeight(24)),
-                child: Divider(height: getProportionateScreenHeight(4), thickness: 0.5, color: Colors.grey.shade300),
+                padding: EdgeInsets.symmetric(
+                    horizontal: getProportionateScreenHeight(24)),
+                child: Divider(
+                    height: getProportionateScreenHeight(4),
+                    thickness: 0.5,
+                    color: Colors.grey.shade300),
               ),
               // _______________________________________________
               // Services
@@ -133,8 +161,12 @@ class _BodyState extends State<Body> {
                 ),
               ),
               Padding(
-                padding: EdgeInsets.symmetric(horizontal: getProportionateScreenHeight(24)),
-                child: Divider(height: getProportionateScreenHeight(4), thickness: 0.5, color: Colors.grey.shade300),
+                padding: EdgeInsets.symmetric(
+                    horizontal: getProportionateScreenHeight(24)),
+                child: Divider(
+                    height: getProportionateScreenHeight(4),
+                    thickness: 0.5,
+                    color: Colors.grey.shade300),
               ),
               // _______________________________________________
               // Descriptions
@@ -158,7 +190,9 @@ class _BodyState extends State<Body> {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Text("Information", style: cusHeadingStyle(getProportionateScreenHeight(20))),
+                    Text("Information",
+                        style:
+                            cusHeadingStyle(getProportionateScreenHeight(20))),
                     sizedBoxOfHeight(getProportionateScreenHeight(12)),
                     Text(
                       widget.gym.desc,
@@ -184,7 +218,8 @@ class _BodyState extends State<Body> {
             bottom: 0,
             child: Container(
               margin: EdgeInsets.all(getProportionateScreenWidth(12)),
-              padding: EdgeInsets.symmetric(horizontal: getProportionateScreenWidth(20)),
+              padding: EdgeInsets.symmetric(
+                  horizontal: getProportionateScreenWidth(20)),
               width: SizeConfig.screenWidth - getProportionateScreenWidth(24),
               height: getProportionateScreenHeight(48),
               decoration: BoxDecoration(color: kPrimaryColor),
@@ -224,13 +259,16 @@ class _BodyState extends State<Body> {
                   ),
                   GestureDetector(
                       onTap: () async {
-                        bool allowed = AuthentificationService().currentUserVerified;
+                        bool allowed =
+                            AuthentificationService().currentUserVerified;
                         if (!allowed) {
-                          final reverify = await showConfirmationDialog(
-                              context, "You haven't verified your email address. This action is only allowed for verified users.",
-                              positiveResponse: "Resend verification email", negativeResponse: "Go back");
+                          final reverify = await showConfirmationDialog(context,
+                              "You haven't verified your email address. This action is only allowed for verified users.",
+                              positiveResponse: "Resend verification email",
+                              negativeResponse: "Go back");
                           if (reverify) {
-                            final future = AuthentificationService().sendVerificationEmailToCurrentUser();
+                            final future = AuthentificationService()
+                                .sendVerificationEmailToCurrentUser();
                             await showDialog(
                               context: context,
                               builder: (context) {
@@ -253,9 +291,12 @@ class _BodyState extends State<Body> {
                           subscribedOn: "${now.day}-${now.month}-${now.year}",
                         );
                         try {
-                          addedSuccessfully = await UserDatabaseHelper().addGymSubscriptionForCurrentUser(gymSubscription);
+                          addedSuccessfully = await UserDatabaseHelper()
+                              .addGymSubscriptionForCurrentUser(
+                                  gymSubscription);
                           if (addedSuccessfully == true) {
-                            snackbarMessage = "Gym Subscription Added successfully";
+                            snackbarMessage =
+                                "Gym Subscription Added successfully";
                           } else {
                             throw "Couldn't add Gym Subscription due to unknown reason";
                           }
@@ -307,12 +348,15 @@ class _BodyState extends State<Body> {
 
   Container buildService(Map service) {
     return Container(
-      padding: EdgeInsets.only(left: getProportionateScreenWidth(24), right: getProportionateScreenWidth(12)),
+      padding: EdgeInsets.only(
+          left: getProportionateScreenWidth(24),
+          right: getProportionateScreenWidth(12)),
       // margin: EdgeInsets.only(right: getProportionateScreenWidth(12)),
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          Icon(service["icon"], size: 36, color: Colors.grey),
+          Icon(service["icon"],
+              size: getProportionateScreenHeight(36), color: Colors.grey),
           sizedBoxOfHeight(8),
           Text(
             service["name"],
@@ -325,7 +369,8 @@ class _BodyState extends State<Body> {
   }
 
   Widget buildPackage(Map package, num i) {
-    var curFormat = new NumberFormat.currency(locale: "en_US", symbol: "Rs. ", decimalDigits: 0);
+    var curFormat = new NumberFormat.currency(
+        locale: "en_US", symbol: "Rs. ", decimalDigits: 0);
     bool isSelected = selectedPackageIndex == i ?? false;
 
     return GestureDetector(
@@ -335,7 +380,9 @@ class _BodyState extends State<Body> {
         });
       },
       child: Container(
-        padding: EdgeInsets.symmetric(horizontal: getProportionateScreenWidth(16), vertical: getProportionateScreenHeight(4)),
+        padding: EdgeInsets.symmetric(
+            horizontal: getProportionateScreenWidth(16),
+            vertical: getProportionateScreenHeight(4)),
         margin: EdgeInsets.only(left: getProportionateScreenWidth(24)),
         decoration: BoxDecoration(
           border: Border.all(
@@ -348,7 +395,8 @@ class _BodyState extends State<Body> {
         child: Center(
             child: Text(
           "${package[PACKAGES_DURATION_KEY]} for ${curFormat.format((package[PACKAGES_PRICE_KEY]))}",
-          style: TextStyle(color: kPrimaryColor),
+          style: TextStyle(
+              fontSize: getProportionateScreenHeight(16), color: kPrimaryColor),
         )),
       ),
     );
@@ -387,7 +435,8 @@ class _BodyState extends State<Body> {
                     minimumYear: now.year,
                     onDateTimeChanged: (DateTime newDate) {
                       setState(() {
-                        selectedDate = "${newDate.day}-${newDate.month}-${newDate.year}";
+                        selectedDate =
+                            "${newDate.day}-${newDate.month}-${newDate.year}";
                       });
                     },
                   ),
