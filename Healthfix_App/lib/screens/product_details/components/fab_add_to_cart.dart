@@ -2,6 +2,7 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:future_progress_dialog/future_progress_dialog.dart';
 import 'package:healthfix/constants.dart';
+import 'package:healthfix/screens/cart/cart_screen.dart';
 import 'package:healthfix/services/authentification/authentification_service.dart';
 import 'package:healthfix/services/database/user_database_helper.dart';
 import 'package:healthfix/size_config.dart';
@@ -75,7 +76,20 @@ class AddToCartFAB extends StatelessWidget {
             Logger().i(snackbarMessage);
             ScaffoldMessenger.of(context).showSnackBar(
               SnackBar(
-                content: Text(snackbarMessage),
+                content: Text(
+                  snackbarMessage,
+                  style: TextStyle(
+                    fontSize: getProportionateScreenHeight(16),
+                  ),
+                ),
+                action: SnackBarAction(
+                  label: 'View',
+                  textColor: Colors.white,
+                  onPressed: () {
+                    Navigator.push(context,
+                        MaterialPageRoute(builder: (context) => CartScreen()));
+                  },
+                ),
               ),
             );
           }

@@ -173,4 +173,5 @@ var currency = new NumberFormat.currency(
 
 DateTime now = new DateTime.now();
 
-var cusDateTimeFormatter = new DateFormat('yyyy-MM-dd - hh:mm a');
+var cusDateTimeFormatter = new DateFormat('yyyy-MM-dd hh:mma');
+var cusDateFormatter = new DateFormat('yyyy-MM-dd');

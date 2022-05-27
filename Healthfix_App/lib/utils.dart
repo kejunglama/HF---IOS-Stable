@@ -1,6 +1,8 @@
 // ignore_for_file: deprecated_member_use
 
 import 'package:flutter/material.dart';
+import 'package:healthfix/constants.dart';
+import 'package:healthfix/size_config.dart';
 
 Future<bool> showConfirmationDialog(
   BuildContext context,
@@ -12,15 +14,19 @@ Future<bool> showConfirmationDialog(
     context: context,
     builder: (context) {
       return AlertDialog(
-        content: Text(messege),
+        content: Text(
+          messege,
+          style: cusHeadingStyle(),
+        ),
         shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(15),
+          borderRadius: BorderRadius.circular(getProportionateScreenHeight(5)),
         ),
         actions: [
           FlatButton(
             child: Text(
               positiveResponse,
               style: TextStyle(
+                fontSize: getProportionateScreenHeight(16),
                 fontWeight: FontWeight.bold,
               ),
             ),
@@ -32,6 +38,7 @@ Future<bool> showConfirmationDialog(
             child: Text(
               negativeResponse,
               style: TextStyle(
+                fontSize: getProportionateScreenHeight(16),
                 fontWeight: FontWeight.bold,
               ),
             ),

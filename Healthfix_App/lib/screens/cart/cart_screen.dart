@@ -11,7 +11,8 @@ class CartScreen extends StatelessWidget {
       appBar: AppBar(
         title: Text(
           "Your Cart",
-          style: cusCenterHeadingStyle(null, null, getProportionateScreenWidth(24.0)),
+          style: cusCenterHeadingStyle(
+              null, null, getProportionateScreenHeight(24.0)),
         ),
       ),
       body: Body(),

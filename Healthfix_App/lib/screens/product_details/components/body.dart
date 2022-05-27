@@ -98,81 +98,83 @@ class _BodyState extends State<Body> {
                 children: [
                   Scaffold(
                     body: SafeArea(
-                      child: SingleChildScrollView(
-                        // physics: BouncingScrollPhysics(),
-                        child: Container(
-                          color: Colors.white,
-                          child: Column(
-                            children: [
-                              SizedBox(
-                                height: getProportionateScreenHeight(50),
-                                child: Row(
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceBetween,
-                                  children: [
-                                    RoundedIconButton(
-                                      iconData: Icons.arrow_back_ios_rounded,
-                                      press: () {
-                                        Navigator.pop(context);
-                                      },
+                      child: Container(
+                        color: Colors.white,
+                        child: Column(
+                          children: [
+                            SizedBox(
+                              height: getProportionateScreenHeight(50),
+                              child: Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
+                                children: [
+                                  RoundedIconButton(
+                                    iconData: Icons.arrow_back_ios_rounded,
+                                    press: () {
+                                      Navigator.pop(context);
+                                    },
+                                  ),
+                                  SizedBox(
+                                      width: getProportionateScreenWidth(15)),
+                                  Expanded(
+                                    child: Container(
+                                      margin: EdgeInsets.zero,
+                                      alignment: Alignment.centerLeft,
+                                      height: getProportionateScreenHeight(30),
+                                      child: Image.asset(
+                                          'assets/logo/HF-logo.png'),
                                     ),
-                                    SizedBox(
-                                        width: getProportionateScreenWidth(15)),
-                                    Expanded(
-                                      child: Container(
-                                        margin: EdgeInsets.zero,
-                                        alignment: Alignment.centerLeft,
-                                        height:
-                                            getProportionateScreenHeight(30),
-                                        child: Image.asset(
-                                            'assets/logo/HF-logo.png'),
+                                  ),
+                                  Row(
+                                    children: [
+                                      Container(
+                                        margin: EdgeInsets.only(
+                                            right:
+                                                getProportionateScreenWidth(8)),
+                                        child: Icon(
+                                          Icons.search_rounded,
+                                          color: kPrimaryColor,
+                                        ),
                                       ),
-                                    ),
-                                    Row(
-                                      children: [
-                                        Container(
+                                      GestureDetector(
+                                        onTap: () {
+                                          Navigator.push(
+                                            context,
+                                            MaterialPageRoute(
+                                                builder: (context) =>
+                                                    CartScreen()),
+                                          );
+                                        },
+                                        child: Container(
                                           margin: EdgeInsets.only(
                                               right:
                                                   getProportionateScreenWidth(
                                                       8)),
                                           child: Icon(
-                                            Icons.search_rounded,
+                                            Icons.shopping_bag,
                                             color: kPrimaryColor,
                                           ),
                                         ),
-                                        GestureDetector(
-                                          onTap: () {
-                                            Navigator.push(
-                                              context,
-                                              MaterialPageRoute(
-                                                  builder: (context) =>
-                                                      CartScreen()),
-                                            );
-                                          },
-                                          child: Container(
-                                            margin: EdgeInsets.only(
-                                                right:
-                                                    getProportionateScreenWidth(
-                                                        8)),
-                                            child: Icon(
-                                              Icons.shopping_bag,
-                                              color: kPrimaryColor,
-                                            ),
-                                          ),
-                                        ),
-                                      ],
-                                    ),
+                                      ),
+                                    ],
+                                  ),
+                                ],
+                              ),
+                            ),
+                            Expanded(
+                              child: SingleChildScrollView(
+                                child: Column(
+                                  children: [
+                                    ProductImages(product: product),
+                                    ProductActionsSection(
+                                        product: product,
+                                        setSelectedVariant: setSelectedVariant),
                                   ],
                                 ),
                               ),
-                              ProductImages(product: product),
-                              ProductActionsSection(
-                                  product: product,
-                                  setSelectedVariant: setSelectedVariant),
-                              SizedBox(
-                                  height: getProportionateScreenHeight(80)),
-                            ],
-                          ),
+                            ),
+                            SizedBox(height: getProportionateScreenHeight(80)),
+                          ],
                         ),
                       ),
                     ),
@@ -320,9 +322,10 @@ class _BodyState extends State<Body> {
       Map orderDetails, List selectedProductsUid) async {
     if (selectedProductsUid != null) {
       // print(orderedProductsUid);
-      final dateTime = DateTime.now();
+
       final formatedDateTime =
-          "${dateTime.day}-${dateTime.month}-${dateTime.year}";
+          cusDateTimeFormatter.format(DateTime.now()).toString();
+
       List orderedProducts = [];
       orderedProducts.add({
         OrderedProduct.PRODUCT_UID_KEY: selectedProductsUid[0],

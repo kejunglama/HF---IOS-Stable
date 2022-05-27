@@ -16,11 +16,14 @@ import 'components/order_items.dart';
 import 'components/total_amounts.dart';
 
 class CheckoutScreen extends StatefulWidget {
-  Future<void> Function(Map orderDetails, List selectedProductsUid) onCheckoutPressed;
+  Future<void> Function(Map orderDetails, List selectedProductsUid)
+      onCheckoutPressed;
   List selectedCartItems;
   bool isBuyNow;
 
-  CheckoutScreen({Key key, this.onCheckoutPressed, this.selectedCartItems, this.isBuyNow}) : super(key: key);
+  CheckoutScreen(
+      {Key key, this.onCheckoutPressed, this.selectedCartItems, this.isBuyNow})
+      : super(key: key);
 
   @override
   State<CheckoutScreen> createState() => _CheckoutScreenState();
@@ -90,41 +93,54 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
                             children: [
                               buildAddressSection(context),
                               sizedBoxOfHeight(12),
-                              buildIconWithTextField(Icons.contact_phone_outlined, "Your Number", phoneFieldController),
+                              buildIconWithTextField(
+                                  Icons.contact_phone_outlined,
+                                  "Your Number",
+                                  phoneFieldController),
                               sizedBoxOfHeight(12),
-                              buildIconWithTextField(Icons.mail_outline_rounded, "Your Email", emailFieldController),
+                              buildIconWithTextField(Icons.mail_outline_rounded,
+                                  "Your Email", emailFieldController),
                               sizedBoxOfHeight(12),
                               Divider(thickness: 0.1, color: Colors.cyan),
                               sizedBoxOfHeight(12),
                               // Order Items
                               // OrderItems(getCartPdct: getCartPdct),
-                              OrderItems(selectedCartItems: widget.selectedCartItems, isBuyNow: widget.isBuyNow),
+                              OrderItems(
+                                  selectedCartItems: widget.selectedCartItems,
+                                  isBuyNow: widget.isBuyNow),
 
                               sizedBoxOfHeight(12),
                               Divider(thickness: 0.1, color: Colors.cyan),
                               sizedBoxOfHeight(12),
                               widget.isBuyNow ?? false
                                   ? FutureBuilder(
-                                      future: ProductDatabaseHelper().getProductWithID(widget.selectedCartItems[0]),
+                                      future: ProductDatabaseHelper()
+                                          .getProductWithID(
+                                              widget.selectedCartItems[0]),
                                       builder: (context, snapshot) {
                                         if (snapshot.hasData) {
                                           Product pdct = snapshot.data;
-                                          double price = pdct.discountPrice.toDouble();
+                                          int price =
+                                              pdct.discountPrice.toInt();
                                           cartTotal = price;
                                           deliveryCharge = 100;
                                           // print(cartTotal.runtimeType);
-                                          return TotalAmounts(price, deliveryCharge);
+                                          return TotalAmounts(
+                                              price, deliveryCharge);
                                         }
                                         return CircularProgressIndicator();
                                       })
                                   : FutureBuilder(
-                                      future: UserDatabaseHelper().selectedCartTotal(widget.selectedCartItems),
+                                      future: UserDatabaseHelper()
+                                          .selectedCartTotal(
+                                              widget.selectedCartItems),
                                       builder: (context, snapshot) {
                                         if (snapshot.hasData) {
                                           cartTotal = snapshot.data;
                                           deliveryCharge = 100;
-                                          // print(cartTotal.runtimeType);
-                                          return TotalAmounts(cartTotal, deliveryCharge);
+                                          print(cartTotal.runtimeType);
+                                          return TotalAmounts(
+                                              cartTotal, deliveryCharge);
                                         }
                                         return CircularProgressIndicator();
                                       }),
@@ -133,11 +149,16 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
                           DefaultButton(
                             text: "Proceed to Payment",
                             press: () {
-                              if (address.phone != phoneFieldController.text) address.phone = phoneFieldController.text;
+                              if (address.phone != phoneFieldController.text)
+                                address.phone = phoneFieldController.text;
 
                               final Map _address = address.toMap();
                               _address["email"] = emailFieldController.text;
-                              final Map totals = {"cartTotal": cartTotal, "deliveryCharge": deliveryCharge, "netTotal": cartTotal + deliveryCharge};
+                              final Map totals = {
+                                "cartTotal": cartTotal,
+                                "deliveryCharge": deliveryCharge,
+                                "netTotal": cartTotal + deliveryCharge
+                              };
 
                               print(_address);
                               print("");
@@ -152,7 +173,10 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
                                 context,
                                 MaterialPageRoute(
                                   builder: (context) => PaymentOptionsScreen(
-                                      onCheckout: widget.onCheckoutPressed, orderDetails: orderDetails, selectedCartItems: widget.selectedCartItems),
+                                      onCheckout: widget.onCheckoutPressed,
+                                      orderDetails: orderDetails,
+                                      selectedCartItems:
+                                          widget.selectedCartItems),
                                 ),
                               );
 
@@ -184,10 +208,15 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
     );
   }
 
-  Row buildIconWithTextField(IconData iconData, String hintText, TextEditingController textController) {
+  Row buildIconWithTextField(IconData iconData, String hintText,
+      TextEditingController textController) {
     return Row(
       children: [
-        Icon(iconData, color: kSecondaryColor.withOpacity(0.8)),
+        Icon(
+          iconData,
+          color: kSecondaryColor.withOpacity(0.8),
+          size: getProportionateScreenHeight(20),
+        ),
         sizedBoxOfWidth(12),
         Expanded(
           child: Container(
@@ -211,16 +240,20 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
             Icon(
               Icons.my_location_rounded,
               color: kSecondaryColor.withOpacity(0.8),
+              size: getProportionateScreenHeight(20),
             ),
             sizedBoxOfWidth(12),
             Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text(address != null ? address.receiver : "Receiver's Name", style: cusBodyStyle()),
+                Text(address != null ? address.receiver : "Receiver's Name",
+                    style: cusBodyStyle()),
                 Row(
                   children: [
-                    Text((address != null ? address.address : "Address") + ", ", style: cusBodyStyle()),
-                    Text(address != null ? address.city : "City", style: cusBodyStyle()),
+                    Text((address != null ? address.address : "Address") + ", ",
+                        style: cusBodyStyle()),
+                    Text(address != null ? address.city : "City",
+                        style: cusBodyStyle()),
                   ],
                 ),
               ],
@@ -229,23 +262,30 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
         ),
         GestureDetector(
           onTap: () async {
-            Address _address =
-                await Navigator.push(context, MaterialPageRoute(builder: (context) => ManageAddressesScreen(isSelectAddressScreen: true)));
+            Address _address = await Navigator.push(
+                context,
+                MaterialPageRoute(
+                    builder: (context) =>
+                        ManageAddressesScreen(isSelectAddressScreen: true)));
             setState(() {
               address = _address;
               phoneFieldController.text = address.phone;
             });
             // print(address.receiver);
           },
-          child: Text("EDIT", style: cusBodyStyle(16, FontWeight.w400, kPrimaryColor.withOpacity(0.8))),
+          child: Text("EDIT",
+              style: cusBodyStyle(getProportionateScreenHeight(16),
+                  FontWeight.w400, kPrimaryColor.withOpacity(0.8))),
         ),
       ],
     );
   }
 
-  TextFormField buildTextFormField(TextEditingController textController, String hint) {
+  TextFormField buildTextFormField(
+      TextEditingController textController, String hint) {
     return TextFormField(
       // keyboardType: TextInputType.emailAddress,
+      style: TextStyle(fontSize: getProportionateScreenHeight(14)),
       controller: textController,
       decoration: InputDecoration(
         enabledBorder: OutlineInputBorder(
@@ -257,9 +297,11 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
         border: OutlineInputBorder(
           borderRadius: BorderRadius.circular(5.0),
         ),
-        contentPadding: EdgeInsets.all(10),
+        contentPadding: EdgeInsets.all(getProportionateScreenHeight(10)),
         hintText: hint,
-        hintStyle: cusHeadingStyle(14, Colors.grey, null, FontWeight.w400),
+        hintStyle: cusHeadingStyle(getProportionateScreenHeight(14),
+            Colors.grey, null, FontWeight.w400),
+
         // labelText: "Email",
         floatingLabelBehavior: FloatingLabelBehavior.always,
       ),

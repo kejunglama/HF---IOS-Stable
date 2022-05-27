@@ -67,8 +67,10 @@ class _AddressDetailsFormState extends State<AddressDetailsForm> {
       child: Column(
         children: [
           SizedBox(height: getProportionateScreenHeight(20)),
-          buildTextField(titleFieldController, "Title", "Enter a title for address"),
-          buildTextField(receiverFieldController, "Receiver Name", "Enter Receiver's Full Name"),
+          buildTextField(
+              titleFieldController, "Title", "Enter a title for address"),
+          buildTextField(receiverFieldController, "Receiver Name",
+              "Enter Receiver's Full Name"),
           buildSelectField("Zone", "Select Zone",
               fieldValueIsNull: _currentSelectedZone == null,
               isEmpty: _currentSelectedZone == '',
@@ -79,12 +81,18 @@ class _AddressDetailsFormState extends State<AddressDetailsForm> {
               isEmpty: _currentSelectedCity == '',
               dropdownButton: buildDropdownButtonForCity,
               validator: cityValidator),
-          buildTextField(addressFieldController, "Address Line", "Enter Address Line"),
-          buildTextField(landmarkFieldController, "Landmark", "Enter Landmarks near Location"),
-          buildTextField(phoneFieldController, "Phone Number", "Enter Phone Number", inputType: TextInputType.number),
+          buildTextField(
+              addressFieldController, "Address Line", "Enter Address Line"),
+          buildTextField(landmarkFieldController, "Landmark",
+              "Enter Landmarks near Location"),
+          buildTextField(
+              phoneFieldController, "Phone Number", "Enter Phone Number",
+              inputType: TextInputType.number),
           DefaultButton(
             text: "Save Address",
-            press: widget.addressToEdit == null ? saveNewAddressButtonCallback : saveEditedAddressButtonCallback,
+            press: widget.addressToEdit == null
+                ? saveNewAddressButtonCallback
+                : saveEditedAddressButtonCallback,
           ),
         ],
       ),
@@ -126,7 +134,9 @@ class _AddressDetailsFormState extends State<AddressDetailsForm> {
   }
 
   DropdownButton buildDropdownButtonForCity(FormFieldState<String> state) {
-    List<String> cities = _currentSelectedZone == null ? [] : nepalZonesAndDistricts[_currentSelectedZone];
+    List<String> cities = _currentSelectedZone == null
+        ? []
+        : nepalZonesAndDistricts[_currentSelectedZone];
     return DropdownButton<String>(
       hint: Text('Please choose your City'),
       style: cusHeadingStyle(14, Colors.grey, null, FontWeight.w400),
@@ -292,7 +302,8 @@ class _AddressDetailsFormState extends State<AddressDetailsForm> {
               borderRadius: BorderRadius.circular(5.0),
             ),
             contentPadding: EdgeInsets.all(10),
-            hintStyle: cusHeadingStyle(14, Colors.grey, null, FontWeight.w400),
+            hintStyle: cusHeadingStyle(getProportionateScreenHeight(14),
+                Colors.grey, null, FontWeight.w400),
           ),
           validator: (value) {
             if (fieldController.text.isEmpty) {
@@ -335,7 +346,9 @@ class _AddressDetailsFormState extends State<AddressDetailsForm> {
           builder: (FormFieldState<String> state) {
             return InputDecorator(
               decoration: InputDecoration(
-                errorText: _submitted && fieldValueIsNull ? "This field is required." : null,
+                errorText: _submitted && fieldValueIsNull
+                    ? "This field is required."
+                    : null,
                 hintText: hintText,
                 labelText: labelText,
                 floatingLabelBehavior: FloatingLabelBehavior.always,
@@ -349,7 +362,8 @@ class _AddressDetailsFormState extends State<AddressDetailsForm> {
                   borderRadius: BorderRadius.circular(5.0),
                 ),
                 contentPadding: EdgeInsets.all(10),
-                hintStyle: cusHeadingStyle(14, Colors.grey, null, FontWeight.w400),
+                hintStyle:
+                    cusHeadingStyle(14, Colors.grey, null, FontWeight.w400),
               ),
               isEmpty: isEmpty,
               child: DropdownButtonHideUnderline(
@@ -578,7 +592,8 @@ class _AddressDetailsFormState extends State<AddressDetailsForm> {
       bool status = false;
       String snackbarMessage;
       try {
-        status = await UserDatabaseHelper().addAddressForCurrentUser(newAddress);
+        status =
+            await UserDatabaseHelper().addAddressForCurrentUser(newAddress);
         if (status == true) {
           snackbarMessage = "Address saved successfully";
         } else {
@@ -608,12 +623,14 @@ class _AddressDetailsFormState extends State<AddressDetailsForm> {
 
     if (_formKey.currentState.validate()) {
       _formKey.currentState.save();
-      final Address newAddress = generateAddressObject(id: widget.addressToEdit.id);
+      final Address newAddress =
+          generateAddressObject(id: widget.addressToEdit.id);
 
       bool status = false;
       String snackbarMessage;
       try {
-        status = await UserDatabaseHelper().updateAddressForCurrentUser(newAddress);
+        status =
+            await UserDatabaseHelper().updateAddressForCurrentUser(newAddress);
         if (status == true) {
           snackbarMessage = "Address updated successfully";
         } else {

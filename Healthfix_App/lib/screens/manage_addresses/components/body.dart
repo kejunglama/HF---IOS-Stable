@@ -44,21 +44,22 @@ class _BodyState extends State<Body> {
         child: SingleChildScrollView(
           physics: AlwaysScrollableScrollPhysics(),
           child: Padding(
-            padding: EdgeInsets.symmetric(horizontal: getProportionateScreenWidth(screenPadding)),
+            padding: EdgeInsets.symmetric(
+                horizontal: getProportionateScreenWidth(screenPadding)),
             child: SizedBox(
               width: double.infinity,
               child: Column(
                 children: [
                   SizedBox(height: getProportionateScreenHeight(10)),
                   Text(
-                    widget.isSelectAddressScreen ? "Select Address" : "Manage Addresses",
-                    style: cusHeadingStyle(28),
+                    widget.isSelectAddressScreen
+                        ? "Select Address"
+                        : "Manage Addresses",
+                    style: cusHeadingStyle(getProportionateScreenHeight(28)),
                   ),
                   SizedBox(height: getProportionateScreenHeight(4)),
-                  Text(
-                    "Swipe LEFT to Edit, Swipe RIGHT to Delete",
-                    style: cusBodyStyle(getProportionateScreenHeight(12))
-                  ),
+                  Text("Swipe LEFT to Edit, Swipe RIGHT to Delete",
+                      style: cusBodyStyle(getProportionateScreenHeight(12))),
                   Visibility(
                     visible: !widget.isSelectAddressScreen,
                     child: Column(
@@ -98,9 +99,11 @@ class _BodyState extends State<Body> {
                               physics: BouncingScrollPhysics(),
                               itemCount: addresses.length,
                               itemBuilder: (context, index) {
-                                return buildAddressItemCard(addresses[index], widget.isSelectAddressScreen);
+                                return buildAddressItemCard(addresses[index],
+                                    widget.isSelectAddressScreen);
                               });
-                        } else if (snapshot.connectionState == ConnectionState.waiting) {
+                        } else if (snapshot.connectionState ==
+                            ConnectionState.waiting) {
                           return Center(
                             child: CircularProgressIndicator(),
                           );
@@ -133,22 +136,34 @@ class _BodyState extends State<Body> {
     return Future<void>.value();
   }
 
-  Future<bool> deleteButtonCallback(BuildContext context, String addressId) async {
+  Future<bool> deleteButtonCallback(
+      BuildContext context, String addressId) async {
     final confirmDeletion = await showDialog(
       context: context,
       builder: (context) {
         return AlertDialog(
-          title: Text("Confirmation"),
-          content: Text("Are you sure you want to delete this Address ?"),
+          // title: Text("Confirmation"),
+          content: Text(
+            "Are you sure you want to delete this Address ?",
+            style: TextStyle(fontSize: getProportionateScreenHeight(16)),
+          ),
           actions: [
             FlatButton(
-              child: Text("Yes"),
+              child: Text(
+                "Delete",
+                style: TextStyle(
+                    fontSize: getProportionateScreenHeight(16),
+                    color: Colors.red),
+              ),
               onPressed: () {
                 Navigator.pop(context, true);
               },
             ),
             FlatButton(
-              child: Text("No"),
+              child: Text(
+                "Cancel",
+                style: TextStyle(fontSize: getProportionateScreenHeight(16)),
+              ),
               onPressed: () {
                 Navigator.pop(context, false);
               },
@@ -162,7 +177,8 @@ class _BodyState extends State<Body> {
       bool status = false;
       String snackbarMessage;
       try {
-        status = await UserDatabaseHelper().deleteAddressForCurrentUser(addressId);
+        status =
+            await UserDatabaseHelper().deleteAddressForCurrentUser(addressId);
         if (status == true) {
           snackbarMessage = "Address deleted successfully";
         } else {
@@ -188,13 +204,19 @@ class _BodyState extends State<Body> {
     return false;
   }
 
-  Future<bool> editButtonCallback(BuildContext context, String addressId) async {
-    await Navigator.push(context, MaterialPageRoute(builder: (context) => EditAddressScreen(addressIdToEdit: addressId)));
+  Future<bool> editButtonCallback(
+      BuildContext context, String addressId) async {
+    await Navigator.push(
+        context,
+        MaterialPageRoute(
+            builder: (context) =>
+                EditAddressScreen(addressIdToEdit: addressId)));
     await refreshPage();
     return false;
   }
 
-  Future<void> addressItemTapCallback(String addressId, [bool isSelectAddressScreen]) async {
+  Future<void> addressItemTapCallback(String addressId,
+      [bool isSelectAddressScreen]) async {
     await showDialog(
       context: context,
       builder: (context) {
@@ -261,15 +283,16 @@ class _BodyState extends State<Body> {
         children: [
           Icon(
             Icons.edit,
+            size: getProportionateScreenHeight(20),
             color: Colors.white,
           ),
-          SizedBox(width: 4),
+          SizedBox(width: getProportionateScreenWidth(4)),
           Text(
             "Edit",
             style: TextStyle(
               color: Colors.white,
               fontWeight: FontWeight.bold,
-              fontSize: 15,
+              fontSize: getProportionateScreenHeight(15),
             ),
           ),
         ],
@@ -293,12 +316,13 @@ class _BodyState extends State<Body> {
             style: TextStyle(
               color: Colors.white,
               fontWeight: FontWeight.bold,
-              fontSize: 15,
+              fontSize: getProportionateScreenHeight(15),
             ),
           ),
-          SizedBox(width: 4),
+          SizedBox(width: getProportionateScreenWidth(4)),
           Icon(
             Icons.delete,
+            size: getProportionateScreenHeight(20),
             color: Colors.white,
           ),
         ],

@@ -57,11 +57,11 @@ class _BodyState extends State<Body> {
               width: double.infinity,
               child: Column(
                 children: [
-                  Text("Swipe RIGHT to Delete",
-                      style: cusBodyStyle(getProportionateScreenHeight(12))),
+                  // Text("Swipe RIGHT to Delete",
+                  // style: cusBodyStyle(getProportionateScreenHeight(12))),
                   // SizedBox(height: getProportionateScreenHeight(20)),
                   SizedBox(
-                    height: SizeConfig.screenHeight * 0.8,
+                    height: SizeConfig.screenHeight * 0.7,
                     child: Center(
                       child: buildCartItemsList(),
                     ),
@@ -100,7 +100,8 @@ class _BodyState extends State<Body> {
               // SizedBox(height: getProportionateScreenHeight(20)),
               Expanded(
                 child: ListView.builder(
-                  padding: EdgeInsets.symmetric(vertical: 16),
+                  padding: EdgeInsets.symmetric(
+                      vertical: getProportionateScreenHeight(16)),
                   physics: BouncingScrollPhysics(),
                   itemCount: cartItemsId.length,
                   itemBuilder: (context, index) {
@@ -237,6 +238,44 @@ class _BodyState extends State<Body> {
     );
   }
 
+  buildConfirmationToDelete(DismissDirection direction, cartItemId) async {
+    final confirmation = await showConfirmationDialog(
+      context,
+      "Remove Product from Cart?",
+      positiveResponse: "Remove",
+      negativeResponse: "Cancel",
+    );
+    if (confirmation) {
+      if (direction == DismissDirection.startToEnd) {
+        bool result = false;
+        String snackbarMessage;
+        try {
+          result = await UserDatabaseHelper().removeProductFromCart(cartItemId);
+          if (result == true) {
+            snackbarMessage = "Product removed from cart successfully";
+            await refreshPage();
+          } else {
+            throw "Coulnd't remove product from cart due to unknown reason";
+          }
+        } on FirebaseException catch (e) {
+          Logger().w("Firebase Exception: $e");
+          snackbarMessage = "Something went wrong";
+        } catch (e) {
+          Logger().w("Unknown Exception: $e");
+          snackbarMessage = "Something went wrong";
+        } finally {
+          Logger().i(snackbarMessage);
+          ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(
+              content: Text(snackbarMessage),
+            ),
+          );
+        }
+        return result;
+      }
+    }
+  }
+
   Widget buildSelectableCartItemDismissible(
       BuildContext context, String cartItemId, int index) {
     bool _isSelected = selectedCartItems.contains(cartItemId);
@@ -267,40 +306,42 @@ class _BodyState extends State<Body> {
       ),
       confirmDismiss: (direction) async {
         if (direction == DismissDirection.startToEnd) {
-          final confirmation = await showConfirmationDialog(
-            context,
-            "Remove Product from Cart?",
-          );
-          if (confirmation) {
-            if (direction == DismissDirection.startToEnd) {
-              bool result = false;
-              String snackbarMessage;
-              try {
-                result = await UserDatabaseHelper()
-                    .removeProductFromCart(cartItemId);
-                if (result == true) {
-                  snackbarMessage = "Product removed from cart successfully";
-                  await refreshPage();
-                } else {
-                  throw "Coulnd't remove product from cart due to unknown reason";
-                }
-              } on FirebaseException catch (e) {
-                Logger().w("Firebase Exception: $e");
-                snackbarMessage = "Something went wrong";
-              } catch (e) {
-                Logger().w("Unknown Exception: $e");
-                snackbarMessage = "Something went wrong";
-              } finally {
-                Logger().i(snackbarMessage);
-                ScaffoldMessenger.of(context).showSnackBar(
-                  SnackBar(
-                    content: Text(snackbarMessage),
-                  ),
-                );
-              }
-              return result;
-            }
-          }
+          buildConfirmationToDelete(DismissDirection.startToEnd, cartItemId);
+
+          // final confirmation = await showConfirmationDialog(
+          //   context,
+          //   "Remove Product from Cart?",
+          // );
+          // if (confirmation) {
+          //   if (direction == DismissDirection.startToEnd) {
+          //     bool result = false;
+          //     String snackbarMessage;
+          //     try {
+          //       result = await UserDatabaseHelper()
+          //           .removeProductFromCart(cartItemId);
+          //       if (result == true) {
+          //         snackbarMessage = "Product removed from cart successfully";
+          //         await refreshPage();
+          //       } else {
+          //         throw "Coulnd't remove product from cart due to unknown reason";
+          //       }
+          //     } on FirebaseException catch (e) {
+          //       Logger().w("Firebase Exception: $e");
+          //       snackbarMessage = "Something went wrong";
+          //     } catch (e) {
+          //       Logger().w("Unknown Exception: $e");
+          //       snackbarMessage = "Something went wrong";
+          //     } finally {
+          //       Logger().i(snackbarMessage);
+          //       ScaffoldMessenger.of(context).showSnackBar(
+          //         SnackBar(
+          //           content: Text(snackbarMessage),
+          //         ),
+          //       );
+          //     }
+          //     return result;
+          //   }
+          // }
         }
         return false;
       },
@@ -352,6 +393,7 @@ class _BodyState extends State<Body> {
                   child: ProductShortDetailCard(
                     productId: product.id,
                     variation: variation,
+                    buildConfirmationToDelete: buildConfirmationToDelete,
                     onPressed: () {
                       Navigator.push(
                         context,
@@ -579,9 +621,9 @@ class _BodyState extends State<Body> {
     orderFuture.then((orderedProductsUid) async {
       if (orderedProductsUid != null) {
         // print(orderedProductsUid);
-        final dateTime = DateTime.now();
-        final formatedDateTime =
-            "${dateTime.day}-${dateTime.month}-${dateTime.year}";
+        // final dateTime = DateTime.now();
+
+        final formatedDateTime = cusDateTimeFormatter.format(DateTime.now());
         // List<OrderedProduct> orderedProducts =
         // orderedProductsUid.map((e) => OrderedProduct(null, productUid: e, orderDate: formatedDateTime)).toList();
         List orderedProducts = [];
@@ -591,10 +633,12 @@ class _BodyState extends State<Body> {
             OrderedProduct.ITEM_COUNT_KEY: entry.value["item_count"],
           });
         }
-        OrderedProduct order = OrderedProduct(null,
-            products: orderedProducts,
-            orderDate: formatedDateTime,
-            orderDetails: orderDetails);
+        OrderedProduct order = OrderedProduct(
+          null,
+          products: orderedProducts,
+          orderDate: formatedDateTime,
+          orderDetails: orderDetails,
+        );
         print(order);
 
         bool addedProductsToMyProducts = false;
@@ -623,7 +667,10 @@ class _BodyState extends State<Body> {
           // );
           ScaffoldMessenger.of(context).showSnackBar(
             SnackBar(
-              content: Text(snackbarmMessage ?? "Something went wrong"),
+              content: Text(
+                snackbarmMessage ?? "Something went wrong",
+                style: TextStyle(fontSize: getProportionateScreenHeight(16)),
+              ),
             ),
           );
         }
@@ -713,6 +760,10 @@ class _BodyState extends State<Body> {
         return FutureProgressDialog(
           future,
           message: Text("Please wait"),
+          decoration: BoxDecoration(
+            borderRadius:
+                BorderRadius.circular(getProportionateScreenHeight(5)),
+          ),
         );
       },
     );

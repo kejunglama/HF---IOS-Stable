@@ -7,6 +7,7 @@ import 'package:healthfix/screens/category_products/category_products_screen.dar
 import 'package:healthfix/shared_preference.dart';
 import 'package:healthfix/size_config.dart';
 import 'package:healthfix/wrappers/authentification_wrapper.dart';
+import 'package:intl/intl.dart';
 
 import '../../../constants.dart';
 import 'home_screen_drawer.dart';
@@ -41,11 +42,13 @@ class HomeHeader extends StatelessWidget {
                   child: Image.asset('assets/logo/HF-logo.png'),
                 ),
                 onTap: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                        builder: (context) => AuthenticationWrapper()),
-                  );
+                  print(cusDateTimeFormatter.format(DateTime.now()));
+
+                  // Navigator.push(
+                  //   context,
+                  //   MaterialPageRoute(
+                  //       builder: (context) => AuthenticationWrapper()),
+                  // );
                 },
               ),
 

@@ -47,9 +47,15 @@ class _OrderItemsState extends State<OrderItems> {
       children: [
         Row(
           children: [
-            Icon(Icons.markunread_mailbox_outlined, color: kSecondaryColor.withOpacity(0.8)),
+            Icon(
+              Icons.markunread_mailbox_outlined,
+              color: kSecondaryColor.withOpacity(0.8),
+              size: getProportionateScreenHeight(20),
+            ),
             sizedBoxOfWidth(12),
-            Text("OrderItems", style: cusCenterHeadingStyle(null, null, getProportionateScreenHeight(18))),
+            Text("OrderItems",
+                style: cusCenterHeadingStyle(
+                    null, null, getProportionateScreenHeight(18))),
           ],
         ),
         // SizedBox(height: SizeConfig.screenHeight * 0.14, child: buildCartItemsList()),
@@ -89,7 +95,8 @@ class _OrderItemsState extends State<OrderItems> {
                     itemCount: widget.isBuyNow ? 1 : cartItemsId.length,
                     itemBuilder: (context, index) {
                       if (index >= cartItemsId.length) {
-                        return SizedBox(height: getProportionateScreenHeight(80));
+                        return SizedBox(
+                            height: getProportionateScreenHeight(80));
                       }
                       return buildCartItem(cartItemsId[index], index);
                     },
@@ -131,7 +138,7 @@ class _OrderItemsState extends State<OrderItems> {
 
   Widget buildSelectedCartItemsList() {
     return Container(
-      height: SizeConfig.screenHeight * 0.14,
+      height: getProportionateScreenHeight(160),
       child: Column(
         children: [
           // SizedBox(height: getProportionateScreenHeight(20)),
@@ -146,7 +153,8 @@ class _OrderItemsState extends State<OrderItems> {
                   return SizedBox(height: getProportionateScreenHeight(80));
                 }
                 return widget.isBuyNow ?? false
-                    ? buildCartItemWithBuyNow(widget.selectedCartItems[index], index)
+                    ? buildCartItemWithBuyNow(
+                        widget.selectedCartItems[index], index)
                     : buildCartItem(widget.selectedCartItems[index], index);
               },
             ),
@@ -170,7 +178,8 @@ class _OrderItemsState extends State<OrderItems> {
 
   Widget buildCartItem(String cartItemId, int index) {
     Future<Product> pdct = ProductDatabaseHelper().getProductWithID(cartItemId);
-    Future<CartItem> cartItem = UserDatabaseHelper().getCartItemFromId(cartItemId);
+    Future<CartItem> cartItem =
+        UserDatabaseHelper().getCartItemFromId(cartItemId);
     Map variation;
     int i = 1;
     int j = 1;
@@ -178,11 +187,13 @@ class _OrderItemsState extends State<OrderItems> {
     return Container(
       width: SizeConfig.screenWidth * 0.7,
       padding: EdgeInsets.only(
-        bottom: 4,
-        top: 4,
-        right: 4,
+        bottom: getProportionateScreenHeight(4),
+        top: getProportionateScreenHeight(4),
+        right: getProportionateScreenHeight(4),
       ),
-      margin: EdgeInsets.symmetric(vertical: 4, horizontal: 4),
+      margin: EdgeInsets.symmetric(
+          vertical: getProportionateScreenHeight(4),
+          horizontal: getProportionateScreenHeight(4)),
       decoration: BoxDecoration(
         border: Border.all(color: kTextColor.withOpacity(0.15)),
         borderRadius: BorderRadius.circular(5),

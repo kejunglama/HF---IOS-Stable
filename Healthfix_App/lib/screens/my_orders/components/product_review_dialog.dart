@@ -3,6 +3,7 @@ import 'package:healthfix/models/Review.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 
+import '../../../constants.dart';
 import '../../../size_config.dart';
 
 class ProductReviewDialog extends StatelessWidget {
@@ -18,6 +19,7 @@ class ProductReviewDialog extends StatelessWidget {
       title: Center(
         child: Text(
           "Review",
+          style: TextStyle(fontSize: getProportionateScreenHeight(20)),
         ),
       ),
       children: [
@@ -27,6 +29,7 @@ class ProductReviewDialog extends StatelessWidget {
             minRating: 1,
             direction: Axis.horizontal,
             allowHalfRating: false,
+            itemSize: getProportionateScreenHeight(40),
             itemCount: 5,
             itemPadding: EdgeInsets.symmetric(horizontal: 4.0),
             itemBuilder: (context, _) => Icon(
@@ -38,15 +41,29 @@ class ProductReviewDialog extends StatelessWidget {
             },
           ),
         ),
-        SizedBox(height: getProportionateScreenHeight(20)),
+        SizedBox(height: getProportionateScreenHeight(40)),
         Center(
           child: TextFormField(
             initialValue: review.feedback,
+            minLines: 4,
             decoration: InputDecoration(
-              hintText: "Feedback of Product",
-              labelText: "Feedback (optional)",
+              hintText: "Your Feedback",
+              labelText: "Your Feedback",
               floatingLabelBehavior: FloatingLabelBehavior.always,
+              enabledBorder: OutlineInputBorder(
+                borderSide: BorderSide(color: Colors.cyan, width: 0.1),
+              ),
+              focusedBorder: OutlineInputBorder(
+                borderSide: BorderSide(color: kPrimaryColor),
+              ),
+              border: OutlineInputBorder(
+                borderRadius: BorderRadius.circular(5.0),
+              ),
+              contentPadding: EdgeInsets.all(10),
+              hintStyle: cusHeadingStyle(getProportionateScreenHeight(14),
+                  Colors.grey, null, FontWeight.w400),
             ),
+            style: TextStyle(fontSize: getProportionateScreenHeight(16)),
             onChanged: (value) {
               review.feedback = value;
             },
@@ -65,10 +82,10 @@ class ProductReviewDialog extends StatelessWidget {
         ),
       ],
       contentPadding: EdgeInsets.symmetric(
-        horizontal: 12,
-        vertical: 16,
+        horizontal: getProportionateScreenHeight(12),
+        vertical: getProportionateScreenHeight(16),
       ),
-      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(15)),
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(5)),
     );
   }
 }

@@ -47,8 +47,8 @@ class ProductDescription extends StatelessWidget {
 
     return Container(
       margin: EdgeInsets.symmetric(
-          horizontal: getProportionateScreenWidth(20),
-          vertical: getProportionateScreenHeight(12)),
+          horizontal: getProportionateScreenHeight(16),
+          vertical: getProportionateScreenHeight(16)),
       child: Stack(
         children: [
           Column(

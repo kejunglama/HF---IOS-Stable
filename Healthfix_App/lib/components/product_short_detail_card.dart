@@ -13,6 +13,8 @@ class ProductShortDetailCard extends StatelessWidget {
   final VoidCallback onPressed;
   Map variation;
   num itemCount;
+  Function(DismissDirection direction, dynamic cartItemId)
+      buildConfirmationToDelete;
 
   ProductShortDetailCard({
     Key key,
@@ -20,6 +22,7 @@ class ProductShortDetailCard extends StatelessWidget {
     @required this.onPressed,
     this.variation,
     this.itemCount,
+    this.buildConfirmationToDelete,
   }) : super(key: key);
 
   @override
@@ -28,6 +31,9 @@ class ProductShortDetailCard extends StatelessWidget {
     // print("item count --- ${itemCount}");
     return InkWell(
       onTap: onPressed,
+      onLongPress: () {
+        buildConfirmationToDelete(DismissDirection.startToEnd, productId);
+      },
       child: FutureBuilder<Product>(
         future: ProductDatabaseHelper().getProductWithID(productId),
         builder: (context, snapshot) {
@@ -85,7 +91,8 @@ class ProductShortDetailCard extends StatelessWidget {
                           style: cusPdctNameStyle,
                         ),
                       ),
-                      SizedBox(height: 10),
+                      sizedBoxOfHeight(10),
+
                       Text.rich(
                         TextSpan(
                           text: "\Rs. ${product.discountPrice}  ",

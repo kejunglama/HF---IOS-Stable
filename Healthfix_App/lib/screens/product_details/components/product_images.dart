@@ -26,7 +26,8 @@ class _ProductImagesState extends State<ProductImages> {
       create: (context) => ProductImageSwiper(),
       child: Consumer<ProductImageSwiper>(
         builder: (context, productImagesSwiper, child) {
-          return Column(
+          return Stack(
+            alignment: Alignment.bottomCenter,
             children: [
               // GestureDetector(
               //   onHorizontalDragUpdate: (details) {
@@ -103,19 +104,23 @@ class _ProductImagesState extends State<ProductImages> {
                     )
                     .toList(),
               ),
-              SizedBox(height: 10),
+              // SizedBox(height: 10),
               // Slider Indicator
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: widget.product.images.map((urlOfItem) {
                   int index = widget.product.images.indexOf(urlOfItem);
                   return Container(
-                    width: 8.0,
-                    height: 8.0,
-                    margin: EdgeInsets.symmetric(vertical: 10.0, horizontal: 2.0),
+                    width: getProportionateScreenHeight(8),
+                    height: getProportionateScreenHeight(8),
+                    margin: EdgeInsets.symmetric(
+                        vertical: getProportionateScreenHeight(10),
+                        horizontal: getProportionateScreenHeight(2)),
                     decoration: BoxDecoration(
                       shape: BoxShape.circle,
-                      color: productImagesSwiper.currentImageIndex == index ? kSecondaryColor : kSecondaryColor.withOpacity(0.2),
+                      color: productImagesSwiper.currentImageIndex == index
+                          ? kSecondaryColor
+                          : kSecondaryColor.withOpacity(0.2),
                     ),
                   );
                 }).toList(),
@@ -153,20 +158,25 @@ class _ProductImagesState extends State<ProductImages> {
     );
   }
 
-  Widget buildSmallPreview(ProductImageSwiper productImagesSwiper, {@required int index}) {
+  Widget buildSmallPreview(ProductImageSwiper productImagesSwiper,
+      {@required int index}) {
     return GestureDetector(
       onTap: () {
         productImagesSwiper.currentImageIndex = index;
       },
       child: Container(
-        margin: EdgeInsets.symmetric(horizontal: getProportionateScreenWidth(8)),
+        margin:
+            EdgeInsets.symmetric(horizontal: getProportionateScreenWidth(8)),
         padding: EdgeInsets.all(getProportionateScreenHeight(8)),
         height: getProportionateScreenWidth(48),
         width: getProportionateScreenWidth(48),
         decoration: BoxDecoration(
           color: Colors.white,
           borderRadius: BorderRadius.circular(10),
-          border: Border.all(color: productImagesSwiper.currentImageIndex == index ? kPrimaryColor : Colors.transparent),
+          border: Border.all(
+              color: productImagesSwiper.currentImageIndex == index
+                  ? kPrimaryColor
+                  : Colors.transparent),
         ),
         child: Image.network(widget.product.images[index]),
       ),

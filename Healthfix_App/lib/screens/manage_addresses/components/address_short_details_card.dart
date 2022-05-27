@@ -18,7 +18,7 @@ class AddressShortDetailsCard extends StatelessWidget {
       onTap: onTap,
       child: SizedBox(
         width: double.infinity,
-        height: SizeConfig.screenHeight * 0.10,
+        height: getProportionateScreenHeight(100),
         child: FutureBuilder<Address>(
           future: UserDatabaseHelper().getAddressFromId(addressId),
           builder: (context, snapshot) {
@@ -44,7 +44,7 @@ class AddressShortDetailsCard extends StatelessWidget {
                           address.title,
                           style: TextStyle(
                             color: Colors.white,
-                            fontSize: 18,
+                            fontSize: getProportionateScreenHeight(18),
                             fontWeight: FontWeight.w600,
                           ),
                         ),
@@ -55,11 +55,13 @@ class AddressShortDetailsCard extends StatelessWidget {
                     flex: 8,
                     child: Container(
                       padding: EdgeInsets.symmetric(
-                        horizontal: 16,
-                        vertical: 12,
+                        horizontal: getProportionateScreenHeight(16),
+                        vertical: getProportionateScreenHeight(12),
                       ),
                       decoration: BoxDecoration(
-                        border: Border.all(color: Colors.cyan.withOpacity(0.24),),
+                        border: Border.all(
+                          color: Colors.cyan.withOpacity(0.24),
+                        ),
                         borderRadius: BorderRadius.only(
                           topRight: Radius.circular(5),
                           bottomRight: Radius.circular(5),
@@ -74,14 +76,29 @@ class AddressShortDetailsCard extends StatelessWidget {
                             style: TextStyle(
                               color: Colors.black,
                               fontWeight: FontWeight.bold,
-                              fontSize: 15,
+                              fontSize: getProportionateScreenHeight(15),
                             ),
                           ),
-                          Text("${address.landmark}"),
+                          Text(
+                            "${address.landmark}",
+                            style: TextStyle(
+                              fontSize: getProportionateScreenHeight(12),
+                            ),
+                          ),
                           Row(
                             children: [
-                              Text("${address.address}, "),
-                              Text("${address.city}"),
+                              Text(
+                                "${address.address}, ",
+                                style: TextStyle(
+                                  fontSize: getProportionateScreenHeight(12),
+                                ),
+                              ),
+                              Text(
+                                "${address.city}",
+                                style: TextStyle(
+                                  fontSize: getProportionateScreenHeight(12),
+                                ),
+                              ),
                             ],
                           ),
                         ],
