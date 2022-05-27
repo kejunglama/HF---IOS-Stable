@@ -89,30 +89,49 @@ class ProductCard extends StatelessWidget {
                 overflow: TextOverflow.ellipsis,
               ),
               SizedBox(height: getProportionateScreenHeight(10)),
-              Column(
-                // mainAxisAlignment: MainAxisAlignment.center,
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    "\Rs. ${product.discountPrice}",
-                    style: cusPdctDisPriceStyle(),
-                  ),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Text("\Rs. ${product.originalPrice}",
-                          style: cusPdctOriPriceStyle()),
-                      Text(
-                        "${product.calculatePercentageDiscount()}% OFF",
-                        style: TextStyle(
-                          color: Colors.red,
-                          fontSize: getProportionateScreenHeight(10),
-                          fontWeight: FontWeight.w900,
+              Visibility(
+                visible:
+                    product.variations != null && product.priceRange != null,
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      "Starting From",
+                      style: cusBodyStyle(getProportionateScreenHeight(12)),
+                    ),
+                    Text(
+                        "${currency.format(product.priceRange != null ? product.priceRange : 0)}",
+                        style: cusPdctDisPriceStyle()),
+                  ],
+                ),
+              ),
+              Visibility(
+                visible: product.variations == null,
+                child: Column(
+                  // mainAxisAlignment: MainAxisAlignment.center,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      "\Rs. ${product.discountPrice}",
+                      style: cusPdctDisPriceStyle(),
+                    ),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Text("\Rs. ${product.originalPrice}",
+                            style: cusPdctOriPriceStyle()),
+                        Text(
+                          "${product.calculatePercentageDiscount()}% OFF",
+                          style: TextStyle(
+                            color: Colors.red,
+                            fontSize: getProportionateScreenHeight(10),
+                            fontWeight: FontWeight.w900,
+                          ),
                         ),
-                      ),
-                    ],
-                  ),
-                ],
+                      ],
+                    ),
+                  ],
+                ),
               ),
             ],
           ),

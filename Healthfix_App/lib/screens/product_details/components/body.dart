@@ -35,6 +35,7 @@ class _BodyState extends State<Body> {
   Map _selectedColor;
   String _selectedSize;
   Map selectedVariations;
+  bool _selected = false;
   var numFormat = NumberFormat('#,##,000');
 
   @override
@@ -52,8 +53,9 @@ class _BodyState extends State<Body> {
         .toList();
 
     setState(() {
-      _productDisPrice = int.parse(variant.first["price"]);
+      _productDisPrice = variant.first["price"];
       _productOriPrice = 1.2 * _productDisPrice;
+      _selected = true;
     });
   }
 
@@ -230,43 +232,65 @@ class _BodyState extends State<Body> {
             Expanded(
               child: SizedBox(
                 height: getProportionateScreenHeight(60),
-                child: Center(
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Text(
-                        "Rs. ${numFormat.format(_productDisPrice)}  ",
-                        style: cusPdctPageDisPriceStyle(
-                            getProportionateScreenHeight(26), Colors.black),
-                      ),
-                      Row(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Visibility(
+                      visible: product.variations != null && !_selected,
+                      child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
-                        // mainAxisAlignment: MainAxisAlignment.center,
                         children: [
                           Text(
-                            "Rs. ${numFormat.format(_productOriPrice)}",
-                            style: cusPdctOriPriceStyle(
-                                getProportionateScreenHeight(12)),
+                            "Starting From",
+                            style:
+                                cusBodyStyle(getProportionateScreenHeight(14)),
                           ),
-                          sizedBoxOfWidth(8),
                           Text(
-                            // "${product.calculatePercentageDiscount()}% OFF",
-                            "20% OFF",
-                            style: GoogleFonts.poppins(
-                              textStyle: TextStyle(
-                                color: Colors.red,
-                                fontSize: getProportionateScreenHeight(12),
-                                fontWeight: FontWeight.w600,
-                                letterSpacing:
-                                    getProportionateScreenHeight(0.5),
+                              "${currency.format(product.priceRange != null ? product.priceRange : 0)}",
+                              style: cusHeadingStyle(null, kPrimaryColor)),
+                        ],
+                      ),
+                    ),
+                    Visibility(
+                      visible: product.variations == null || _selected,
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Text(
+                            "Rs. ${numFormat.format(_productDisPrice)}  ",
+                            style: cusPdctPageDisPriceStyle(
+                                getProportionateScreenHeight(26), Colors.black),
+                          ),
+                          Row(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            // mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Text(
+                                "Rs. ${numFormat.format(_productOriPrice)}",
+                                style: cusPdctOriPriceStyle(
+                                    getProportionateScreenHeight(12)),
                               ),
-                            ),
+                              sizedBoxOfWidth(8),
+                              Text(
+                                // "${product.calculatePercentageDiscount()}% OFF",
+                                "20% OFF",
+                                style: GoogleFonts.poppins(
+                                  textStyle: TextStyle(
+                                    color: Colors.red,
+                                    fontSize: getProportionateScreenHeight(12),
+                                    fontWeight: FontWeight.w600,
+                                    letterSpacing:
+                                        getProportionateScreenHeight(0.5),
+                                  ),
+                                ),
+                              ),
+                            ],
                           ),
                         ],
                       ),
-                    ],
-                  ),
+                    ),
+                  ],
                 ),
               ),
             ),
