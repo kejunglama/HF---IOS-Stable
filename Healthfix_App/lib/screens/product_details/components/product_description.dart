@@ -54,7 +54,7 @@ class ProductDescription extends StatelessWidget {
           Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Text("${product.variant.toUpperCase()}",
+              Text("${product.brand?.toUpperCase()}",
                   style: cusHeadingStyle(getProportionateScreenHeight(14),
                       Colors.black87, null, FontWeight.w500)),
               sizedBoxOfHeight(8),
@@ -82,7 +82,9 @@ class ProductDescription extends StatelessWidget {
 
               const SizedBox(height: 12),
               Text(
-                product.description.trim().replaceAll("\\n", "\n"),
+                product.description != null
+                    ? product.description.trim().replaceAll("\\n", "\n")
+                    : "",
                 style: cusBodyStyle(),
               ),
               // ExpandableText(
@@ -160,9 +162,19 @@ class _ProductVariationDescriptionState
     });
   }
 
+  bool hasColorVariation() {
+    return widget.colors.isNotEmpty ? widget.colors.first != null : false;
+  }
+
+  bool hasSizeVariation() {
+    return widget.sizes.isNotEmpty ? widget.sizes.first != null : false;
+  }
+
   @override
   Widget build(BuildContext context) {
     bool hasVariations = widget.jsonArray != null;
+    // print("${widget.colors.isNotEmpty ? widget.colors.first != null : false}");
+    print("size: ${hasSizeVariation()} color:${hasColorVariation()}");
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -183,10 +195,13 @@ class _ProductVariationDescriptionState
                     ),
                   ),
                   // SizedBox(height: getProportionateScreenHeight(12)),
-                  variantsBuilder(
-                      variants: widget.sizes.toList(),
-                      json: widget.jsonArray,
-                      setSize: setSizeAndFetchColors),
+                  Visibility(
+                    visible: hasSizeVariation(),
+                    child: variantsBuilder(
+                        variants: widget.sizes.toList(),
+                        json: widget.jsonArray,
+                        setSize: setSizeAndFetchColors),
+                  ),
                 ],
               ),
               // SizedBox(height: getProportionateScreenHeight(20)),
@@ -204,12 +219,15 @@ class _ProductVariationDescriptionState
                     ),
                   ),
                   // SizedBox(height: getProportionateScreenHeight(12)),
-                  ColorvariantsBuilder(
-                    selectedIndex: _selectedColorIndex ?? 0,
-                    colors:
-                        _colors.isNotEmpty ? _colors : widget.colors.toList(),
-                    selectable: _colors.isNotEmpty,
-                    setColor: setColor,
+                  Visibility(
+                    visible: hasColorVariation(),
+                    child: ColorvariantsBuilder(
+                      selectedIndex: _selectedColorIndex ?? 0,
+                      colors:
+                          _colors.isNotEmpty ? _colors : widget.colors.toList(),
+                      selectable: _colors.isNotEmpty,
+                      setColor: setColor,
+                    ),
                   ),
                 ],
               ),

@@ -13,7 +13,7 @@ enum ProductType {
 class Product extends Model {
   static const String IMAGES_KEY = "images";
   static const String TITLE_KEY = "title";
-  static const String VARIANT_KEY = "variant";
+  static const String BRAND_KEY = "brand";
   static const String DISCOUNT_PRICE_KEY = "discount_price";
   static const String ORIGINAL_PRICE_KEY = "original_price";
   static const String PRICE_RANGE_KEY = "price_range";
@@ -30,7 +30,7 @@ class Product extends Model {
 
   List<String> images;
   String title;
-  String variant;
+  String brand;
   num discountPrice;
   num originalPrice;
   num priceRange;
@@ -48,7 +48,7 @@ class Product extends Model {
     String id, {
     this.images,
     this.title,
-    this.variant,
+    this.brand,
     this.productType,
     this.discountPrice,
     this.originalPrice,
@@ -76,7 +76,7 @@ class Product extends Model {
       id,
       images: (map[IMAGES_KEY] ?? []).cast<String>(),
       title: map[TITLE_KEY],
-      variant: map[VARIANT_KEY],
+      brand: map[BRAND_KEY],
       productType:
           EnumToString.fromString(ProductType.values, map[PRODUCT_TYPE_KEY]),
       discountPrice: map[DISCOUNT_PRICE_KEY],
@@ -97,7 +97,7 @@ class Product extends Model {
     final map = <String, dynamic>{
       IMAGES_KEY: images,
       TITLE_KEY: title,
-      VARIANT_KEY: variant,
+      BRAND_KEY: brand,
       PRODUCT_TYPE_KEY: EnumToString.convertToString(productType),
       DISCOUNT_PRICE_KEY: discountPrice,
       ORIGINAL_PRICE_KEY: originalPrice,
@@ -119,7 +119,7 @@ class Product extends Model {
     final map = <String, dynamic>{};
     if (images != null) map[IMAGES_KEY] = images;
     if (title != null) map[TITLE_KEY] = title;
-    if (variant != null) map[VARIANT_KEY] = variant;
+    if (brand != null) map[BRAND_KEY] = brand;
     if (discountPrice != null) map[DISCOUNT_PRICE_KEY] = discountPrice;
     if (originalPrice != null) map[ORIGINAL_PRICE_KEY] = originalPrice;
     if (priceRange != null) map[PRICE_RANGE_KEY] = priceRange;

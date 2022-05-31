@@ -92,9 +92,11 @@ class _BodyState extends State<Body> {
           builder: (context, snapshot) {
             if (snapshot.hasData) {
               product = snapshot.data;
-              if (_productDisPrice == null) {
+              _productOriPrice = product.originalPrice;
+
+              if (_productDisPrice != null) {
                 _productDisPrice = product.discountPrice;
-                _productOriPrice = 1.2 * _productDisPrice;
+                _productOriPrice = product.originalPrice;
               }
               return Stack(
                 children: [
@@ -205,6 +207,7 @@ class _BodyState extends State<Body> {
 
   Positioned bottomProductBar() {
     UserPreferences prefs = new UserPreferences();
+    bool hasDisPrice = product.discountPrice != null;
 
     return Positioned(
       bottom: 0,
@@ -257,31 +260,43 @@ class _BodyState extends State<Body> {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
-                          Text(
-                            "Rs. ${numFormat.format(_productDisPrice)}  ",
-                            style: cusPdctPageDisPriceStyle(
-                                getProportionateScreenHeight(26), Colors.black),
+                          Visibility(
+                            visible: hasDisPrice,
+                            child: Text(
+                              "Rs. ${hasDisPrice ? (numFormat.format(_productDisPrice ?? 0)) : null}  ",
+                              style: cusPdctPageDisPriceStyle(
+                                  getProportionateScreenHeight(26),
+                                  Colors.black),
+                            ),
                           ),
                           Row(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             // mainAxisAlignment: MainAxisAlignment.center,
                             children: [
                               Text(
-                                "Rs. ${numFormat.format(_productOriPrice)}",
-                                style: cusPdctOriPriceStyle(
-                                    getProportionateScreenHeight(12)),
+                                "Rs. ${numFormat.format(_productOriPrice ?? 0)}",
+                                style: hasDisPrice
+                                    ? cusPdctOriPriceStyle(
+                                        getProportionateScreenHeight(12))
+                                    : cusPdctPageDisPriceStyle(
+                                        getProportionateScreenHeight(26),
+                                        Colors.black),
                               ),
                               sizedBoxOfWidth(8),
-                              Text(
-                                // "${product.calculatePercentageDiscount()}% OFF",
-                                "20% OFF",
-                                style: GoogleFonts.poppins(
-                                  textStyle: TextStyle(
-                                    color: Colors.red,
-                                    fontSize: getProportionateScreenHeight(12),
-                                    fontWeight: FontWeight.w600,
-                                    letterSpacing:
-                                        getProportionateScreenHeight(0.5),
+                              Visibility(
+                                visible: hasDisPrice,
+                                child: Text(
+                                  // "${product.calculatePercentageDiscount()}% OFF",
+                                  "20% OFF",
+                                  style: GoogleFonts.poppins(
+                                    textStyle: TextStyle(
+                                      color: Colors.red,
+                                      fontSize:
+                                          getProportionateScreenHeight(12),
+                                      fontWeight: FontWeight.w600,
+                                      letterSpacing:
+                                          getProportionateScreenHeight(0.5),
+                                    ),
                                   ),
                                 ),
                               ),

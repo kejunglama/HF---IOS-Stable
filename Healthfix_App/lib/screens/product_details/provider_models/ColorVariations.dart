@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:healthfix/constants.dart';
 
 import '../../../size_config.dart';
 
@@ -68,11 +69,14 @@ class _ColorvariantsBuilderState extends State<ColorvariantsBuilder> {
                 child: Stack(
                   children: [
                     Container(
-                      decoration: BoxDecoration(
-                        color: Color(int.parse("0xFF" + _colors[i]["hex"])),
-                        borderRadius: BorderRadius.circular(getProportionateScreenWidth(20)),
-                      ),
-                    ),
+                        decoration: BoxDecoration(
+                      color: Color(int.parse("0xFF" + _colors[i]["hex"])),
+                      borderRadius: BorderRadius.circular(
+                          getProportionateScreenWidth(20)),
+                      border: _colors[i]["hex"].toLowerCase() == ("ffffff")
+                          ? Border.all(color: kPrimaryColor)
+                          : null,
+                    )),
                     Visibility(
                       visible: _selectedIndex == i && widget.selectable,
                       child: Center(

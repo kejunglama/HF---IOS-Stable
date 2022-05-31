@@ -36,7 +36,7 @@ class _EditProductFormState extends State<EditProductForm> {
   final _tagStateKey = GlobalKey<TagsState>();
 
   final TextEditingController titleFieldController = TextEditingController();
-  final TextEditingController variantFieldController = TextEditingController();
+  final TextEditingController brandFieldController = TextEditingController();
   final TextEditingController discountPriceFieldController =
       TextEditingController();
   final TextEditingController originalPriceFieldController =
@@ -53,7 +53,7 @@ class _EditProductFormState extends State<EditProductForm> {
   @override
   void dispose() {
     titleFieldController.dispose();
-    variantFieldController.dispose();
+    brandFieldController.dispose();
     discountPriceFieldController.dispose();
     originalPriceFieldController.dispose();
     highlightsFieldController.dispose();
@@ -106,7 +106,7 @@ class _EditProductFormState extends State<EditProductForm> {
     );
     if (newProduct == false) {
       titleFieldController.text = product.title;
-      variantFieldController.text = product.variant;
+      brandFieldController.text = product.brand;
       discountPriceFieldController.text = product.discountPrice.toString();
       originalPriceFieldController.text = product.originalPrice.toString();
       highlightsFieldController.text = product.highlights;
@@ -195,7 +195,7 @@ class _EditProductFormState extends State<EditProductForm> {
     if (_basicDetailsFormKey.currentState.validate()) {
       _basicDetailsFormKey.currentState.save();
       product.title = titleFieldController.text;
-      product.variant = variantFieldController.text;
+      product.brand = brandFieldController.text;
       product.originalPrice = double.parse(originalPriceFieldController.text);
       product.discountPrice = double.parse(discountPriceFieldController.text);
       product.seller = sellerFieldController.text;
@@ -374,7 +374,7 @@ class _EditProductFormState extends State<EditProductForm> {
 
   Widget buildVariantField() {
     return TextFormField(
-      controller: variantFieldController,
+      controller: brandFieldController,
       keyboardType: TextInputType.name,
       decoration: InputDecoration(
         hintText: "e.g., Fusion Green",
@@ -382,7 +382,7 @@ class _EditProductFormState extends State<EditProductForm> {
         floatingLabelBehavior: FloatingLabelBehavior.always,
       ),
       validator: (_) {
-        if (variantFieldController.text.isEmpty) {
+        if (brandFieldController.text.isEmpty) {
           return FIELD_REQUIRED_MSG;
         }
         return null;

@@ -64,6 +64,7 @@ class ProductCard extends StatelessWidget {
   }
 
   Column buildProductCardItems(Product product) {
+    bool hasDisPrice = product.discountPrice != null;
     return Column(
       // mainAxisAlignment: MainAxisAlignment.center,
       children: [
@@ -111,21 +112,29 @@ class ProductCard extends StatelessWidget {
                   // mainAxisAlignment: MainAxisAlignment.center,
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Text(
-                      "\Rs. ${product.discountPrice}",
-                      style: cusPdctDisPriceStyle(),
+                    Visibility(
+                      visible: hasDisPrice,
+                      child: Text(
+                        "\Rs. ${product.discountPrice}",
+                        style: cusPdctDisPriceStyle(),
+                      ),
                     ),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         Text("\Rs. ${product.originalPrice}",
-                            style: cusPdctOriPriceStyle()),
-                        Text(
-                          "${product.calculatePercentageDiscount()}% OFF",
-                          style: TextStyle(
-                            color: Colors.red,
-                            fontSize: getProportionateScreenHeight(10),
-                            fontWeight: FontWeight.w900,
+                            style: hasDisPrice
+                                ? cusPdctOriPriceStyle()
+                                : cusPdctDisPriceStyle()),
+                        Visibility(
+                          visible: hasDisPrice,
+                          child: Text(
+                            "${hasDisPrice ? product.calculatePercentageDiscount() : null}% OFF",
+                            style: TextStyle(
+                              color: Colors.red,
+                              fontSize: getProportionateScreenHeight(10),
+                              fontWeight: FontWeight.w900,
+                            ),
                           ),
                         ),
                       ],
