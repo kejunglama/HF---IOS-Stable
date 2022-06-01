@@ -28,6 +28,7 @@ class _ColorvariantsBuilderState extends State<ColorvariantsBuilder> {
   @override
   void initState() {
     _selectedIndex = widget.selectedIndex;
+    print("Index $_selectedIndex");
     super.initState();
   }
 
@@ -39,10 +40,15 @@ class _ColorvariantsBuilderState extends State<ColorvariantsBuilder> {
 
   @override
   Widget build(BuildContext context) {
+    _selectedIndex ??= widget.selectedIndex;
+    print("Index $_selectedIndex");
+
     List _colors = widget.colors;
-    if (_colors != _colorsDup) _selectedIndex = widget.selectedIndex;
-    _colorsDup = _colors;
-    print(_colors);
+    // if (_colors != _colorsDup) _selectedIndex = widget.selectedIndex;
+    // _colorsDup = _colors;
+
+    // print("${_colors} ${_colorsDup}");
+    // print(_colors);
     // _selectedIndex = null;
 
     // print(int.parse("0xFF" + _colors[0]));
@@ -52,11 +58,15 @@ class _ColorvariantsBuilderState extends State<ColorvariantsBuilder> {
           for (var i = 0; i < _colors.length; i++)
             GestureDetector(
               onTap: () {
-                if (widget.selectable)
+                print(i);
+                if (widget.selectable) {
                   setState(() {
+                    print("color ${_colors[i]} $_selectedIndex $i");
                     _selectedIndex = i;
+                    print("$i $_selectedIndex");
                     widget.setColor(_colors[i]);
                   });
+                }
               },
               child: Container(
                 height: getProportionateScreenWidth(30),
@@ -72,10 +82,13 @@ class _ColorvariantsBuilderState extends State<ColorvariantsBuilder> {
                         decoration: BoxDecoration(
                       color: Color(int.parse("0xFF" + _colors[i]["hex"])),
                       borderRadius: BorderRadius.circular(
-                          getProportionateScreenWidth(20)),
-                      border: _colors[i]["hex"].toLowerCase() == ("ffffff")
-                          ? Border.all(color: kPrimaryColor)
-                          : null,
+                        getProportionateScreenWidth(20),
+                      ),
+                      border: _selectedIndex == i && widget.selectable
+                          ? Border.all(color: kPrimaryColor, width: 1)
+                          : _colors[i]["hex"].toLowerCase() == ("ffffffff")
+                              ? Border.all(color: kPrimaryColor, width: 0.2)
+                              : null,
                     )),
                     Visibility(
                       visible: _selectedIndex == i && widget.selectable,

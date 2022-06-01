@@ -31,9 +31,12 @@ class ProductShortDetailCard extends StatelessWidget {
     // print("item count --- ${itemCount}");
     return InkWell(
       onTap: onPressed,
-      onLongPress: () {
-        buildConfirmationToDelete(DismissDirection.startToEnd, productId);
-      },
+      splashColor: Colors.transparent,
+      focusColor: Colors.transparent,
+      highlightColor: Colors.transparent,
+      // onLongPress: () {
+      //   buildConfirmationToDelete(DismissDirection.startToEnd, productId);
+      // },
       child: FutureBuilder<Product>(
         future: ProductDatabaseHelper().getProductWithID(productId),
         builder: (context, snapshot) {

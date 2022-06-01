@@ -91,8 +91,7 @@ class ProductCard extends StatelessWidget {
               ),
               SizedBox(height: getProportionateScreenHeight(10)),
               Visibility(
-                visible:
-                    product.variations != null && product.priceRange != null,
+                visible: product.priceRange != null,
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [

@@ -146,19 +146,19 @@ class _ProductVariationDescriptionState
 
   setSizeAndFetchColors(String size, List colors) {
     setState(() {
-      _selectedSize = size;
       _selectedColorIndex = 0;
+      _selectedSize = size;
       _colors = colors;
       setColor(_colors[0]);
+      print(_selectedColorIndex);
     });
   }
 
   setColor(Map color) {
     setState(() {
+      print("color is set to $_selectedColor");
       _selectedColor = color;
-      if (_selectedColor != null && _selectedSize != null)
-        widget.setSelectedVariant(_selectedSize, _selectedColor);
-      // print(_selectedColor + " " + _selectedSize);
+      widget.setSelectedVariant(_selectedSize, _selectedColor);
     });
   }
 
@@ -182,54 +182,59 @@ class _ProductVariationDescriptionState
           Column(
             children: [
               SizedBox(height: getProportionateScreenHeight(12)),
-              Row(
-                children: [
-                  Container(
-                    alignment: Alignment.centerLeft,
-                    margin:
-                        EdgeInsets.only(right: getProportionateScreenWidth(12)),
-                    child: Text(
-                      "Size: ",
-                      style: cusHeadingStyle(
-                          getProportionateScreenWidth(12), Colors.grey),
+              Visibility(
+                visible: hasSizeVariation(),
+                child: Row(
+                  children: [
+                    Container(
+                      alignment: Alignment.centerLeft,
+                      margin: EdgeInsets.only(
+                          right: getProportionateScreenWidth(12)),
+                      child: Text(
+                        "Size: ",
+                        style: cusHeadingStyle(
+                            getProportionateScreenWidth(12), Colors.grey),
+                      ),
                     ),
-                  ),
-                  // SizedBox(height: getProportionateScreenHeight(12)),
-                  Visibility(
-                    visible: hasSizeVariation(),
-                    child: variantsBuilder(
-                        variants: widget.sizes.toList(),
-                        json: widget.jsonArray,
-                        setSize: setSizeAndFetchColors),
-                  ),
-                ],
+                    // SizedBox(height: getProportionateScreenHeight(12)),
+                    variantsBuilder(
+                      variants: widget.sizes.toList(),
+                      json: widget.jsonArray,
+                      setSize: setSizeAndFetchColors,
+                    ),
+                  ],
+                ),
               ),
               // SizedBox(height: getProportionateScreenHeight(20)),
               sizedBoxOfHeight(12),
-              Row(
-                children: [
-                  Container(
-                    alignment: Alignment.centerLeft,
-                    margin:
-                        EdgeInsets.only(right: getProportionateScreenWidth(12)),
-                    child: Text(
-                      "Available Colors: ",
-                      style: cusHeadingStyle(
-                          getProportionateScreenWidth(12), Colors.grey),
+              Visibility(
+                visible: hasColorVariation(),
+                child: Row(
+                  children: [
+                    Container(
+                      alignment: Alignment.centerLeft,
+                      margin: EdgeInsets.only(
+                          right: getProportionateScreenWidth(12)),
+                      child: Text(
+                        "Available Colors: ",
+                        style: cusHeadingStyle(
+                            getProportionateScreenWidth(12), Colors.grey),
+                      ),
                     ),
-                  ),
-                  // SizedBox(height: getProportionateScreenHeight(12)),
-                  Visibility(
-                    visible: hasColorVariation(),
-                    child: ColorvariantsBuilder(
-                      selectedIndex: _selectedColorIndex ?? 0,
-                      colors:
-                          _colors.isNotEmpty ? _colors : widget.colors.toList(),
-                      selectable: _colors.isNotEmpty,
-                      setColor: setColor,
+                    // SizedBox(height: getProportionateScreenHeight(12)),
+                    Visibility(
+                      visible: hasColorVariation(),
+                      child: ColorvariantsBuilder(
+                        selectedIndex: _selectedColorIndex ?? null,
+                        colors: _colors.isNotEmpty
+                            ? _colors
+                            : widget.colors.toList(),
+                        selectable: _colors.isNotEmpty || hasColorVariation(),
+                        setColor: setColor,
+                      ),
                     ),
-                  ),
-                ],
+                  ],
+                ),
               ),
             ],
           ),

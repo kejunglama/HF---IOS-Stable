@@ -7,7 +7,12 @@ class variantsBuilder extends StatefulWidget {
   final List json;
   final setSize;
 
-  const variantsBuilder({Key key, @required this.variants, this.json, this.setSize}) : super(key: key);
+  const variantsBuilder({
+    Key key,
+    @required this.variants,
+    this.json,
+    this.setSize,
+  }) : super(key: key);
 
   @override
   State<variantsBuilder> createState() => _variantsState();

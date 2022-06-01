@@ -30,7 +30,7 @@ class Body extends StatefulWidget {
 }
 
 class _BodyState extends State<Body> {
-  num _productDisPrice, _productOriPrice;
+  num _productDisPrice, _productOriPrice, discountPercent;
   Product product;
   Map _selectedColor;
   String _selectedSize;
@@ -46,17 +46,35 @@ class _BodyState extends State<Body> {
   void setSelectedVariant(String size, Map color) {
     _selectedColor = color;
     _selectedSize = size;
-
-    List variant = product.variations
-        .where((variant) => variant["size"] == _selectedSize)
-        .where((variant) => variant["color"]["name"] == _selectedColor["name"])
-        .toList();
+    List variant;
+    if (_selectedColor != null && _selectedSize != null) {
+      variant = product.variations
+          .where((variant) => (variant["size"] == _selectedSize))
+          .where(
+              (variant) => variant["color"]["name"] == _selectedColor["name"])
+          .toList();
+    } else if (_selectedColor == null) {
+      variant = product.variations
+          .where((variant) => (variant["size"] == _selectedSize))
+          .toList();
+    } else if (_selectedSize == null) {
+      variant = product.variations
+          .where(
+              (variant) => variant["color"]["name"] == _selectedColor["name"])
+          .toList();
+    }
 
     setState(() {
       _productDisPrice = variant.first["price"];
-      _productOriPrice = 1.2 * _productDisPrice;
+      _productOriPrice =
+          variant.first["dis_price"] ?? (1.2 * _productDisPrice).toInt();
+      discountPercent =
+          ((_productOriPrice - _productDisPrice) * 100 / _productOriPrice)
+              .round();
       _selected = true;
     });
+    // print(
+    //     "from color is set to $_selectedColor $_productDisPrice $_productOriPrice ${discountPercent.round()}");
   }
 
   Map onCartTapFetchVariant() {
@@ -92,11 +110,12 @@ class _BodyState extends State<Body> {
           builder: (context, snapshot) {
             if (snapshot.hasData) {
               product = snapshot.data;
-              _productOriPrice = product.originalPrice;
-
-              if (_productDisPrice != null) {
-                _productDisPrice = product.discountPrice;
+              if (_productDisPrice == null) {
                 _productOriPrice = product.originalPrice;
+              }
+
+              if (_productDisPrice == null) {
+                _productDisPrice = product.discountPrice;
               }
               return Stack(
                 children: [
@@ -208,6 +227,7 @@ class _BodyState extends State<Body> {
   Positioned bottomProductBar() {
     UserPreferences prefs = new UserPreferences();
     bool hasDisPrice = product.discountPrice != null;
+    // print("new color is set to $_selectedColor $_productDisPrice");
 
     return Positioned(
       bottom: 0,
@@ -286,8 +306,8 @@ class _BodyState extends State<Body> {
                               Visibility(
                                 visible: hasDisPrice,
                                 child: Text(
-                                  // "${product.calculatePercentageDiscount()}% OFF",
-                                  "20% OFF",
+                                  "${_productOriPrice == null ? product.calculatePercentageDiscount() : discountPercent}% OFF",
+                                  // "20% OFF",
                                   style: GoogleFonts.poppins(
                                     textStyle: TextStyle(
                                       color: Colors.red,

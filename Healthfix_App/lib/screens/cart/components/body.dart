@@ -286,23 +286,28 @@ class _BodyState extends State<Body> {
         DismissDirection.startToEnd: 0.65,
       },
       background: buildDismissibleBackground(),
-      child: Row(
-        children: [
-          IconButton(
-            icon: _isSelected
-                ? Icon(Icons.check_box_rounded, color: kPrimaryColor)
-                : Icon(Icons.check_box_outline_blank_rounded,
-                    color: kPrimaryColor),
-            onPressed: () {
-              setState(() {
-                _isSelected
-                    ? selectedCartItems.remove(cartItemId)
-                    : selectedCartItems.add(cartItemId);
-              });
-            },
-          ),
-          Expanded(child: buildCartItem(cartItemId, index)),
-        ],
+      child: InkWell(
+        onLongPress: () {
+          buildConfirmationToDelete(DismissDirection.startToEnd, cartItemId);
+        },
+        child: Row(
+          children: [
+            IconButton(
+              icon: _isSelected
+                  ? Icon(Icons.check_box_rounded, color: kPrimaryColor)
+                  : Icon(Icons.check_box_outline_blank_rounded,
+                      color: kPrimaryColor),
+              onPressed: () {
+                setState(() {
+                  _isSelected
+                      ? selectedCartItems.remove(cartItemId)
+                      : selectedCartItems.add(cartItemId);
+                });
+              },
+            ),
+            Expanded(child: buildCartItem(cartItemId, index)),
+          ],
+        ),
       ),
       confirmDismiss: (direction) async {
         if (direction == DismissDirection.startToEnd) {
