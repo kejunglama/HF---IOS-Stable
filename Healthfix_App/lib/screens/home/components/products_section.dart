@@ -29,8 +29,10 @@ class ProductsSection extends StatelessWidget {
     return Container(
       padding: EdgeInsets.symmetric(
         // horizontal: getProportionateScreenHeight(10),
+
         vertical: getProportionateScreenHeight(16),
       ),
+      // height: getProportionateScreenHeight(280),
 
       // Title Bar
       child: Column(
@@ -45,7 +47,9 @@ class ProductsSection extends StatelessWidget {
             ),
           ),
           sizedBoxOfHeight(12),
-          Expanded(child: buildProductsList()),
+          Container(
+              height: getProportionateScreenHeight(200),
+              child: Expanded(child: buildProductsList())),
         ],
       ),
     );

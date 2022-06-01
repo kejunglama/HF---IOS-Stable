@@ -257,6 +257,7 @@ class _BodyState extends State<Body> {
                 height: getProportionateScreenHeight(60),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
+                  mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     Visibility(
                       visible: product.variations != null && !_selected,
@@ -299,8 +300,8 @@ class _BodyState extends State<Body> {
                                     ? cusPdctOriPriceStyle(
                                         getProportionateScreenHeight(12))
                                     : cusPdctPageDisPriceStyle(
-                                        getProportionateScreenHeight(26),
-                                        Colors.black),
+                                        getProportionateScreenHeight(24),
+                                        kPrimaryColor),
                               ),
                               sizedBoxOfWidth(8),
                               Visibility(

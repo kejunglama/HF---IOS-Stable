@@ -275,7 +275,7 @@ class _BodyState extends State<Body> {
 
   Container trendingProducts() {
     return Container(
-      height: getProportionateScreenHeight(280),
+      // height: getProportionateScreenHeight(280),
       child: ProductsSection(
         sectionTitle: "Trending Products",
         productsStreamController: featuredProductsStream,
