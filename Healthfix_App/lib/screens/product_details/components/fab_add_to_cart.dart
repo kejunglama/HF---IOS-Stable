@@ -2,6 +2,7 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:future_progress_dialog/future_progress_dialog.dart';
 import 'package:healthfix/constants.dart';
+import 'package:healthfix/models/Product.dart';
 import 'package:healthfix/screens/cart/cart_screen.dart';
 import 'package:healthfix/services/authentification/authentification_service.dart';
 import 'package:healthfix/services/database/user_database_helper.dart';
@@ -11,18 +12,18 @@ import 'package:logger/logger.dart';
 import '../../../utils.dart';
 
 class AddToCartFAB extends StatelessWidget {
-  final String productId;
-  Function onTap;
+  Function fetchVariantId;
+  Product product;
 
   AddToCartFAB({
     Key key,
-    @required this.productId,
-    this.onTap,
+    @required this.product,
+    this.fetchVariantId,
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    Map variations;
+    String variationId;
 
     return Container(
       height: getProportionateScreenHeight(40),
@@ -30,9 +31,9 @@ class AddToCartFAB extends StatelessWidget {
         extendedPadding: EdgeInsets.all(getProportionateScreenHeight(12)),
         heroTag: "addToCart",
         onPressed: () async {
-          variations = onTap();
-          // print("Variation");
-          // print(variations);
+          variationId = fetchVariantId();
+          print("variationId");
+          print(variationId);
           bool allowed = AuthentificationService().currentUserVerified;
           if (!allowed) {
             final reverify = await showConfirmationDialog(context,
@@ -58,7 +59,7 @@ class AddToCartFAB extends StatelessWidget {
           String snackbarMessage;
           try {
             addedSuccessfully = await UserDatabaseHelper()
-                .addProductToCart(productId, variations);
+                .addProductToCart(product, variationId);
             print("addedSuccessfully $addedSuccessfully");
 
             if (addedSuccessfully == true) {

@@ -1,26 +1,32 @@
 // import 'dart:ffi';
 
 import 'package:healthfix/models/Model.dart';
+import 'package:healthfix/models/Product.dart';
 
 class CartItem extends Model {
   static const String PRODUCT_ID_KEY = "product_id";
   static const String ITEM_COUNT_KEY = "item_count";
   static const String VARIATION_KEY = "variation";
+  static const String VARIATION_ID_KEY = "var_id";
+  static const String VARIATION_COUNT_KEY = "item_count";
 
+  String productId;
   int itemCount;
-  dynamic variation;
+  // String variantId;
 
   CartItem({
     String id,
+    this.productId,
     this.itemCount = 0,
-    this.variation,
+    // this.variantId,
   }) : super(id);
 
   factory CartItem.fromMap(Map<String, dynamic> map, {String id}) {
     return CartItem(
       id: id,
+      productId: map[PRODUCT_ID_KEY],
       itemCount: map[ITEM_COUNT_KEY],
-      variation: map[VARIATION_KEY],
+      // variantId: map[VARIATION_ID_KEY],
     );
   }
 
@@ -29,7 +35,9 @@ class CartItem extends Model {
     // print("variation in DBHELPER");
     Map map;
     map = <String, dynamic>{
+      PRODUCT_ID_KEY: productId,
       ITEM_COUNT_KEY: itemCount,
+      // VARIATION_ID_KEY: variantId,
     };
     // if(variation != null){
     //   if (variation.isEmpty) {
@@ -51,7 +59,9 @@ class CartItem extends Model {
   @override
   Map<String, dynamic> toUpdateMap() {
     final map = <String, dynamic>{};
+    if (productId != null) map[PRODUCT_ID_KEY] = productId;
     if (itemCount != null) map[ITEM_COUNT_KEY] = itemCount;
+    // if (variantId != null) map[VARIATION_ID_KEY] = variantId;
     return map;
   }
 }

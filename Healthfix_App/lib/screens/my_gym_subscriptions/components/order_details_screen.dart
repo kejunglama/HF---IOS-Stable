@@ -21,7 +21,8 @@ class OrderDetails extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    var currency = new NumberFormat.currency(locale: "en_US", symbol: "Rs. ", decimalDigits: 0);
+    var currency = new NumberFormat.currency(
+        locale: "en_US", symbol: "Rs. ", decimalDigits: 0);
     // print(orderedProduct.products);
     orderedProduct.products.forEach((e) => buildOrderedProductItem(e));
     var orderDetails = orderedProduct.orderDetails;
@@ -34,7 +35,8 @@ class OrderDetails extends StatelessWidget {
         child: SingleChildScrollView(
           physics: AlwaysScrollableScrollPhysics(),
           child: Padding(
-            padding: EdgeInsets.symmetric(horizontal: getProportionateScreenWidth(screenPadding)),
+            padding: EdgeInsets.symmetric(
+                horizontal: getProportionateScreenWidth(screenPadding)),
             child: SizedBox(
               width: double.infinity,
               child: Column(
@@ -53,12 +55,16 @@ class OrderDetails extends StatelessWidget {
                   ),
                   SizedBox(height: getProportionateScreenHeight(20)),
                   // Text(orderedProduct.orderDetails.toString()),
-                  buildOrderDetails(orderDetailsAddress, currency, orderDetailsTotals),
+                  buildOrderDetails(
+                      orderDetailsAddress, currency, orderDetailsTotals),
                   SizedBox(height: getProportionateScreenHeight(20)),
                   SizedBox(
                     height: SizeConfig.screenHeight * 0.75,
                     child: Column(
-                      children: [for (var e in orderedProduct.products) buildOrderedProductItem(e)],
+                      children: [
+                        for (var e in orderedProduct.products)
+                          buildOrderedProductItem(e)
+                      ],
                     ),
                   ),
                 ],
@@ -70,7 +76,8 @@ class OrderDetails extends StatelessWidget {
     );
   }
 
-  Container buildOrderDetails(orderDetailsAddress, NumberFormat currency, orderDetailsTotals) {
+  Container buildOrderDetails(
+      orderDetailsAddress, NumberFormat currency, orderDetailsTotals) {
     return Container(
       padding: EdgeInsets.symmetric(horizontal: 12),
       child: Row(
@@ -81,16 +88,20 @@ class OrderDetails extends StatelessWidget {
             children: [
               Text("Receiver: ${orderDetailsAddress["receiver"]}"),
               Text("Phone: ${orderDetailsAddress["phone"]}"),
-              Text("Address: ${orderDetailsAddress["landmark"]}, ${orderDetailsAddress["address_line_1"]}"),
+              Text(
+                  "Address: ${orderDetailsAddress["landmark"]}, ${orderDetailsAddress["address_line_1"]}"),
               Text("Email: ${orderDetailsAddress["email"]}"),
             ],
           ),
           Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Text("Cart Total: ${currency.format(orderDetailsTotals["cartTotal"])}"),
-              Text("Delivery Charge: ${currency.format(orderDetailsTotals["deliveryCharge"])}"),
-              Text("Net Total: ${currency.format(orderDetailsTotals["netTotal"])}"),
+              Text(
+                  "Cart Total: ${currency.format(orderDetailsTotals["cartTotal"])}"),
+              Text(
+                  "Delivery Charge: ${currency.format(orderDetailsTotals["deliveryCharge"])}"),
+              Text(
+                  "Net Total: ${currency.format(orderDetailsTotals["netTotal"])}"),
             ],
           )
         ],
@@ -159,7 +170,7 @@ class OrderDetails extends StatelessWidget {
   // }
   //
   Widget buildOrderedProductItem(Map products) {
-    print(products["item_count"]);
+    // print(products["item_count"]);
     return FutureBuilder<Product>(
       future: ProductDatabaseHelper().getProductWithID(products["product_uid"]),
       builder: (context, snapshot) {
@@ -217,10 +228,13 @@ class OrderDetails extends StatelessWidget {
                         ),
                         child: FlatButton(
                           onPressed: () async {
-                            String currentUserUid = AuthentificationService().currentUser.uid;
+                            String currentUserUid =
+                                AuthentificationService().currentUser.uid;
                             Review prevReview;
                             try {
-                              prevReview = await ProductDatabaseHelper().getProductReviewWithID(product.id, currentUserUid);
+                              prevReview = await ProductDatabaseHelper()
+                                  .getProductReviewWithID(
+                                      product.id, currentUserUid);
                             } on FirebaseException catch (e) {
                               Logger().w("Firebase Exception: $e");
                             } catch (e) {
@@ -246,9 +260,11 @@ class OrderDetails extends StatelessWidget {
                               bool reviewAdded = false;
                               String snackbarMessage;
                               try {
-                                reviewAdded = await ProductDatabaseHelper().addProductReview(product.id, result);
+                                reviewAdded = await ProductDatabaseHelper()
+                                    .addProductReview(product.id, result);
                                 if (reviewAdded == true) {
-                                  snackbarMessage = "Product review added successfully";
+                                  snackbarMessage =
+                                      "Product review added successfully";
                                 } else {
                                   throw "Coulnd't add product review due to unknown reason";
                                 }

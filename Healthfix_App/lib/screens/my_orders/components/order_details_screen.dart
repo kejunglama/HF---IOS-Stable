@@ -276,8 +276,8 @@ class OrderDetails extends StatelessWidget {
   //
 
   Widget buildOrderedProductItem(Map products) {
-    print(products["item_count"]);
-    print(products);
+    // print(products["item_count"]);
+    // print(products);
     return FutureBuilder<Product>(
       future: ProductDatabaseHelper().getProductWithID(products["product_uid"]),
       builder: (context, snapshot) {

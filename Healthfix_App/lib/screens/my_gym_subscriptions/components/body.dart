@@ -24,7 +24,8 @@ class Body extends StatefulWidget {
 }
 
 class _BodyState extends State<Body> {
-  final GymSubscriptionsStream gymSubscriptionsStream = GymSubscriptionsStream();
+  final GymSubscriptionsStream gymSubscriptionsStream =
+      GymSubscriptionsStream();
 
   @override
   void initState() {
@@ -46,7 +47,8 @@ class _BodyState extends State<Body> {
         child: SingleChildScrollView(
           physics: AlwaysScrollableScrollPhysics(),
           child: Padding(
-            padding: EdgeInsets.symmetric(horizontal: getProportionateScreenWidth(screenPadding)),
+            padding: EdgeInsets.symmetric(
+                horizontal: getProportionateScreenWidth(screenPadding)),
             child: SizedBox(
               width: double.infinity,
               child: Column(
@@ -94,7 +96,8 @@ class _BodyState extends State<Body> {
             itemCount: gymSubscriptionsIds.length,
             itemBuilder: (context, index) {
               return FutureBuilder(
-                future: UserDatabaseHelper().getGymSubscriptionFromId(gymSubscriptionsIds[index]),
+                future: UserDatabaseHelper()
+                    .getGymSubscriptionFromId(gymSubscriptionsIds[index]),
                 builder: (context, snapshot) {
                   if (snapshot.hasData) {
                     final gymSubscription = snapshot.data;
@@ -107,7 +110,8 @@ class _BodyState extends State<Body> {
                             Navigator.push(
                               context,
                               MaterialPageRoute(
-                                builder: (context) => GymSubscriptionDetails(gymSubscription),
+                                builder: (context) =>
+                                    GymSubscriptionDetails(gymSubscription),
                               ),
                             );
                           },
@@ -136,11 +140,13 @@ class _BodyState extends State<Body> {
                                 sizedBoxOfWidth(16),
                                 Expanded(
                                   child: Column(
-                                    crossAxisAlignment: CrossAxisAlignment.start,
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
                                     children: [
                                       Text(
                                         "${gymSubscription.gymName}",
-                                        style: cusHeadingStyle(16, Colors.black.withOpacity(0.7)),
+                                        style: cusHeadingStyle(
+                                            16, Colors.black.withOpacity(0.7)),
                                       ),
                                       // sizedBoxOfHeight(8),
                                       Text(
@@ -156,7 +162,8 @@ class _BodyState extends State<Body> {
                                     children: [
                                       Text(
                                         "${currency.format(gymSubscription.package["price"])}",
-                                        style: cusHeadingStyle(16, Colors.black.withOpacity(0.7)),
+                                        style: cusHeadingStyle(
+                                            16, Colors.black.withOpacity(0.7)),
                                       ),
                                       Text(
                                         "${gymSubscription.package["duration"]}",
@@ -169,7 +176,7 @@ class _BodyState extends State<Body> {
                             ),
                           ),
                         ),
-                        Divider( color: Colors.black12),
+                        Divider(color: Colors.black12),
                         // Container(
                         //   padding: EdgeInsets.symmetric(
                         //     horizontal: 4,
@@ -263,7 +270,8 @@ class _BodyState extends State<Body> {
                         // ),
                       ],
                     );
-                  } else if (snapshot.connectionState == ConnectionState.waiting) {
+                  } else if (snapshot.connectionState ==
+                      ConnectionState.waiting) {
                     return Center(child: CircularProgressIndicator());
                   } else if (snapshot.hasError) {
                     final error = snapshot.error.toString();
@@ -316,14 +324,16 @@ class _BodyState extends State<Body> {
             itemCount: gymSubscriptionsIds.length,
             itemBuilder: (context, index) {
               return FutureBuilder(
-                future: UserDatabaseHelper().getGymSubscriptionFromId(gymSubscriptionsIds[index]),
+                future: UserDatabaseHelper()
+                    .getGymSubscriptionFromId(gymSubscriptionsIds[index]),
                 builder: (context, snapshot) {
                   if (snapshot.hasData) {
                     final gymSubscription = snapshot.data;
                     // print(gymSubscription);
-                    print(prettyJson(gymSubscription.toMap(), indent: 2));
+                    // print(prettyJson(gymSubscription.toMap(), indent: 2));
                     return buildGymSubscriptionItem(gymSubscription);
-                  } else if (snapshot.connectionState == ConnectionState.waiting) {
+                  } else if (snapshot.connectionState ==
+                      ConnectionState.waiting) {
                     return Center(child: CircularProgressIndicator());
                   } else if (snapshot.hasError) {
                     final error = snapshot.error.toString();
@@ -441,10 +451,12 @@ class _BodyState extends State<Body> {
                   ),
                   child: FlatButton(
                     onPressed: () async {
-                      String currentUserUid = AuthentificationService().currentUser.uid;
+                      String currentUserUid =
+                          AuthentificationService().currentUser.uid;
                       Review prevReview;
                       try {
-                        prevReview = await ProductDatabaseHelper().getProductReviewWithID(product.id, currentUserUid);
+                        prevReview = await ProductDatabaseHelper()
+                            .getProductReviewWithID(product.id, currentUserUid);
                       } on FirebaseException catch (e) {
                         Logger().w("Firebase Exception: $e");
                       } catch (e) {
@@ -470,9 +482,11 @@ class _BodyState extends State<Body> {
                         bool reviewAdded = false;
                         String snackbarMessage;
                         try {
-                          reviewAdded = await ProductDatabaseHelper().addProductReview(product.id, result);
+                          reviewAdded = await ProductDatabaseHelper()
+                              .addProductReview(product.id, result);
                           if (reviewAdded == true) {
-                            snackbarMessage = "Product review added successfully";
+                            snackbarMessage =
+                                "Product review added successfully";
                           } else {
                             throw "Coulnd't add product review due to unknown reason";
                           }

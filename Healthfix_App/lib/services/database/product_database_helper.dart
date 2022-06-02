@@ -30,7 +30,7 @@ class ProductDatabaseHelper {
       [ProductType productType, String productSubType]) async {
     Query queryRef;
     query = query.toLowerCase();
-    print("queryRef $queryRef");
+    // print("queryRef $queryRef");
     if (productType == null || productType == ProductType.All) {
       queryRef = firestore.collection(PRODUCTS_COLLECTION_NAME);
     } else if (productSubType == null || productSubType.isEmpty) {

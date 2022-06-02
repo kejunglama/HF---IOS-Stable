@@ -66,7 +66,7 @@ class ProductCard extends StatelessWidget {
   Column buildProductCardItems(Product product) {
     bool hasDisPrice = product.discountPrice != null;
     return Column(
-      // mainAxisAlignment: MainAxisAlignment.center,
+      mainAxisAlignment: MainAxisAlignment.center,
       children: [
         Container(
           width: getProportionateScreenHeight(80),

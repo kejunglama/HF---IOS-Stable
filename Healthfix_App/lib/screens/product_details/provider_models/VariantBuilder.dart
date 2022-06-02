@@ -6,12 +6,14 @@ class variantsBuilder extends StatefulWidget {
   final List variants;
   final List json;
   final setSize;
+  final Function(num i) setSelectedColorIndex;
 
   const variantsBuilder({
     Key key,
     @required this.variants,
     this.json,
     this.setSize,
+    this.setSelectedColorIndex,
   }) : super(key: key);
 
   @override
@@ -34,6 +36,7 @@ class _variantsState extends State<variantsBuilder> {
             onTap: () {
               setState(() {
                 _selected = i;
+                widget.setSelectedColorIndex(0);
               });
               widget.setSize(
                 _variant[i],

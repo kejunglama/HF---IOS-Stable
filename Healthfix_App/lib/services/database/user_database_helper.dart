@@ -3,6 +3,7 @@ import 'package:healthfix/models/Address.dart';
 import 'package:healthfix/models/CartItem.dart';
 import 'package:healthfix/models/GymSubscription.dart';
 import 'package:healthfix/models/OrderedProduct.dart';
+import 'package:healthfix/models/Product.dart';
 import 'package:healthfix/services/authentification/authentification_service.dart';
 import 'package:healthfix/services/database/product_database_helper.dart';
 
@@ -16,6 +17,9 @@ class UserDatabaseHelper {
   static const String PHONE_KEY = 'phone';
   static const String DP_KEY = "display_picture";
   static const String FAV_PRODUCTS_KEY = "favourite_products";
+
+  static const String VARIATION_KEY = "variations";
+  static const String VARIATION_ID_KEY = "var_id";
 
   UserDatabaseHelper._privateConstructor();
 
@@ -220,42 +224,59 @@ class UserDatabaseHelper {
     return gymSubscription;
   }
 
-  Future<bool> addProductToCart(String productId, Map variation) async {
+  Future<bool> addProductToCart(Product product, String variationId) async {
     String uid = AuthentificationService().currentUser.uid;
+    // print("object");
+    // print("$product");
+    // print(", $variationId");
+    // print("Vairation $variation");
+    bool isVariationPdct = variationId != null;
     final cartCollectionRef = firestore
         .collection(USERS_COLLECTION_NAME)
         .doc(uid)
         .collection(CART_COLLECTION_NAME);
-    final docRef = cartCollectionRef.doc(productId);
+    final docRef = isVariationPdct
+        ? cartCollectionRef.doc(variationId)
+        : cartCollectionRef.doc(product.id);
     final docSnapshot = await docRef.get();
     bool alreadyPresent = docSnapshot.exists;
     // If New Product
     if (alreadyPresent == false) {
-      print("already");
-      docRef.set(CartItem(itemCount: 1, variation: variation).toMap());
+      // print("new");
+      // print(product.variations);
+      // print(variationId);
+      // // var temp = (product.variations
+      //     .where((variant) => variant[VARIATION_ID_KEY] == variationId));
+      // print("temp ${temp}");
+
+      docRef.set(CartItem(
+        productId: isVariationPdct ? product.id : null,
+        itemCount: 1,
+      ).toUpdateMap());
       // If Already Product
     } else {
-      List _variation = docSnapshot.data()["variation"];
-      print(_variation);
+      String _varId = docSnapshot.data()[VARIATION_ID_KEY];
+      // print(_varId);
       // If with Single Variant
-      if (_variation == null) {
+      if (_varId == null) {
         docRef.update({CartItem.ITEM_COUNT_KEY: FieldValue.increment(1)});
       }
       // If has Variantion
       else {
-        docRef.set(CartItem(itemCount: 1, variation: _variation).toMap());
+        docRef.set(CartItem(itemCount: int.parse(CartItem.ITEM_COUNT_KEY) + 1)
+            .toMap());
 
         // _variation.remove(CartItem.ITEM_COUNT_KEY);
-        _variation.forEach((vari) {
-          if (vari["size"] == variation["size"] &&
-              vari["color"]["name"] == variation["color"]["name"]) {
-            vari[CartItem.ITEM_COUNT_KEY]++;
-            docRef.update({CartItem.VARIATION_KEY: _variation});
-          } else {
-            _variation.add(variation);
-            docRef.set(CartItem(itemCount: 1, variation: _variation).toMap());
-          }
-        });
+        // _variation.forEach((vari) {
+        //   if (vari["size"] == variation["size"] &&
+        //       vari["color"]["name"] == variation["color"]["name"]) {
+        //     vari[CartItem.ITEM_COUNT_KEY]++;
+        //     docRef.update({CartItem.VARIATION_KEY: _variation});
+        //   } else {
+        //     _variation.add(variation);
+        //     docRef.set(CartItem(itemCount: 1, variation: _variation).toMap());
+        //   }
+        // });
 
         // _variation[CartItem.ITEM_COUNT_KEY]++;
         // print(_variation);
@@ -293,7 +314,7 @@ class UserDatabaseHelper {
     Map orderedProductsUid = {};
     for (final doc in cartItems.docs) {
       if (selectedProductsUid.contains(doc.id)) {
-        print("contains ${doc.id}");
+        // print("contains ${doc.id}");
         orderedProductsUid[doc.id] = doc.data();
         // orderedProductsUid.add(doc.id);
         await doc.reference.delete();
@@ -313,7 +334,7 @@ class UserDatabaseHelper {
     num total = 0.0;
     for (final doc in cartItems.docs) {
       num itemsCount;
-      print("item");
+      // print("item");
       // print(doc.data()[CartItem.VARIATION_KEY]);
       if (doc.data()[CartItem.VARIATION_KEY] == null) {
         itemsCount = doc.data()[CartItem.ITEM_COUNT_KEY];
@@ -337,15 +358,17 @@ class UserDatabaseHelper {
     num total = 0.0;
     for (final doc in cartItems.docs) {
       num itemsCount;
-      print(doc.id);
+      String productId = doc.data()["product_id"] ?? doc.id;
+      // print(productId);
       if (selectedCartItemIDs.contains(doc.id)) {
-        if (doc.data()[CartItem.VARIATION_KEY] == null) {
-          itemsCount = doc.data()[CartItem.ITEM_COUNT_KEY];
-        } else {
-          itemsCount =
-              doc.data()[CartItem.VARIATION_KEY][0][CartItem.ITEM_COUNT_KEY];
-        }
-        final product = await ProductDatabaseHelper().getProductWithID(doc.id);
+        // if (doc.data()[CartItem.VARIATION_KEY] == null) {
+        itemsCount = doc.data()[CartItem.ITEM_COUNT_KEY];
+        // } else {
+        //   itemsCount =
+        //       doc.data()[CartItem.VARIATION_KEY][0][CartItem.ITEM_COUNT_KEY];
+        // }
+        final product =
+            await ProductDatabaseHelper().getProductWithID(productId);
         total += (itemsCount * product.discountPrice);
       }
     }
@@ -425,6 +448,22 @@ class UserDatabaseHelper {
     List itemsId = List<String>();
     for (final item in querySnapshot.docs) {
       itemsId.add(item.id);
+      // print(item.data());
+    }
+    return itemsId;
+  }
+
+  Future<List<String>> get allCartProductsList async {
+    String uid = AuthentificationService().currentUser.uid;
+    final querySnapshot = await firestore
+        .collection(USERS_COLLECTION_NAME)
+        .doc(uid)
+        .collection(CART_COLLECTION_NAME)
+        .get();
+    List itemsId = [];
+    for (final item in querySnapshot.docs) {
+      bool hasVariant = item["product_id"] != null;
+      itemsId.add(hasVariant ? item.id : item["product_id"]);
       // print(item.data());
     }
     return itemsId;

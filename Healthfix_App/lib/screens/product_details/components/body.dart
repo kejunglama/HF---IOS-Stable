@@ -34,6 +34,7 @@ class _BodyState extends State<Body> {
   Product product;
   Map _selectedColor;
   String _selectedSize;
+  String seletedVarId;
   Map selectedVariations;
   bool _selected = false;
   var numFormat = NumberFormat('#,##,000');
@@ -77,28 +78,38 @@ class _BodyState extends State<Body> {
     //     "from color is set to $_selectedColor $_productDisPrice $_productOriPrice ${discountPercent.round()}");
   }
 
-  Map onCartTapFetchVariant() {
+  String getSeletedVariantId() {
     if (product.variations != null) {
-      if (_selectedSize == null) {
+      bool hasSizeVariation = product.variations.first["size"] != null;
+      bool hasColorVariation = product.variations.first["color"] != null;
+      if (_selectedSize == null && hasSizeVariation) {
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
             content: Text("Please Select a Size"),
           ),
         );
-      } else if (_selectedColor == null) {
+      } else if (_selectedColor == null && hasColorVariation) {
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
             content: Text("Please Select a Color"),
           ),
         );
       } else {
-        selectedVariations = {"size": _selectedSize, "color": _selectedColor};
+        seletedVarId = product.variations
+            .where((variant) =>
+                ((hasSizeVariation ? variant["size"] == _selectedSize : true) &&
+                    (hasColorVariation
+                        ? variant["color"]["hex"] == _selectedColor["hex"]
+                        : true)))
+            .first["var_id"];
+        // print(seletedVarId);
+        // selectedVariations = {"size": _selectedSize, "color": _selectedColor};
         // print(selectedVariations);
       }
     } else {
-      selectedVariations = {};
+      seletedVarId = null;
     }
-    return selectedVariations;
+    return seletedVarId;
   }
 
   @override
@@ -331,10 +342,14 @@ class _BodyState extends State<Body> {
               ),
             ),
             AddToCartFAB(
-              productId: product.id,
-              onTap: () {
+              product: product,
+              fetchVariantId: () {
+                // print("VAIATTION ${product.variations}");
+                // print(_selectedColor);
+                // print(_selectedSize);
+                return getSeletedVariantId();
                 prefs.hasUser().then((hasUser) => hasUser
-                    ? onCartTapFetchVariant
+                    ? getSeletedVariantId
                     : Navigator.push(
                         context,
                         MaterialPageRoute(
@@ -395,7 +410,7 @@ class _BodyState extends State<Body> {
           products: orderedProducts,
           orderDate: formatedDateTime,
           orderDetails: orderDetails);
-      print(order);
+      // print(order);
 
       bool addedProductsToMyProducts = false;
       String snackbarmMessage;

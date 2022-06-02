@@ -123,6 +123,8 @@ class _BodyState extends State<Body> {
                   //     );
                   //   },
                   // );
+                  print(selectedCartItems);
+
                   String snackbarNotSelectedMessage =
                       "Please Select a Item to Checkout";
                   selectedCartItems.isNotEmpty
@@ -303,6 +305,7 @@ class _BodyState extends State<Body> {
                       ? selectedCartItems.remove(cartItemId)
                       : selectedCartItems.add(cartItemId);
                 });
+                // print(selectedCartItems);
               },
             ),
             Expanded(child: buildCartItem(cartItemId, index)),
@@ -376,16 +379,17 @@ class _BodyState extends State<Body> {
         builder: (context, AsyncSnapshot<List<dynamic>> snapshot) {
           if (snapshot.hasData) {
             Product product = snapshot.data[0];
+            CartItem cartItem = snapshot.data[1];
 
             int itemCount = 0;
-            final cartItem = snapshot.data[1];
-            if (cartItem.variation != null) {
-              variation = cartItem.variation[0];
-              // print(variation);
-              itemCount = variation["item_count"];
-            } else {
-              itemCount = cartItem.itemCount;
-            }
+            // if (cartItem.variation != null) {
+            // variation = cartItem.variation;
+            itemCount = cartItem.itemCount;
+            // print(variation);
+            // print(itemCount);
+            //   itemCount = variation["item_count"];
+            // } else {
+            // }
             // print(cartItem.variation);
             // print(product.id);
 
@@ -396,15 +400,16 @@ class _BodyState extends State<Body> {
                 Expanded(
                   flex: 8,
                   child: ProductShortDetailCard(
-                    productId: product.id,
-                    variation: variation,
+                    productId: cartItem.productId ?? cartItem.id,
+                    variantId: cartItem.id,
+                    // variation: variation,
                     buildConfirmationToDelete: buildConfirmationToDelete,
                     onPressed: () {
                       Navigator.push(
                         context,
                         MaterialPageRoute(
                           builder: (context) => ProductDetailsScreen(
-                            productId: product.id,
+                            productId: cartItem.productId ?? cartItem.id,
                           ),
                         ),
                       );
@@ -548,7 +553,7 @@ class _BodyState extends State<Body> {
             products: orderedProducts,
             orderDate: formatedDateTime,
             orderDetails: orderDetails);
-        print(order);
+        // print(order);
 
         // bool addedProductsToMyProducts = false;
         // String snackbarmMessage;
@@ -644,7 +649,7 @@ class _BodyState extends State<Body> {
           orderDate: formatedDateTime,
           orderDetails: orderDetails,
         );
-        print(order);
+        // print(order);
 
         bool addedProductsToMyProducts = false;
         String snackbarmMessage;

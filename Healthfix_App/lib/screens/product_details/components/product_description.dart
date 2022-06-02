@@ -150,15 +150,21 @@ class _ProductVariationDescriptionState
       _selectedSize = size;
       _colors = colors;
       setColor(_colors[0]);
-      print(_selectedColorIndex);
+      // print(_selectedColorIndex);
     });
   }
 
   setColor(Map color) {
     setState(() {
-      print("color is set to $_selectedColor");
+      // print("color is set to $_selectedColor");
       _selectedColor = color;
       widget.setSelectedVariant(_selectedSize, _selectedColor);
+    });
+  }
+
+  setSelectedColorIndex(num i) {
+    setState(() {
+      _selectedColorIndex = i;
     });
   }
 
@@ -174,7 +180,7 @@ class _ProductVariationDescriptionState
   Widget build(BuildContext context) {
     bool hasVariations = widget.jsonArray != null;
     // print("${widget.colors.isNotEmpty ? widget.colors.first != null : false}");
-    print("size: ${hasSizeVariation()} color:${hasColorVariation()}");
+    // print("size: ${hasSizeVariation()} color:${hasColorVariation()}");
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -198,10 +204,10 @@ class _ProductVariationDescriptionState
                     ),
                     // SizedBox(height: getProportionateScreenHeight(12)),
                     variantsBuilder(
-                      variants: widget.sizes.toList(),
-                      json: widget.jsonArray,
-                      setSize: setSizeAndFetchColors,
-                    ),
+                        variants: widget.sizes.toList(),
+                        json: widget.jsonArray,
+                        setSize: setSizeAndFetchColors,
+                        setSelectedColorIndex: setSelectedColorIndex),
                   ],
                 ),
               ),

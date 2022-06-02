@@ -11,7 +11,7 @@ import '../size_config.dart';
 class ProductShortDetailCard extends StatelessWidget {
   final String productId;
   final VoidCallback onPressed;
-  Map variation;
+  String variantId;
   num itemCount;
   Function(DismissDirection direction, dynamic cartItemId)
       buildConfirmationToDelete;
@@ -20,14 +20,18 @@ class ProductShortDetailCard extends StatelessWidget {
     Key key,
     @required this.productId,
     @required this.onPressed,
-    this.variation,
+    this.variantId,
     this.itemCount,
     this.buildConfirmationToDelete,
+    String variationId,
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     // print(variation != null && variation.isNotEmpty);
+    // print(variantId);
+    Map variation;
+
     // print("item count --- ${itemCount}");
     return InkWell(
       onTap: onPressed,
@@ -42,6 +46,28 @@ class ProductShortDetailCard extends StatelessWidget {
         builder: (context, snapshot) {
           if (snapshot.hasData) {
             final product = snapshot.data;
+            // print(product.variations);
+            // print(variantId);
+
+            bool hasVariations = product.variations != null;
+            bool hasSizeVariation = false;
+            bool hasColorVariation = false;
+            String variantText = "";
+            if (hasVariations) {
+              variation = product.variations
+                  .where((variant) => variant["var_id"] == variantId)
+                  .first;
+
+              hasSizeVariation = variation["size"] != null;
+              hasColorVariation = variation["color"] != null;
+              // print(
+              //     "hasSizeVariation $hasSizeVariation $variantId ${variation["size"]}");
+
+              variantText =
+                  "${hasSizeVariation ? "Size: ${variation["size"]}" : ""}${hasSizeVariation && hasColorVariation ? " - " : ""}${hasColorVariation ? ("Color: ${variation["color"]["name"]} - ") : ""}";
+            }
+            // print("variant $variation");
+
             return Row(
               children: [
                 SizedBox(
@@ -85,25 +111,64 @@ class ProductShortDetailCard extends StatelessWidget {
                       //   visible: itemCount != null,
                       //   child: Text(itemCount.toString()),
                       // ),
+                      // Visibility(
+                      //   visible: (variation != null && variation.isNotEmpty),
+                      //   child: Text(
+                      //     (variation != null && variation.isNotEmpty)
+                      //         ? "${variation["size"]} - ${variation["color"]["name"]}"
+                      //         : "",
+                      //     style: cusPdctNameStyle,
+                      //   ),
+                      // ),
+                      // sizedBoxOfHeight(10),
+
                       Visibility(
-                        visible: (variation != null && variation.isNotEmpty),
-                        child: Text(
-                          (variation != null && variation.isNotEmpty)
-                              ? "${variation["size"]} - ${variation["color"]["name"]}"
-                              : "",
-                          style: cusPdctNameStyle,
+                        visible: itemCount != null,
+                        child: Text(itemCount.toString()),
+                      ),
+                      Visibility(
+                        visible: (hasVariations),
+                        child: Row(
+                          children: [
+                            Text(
+                              variantText,
+                              style: cusPdctCatNameStyle,
+                            ),
+                            Container(
+                                height: getProportionateScreenHeight(10),
+                                width: getProportionateScreenHeight(10),
+                                decoration: BoxDecoration(
+                                  color: variation != null &&
+                                          variation.isNotEmpty
+                                      ? Color(int.parse(hasColorVariation
+                                          ? "0xFF" + variation["color"]["hex"]
+                                          : "0xFFFFFFFF"))
+                                      : null,
+                                  borderRadius: BorderRadius.circular(
+                                    getProportionateScreenWidth(20),
+                                  ),
+                                )),
+                          ],
                         ),
                       ),
                       sizedBoxOfHeight(10),
 
                       Text.rich(
                         TextSpan(
-                          text: "\Rs. ${product.discountPrice}  ",
+                          text: variation != null
+                              ? "\Rs. ${variation["price"]} "
+                              : product.discountPrice != null
+                                  ? "\Rs. ${product.discountPrice} "
+                                  : "",
                           style: cusPdctDisPriceStyle(),
                           children: [
                             TextSpan(
-                                text: "\Rs. ${product.originalPrice}",
-                                style: cusPdctOriPriceStyle()),
+                                text: variation != null && variation.isNotEmpty
+                                    ? "\Rs. ${variation != null ? (variation["dis_price"] ?? variation["price"] * 1.2) : product.originalPrice}"
+                                    : "",
+                                style: product.discountPrice != null
+                                    ? cusPdctOriPriceStyle()
+                                    : cusPdctDisPriceStyle()),
                           ],
                         ),
                       ),

@@ -5,12 +5,14 @@ import 'package:healthfix/models/CartItem.dart';
 import 'package:healthfix/models/Product.dart';
 import 'package:healthfix/screens/product_details/product_details_screen.dart';
 import 'package:healthfix/services/data_streams/cart_items_stream.dart';
+import 'package:healthfix/services/data_streams/cart_product_id_stream.dart';
 import 'package:healthfix/services/database/product_database_helper.dart';
 import 'package:healthfix/services/database/user_database_helper.dart';
 import 'package:logger/logger.dart';
 
 import '../../../constants.dart';
 import '../../../size_config.dart';
+import 'order_item.dart';
 
 class OrderItems extends StatefulWidget {
   List selectedCartItems;
@@ -27,18 +29,18 @@ class OrderItems extends StatefulWidget {
 }
 
 class _OrderItemsState extends State<OrderItems> {
-  final CartItemsStream cartItemsStream = CartItemsStream();
+  final CartProductIdStream cartProductIdStream = CartProductIdStream();
 
   @override
   void initState() {
     super.initState();
-    cartItemsStream.init();
+    cartProductIdStream.init();
   }
 
   @override
   void dispose() {
     super.dispose();
-    cartItemsStream.dispose();
+    cartProductIdStream.dispose();
   }
 
   @override
@@ -67,7 +69,7 @@ class _OrderItemsState extends State<OrderItems> {
 
   Widget buildCartItemsList() {
     return StreamBuilder<List<String>>(
-      stream: cartItemsStream.stream,
+      stream: cartProductIdStream.stream,
       builder: (context, snapshot) {
         if (snapshot.hasData) {
           List<String> cartItemsId = snapshot.data;
@@ -90,7 +92,8 @@ class _OrderItemsState extends State<OrderItems> {
                 Expanded(
                   child: ListView.builder(
                     scrollDirection: Axis.horizontal,
-                    padding: EdgeInsets.symmetric(vertical: 16),
+                    padding: EdgeInsets.symmetric(
+                        vertical: getProportionateScreenHeight(16)),
                     physics: BouncingScrollPhysics(),
                     itemCount: widget.isBuyNow ? 1 : cartItemsId.length,
                     itemBuilder: (context, index) {
@@ -98,7 +101,8 @@ class _OrderItemsState extends State<OrderItems> {
                         return SizedBox(
                             height: getProportionateScreenHeight(80));
                       }
-                      return buildCartItem(cartItemsId[index], index);
+                      print("order Items : $cartItemsId");
+                      // return buildCartItem(cartItemsId[index], index);
                     },
                   ),
                 ),
@@ -177,10 +181,13 @@ class _OrderItemsState extends State<OrderItems> {
   }
 
   Widget buildCartItem(String cartItemId, int index) {
-    Future<Product> pdct = ProductDatabaseHelper().getProductWithID(cartItemId);
-    Future<CartItem> cartItem =
+    Future<CartItem> cartItemFuture =
         UserDatabaseHelper().getCartItemFromId(cartItemId);
+
+    print("cartItemId $cartItemId");
     Map variation;
+
+    String VARIANT_ID = "var_id";
     int i = 1;
     int j = 1;
 
@@ -199,49 +206,87 @@ class _OrderItemsState extends State<OrderItems> {
         borderRadius: BorderRadius.circular(5),
       ),
       child: FutureBuilder(
-        future: Future.wait([pdct, cartItem]),
+        future: cartItemFuture,
         builder: (context, snapshot) {
           if (snapshot.hasData) {
-            Product product = snapshot.data[0];
-            int itemCount = 0;
-            final cartItem = snapshot.data[1];
-            // print(i);
-            // if (i == 1) {
-            if (cartItem.variation != null) {
-              variation = cartItem.variation[0];
-              // print({product.id: variation});
-              itemCount = variation["item_count"];
-              // print(i);
-              print(product.title);
-            } else {
-              itemCount = cartItem.itemCount;
-              // print(product.title);
+            CartItem cartItem = snapshot.data;
 
-              // print(itemCount);
-              // print({
-              //   product.id: {"item_count": itemCount}
-              // });
-              // }
-            }
-            i++;
+            print("cartItem $cartItem");
+            print("product Id ${cartItem.productId ?? cartItem.id}");
 
-            return SizedBox(
-              child: ProductShortDetailCard(
-                productId: product.id,
-                itemCount: itemCount,
-                variation: variation,
-                onPressed: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => ProductDetailsScreen(
-                        productId: product.id,
+            Future<Product> pdctFuture = ProductDatabaseHelper()
+                .getProductWithID(cartItem.productId ?? cartItem.id);
+
+            return FutureBuilder(
+                future: pdctFuture,
+                builder: (context, pdctSnapshot) {
+                  if (pdctSnapshot.hasData) {
+                    Product product = pdctSnapshot.data;
+                    print("order items - product - $product");
+                    int itemCount = 0;
+                    // print(i);
+                    // if (i == 1) {
+                    if (cartItem.productId != null) {
+                      // variation = cartItem.variation[0];
+                      variation = product.variations
+                          .where(
+                              (variant) => variant[VARIANT_ID] == cartItem.id)
+                          .first;
+                      // print({product.id: variation});
+                      itemCount = variation["item_count"];
+                      // print(i);
+                      // print(product.title);
+                    } else {
+                      itemCount = cartItem.itemCount;
+                      // print(product.title);
+
+                      // print(itemCount);
+                      // print({
+                      //   product.id: {"item_count": itemCount}
+                      // });
+                      // }
+                    }
+                    i++;
+
+                    return SizedBox(
+                      child: OrderProductShortDetailCard(
+                        // productId: product.id,
+                        product: product,
+                        itemCount: itemCount,
+                        variantId: cartItem.id,
+                        onPressed: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => ProductDetailsScreen(
+                                productId: product.id,
+                              ),
+                            ),
+                          );
+                        },
                       ),
-                    ),
-                  );
-                },
-              ),
-            );
+                    );
+                  } else if (pdctSnapshot.connectionState ==
+                      ConnectionState.waiting) {
+                    return Center(
+                      child: CircularProgressIndicator(),
+                    );
+                  } else if (pdctSnapshot.hasError) {
+                    final error = snapshot.error;
+                    Logger().w(error.toString());
+                    return Center(
+                      child: Text(
+                        error.toString(),
+                      ),
+                    );
+                  } else {
+                    return Center(
+                      child: Icon(
+                        Icons.error,
+                      ),
+                    );
+                  }
+                });
           } else if (snapshot.connectionState == ConnectionState.waiting) {
             return Center(
               child: CircularProgressIndicator(),
@@ -292,7 +337,6 @@ class _OrderItemsState extends State<OrderItems> {
               child: ProductShortDetailCard(
                 productId: product.id,
                 itemCount: itemCount,
-                variation: null,
                 onPressed: () {
                   Navigator.push(
                     context,

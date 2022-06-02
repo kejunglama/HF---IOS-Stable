@@ -53,7 +53,7 @@ class CategoryHierarchyList extends StatelessWidget {
   Widget build(BuildContext context) {
     Map _ch = new Map.from(categoryHierarchy);
     _ch.remove("All Products");
-    print(_ch);
+    // print(_ch);
     var i = 1;
 
     return Expanded(

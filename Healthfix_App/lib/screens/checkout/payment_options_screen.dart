@@ -10,7 +10,8 @@ class PaymentOptionsScreen extends StatefulWidget {
   List selectedCartItems;
   Future<void> Function(Map orderDetails, List selectedProductsUid) onCheckout;
 
-  PaymentOptionsScreen({this.orderDetails, this.onCheckout, this.selectedCartItems});
+  PaymentOptionsScreen(
+      {this.orderDetails, this.onCheckout, this.selectedCartItems});
 
   @override
   State<PaymentOptionsScreen> createState() => _PaymentOptionsScreenState();
@@ -24,10 +25,7 @@ class _PaymentOptionsScreenState extends State<PaymentOptionsScreen> {
     return Scaffold(
         resizeToAvoidBottomInset: false,
         appBar: AppBar(
-          title: Text(
-            "Payment Options",
-            style: cusHeadingStyle(),
-          ),
+          title: Text("Payment Options", style: cusHeadingStyle()),
         ),
         body: Container(
           padding: EdgeInsets.all(getProportionateScreenWidth(20)),
@@ -37,7 +35,11 @@ class _PaymentOptionsScreenState extends State<PaymentOptionsScreen> {
               Column(
                 children: [
                   for (var i = 0; i < payMethods.length; i++)
-                    buildPayMethodCard(payMethods[i]["id"], payMethods[i]["heading"], payMethods[i]["sub"], payMethods[i]["url"]),
+                    buildPayMethodCard(
+                        payMethods[i]["id"],
+                        payMethods[i]["heading"],
+                        payMethods[i]["sub"],
+                        payMethods[i]["url"]),
                 ],
               ),
               DefaultButton(
@@ -73,7 +75,8 @@ class _PaymentOptionsScreenState extends State<PaymentOptionsScreen> {
                   } else {
                     widget.orderDetails["pay_method"] = selected;
                     print(widget.orderDetails);
-                    widget.onCheckout(widget.orderDetails, widget.selectedCartItems);
+                    print(widget.selectedCartItems);
+                    // widget.onCheckout(widget.orderDetails, widget.selectedCartItems);
                   }
 
                   // (orderDetails);
@@ -142,7 +145,8 @@ class _PaymentOptionsScreenState extends State<PaymentOptionsScreen> {
             ),
             Visibility(
               visible: isSelected,
-              child: Icon(Icons.check_circle_outline_rounded, color: Colors.green),
+              child:
+                  Icon(Icons.check_circle_outline_rounded, color: Colors.green),
             ),
           ],
         ),
