@@ -16,7 +16,7 @@ import 'components/order_items.dart';
 import 'components/total_amounts.dart';
 
 class CheckoutScreen extends StatefulWidget {
-  Future<void> Function(Map orderDetails, List selectedProductsUid)
+  Future<void> Function(Map orderDetails, List selectedCartItems)
       onCheckoutPressed;
   List selectedCartItems;
   bool isBuyNow;
@@ -65,6 +65,8 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
   @override
   Widget build(BuildContext context) {
     arr = [];
+    // print("selectedCartItems");
+    // print(widget.selectedCartItems);
 
     return Scaffold(
       resizeToAvoidBottomInset: false,

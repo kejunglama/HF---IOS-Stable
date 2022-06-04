@@ -202,6 +202,7 @@ class OrderDetails extends StatelessWidget {
                     children: [
                       ProductShortDetailCard(
                         productId: product.id,
+                        variantId: products["var_id"],
                         itemCount: products["item_count"],
                         onPressed: () {
                           Navigator.push(

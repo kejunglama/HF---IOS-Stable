@@ -180,11 +180,13 @@ class _OrderItemsState extends State<OrderItems> {
     );
   }
 
-  Widget buildCartItem(String cartItemId, int index) {
+  Widget buildCartItem(Map cartItemIdMap, int index) {
+    String cartItemId = cartItemIdMap["var_id"] ?? cartItemIdMap["product_id"];
+
     Future<CartItem> cartItemFuture =
         UserDatabaseHelper().getCartItemFromId(cartItemId);
 
-    print("cartItemId $cartItemId");
+    // print("cartItemId $cartItemId");
     Map variation;
 
     String VARIANT_ID = "var_id";
@@ -211,8 +213,8 @@ class _OrderItemsState extends State<OrderItems> {
           if (snapshot.hasData) {
             CartItem cartItem = snapshot.data;
 
-            print("cartItem $cartItem");
-            print("product Id ${cartItem.productId ?? cartItem.id}");
+            // print("cartItem $cartItem");
+            // print("product Id ${cartItem.productId ?? cartItem.id}");
 
             Future<Product> pdctFuture = ProductDatabaseHelper()
                 .getProductWithID(cartItem.productId ?? cartItem.id);
@@ -222,7 +224,7 @@ class _OrderItemsState extends State<OrderItems> {
                 builder: (context, pdctSnapshot) {
                   if (pdctSnapshot.hasData) {
                     Product product = pdctSnapshot.data;
-                    print("order items - product - $product");
+                    // print("order items - product - $product");
                     int itemCount = 0;
                     // print(i);
                     // if (i == 1) {

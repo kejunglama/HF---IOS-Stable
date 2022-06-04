@@ -438,19 +438,28 @@ class UserDatabaseHelper {
     return true;
   }
 
-  Future<List<String>> get allCartItemsList async {
+  Future<List<Map>> get allCartItemsList async {
     String uid = AuthentificationService().currentUser.uid;
     final querySnapshot = await firestore
         .collection(USERS_COLLECTION_NAME)
         .doc(uid)
         .collection(CART_COLLECTION_NAME)
         .get();
-    List itemsId = List<String>();
+    List<Map> itemsIds = [];
     for (final item in querySnapshot.docs) {
-      itemsId.add(item.id);
-      // print(item.data());
+      String productId = item.data()["product_id"];
+      String itemId = item.id;
+      Map cartItem = {};
+
+      if (productId == null) {
+        cartItem["product_id"] = itemId;
+      } else {
+        cartItem["var_id"] = itemId;
+        cartItem["product_id"] = productId;
+      }
+      itemsIds.add(cartItem);
     }
-    return itemsId;
+    return itemsIds;
   }
 
   Future<List<String>> get allCartProductsList async {

@@ -2,6 +2,7 @@ import 'Model.dart';
 
 class OrderedProduct extends Model {
   static const String PRODUCT_UID_KEY = "product_uid";
+  static const String VARIATION_UID_KEY = "var_id";
   static const String ITEM_COUNT_KEY = "item_count";
   static const String PRODUCTS_KEY = "products";
   static const String ORDER_DATE_KEY = "order_date";
@@ -56,7 +57,7 @@ class OrderedProduct extends Model {
   @override
   Map<String, dynamic> toUpdateMap() {
     final map = <String, dynamic>{};
-    if (productUid != null) map[PRODUCT_UID_KEY] = productUid;
+    // if (productUid != null) map[PRODUCT_UID_KEY] = productUid;
     if (orderDate != null) map[ORDER_DATE_KEY] = orderDate;
     return map;
   }

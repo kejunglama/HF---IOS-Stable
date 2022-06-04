@@ -12,6 +12,7 @@ import 'package:healthfix/models/Product.dart';
 import 'package:healthfix/screens/checkout/checkout_screen.dart';
 import 'package:healthfix/screens/product_details/product_details_screen.dart';
 import 'package:healthfix/services/data_streams/cart_items_stream.dart';
+import 'package:healthfix/services/data_streams/cart_product_id_stream.dart';
 import 'package:healthfix/services/database/product_database_helper.dart';
 import 'package:healthfix/services/database/user_database_helper.dart';
 import 'package:healthfix/size_config.dart';
@@ -81,12 +82,20 @@ class _BodyState extends State<Body> {
   }
 
   Widget buildCartItemsList() {
-    return StreamBuilder<List<String>>(
+    return StreamBuilder<List<Map>>(
       stream: cartItemsStream.stream,
       builder: (context, snapshot) {
         if (snapshot.hasData) {
-          List<String> cartItemsId = snapshot.data;
-          if (cartItemsId.length == 0) {
+          print(snapshot.data);
+          List<Map> cartItemsList = snapshot.data;
+          // List cartItemsId = [];
+          // cartandProductIds.forEach((_cartItem) {
+          //   cartItemsId.add(_cartItem["var_id"] ?? _cartItem["product_id"]);
+          // });
+          // print("cartItemsId");
+          // print(cartItemsId);
+
+          if (cartItemsList.length == 0) {
             return Center(
               child: NothingToShowContainer(
                 iconPath: "assets/icons/empty_cart.svg",
@@ -103,13 +112,13 @@ class _BodyState extends State<Body> {
                   padding: EdgeInsets.symmetric(
                       vertical: getProportionateScreenHeight(16)),
                   physics: BouncingScrollPhysics(),
-                  itemCount: cartItemsId.length,
+                  itemCount: cartItemsList.length,
                   itemBuilder: (context, index) {
-                    if (index >= cartItemsId.length) {
+                    if (index >= cartItemsList.length) {
                       return SizedBox(height: getProportionateScreenHeight(80));
                     }
                     return buildSelectableCartItemDismissible(
-                        context, cartItemsId[index], index);
+                        context, cartItemsList[index], index);
                   },
                 ),
               ),
@@ -186,59 +195,59 @@ class _BodyState extends State<Body> {
     );
   }
 
-  Widget buildCartItemDismissible(
-      BuildContext context, String cartItemId, int index) {
-    return Dismissible(
-      key: Key(cartItemId),
-      direction: DismissDirection.startToEnd,
-      dismissThresholds: {
-        DismissDirection.startToEnd: 0.65,
-      },
-      background: buildDismissibleBackground(),
-      child: buildCartItem(cartItemId, index),
-      confirmDismiss: (direction) async {
-        if (direction == DismissDirection.startToEnd) {
-          final confirmation = await showConfirmationDialog(
-            context,
-            "Remove Product from Cart?",
-          );
-          if (confirmation) {
-            if (direction == DismissDirection.startToEnd) {
-              bool result = false;
-              String snackbarMessage;
-              try {
-                result = await UserDatabaseHelper()
-                    .removeProductFromCart(cartItemId);
-                if (result == true) {
-                  snackbarMessage = "Product removed from cart successfully";
-                  await refreshPage();
-                } else {
-                  throw "Coulnd't remove product from cart due to unknown reason";
-                }
-              } on FirebaseException catch (e) {
-                Logger().w("Firebase Exception: $e");
-                snackbarMessage = "Something went wrong";
-              } catch (e) {
-                Logger().w("Unknown Exception: $e");
-                snackbarMessage = "Something went wrong";
-              } finally {
-                Logger().i(snackbarMessage);
-                ScaffoldMessenger.of(context).showSnackBar(
-                  SnackBar(
-                    content: Text(snackbarMessage),
-                  ),
-                );
-              }
+  // Widget buildCartItemDismissible(
+  //     BuildContext context, String cartItemId, int index) {
+  //   return Dismissible(
+  //     key: Key(cartItemId),
+  //     direction: DismissDirection.startToEnd,
+  //     dismissThresholds: {
+  //       DismissDirection.startToEnd: 0.65,
+  //     },
+  //     background: buildDismissibleBackground(),
+  //     child: buildCartItem(cartItemId, index),
+  //     confirmDismiss: (direction) async {
+  //       if (direction == DismissDirection.startToEnd) {
+  //         final confirmation = await showConfirmationDialog(
+  //           context,
+  //           "Remove Product from Cart?",
+  //         );
+  //         if (confirmation) {
+  //           if (direction == DismissDirection.startToEnd) {
+  //             bool result = false;
+  //             String snackbarMessage;
+  //             try {
+  //               result = await UserDatabaseHelper()
+  //                   .removeProductFromCart(cartItemId);
+  //               if (result == true) {
+  //                 snackbarMessage = "Product removed from cart successfully";
+  //                 await refreshPage();
+  //               } else {
+  //                 throw "Coulnd't remove product from cart due to unknown reason";
+  //               }
+  //             } on FirebaseException catch (e) {
+  //               Logger().w("Firebase Exception: $e");
+  //               snackbarMessage = "Something went wrong";
+  //             } catch (e) {
+  //               Logger().w("Unknown Exception: $e");
+  //               snackbarMessage = "Something went wrong";
+  //             } finally {
+  //               Logger().i(snackbarMessage);
+  //               ScaffoldMessenger.of(context).showSnackBar(
+  //                 SnackBar(
+  //                   content: Text(snackbarMessage),
+  //                 ),
+  //               );
+  //             }
 
-              return result;
-            }
-          }
-        }
-        return false;
-      },
-      onDismissed: (direction) {},
-    );
-  }
+  //             return result;
+  //           }
+  //         }
+  //       }
+  //       return false;
+  //     },
+  //     onDismissed: (direction) {},
+  //   );
+  // }
 
   buildConfirmationToDelete(DismissDirection direction, cartItemId) async {
     final confirmation = await showConfirmationDialog(
@@ -279,8 +288,11 @@ class _BodyState extends State<Body> {
   }
 
   Widget buildSelectableCartItemDismissible(
-      BuildContext context, String cartItemId, int index) {
-    bool _isSelected = selectedCartItems.contains(cartItemId);
+      BuildContext context, Map cartItemIdMap, int index) {
+    bool _isSelected = selectedCartItems.contains(cartItemIdMap);
+    String cartItemPdctId =
+        cartItemIdMap["product_id"] ?? cartItemIdMap["var_id"];
+    String cartItemId = cartItemIdMap["var_id"] ?? cartItemIdMap["product_id"];
     return Dismissible(
       key: Key(cartItemId),
       direction: DismissDirection.startToEnd,
@@ -290,7 +302,7 @@ class _BodyState extends State<Body> {
       background: buildDismissibleBackground(),
       child: InkWell(
         onLongPress: () {
-          buildConfirmationToDelete(DismissDirection.startToEnd, cartItemId);
+          buildConfirmationToDelete(DismissDirection.startToEnd, cartItemIdMap);
         },
         child: Row(
           children: [
@@ -302,19 +314,21 @@ class _BodyState extends State<Body> {
               onPressed: () {
                 setState(() {
                   _isSelected
-                      ? selectedCartItems.remove(cartItemId)
-                      : selectedCartItems.add(cartItemId);
+                      ? selectedCartItems.remove(cartItemIdMap)
+                      : selectedCartItems.add(cartItemIdMap);
                 });
                 // print(selectedCartItems);
               },
             ),
-            Expanded(child: buildCartItem(cartItemId, index)),
+            Expanded(
+                child: buildCartItem(
+                    cartItemIdMap, cartItemId, cartItemPdctId, index)),
           ],
         ),
       ),
       confirmDismiss: (direction) async {
         if (direction == DismissDirection.startToEnd) {
-          buildConfirmationToDelete(DismissDirection.startToEnd, cartItemId);
+          buildConfirmationToDelete(DismissDirection.startToEnd, cartItemIdMap);
 
           // final confirmation = await showConfirmationDialog(
           //   context,
@@ -357,8 +371,10 @@ class _BodyState extends State<Body> {
     );
   }
 
-  Widget buildCartItem(String cartItemId, int index) {
-    Future<Product> pdct = ProductDatabaseHelper().getProductWithID(cartItemId);
+  Widget buildCartItem(
+      Map cartItemMap, String cartItemId, String cartItemPdctId, int index) {
+    Future<Product> pdct =
+        ProductDatabaseHelper().getProductWithID(cartItemPdctId);
     Future<CartItem> cartItem =
         UserDatabaseHelper().getCartItemFromId(cartItemId);
 
@@ -409,7 +425,7 @@ class _BodyState extends State<Body> {
                         context,
                         MaterialPageRoute(
                           builder: (context) => ProductDetailsScreen(
-                            productId: cartItem.productId ?? cartItem.id,
+                            productId: cartItemPdctId,
                           ),
                         ),
                       );
@@ -617,7 +633,7 @@ class _BodyState extends State<Body> {
   }
 
   Future<void> selectedCheckoutButtonCallback(
-      Map orderDetails, List selectedProductsUid) async {
+      Map orderDetails, List selectedCartItems) async {
     shutBottomSheet();
     // final confirmation = await showConfirmationDialog(
     //   context,
@@ -626,22 +642,47 @@ class _BodyState extends State<Body> {
     // if (confirmation == false) {
     //   return;
     // }
+    List selectedCartItemsIds = [];
+    selectedCartItems.forEach((cartItem) {
+      selectedCartItemsIds.add(cartItem["var_id"] ?? cartItem["product_id"]);
+    });
+    print("selectedCartItemsIds");
+    print(selectedCartItemsIds);
+
     final orderFuture =
-        UserDatabaseHelper().emptySelectedCart(selectedProductsUid);
+        UserDatabaseHelper().emptySelectedCart(selectedCartItemsIds);
     orderFuture.then((orderedProductsUid) async {
       if (orderedProductsUid != null) {
-        // print(orderedProductsUid);
-        // final dateTime = DateTime.now();
+        print("orderedProductsUid");
+        print(orderedProductsUid);
 
         final formatedDateTime = cusDateTimeFormatter.format(DateTime.now());
+        // final dateTime = DateTime.now();
         // List<OrderedProduct> orderedProducts =
         // orderedProductsUid.map((e) => OrderedProduct(null, productUid: e, orderDate: formatedDateTime)).toList();
         List orderedProducts = [];
         for (var entry in orderedProductsUid.entries) {
-          orderedProducts.add({
-            OrderedProduct.PRODUCT_UID_KEY: entry.key,
-            OrderedProduct.ITEM_COUNT_KEY: entry.value["item_count"],
-          });
+          Map orderedProduct = {};
+          print("entry");
+          print(entry.key);
+
+          if (entry.value["product_id"] != null) {
+            orderedProduct[OrderedProduct.PRODUCT_UID_KEY] =
+                entry.value["product_id"];
+            orderedProduct[OrderedProduct.VARIATION_UID_KEY] = entry.key;
+          } else {
+            orderedProduct[OrderedProduct.PRODUCT_UID_KEY] = entry.key;
+          }
+
+          // orderedProduct[OrderedProduct.PRODUCT_UID_KEY] =
+          //     entry.value["product_id"] ?? entry.key;
+          // if (entry.value["var_id"] == null)
+          //   orderedProduct[OrderedProduct.VARIATION_UID_KEY] = entry.key;
+          orderedProduct[OrderedProduct.ITEM_COUNT_KEY] =
+              entry.value["item_count"];
+          print("orderedProduct");
+          print(orderedProduct);
+          orderedProducts.add(orderedProduct);
         }
         OrderedProduct order = OrderedProduct(
           null,

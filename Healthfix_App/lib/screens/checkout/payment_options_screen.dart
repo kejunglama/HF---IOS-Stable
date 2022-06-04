@@ -45,6 +45,8 @@ class _PaymentOptionsScreenState extends State<PaymentOptionsScreen> {
               DefaultButton(
                 text: "Proceed to Payment",
                 press: () {
+                  print("selectedCartItems");
+                  print(widget.selectedCartItems);
                   // if (address.phone != phoneFieldController.text) address.phone = phoneFieldController.text;
                   //
                   // final Map _address = address.toMap();
@@ -76,7 +78,8 @@ class _PaymentOptionsScreenState extends State<PaymentOptionsScreen> {
                     widget.orderDetails["pay_method"] = selected;
                     print(widget.orderDetails);
                     print(widget.selectedCartItems);
-                    // widget.onCheckout(widget.orderDetails, widget.selectedCartItems);
+                    widget.onCheckout(
+                        widget.orderDetails, widget.selectedCartItems);
                   }
 
                   // (orderDetails);

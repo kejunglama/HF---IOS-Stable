@@ -53,7 +53,7 @@ class ProductShortDetailCard extends StatelessWidget {
             bool hasSizeVariation = false;
             bool hasColorVariation = false;
             String variantText = "";
-            if (hasVariations) {
+            if (hasVariations && variantId != null) {
               variation = product.variations
                   .where((variant) => variant["var_id"] == variantId)
                   .first;
@@ -122,10 +122,10 @@ class ProductShortDetailCard extends StatelessWidget {
                       // ),
                       // sizedBoxOfHeight(10),
 
-                      Visibility(
-                        visible: itemCount != null,
-                        child: Text(itemCount.toString()),
-                      ),
+                      // Visibility(
+                      //   visible: itemCount != null,
+                      //   child: Text(itemCount.toString()),
+                      // ),
                       Visibility(
                         visible: (hasVariations),
                         child: Row(
