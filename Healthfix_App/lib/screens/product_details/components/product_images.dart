@@ -8,12 +8,15 @@ import '../../../constants.dart';
 import '../../../size_config.dart';
 
 class ProductImages extends StatefulWidget {
+  final BoxFit imageFit;
+
   const ProductImages({
     Key key,
-    @required this.product,
+    @required this.imageList,
+    this.imageFit,
   }) : super(key: key);
 
-  final Product product;
+  final List imageList;
 
   @override
   _ProductImagesState createState() => _ProductImagesState();
@@ -79,37 +82,41 @@ class _ProductImagesState extends State<ProductImages> {
               //   ),
               // ),
               // Product Image Slider
-              CarouselSlider(
-                options: CarouselOptions(
-                  height: SizeConfig.screenWidth,
-                  aspectRatio: 1,
-                  autoPlay: true,
-                  enableInfiniteScroll: false,
-                  autoPlayAnimationDuration: Duration(seconds: 1),
-                  autoPlayInterval: Duration(seconds: 10),
-                  viewportFraction: 1,
-                  onPageChanged: (index, reason) {
-                    setState(() {
-                      productImagesSwiper.currentImageIndex = index;
-                    });
-                  },
+              Container(
+                height: getProportionateScreenHeight(360),
+                child: CarouselSlider(
+                  options: CarouselOptions(
+                    height: getProportionateScreenHeight(360),
+                    // aspectRatio: SizeConfig.screenWidth /getProportionateScreenHeight(360),
+                    autoPlay: true,
+                    enableInfiniteScroll: false,
+                    autoPlayAnimationDuration: Duration(seconds: 1),
+                    autoPlayInterval: Duration(seconds: 10),
+                    viewportFraction: 1,
+                    onPageChanged: (index, reason) {
+                      setState(() {
+                        productImagesSwiper.currentImageIndex = index;
+                      });
+                    },
+                  ),
+                  items: widget.imageList
+                      .map(
+                        (item) => Container(
+                          // height: SizeConfig.screenWidth,
+                          // width: SizeConfig.screenWidth,
+                          child: Image.network(item,
+                              fit: widget.imageFit ?? BoxFit.cover),
+                        ),
+                      )
+                      .toList(),
                 ),
-                items: widget.product.images
-                    .map(
-                      (item) => Container(
-                        height: SizeConfig.screenWidth,
-                        width: SizeConfig.screenWidth,
-                        child: Image.network(item, fit: BoxFit.cover),
-                      ),
-                    )
-                    .toList(),
               ),
               // SizedBox(height: 10),
               // Slider Indicator
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
-                children: widget.product.images.map((urlOfItem) {
-                  int index = widget.product.images.indexOf(urlOfItem);
+                children: widget.imageList.map((urlOfItem) {
+                  int index = widget.imageList.indexOf(urlOfItem);
                   return Container(
                     width: getProportionateScreenHeight(8),
                     height: getProportionateScreenHeight(8),
@@ -178,7 +185,7 @@ class _ProductImagesState extends State<ProductImages> {
                   ? kPrimaryColor
                   : Colors.transparent),
         ),
-        child: Image.network(widget.product.images[index]),
+        child: Image.network(widget.imageList[index]),
       ),
     );
   }

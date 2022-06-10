@@ -40,18 +40,18 @@ class Body extends StatelessWidget {
                         sizedBoxOfHeight(getProportionateScreenHeight(100)),
                         Text(name,
                             style: cusHeadingStyle(
-                                getProportionateScreenHeight(28))),
+                                fontSize: getProportionateScreenHeight(28))),
                         // sizedBoxOfHeight(4),
                         Text(title,
                             style: cusHeadingStyle(
-                                getProportionateScreenHeight(20), Colors.blue)),
+                                fontSize: getProportionateScreenHeight(20),
+                                color: Colors.blue)),
                         sizedBoxOfHeight(8),
                         Text(experience,
                             style: cusHeadingStyle(
-                                getProportionateScreenHeight(16),
-                                Colors.black54,
-                                null,
-                                FontWeight.w400)),
+                                fontSize: getProportionateScreenHeight(16),
+                                color: Colors.black54,
+                                fontWeight: FontWeight.w400)),
                         sizedBoxOfHeight(12),
                       ],
                     ),
@@ -102,11 +102,13 @@ class Body extends StatelessWidget {
               sizedBoxOfWidth(4),
               Text("Specialization: ",
                   style: cusHeadingStyle(
-                      getProportionateScreenHeight(16), Colors.blue)),
+                      fontSize: getProportionateScreenHeight(16),
+                      color: Colors.blue)),
               Expanded(
                 child: Text(specialization,
                     maxLines: 2,
-                    style: cusHeadingStyle(getProportionateScreenHeight(16))),
+                    style: cusHeadingStyle(
+                        fontSize: getProportionateScreenHeight(16))),
               ),
             ],
           ),
@@ -118,7 +120,8 @@ class Body extends StatelessWidget {
               sizedBoxOfWidth(4),
               Text("Available Timings: ",
                   style: cusHeadingStyle(
-                      getProportionateScreenHeight(16), Colors.blue)),
+                      fontSize: getProportionateScreenHeight(16),
+                      color: Colors.blue)),
               sizedBoxOfWidth(4),
               Column(
                 crossAxisAlignment: CrossAxisAlignment.start,

@@ -2,10 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:healthfix/components/default_button.dart';
 import 'package:healthfix/components/nothingtoshow_container.dart';
 import 'package:healthfix/models/Address.dart';
+import 'package:healthfix/models/Meal.dart';
 import 'package:healthfix/models/Product.dart';
 import 'package:healthfix/screens/checkout/payment_options_screen.dart';
 import 'package:healthfix/screens/manage_addresses/manage_addresses_screen.dart';
 import 'package:healthfix/services/data_streams/addresses_stream.dart';
+import 'package:healthfix/services/database/meals_database_helper.dart';
 import 'package:healthfix/services/database/product_database_helper.dart';
 import 'package:healthfix/services/database/user_database_helper.dart';
 import 'package:healthfix/size_config.dart';
@@ -18,12 +20,20 @@ import 'components/total_amounts.dart';
 class CheckoutScreen extends StatefulWidget {
   Future<void> Function(Map orderDetails, List selectedCartItems)
       onCheckoutPressed;
+  Future<void> Function(Map orderDetails, List selectedCartItems)
+      onCheckoutPressedForMeals;
   List selectedCartItems;
   bool isBuyNow;
+  bool isMeal;
 
-  CheckoutScreen(
-      {Key key, this.onCheckoutPressed, this.selectedCartItems, this.isBuyNow})
-      : super(key: key);
+  CheckoutScreen({
+    Key key,
+    this.onCheckoutPressed,
+    this.selectedCartItems,
+    this.isBuyNow,
+    this.isMeal,
+    this.onCheckoutPressedForMeals,
+  }) : super(key: key);
 
   @override
   State<CheckoutScreen> createState() => _CheckoutScreenState();
@@ -65,8 +75,9 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
   @override
   Widget build(BuildContext context) {
     arr = [];
-    // print("selectedCartItems");
-    // print(widget.selectedCartItems);
+
+    print("onCheckoutPressedForMeals");
+    print(widget.onCheckoutPressedForMeals);
 
     return Scaffold(
       resizeToAvoidBottomInset: false,
@@ -108,23 +119,25 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
                               // Order Items
                               // OrderItems(getCartPdct: getCartPdct),
                               OrderItems(
-                                  selectedCartItems: widget.selectedCartItems,
-                                  isBuyNow: widget.isBuyNow),
+                                selectedCartItems: widget.selectedCartItems,
+                                isBuyNow: widget.isBuyNow,
+                                isMeal: widget.isMeal,
+                              ),
 
                               sizedBoxOfHeight(12),
                               Divider(thickness: 0.1, color: Colors.cyan),
                               sizedBoxOfHeight(12),
                               widget.isBuyNow ?? false
                                   ? FutureBuilder(
-                                      future: ProductDatabaseHelper()
-                                          .getProductWithID(
+                                      future: MealsDatabaseHelper()
+                                          .getMealsWithID(
                                               widget.selectedCartItems[0]),
                                       builder: (context, snapshot) {
                                         if (snapshot.hasData) {
-                                          Product pdct = snapshot.data;
-                                          int price =
-                                              pdct.discountPrice.toInt();
-                                          cartTotal = price;
+                                          Meal meal = snapshot.data;
+                                          int price = meal.discountPrice ??
+                                              meal.originalPrice;
+                                          cartTotal = price.toInt();
                                           deliveryCharge = 100;
                                           // print(cartTotal.runtimeType);
                                           return TotalAmounts(
@@ -175,10 +188,12 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
                                 context,
                                 MaterialPageRoute(
                                   builder: (context) => PaymentOptionsScreen(
-                                      onCheckout: widget.onCheckoutPressed,
-                                      orderDetails: orderDetails,
-                                      selectedCartItems:
-                                          widget.selectedCartItems),
+                                    onCheckout: widget.isMeal ?? false
+                                        ? widget.onCheckoutPressedForMeals
+                                        : widget.onCheckoutPressed,
+                                    orderDetails: orderDetails,
+                                    selectedCartItems: widget.selectedCartItems,
+                                  ),
                                 ),
                               );
 
@@ -301,8 +316,10 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
         ),
         contentPadding: EdgeInsets.all(getProportionateScreenHeight(10)),
         hintText: hint,
-        hintStyle: cusHeadingStyle(getProportionateScreenHeight(14),
-            Colors.grey, null, FontWeight.w400),
+        hintStyle: cusHeadingStyle(
+            fontSize: getProportionateScreenHeight(14),
+            color: Colors.grey,
+            fontWeight: FontWeight.w400),
 
         // labelText: "Email",
         floatingLabelBehavior: FloatingLabelBehavior.always,

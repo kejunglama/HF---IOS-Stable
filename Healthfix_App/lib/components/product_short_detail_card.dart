@@ -1,6 +1,7 @@
 // ignore_for_file: must_be_immutable
 
 import 'package:flutter/material.dart';
+import 'package:healthfix/models/Meal.dart';
 import 'package:healthfix/models/Product.dart';
 import 'package:healthfix/services/database/product_database_helper.dart';
 import 'package:logger/logger.dart';
@@ -24,6 +25,7 @@ class ProductShortDetailCard extends StatelessWidget {
     this.itemCount,
     this.buildConfirmationToDelete,
     String variationId,
+    Meal meal,
   }) : super(key: key);
 
   @override

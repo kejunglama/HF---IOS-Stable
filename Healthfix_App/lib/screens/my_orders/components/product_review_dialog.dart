@@ -60,8 +60,10 @@ class ProductReviewDialog extends StatelessWidget {
                 borderRadius: BorderRadius.circular(5.0),
               ),
               contentPadding: EdgeInsets.all(10),
-              hintStyle: cusHeadingStyle(getProportionateScreenHeight(14),
-                  Colors.grey, null, FontWeight.w400),
+              hintStyle: cusHeadingStyle(
+                  fontSize: getProportionateScreenHeight(14),
+                  color: Colors.grey,
+                  fontWeight: FontWeight.w400),
             ),
             style: TextStyle(fontSize: getProportionateScreenHeight(16)),
             onChanged: (value) {

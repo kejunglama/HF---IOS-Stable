@@ -313,7 +313,8 @@ class HomeScreenDrawer extends StatelessWidget {
             child: Text(
               user.displayName,
               style: cusHeadingStyle(
-                  getProportionateScreenHeight(22), kPrimaryColor),
+                  fontSize: getProportionateScreenHeight(22),
+                  color: kPrimaryColor),
             ),
           ),
           Text(
@@ -323,7 +324,9 @@ class HomeScreenDrawer extends StatelessWidget {
                     fontSize: getProportionateScreenHeight(16),
                     color: Colors.black,
                   )
-                : cusHeadingStyle(22, kPrimaryColor),
+                : cusHeadingStyle(
+                    fontSize: getProportionateScreenHeight(22),
+                    color: kPrimaryColor),
           ),
         ],
       ),

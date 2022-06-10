@@ -302,7 +302,7 @@ class _BodyState extends State<Body> {
       background: buildDismissibleBackground(),
       child: InkWell(
         onLongPress: () {
-          buildConfirmationToDelete(DismissDirection.startToEnd, cartItemIdMap);
+          buildConfirmationToDelete(DismissDirection.startToEnd, cartItemId);
         },
         child: Row(
           children: [

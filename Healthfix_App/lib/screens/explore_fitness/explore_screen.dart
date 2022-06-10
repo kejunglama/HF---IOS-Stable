@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:healthfix/constants.dart';
 import 'package:healthfix/screens/fitness_trainers/fitness_trainer_screen.dart';
 import 'package:healthfix/screens/gym_membership/gym_membership_screen.dart';
+import 'package:healthfix/screens/healthy_meals/healthy_meals_screen.dart';
+// import 'package:healthfix/screens/healthy_meals/healthy_meals_screen.dart';
 import 'package:healthfix/size_config.dart';
 
 class ExploreScreen extends StatelessWidget {
@@ -37,7 +39,8 @@ class ExploreScreen extends StatelessWidget {
     // FitnessTrainerDetailsScreen(),
     FitnessTrainersScreen(),
     GymMembershipScreen(),
-    GymMembershipScreen(),
+    HealthyMealsScreen(),
+    // GymMembershipScreen(),
   ];
 
   @override
@@ -77,16 +80,21 @@ class ExploreScreen extends StatelessWidget {
         backgroundColor: kPrimaryColor.withOpacity(0.9),
       ),
       body: SafeArea(
-        child: GridView.count(
-          crossAxisCount: 2,
-          childAspectRatio: 4 / 5,
-          children: List.generate(
-            titleList.length,
-            (i) => ExploreCard(
-              imageURL: imageList[i],
-              caption: captionList[i],
-              text: titleList[i],
-              toScreen: toScreen[i],
+        child: Padding(
+          padding:
+              EdgeInsets.symmetric(vertical: getProportionateScreenHeight(16)),
+          child: GridView.count(
+            crossAxisCount: 1,
+            childAspectRatio: 6 / 3,
+            mainAxisSpacing: getProportionateScreenHeight(16),
+            children: List.generate(
+              titleList.length,
+              (i) => ExploreCard(
+                imageURL: imageList[i],
+                caption: captionList[i],
+                text: titleList[i],
+                toScreen: toScreen[i],
+              ),
             ),
           ),
         ),
@@ -121,9 +129,10 @@ class ExploreCard extends StatelessWidget {
         );
       },
       child: Container(
-        width: SizeConfig.screenWidth / 2.2,
+        width: SizeConfig.screenWidth,
         alignment: Alignment.center,
-        margin: EdgeInsets.all(getProportionateScreenHeight(8)),
+        margin:
+            EdgeInsets.symmetric(horizontal: getProportionateScreenHeight(16)),
         decoration: BoxDecoration(
           gradient: LinearGradient(
             begin: Alignment.topRight,
@@ -146,16 +155,17 @@ class ExploreCard extends StatelessWidget {
           child: Align(
             alignment: Alignment.bottomLeft,
             child: Wrap(
-              // direction: Axis.vertical,
+              direction: Axis.vertical,
               children: [
                 Container(
                   margin:
                       EdgeInsets.only(bottom: getProportionateScreenHeight(8)),
                   child: Text(
                     text,
-                    maxLines: 2,
+                    maxLines: 1,
                     style: cusHeadingStyle(
-                        getProportionateScreenHeight(18), Colors.white),
+                        fontSize: getProportionateScreenHeight(24),
+                        color: Colors.white),
                   ),
                 ),
                 // SizedBox(height: getProportionateScreenHeight()),
@@ -163,7 +173,7 @@ class ExploreCard extends StatelessWidget {
                   caption,
                   maxLines: 2,
                   style: cusBodyStyle(
-                      getProportionateScreenHeight(14), null, Colors.white),
+                      getProportionateScreenHeight(16), null, Colors.white),
                 ),
                 // SizedBox(height: getProportionateScreenHeight(8)),
                 // cusButton(text: "Learn More"),
@@ -211,7 +221,9 @@ class cusButton extends StatelessWidget {
               onPressed: () {},
               child: Text(
                 text ?? 'Learn More',
-                style: cusHeadingStyle(16, Colors.white),
+                style: cusHeadingStyle(
+                    fontSize: getProportionateScreenHeight(16),
+                    color: Colors.white),
               ),
             ),
           ],

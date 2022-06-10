@@ -98,8 +98,8 @@ class AddToCartFAB extends StatelessWidget {
         elevation: 3,
         label: Text(
           "Add to Cart",
-          style:
-              cusHeadingStyle(getProportionateScreenHeight(14), Colors.white),
+          style: cusHeadingStyle(
+              fontSize: getProportionateScreenHeight(14), color: Colors.white),
         ),
         // icon: Icon(
         //   Icons.shopping_cart,

@@ -22,6 +22,8 @@ class _PaymentOptionsScreenState extends State<PaymentOptionsScreen> {
 
   @override
   Widget build(BuildContext context) {
+    print("widget.onCheckout");
+    print(widget.onCheckout);
     return Scaffold(
         resizeToAvoidBottomInset: false,
         appBar: AppBar(

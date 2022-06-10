@@ -259,7 +259,8 @@ class _BodyState extends State<Body> {
                       : Text(
                           _categoryName,
                           style: cusHeadingStyle(
-                              getProportionateScreenHeight(20), kPrimaryColor),
+                              fontSize: getProportionateScreenHeight(20),
+                              color: kPrimaryColor),
                         ),
                   // isExpanded: true,
                   iconSize: getProportionateScreenHeight(20),

@@ -55,7 +55,8 @@ class _BodyState extends State<Body> {
                     widget.isSelectAddressScreen
                         ? "Select Address"
                         : "Manage Addresses",
-                    style: cusHeadingStyle(getProportionateScreenHeight(28)),
+                    style: cusHeadingStyle(
+                        fontSize: getProportionateScreenHeight(28)),
                   ),
                   SizedBox(height: getProportionateScreenHeight(4)),
                   Text("Swipe LEFT to Edit, Swipe RIGHT to Delete",

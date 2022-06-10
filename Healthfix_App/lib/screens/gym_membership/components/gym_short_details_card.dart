@@ -94,7 +94,7 @@ class GymShortDetailsCard extends StatelessWidget {
                       children: [
                         Text(gym.name,
                             style: cusHeadingStyle(
-                                getProportionateScreenHeight(20))),
+                                fontSize: getProportionateScreenHeight(20))),
                         Row(
                           children: [
                             Icon(

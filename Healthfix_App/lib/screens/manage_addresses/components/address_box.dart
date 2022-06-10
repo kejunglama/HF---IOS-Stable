@@ -44,8 +44,8 @@ class AddressBox extends StatelessWidget {
                           Text(
                             "${address.title} Address",
                             style: cusHeadingStyle(
-                                getProportionateScreenHeight(20),
-                                kSecondaryColor),
+                                fontSize: getProportionateScreenHeight(20),
+                                color: kSecondaryColor),
                           ),
                           sizedBoxOfHeight(12),
                           Row(

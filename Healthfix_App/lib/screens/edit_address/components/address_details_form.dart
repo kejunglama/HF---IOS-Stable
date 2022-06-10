@@ -114,7 +114,10 @@ class _AddressDetailsFormState extends State<AddressDetailsForm> {
   DropdownButton buildDropdownButtonForZone(FormFieldState<String> state) {
     return DropdownButton<String>(
       hint: Text('Please choose a Zone'),
-      style: cusHeadingStyle(14, Colors.grey, null, FontWeight.w400),
+      style: cusHeadingStyle(
+          fontSize: getProportionateScreenHeight(14),
+          color: Colors.grey,
+          fontWeight: FontWeight.w400),
       value: _currentSelectedZone,
       isDense: true,
       onChanged: (String newValue) {
@@ -139,7 +142,10 @@ class _AddressDetailsFormState extends State<AddressDetailsForm> {
         : nepalZonesAndDistricts[_currentSelectedZone];
     return DropdownButton<String>(
       hint: Text('Please choose your City'),
-      style: cusHeadingStyle(14, Colors.grey, null, FontWeight.w400),
+      style: cusHeadingStyle(
+          fontSize: getProportionateScreenHeight(14),
+          color: Colors.grey,
+          fontWeight: FontWeight.w400),
       value: _currentSelectedCity,
       isDense: true,
       onChanged: (String newValue) {
@@ -175,7 +181,10 @@ class _AddressDetailsFormState extends State<AddressDetailsForm> {
           borderRadius: BorderRadius.circular(5.0),
         ),
         contentPadding: EdgeInsets.all(10),
-        hintStyle: cusHeadingStyle(14, Colors.grey, null, FontWeight.w400),
+        hintStyle: cusHeadingStyle(
+            fontSize: getProportionateScreenHeight(14),
+            color: Colors.grey,
+            fontWeight: FontWeight.w400),
       ),
       validator: (value) {
         if (titleFieldController.text.isEmpty) {
@@ -205,7 +214,10 @@ class _AddressDetailsFormState extends State<AddressDetailsForm> {
           borderRadius: BorderRadius.circular(5.0),
         ),
         contentPadding: EdgeInsets.all(10),
-        hintStyle: cusHeadingStyle(14, Colors.grey, null, FontWeight.w400),
+        hintStyle: cusHeadingStyle(
+            fontSize: getProportionateScreenHeight(14),
+            color: Colors.grey,
+            fontWeight: FontWeight.w400),
       ),
       validator: (value) {
         if (receiverFieldController.text.isEmpty) {
@@ -235,7 +247,10 @@ class _AddressDetailsFormState extends State<AddressDetailsForm> {
           borderRadius: BorderRadius.circular(5.0),
         ),
         contentPadding: EdgeInsets.all(10),
-        hintStyle: cusHeadingStyle(14, Colors.grey, null, FontWeight.w400),
+        hintStyle: cusHeadingStyle(
+            fontSize: getProportionateScreenHeight(14),
+            color: Colors.grey,
+            fontWeight: FontWeight.w400),
       ),
       validator: (value) {
         if (addressFieldController.text.isEmpty) {
@@ -265,7 +280,10 @@ class _AddressDetailsFormState extends State<AddressDetailsForm> {
           borderRadius: BorderRadius.circular(5.0),
         ),
         contentPadding: EdgeInsets.all(10),
-        hintStyle: cusHeadingStyle(14, Colors.grey, null, FontWeight.w400),
+        hintStyle: cusHeadingStyle(
+            fontSize: getProportionateScreenHeight(14),
+            color: Colors.grey,
+            fontWeight: FontWeight.w400),
       ),
       validator: (value) {
         if (cityFieldController.text.isEmpty) {
@@ -302,8 +320,10 @@ class _AddressDetailsFormState extends State<AddressDetailsForm> {
               borderRadius: BorderRadius.circular(5.0),
             ),
             contentPadding: EdgeInsets.all(10),
-            hintStyle: cusHeadingStyle(getProportionateScreenHeight(14),
-                Colors.grey, null, FontWeight.w400),
+            hintStyle: cusHeadingStyle(
+                fontSize: getProportionateScreenHeight(14),
+                color: Colors.grey,
+                fontWeight: FontWeight.w400),
           ),
           validator: (value) {
             if (fieldController.text.isEmpty) {
@@ -362,8 +382,10 @@ class _AddressDetailsFormState extends State<AddressDetailsForm> {
                   borderRadius: BorderRadius.circular(5.0),
                 ),
                 contentPadding: EdgeInsets.all(10),
-                hintStyle:
-                    cusHeadingStyle(14, Colors.grey, null, FontWeight.w400),
+                hintStyle: cusHeadingStyle(
+                    fontSize: getProportionateScreenHeight(14),
+                    color: Colors.grey,
+                    fontWeight: FontWeight.w400),
               ),
               isEmpty: isEmpty,
               child: DropdownButtonHideUnderline(
@@ -397,7 +419,10 @@ class _AddressDetailsFormState extends State<AddressDetailsForm> {
               borderRadius: BorderRadius.circular(5.0),
             ),
             contentPadding: EdgeInsets.all(10),
-            hintStyle: cusHeadingStyle(14, Colors.grey, null, FontWeight.w400),
+            hintStyle: cusHeadingStyle(
+                fontSize: getProportionateScreenHeight(14),
+                color: Colors.grey,
+                fontWeight: FontWeight.w400),
             // border: OutlineInputBorder(
             //   borderRadius: BorderRadius.circular(5.0),
             // ),
@@ -444,7 +469,10 @@ class _AddressDetailsFormState extends State<AddressDetailsForm> {
           borderRadius: BorderRadius.circular(5.0),
         ),
         contentPadding: EdgeInsets.all(10),
-        hintStyle: cusHeadingStyle(14, Colors.grey, null, FontWeight.w400),
+        hintStyle: cusHeadingStyle(
+            fontSize: getProportionateScreenHeight(14),
+            color: Colors.grey,
+            fontWeight: FontWeight.w400),
       ),
       validator: (value) {
         if (districtFieldController.text.isEmpty) {
@@ -474,7 +502,10 @@ class _AddressDetailsFormState extends State<AddressDetailsForm> {
           borderRadius: BorderRadius.circular(5.0),
         ),
         contentPadding: EdgeInsets.all(10),
-        hintStyle: cusHeadingStyle(14, Colors.grey, null, FontWeight.w400),
+        hintStyle: cusHeadingStyle(
+            fontSize: getProportionateScreenHeight(14),
+            color: Colors.grey,
+            fontWeight: FontWeight.w400),
       ),
       validator: (value) {
         if (stateFieldController.text.isEmpty) {
@@ -504,7 +535,10 @@ class _AddressDetailsFormState extends State<AddressDetailsForm> {
           borderRadius: BorderRadius.circular(5.0),
         ),
         contentPadding: EdgeInsets.all(10),
-        hintStyle: cusHeadingStyle(14, Colors.grey, null, FontWeight.w400),
+        hintStyle: cusHeadingStyle(
+            fontSize: getProportionateScreenHeight(14),
+            color: Colors.grey,
+            fontWeight: FontWeight.w400),
       ),
       validator: (value) {
         if (pincodeFieldController.text.isEmpty) {
@@ -538,7 +572,10 @@ class _AddressDetailsFormState extends State<AddressDetailsForm> {
           borderRadius: BorderRadius.circular(5.0),
         ),
         contentPadding: EdgeInsets.all(10),
-        hintStyle: cusHeadingStyle(14, Colors.grey, null, FontWeight.w400),
+        hintStyle: cusHeadingStyle(
+            fontSize: getProportionateScreenHeight(14),
+            color: Colors.grey,
+            fontWeight: FontWeight.w400),
       ),
       validator: (value) {
         if (landmarkFieldController.text.isEmpty) {
@@ -568,7 +605,10 @@ class _AddressDetailsFormState extends State<AddressDetailsForm> {
           borderRadius: BorderRadius.circular(5.0),
         ),
         contentPadding: EdgeInsets.all(10),
-        hintStyle: cusHeadingStyle(14, Colors.grey, null, FontWeight.w400),
+        hintStyle: cusHeadingStyle(
+            fontSize: getProportionateScreenHeight(14),
+            color: Colors.grey,
+            fontWeight: FontWeight.w400),
       ),
       validator: (value) {
         if (phoneFieldController.text.isEmpty) {

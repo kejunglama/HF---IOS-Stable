@@ -101,7 +101,7 @@ class _BodyState extends State<Body> {
                       children: [
                         Text(widget.gym.name,
                             style: cusHeadingStyle(
-                                getProportionateScreenHeight(25))),
+                                fontSize: getProportionateScreenHeight(25))),
                         Text("Opening Time: ${widget.gym.openingTime}",
                             style: GoogleFonts.poppins(
                                 fontSize: getProportionateScreenHeight(12))),
@@ -191,8 +191,8 @@ class _BodyState extends State<Body> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text("Information",
-                        style:
-                            cusHeadingStyle(getProportionateScreenHeight(20))),
+                        style: cusHeadingStyle(
+                            fontSize: getProportionateScreenHeight(20))),
                     sizedBoxOfHeight(getProportionateScreenHeight(12)),
                     Text(
                       widget.gym.desc,
@@ -317,7 +317,9 @@ class _BodyState extends State<Body> {
                       },
                       child: Text(
                         "Book Today →",
-                        style: cusHeadingStyle(18, Colors.white),
+                        style: cusHeadingStyle(
+                            fontSize: getProportionateScreenHeight(18),
+                            color: Colors.white),
                       )),
                 ],
               ),

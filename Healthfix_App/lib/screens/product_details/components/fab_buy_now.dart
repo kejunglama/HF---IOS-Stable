@@ -35,8 +35,8 @@ class BuyNowFAB extends StatelessWidget {
         elevation: 0,
         label: Text(
           "Buy Now",
-          style:
-              cusHeadingStyle(getProportionateScreenHeight(14), kPrimaryColor),
+          style: cusHeadingStyle(
+              fontSize: getProportionateScreenHeight(14), color: kPrimaryColor),
         ),
       ),
     );

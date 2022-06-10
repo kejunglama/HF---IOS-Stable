@@ -18,7 +18,8 @@ class ProductActionsSection extends StatelessWidget {
 
   ProductActionsSection({
     Key key,
-    @required this.product, this.setSelectedVariant,
+    @required this.product,
+    this.setSelectedVariant,
   }) : super(key: key);
 
   @override
@@ -27,7 +28,8 @@ class ProductActionsSection extends StatelessWidget {
       children: [
         Stack(
           children: [
-            ProductDescription(product: product,setSelectedVariant:setSelectedVariant),
+            ProductDescription(
+                product: product, setSelectedVariant: setSelectedVariant),
             // Align(
             //   alignment: Alignment.topCenter,
             //   child: buildFavouriteButton(),

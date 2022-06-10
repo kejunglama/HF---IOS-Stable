@@ -55,8 +55,10 @@ class ProductDescription extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Text("${product.brand?.toUpperCase()}",
-                  style: cusHeadingStyle(getProportionateScreenHeight(14),
-                      Colors.black87, null, FontWeight.w500)),
+                  style: cusHeadingStyle(
+                      fontSize: getProportionateScreenHeight(14),
+                      color: Colors.black87,
+                      fontWeight: FontWeight.w500)),
               sizedBoxOfHeight(8),
               Text(product.title.capitalize(),
                   style: GoogleFonts.montserrat(
@@ -96,7 +98,8 @@ class ProductDescription extends StatelessWidget {
                 TextSpan(
                   text: "By ",
                   style: cusHeadingStyle(
-                      getProportionateScreenHeight(14), kSecondaryColor),
+                      fontSize: getProportionateScreenHeight(14),
+                      color: kSecondaryColor),
                   children: [
                     TextSpan(
                       text: "${product.seller}",
@@ -199,7 +202,8 @@ class _ProductVariationDescriptionState
                       child: Text(
                         "Size: ",
                         style: cusHeadingStyle(
-                            getProportionateScreenWidth(12), Colors.grey),
+                            fontSize: getProportionateScreenWidth(12),
+                            color: Colors.grey),
                       ),
                     ),
                     // SizedBox(height: getProportionateScreenHeight(12)),
@@ -224,7 +228,8 @@ class _ProductVariationDescriptionState
                       child: Text(
                         "Available Colors: ",
                         style: cusHeadingStyle(
-                            getProportionateScreenWidth(12), Colors.grey),
+                            fontSize: getProportionateScreenWidth(12),
+                            color: Colors.grey),
                       ),
                     ),
                     // SizedBox(height: getProportionateScreenHeight(12)),

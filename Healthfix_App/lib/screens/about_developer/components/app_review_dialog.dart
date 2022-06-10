@@ -39,7 +39,10 @@ class AppReviewDialog extends StatelessWidget {
                 borderRadius: BorderRadius.circular(5.0),
               ),
               contentPadding: EdgeInsets.all(10),
-              hintStyle: cusHeadingStyle(14, Colors.grey, null, FontWeight.w400),
+              hintStyle: cusHeadingStyle(
+                  fontSize: getProportionateScreenHeight(14),
+                  color: Colors.grey,
+                  fontWeight: FontWeight.w400),
             ),
             onChanged: (value) {
               appReview.feedback = value;

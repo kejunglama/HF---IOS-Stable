@@ -90,8 +90,8 @@ class CategoryHierarchyList extends StatelessWidget {
                         },
                         child: Text(entry.key,
                             style: cusHeadingStyle(
-                                getProportionateScreenHeight(18),
-                                kPrimaryColor))),
+                                fontSize: getProportionateScreenHeight(18),
+                                color: kPrimaryColor))),
                   ),
                   for (var arrValue in entry.value)
                     Container(
@@ -187,10 +187,9 @@ class CategoryList extends StatelessWidget {
                           Text(
                             categories[i][TITLE_KEY],
                             style: cusHeadingStyle(
-                                getProportionateScreenHeight(14),
-                                kPrimaryColor,
-                                null,
-                                FontWeight.w300),
+                                fontSize: getProportionateScreenHeight(14),
+                                color: kPrimaryColor,
+                                fontWeight: FontWeight.w300),
                             textAlign: TextAlign.center,
                           ),
                         ],

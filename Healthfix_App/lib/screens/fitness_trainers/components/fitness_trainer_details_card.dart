@@ -62,13 +62,14 @@ class FitnessTrainerDetailsCard extends StatelessWidget {
                             children: [
                               Text(trainer.name,
                                   style: cusHeadingStyle(
-                                      getProportionateScreenHeight(20))),
+                                      fontSize:
+                                          getProportionateScreenHeight(20))),
                               Text(trainer.title,
                                   style: cusHeadingStyle(
-                                      getProportionateScreenHeight(16),
-                                      Colors.blue,
-                                      null,
-                                      FontWeight.w400)),
+                                      fontSize:
+                                          getProportionateScreenHeight(16),
+                                      color: Colors.blue,
+                                      fontWeight: FontWeight.w400)),
                               sizedBoxOfHeight(8),
                               Row(
                                 children: [

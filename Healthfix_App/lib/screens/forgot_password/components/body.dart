@@ -21,7 +21,9 @@ class Body extends StatelessWidget {
                   children: [
                     Text(
                       "Forgot Password",
-                      style: cusHeadingStyle(getProportionateScreenWidth(20), kPrimaryColor),
+                      style: cusHeadingStyle(
+                          fontSize: getProportionateScreenWidth(20),
+                          color: kPrimaryColor),
                     ),
                     SizedBox(height: SizeConfig.screenHeight * 0.01),
                     Text(

@@ -9,7 +9,8 @@ class Body extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    String imageURL = "https://cdn.shopify.com/s/files/1/1367/5201/products/Scv3TankTurboBlue-A2A3X-A2A3X-UBDR.A_ZH_ZH_800x.jpg?v=1647943311";
+    String imageURL =
+        "https://cdn.shopify.com/s/files/1/1367/5201/products/Scv3TankTurboBlue-A2A3X-A2A3X-UBDR.A_ZH_ZH_800x.jpg?v=1647943311";
     String pdctName = "Vital T-shirt for Gym Buy today and ";
     String pdctBrand = "GymShark";
     num oriPrice = 23000;
@@ -21,16 +22,20 @@ class Body extends StatelessWidget {
         buildHeader(),
         Column(
           children: [
-            buildPdctItem(imageURL, pdctName, pdctBrand, disPrice, oriPrice, discountPercentage),
-            buildPdctItem(imageURL, pdctName, pdctBrand, disPrice, oriPrice, discountPercentage),
-            buildPdctItem(imageURL, pdctName, pdctBrand, disPrice, oriPrice, discountPercentage),
+            buildPdctItem(imageURL, pdctName, pdctBrand, disPrice, oriPrice,
+                discountPercentage),
+            buildPdctItem(imageURL, pdctName, pdctBrand, disPrice, oriPrice,
+                discountPercentage),
+            buildPdctItem(imageURL, pdctName, pdctBrand, disPrice, oriPrice,
+                discountPercentage),
           ],
         ),
       ],
     );
   }
 
-  Container buildPdctItem(String imageURL, String pdctName, String pdctBrand, num disPrice, num oriPrice, num discountPercentage) {
+  Container buildPdctItem(String imageURL, String pdctName, String pdctBrand,
+      num disPrice, num oriPrice, num discountPercentage) {
     return Container(
       padding: EdgeInsets.all(getProportionateScreenHeight(8)),
       child: Container(
@@ -42,7 +47,8 @@ class Body extends StatelessWidget {
               height: getProportionateScreenHeight(90),
               margin: EdgeInsets.only(right: getProportionateScreenWidth(12)),
               child: ClipRRect(
-                borderRadius: BorderRadius.circular(getProportionateScreenHeight(5)),
+                borderRadius:
+                    BorderRadius.circular(getProportionateScreenHeight(5)),
                 child: Image.network(
                   imageURL,
                   fit: BoxFit.cover,
@@ -53,12 +59,18 @@ class Body extends StatelessWidget {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text(pdctName, style: cusHeadingStyle(16, Colors.black.withOpacity(0.7))),
+                  Text(pdctName,
+                      style: cusHeadingStyle(
+                          fontSize: getProportionateScreenHeight(16),
+                          color: Colors.black.withOpacity(0.7))),
                   Text(pdctBrand, style: cusBodyStyle()),
                   Row(
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
-                      Text("${currency.format(disPrice)}", style: cusHeadingStyle(16, Colors.black.withOpacity(0.7))),
+                      Text("${currency.format(disPrice)}",
+                          style: cusHeadingStyle(
+                              fontSize: getProportionateScreenHeight(16),
+                              color: Colors.black.withOpacity(0.7))),
                       sizedBoxOfWidth(4),
                       Text(
                         "${currency.format(oriPrice)}",
@@ -92,9 +104,12 @@ class Body extends StatelessWidget {
                                   itemCount: 5,
                                   itemSize: 16,
                                   ratingWidget: RatingWidget(
-                                    full: Icon(Icons.star_rounded, color: kPrimaryColor),
-                                    half: Icon(Icons.star_half_rounded, color: kPrimaryColor),
-                                    empty: Icon(Icons.star_outline_rounded, color: kPrimaryColor),
+                                    full: Icon(Icons.star_rounded,
+                                        color: kPrimaryColor),
+                                    half: Icon(Icons.star_half_rounded,
+                                        color: kPrimaryColor),
+                                    empty: Icon(Icons.star_outline_rounded,
+                                        color: kPrimaryColor),
                                   ),
                                 ),
                               ),
@@ -106,7 +121,8 @@ class Body extends StatelessWidget {
                         borderRadius: BorderRadius.circular(20),
                         child: Container(
                           color: kPrimaryColor,
-                          padding: EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+                          padding:
+                              EdgeInsets.symmetric(horizontal: 8, vertical: 4),
                           child: Row(
                             children: [
                               Icon(
@@ -115,7 +131,8 @@ class Body extends StatelessWidget {
                                 color: Colors.white,
                               ),
                               sizedBoxOfWidth(2),
-                              Text("ADD TO CART", style: TextStyle(color: Colors.white)),
+                              Text("ADD TO CART",
+                                  style: TextStyle(color: Colors.white)),
                             ],
                           ),
                         ),
@@ -147,8 +164,16 @@ class Body extends StatelessWidget {
             mainAxisSize: MainAxisSize.max,
             mainAxisAlignment: MainAxisAlignment.end,
             children: [
-              Text("Featured Products", style: cusHeadingStyle(20, Colors.white, null, FontWeight.w400)),
-              Text("Our Featured Products", style: cusHeadingStyle(16, Colors.white, null, FontWeight.w300)),
+              Text("Featured Products",
+                  style: cusHeadingStyle(
+                      fontSize: getProportionateScreenHeight(20),
+                      color: Colors.white,
+                      fontWeight: FontWeight.w400)),
+              Text("Our Featured Products",
+                  style: cusHeadingStyle(
+                      fontSize: getProportionateScreenHeight(16),
+                      color: Colors.white,
+                      fontWeight: FontWeight.w300)),
             ],
           ),
         ),

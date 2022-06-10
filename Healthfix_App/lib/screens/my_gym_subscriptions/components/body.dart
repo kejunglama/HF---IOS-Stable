@@ -146,7 +146,11 @@ class _BodyState extends State<Body> {
                                       Text(
                                         "${gymSubscription.gymName}",
                                         style: cusHeadingStyle(
-                                            16, Colors.black.withOpacity(0.7)),
+                                            fontSize:
+                                                getProportionateScreenHeight(
+                                                    16),
+                                            color:
+                                                Colors.black.withOpacity(0.7)),
                                       ),
                                       // sizedBoxOfHeight(8),
                                       Text(
@@ -163,7 +167,11 @@ class _BodyState extends State<Body> {
                                       Text(
                                         "${currency.format(gymSubscription.package["price"])}",
                                         style: cusHeadingStyle(
-                                            16, Colors.black.withOpacity(0.7)),
+                                            fontSize:
+                                                getProportionateScreenHeight(
+                                                    16),
+                                            color:
+                                                Colors.black.withOpacity(0.7)),
                                       ),
                                       Text(
                                         "${gymSubscription.package["duration"]}",

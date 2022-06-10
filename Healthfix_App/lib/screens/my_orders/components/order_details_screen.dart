@@ -1,12 +1,16 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:healthfix/components/meal_short_detail_card.dart';
 import 'package:healthfix/components/product_short_detail_card.dart';
+import 'package:healthfix/models/Meal.dart';
 import 'package:healthfix/models/OrderedProduct.dart';
 import 'package:healthfix/models/Product.dart';
 import 'package:healthfix/models/Review.dart';
+import 'package:healthfix/screens/healthy_meal_description/healthy_meal_desc_screen.dart';
 import 'package:healthfix/screens/my_orders/components/product_review_dialog.dart';
 import 'package:healthfix/screens/product_details/product_details_screen.dart';
 import 'package:healthfix/services/authentification/authentification_service.dart';
+import 'package:healthfix/services/database/meals_database_helper.dart';
 import 'package:healthfix/services/database/product_database_helper.dart';
 import 'package:intl/intl.dart';
 import 'package:logger/logger.dart';
@@ -23,7 +27,14 @@ class OrderDetails extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    orderedProduct.products.forEach((e) => buildOrderedProductItem(e));
+    bool hasOrderedProducts = orderedProduct.products != null;
+    bool hasOrderedMeals = orderedProduct.meals != null;
+
+    print(hasOrderedMeals);
+
+    // hasOrderedProducts
+    //     ? orderedProduct.products.forEach((e) => buildOrderedProductItem(e))
+    //     : null;
     Map orderDetails = orderedProduct.orderDetails;
     Map orderDetailsAddress = orderDetails["address"];
     Map orderDetailsTotals = orderDetails["totals"];
@@ -49,6 +60,18 @@ class OrderDetails extends StatelessWidget {
       "delivering": delivering,
       "done": done,
     };
+
+    print(orderedProduct.meals);
+
+    List<Widget> _widgets = [];
+    if (hasOrderedProducts)
+      _widgets = [
+        for (var e in orderedProduct.products) buildOrderedProductItem(e),
+      ];
+    else if (hasOrderedMeals)
+      _widgets = [
+        for (var e in orderedProduct.meals) buildOrderedMealItem(e),
+      ];
 
     return Scaffold(
       appBar: AppBar(),
@@ -77,10 +100,7 @@ class OrderDetails extends StatelessWidget {
                   SizedBox(
                     height: SizeConfig.screenHeight * 0.75,
                     child: Column(
-                      children: [
-                        for (var e in orderedProduct.products)
-                          buildOrderedProductItem(e)
-                      ],
+                      children: _widgets,
                     ),
                   ),
                 ],
@@ -136,12 +156,15 @@ class OrderDetails extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(_statusTitle,
-                    style: cusHeadingStyle(getProportionateScreenHeight(16),
-                        datetime.isNotEmpty ? Colors.black : Colors.black38)),
+                    style: cusHeadingStyle(
+                        fontSize: getProportionateScreenHeight(16),
+                        color: datetime.isNotEmpty
+                            ? Colors.black
+                            : Colors.black38)),
                 Text(datetime,
                     style: cusHeadingStyle(
-                        getProportionateScreenHeight(16),
-                        datetime.isNotEmpty ?? false
+                        fontSize: getProportionateScreenHeight(16),
+                        color: datetime.isNotEmpty ?? false
                             ? Colors.blue
                             : Colors.black38)),
                 Text(_statusSubText,
@@ -343,6 +366,142 @@ class OrderDetails extends StatelessWidget {
                               Logger().w("Unknown Exception: $e");
                             } finally {
                               if (prevReview == null) {
+                                prevReview = Review(currentUserUid,
+                                    reviewerUid: currentUserUid);
+                              }
+                            }
+
+                            final result = await showDialog(
+                              context: context,
+                              builder: (context) {
+                                return ProductReviewDialog(
+                                  review: prevReview,
+                                );
+                              },
+                            );
+                            if (result is Review) {
+                              bool reviewAdded = false;
+                              String snackbarMessage;
+                              try {
+                                reviewAdded = await ProductDatabaseHelper()
+                                    .addProductReview(product.id, result);
+                                if (reviewAdded == true) {
+                                  snackbarMessage =
+                                      "Product review added successfully";
+                                } else {
+                                  throw "Coulnd't add product review due to unknown reason";
+                                }
+                              } on FirebaseException catch (e) {
+                                Logger().w("Firebase Exception: $e");
+                                snackbarMessage = e.toString();
+                              } catch (e) {
+                                Logger().w("Unknown Exception: $e");
+                                snackbarMessage = e.toString();
+                              } finally {
+                                Logger().i(snackbarMessage);
+                                ScaffoldMessenger.of(context).showSnackBar(
+                                  SnackBar(
+                                    content: Text(snackbarMessage),
+                                  ),
+                                );
+                              }
+                            }
+                            // await refreshPage();
+                          },
+                          child: Text(
+                            "Give Product Review",
+                            style: TextStyle(
+                              color: Colors.white,
+                              fontWeight: FontWeight.w600,
+                              fontSize: getProportionateScreenHeight(16),
+                            ),
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              ],
+            ),
+          );
+        } else if (snapshot.connectionState == ConnectionState.waiting) {
+          return Center(child: CircularProgressIndicator());
+        } else if (snapshot.hasError) {
+          final error = snapshot.error.toString();
+          Logger().e(error);
+        }
+        return Icon(
+          Icons.error,
+          size: 60,
+          color: kTextColor,
+        );
+      },
+    );
+  }
+
+  Widget buildOrderedMealItem(String mealId) {
+    // print(products["item_count"]);
+    return FutureBuilder<Meal>(
+      future: MealsDatabaseHelper().getMealsWithID(mealId),
+      builder: (context, snapshot) {
+        if (snapshot.hasData) {
+          final meal = snapshot.data;
+          print("meal");
+          return Padding(
+            padding: EdgeInsets.symmetric(vertical: 6),
+            child: Column(
+              children: [
+                Container(
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(10),
+                    border: Border.symmetric(
+                      vertical: BorderSide(
+                        color: kTextColor.withOpacity(0.15),
+                      ),
+                      horizontal: BorderSide(
+                        color: kTextColor.withOpacity(0.15),
+                      ),
+                    ),
+                  ),
+                  child: Column(
+                    children: [
+                      MealShortDetailCard(
+                        meal: meal,
+                        itemCount: 1,
+                        onPressed: () {
+                          Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) =>
+                                    HealthyMealDescScreen(meal.id),
+                              ));
+                        },
+                      ),
+                      Container(
+                        width: double.infinity,
+                        padding: EdgeInsets.symmetric(
+                          horizontal: getProportionateScreenHeight(8),
+                          vertical: getProportionateScreenHeight(2),
+                        ),
+                        decoration: BoxDecoration(
+                          color: kPrimaryColor,
+                          borderRadius: BorderRadius.circular(5),
+                        ),
+                        child: FlatButton(
+                          onPressed: () async {
+                            String currentUserUid =
+                                AuthentificationService().currentUser.uid;
+                            Review prevReview;
+                            try {
+                              prevReview = await ProductDatabaseHelper()
+                                  .getProductReviewWithID(
+                                      meal.id, currentUserUid);
+                            } on FirebaseException catch (e) {
+                              Logger().w("Firebase Exception: $e");
+                            } catch (e) {
+                              Logger().w("Unknown Exception: $e");
+                            } finally {
+                              if (prevReview == null) {
                                 prevReview = Review(
                                   currentUserUid,
                                   reviewerUid: currentUserUid,
@@ -363,7 +522,7 @@ class OrderDetails extends StatelessWidget {
                               String snackbarMessage;
                               try {
                                 reviewAdded = await ProductDatabaseHelper()
-                                    .addProductReview(product.id, result);
+                                    .addProductReview(meal.id, result);
                                 if (reviewAdded == true) {
                                   snackbarMessage =
                                       "Product review added successfully";

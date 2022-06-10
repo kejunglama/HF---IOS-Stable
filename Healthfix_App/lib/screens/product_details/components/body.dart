@@ -167,7 +167,7 @@ class _BodyState extends State<Body> {
                                                 getProportionateScreenWidth(8)),
                                         child: Icon(
                                           Icons.search_rounded,
-                                          color: kPrimaryColor,
+                                          color: Colors.black,
                                         ),
                                       ),
                                       GestureDetector(
@@ -185,8 +185,8 @@ class _BodyState extends State<Body> {
                                                   getProportionateScreenWidth(
                                                       8)),
                                           child: Icon(
-                                            Icons.shopping_bag,
-                                            color: kPrimaryColor,
+                                            Icons.shopping_cart_rounded,
+                                            color: Colors.black,
                                           ),
                                         ),
                                       ),
@@ -199,7 +199,7 @@ class _BodyState extends State<Body> {
                               child: SingleChildScrollView(
                                 child: Column(
                                   children: [
-                                    ProductImages(product: product),
+                                    ProductImages(imageList: product.images),
                                     ProductActionsSection(
                                         product: product,
                                         setSelectedVariant: setSelectedVariant),
@@ -282,7 +282,7 @@ class _BodyState extends State<Body> {
                           ),
                           Text(
                               "${currency.format(product.priceRange != null ? product.priceRange : 0)}",
-                              style: cusHeadingStyle(null, kPrimaryColor)),
+                              style: cusHeadingStyle(color: kPrimaryColor)),
                         ],
                       ),
                     ),

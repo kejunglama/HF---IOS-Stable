@@ -184,8 +184,10 @@ class HomeHeader extends StatelessWidget {
                 margin: EdgeInsets.only(left: getProportionateScreenWidth(10)),
                 child: Text(
                   "Search Products, Brands, Vendors",
-                  style: cusHeadingStyle(getProportionateScreenHeight(14),
-                      Colors.grey, null, FontWeight.w400),
+                  style: cusHeadingStyle(
+                      fontSize: getProportionateScreenHeight(14),
+                      color: Colors.grey,
+                      fontWeight: FontWeight.w400),
                 ),
               ),
             ],

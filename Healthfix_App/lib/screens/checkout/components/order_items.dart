@@ -1,11 +1,15 @@
 import 'package:flutter/material.dart';
+import 'package:healthfix/components/meal_short_detail_card.dart';
 import 'package:healthfix/components/nothingtoshow_container.dart';
 import 'package:healthfix/components/product_short_detail_card.dart';
 import 'package:healthfix/models/CartItem.dart';
+import 'package:healthfix/models/Meal.dart';
 import 'package:healthfix/models/Product.dart';
+import 'package:healthfix/screens/healthy_meal_description/healthy_meal_desc_screen.dart';
 import 'package:healthfix/screens/product_details/product_details_screen.dart';
 import 'package:healthfix/services/data_streams/cart_items_stream.dart';
 import 'package:healthfix/services/data_streams/cart_product_id_stream.dart';
+import 'package:healthfix/services/database/meals_database_helper.dart';
 import 'package:healthfix/services/database/product_database_helper.dart';
 import 'package:healthfix/services/database/user_database_helper.dart';
 import 'package:logger/logger.dart';
@@ -17,11 +21,13 @@ import 'order_item.dart';
 class OrderItems extends StatefulWidget {
   List selectedCartItems;
   bool isBuyNow;
+  bool isMeal;
 
   OrderItems({
     Key key,
     this.selectedCartItems,
     this.isBuyNow,
+    this.isMeal,
   }) : super(key: key);
 
   @override
@@ -158,7 +164,10 @@ class _OrderItemsState extends State<OrderItems> {
                 }
                 return widget.isBuyNow ?? false
                     ? buildCartItemWithBuyNow(
-                        widget.selectedCartItems[index], index)
+                        widget.selectedCartItems[index],
+                        index,
+                        widget.isMeal,
+                      )
                     : buildCartItem(widget.selectedCartItems[index], index);
               },
             ),
@@ -313,65 +322,93 @@ class _OrderItemsState extends State<OrderItems> {
     );
   }
 
-  Widget buildCartItemWithBuyNow(String cartItemId, int index) {
-    Future<Product> pdct = ProductDatabaseHelper().getProductWithID(cartItemId);
+  Widget buildCartItemWithBuyNow(String cartItemId, int index, [bool isMeal]) {
+    Future<Product> pdctFuture =
+        ProductDatabaseHelper().getProductWithID(cartItemId);
+    Future<Meal> mealFuture;
+    print("cartItemId");
+    print(cartItemId);
+    print(isMeal);
+    if (isMeal ?? false) {
+      mealFuture = MealsDatabaseHelper().getMealsWithID(cartItemId);
+    }
 
     return Container(
       width: SizeConfig.screenWidth * 0.7,
-      padding: EdgeInsets.only(
-        bottom: 4,
-        top: 4,
-        right: 4,
-      ),
+      padding: EdgeInsets.only(bottom: 4, top: 4, right: 4),
       margin: EdgeInsets.symmetric(vertical: 4, horizontal: 4),
       decoration: BoxDecoration(
         border: Border.all(color: kTextColor.withOpacity(0.15)),
         borderRadius: BorderRadius.circular(5),
       ),
-      child: FutureBuilder(
-        future: pdct,
-        builder: (context, snapshot) {
-          if (snapshot.hasData) {
-            Product product = snapshot.data;
-            int itemCount = 1;
-
-            return SizedBox(
-              child: ProductShortDetailCard(
-                productId: product.id,
-                itemCount: itemCount,
-                onPressed: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => ProductDetailsScreen(
-                        productId: product.id,
-                      ),
+      child: isMeal ?? false
+          ? FutureBuilder(
+              future: mealFuture,
+              builder: (context, snapshot) {
+                if (snapshot.hasData) {
+                  Meal meal = snapshot.data;
+                  int itemCount = 1;
+                  print("meal");
+                  print(meal);
+                  return SizedBox(
+                    child: MealShortDetailCard(
+                      meal: meal,
+                      itemCount: itemCount,
+                      onPressed: () {
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) =>
+                                  HealthyMealDescScreen(meal.id),
+                            ));
+                      },
                     ),
                   );
-                },
-              ),
-            );
-          } else if (snapshot.connectionState == ConnectionState.waiting) {
-            return Center(
-              child: CircularProgressIndicator(),
-            );
-          } else if (snapshot.hasError) {
-            final error = snapshot.error;
-            Logger().w(error.toString());
-            return Center(
-              child: Text(
-                error.toString(),
-              ),
-            );
-          } else {
-            return Center(
-              child: Icon(
-                Icons.error,
-              ),
-            );
-          }
-        },
-      ),
+                } else if (snapshot.connectionState ==
+                    ConnectionState.waiting) {
+                  return Center(child: CircularProgressIndicator());
+                } else if (snapshot.hasError) {
+                  final error = snapshot.error;
+                  Logger().w(snapshot.error.toString());
+                  return Center(child: Text(error.toString()));
+                } else {
+                  return Center(child: Icon(Icons.error));
+                }
+              },
+            )
+          : FutureBuilder(
+              future: pdctFuture,
+              builder: (context, snapshot) {
+                if (snapshot.hasData) {
+                  Product product = snapshot.data;
+                  int itemCount = 1;
+
+                  return SizedBox(
+                    child: ProductShortDetailCard(
+                      productId: product.id,
+                      itemCount: itemCount,
+                      onPressed: () {
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) =>
+                                  ProductDetailsScreen(productId: product.id),
+                            ));
+                      },
+                    ),
+                  );
+                } else if (snapshot.connectionState ==
+                    ConnectionState.waiting) {
+                  return Center(child: CircularProgressIndicator());
+                } else if (snapshot.hasError) {
+                  final error = snapshot.error;
+                  Logger().w(snapshot.error.toString());
+                  return Center(child: Text(error.toString()));
+                } else {
+                  return Center(child: Icon(Icons.error));
+                }
+              },
+            ),
     );
   }
 }

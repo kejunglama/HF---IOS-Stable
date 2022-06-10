@@ -26,7 +26,7 @@ class ExpandableText extends StatelessWidget {
           children: [
             Text(
               title,
-              style: cusHeadingStyle(getProportionateScreenWidth(16)),
+              style: cusHeadingStyle(fontSize: getProportionateScreenWidth(16)),
             ),
             SizedBox(height: getProportionateScreenHeight(6)),
             // Divider(
@@ -56,7 +56,9 @@ class ExpandableText extends StatelessWidget {
                   ),
                   const SizedBox(width: 5),
                   Icon(
-                    expandText.isExpanded == false? Icons.keyboard_arrow_down_rounded: Icons.keyboard_arrow_up_rounded,
+                    expandText.isExpanded == false
+                        ? Icons.keyboard_arrow_down_rounded
+                        : Icons.keyboard_arrow_up_rounded,
                     size: 12,
                     color: kPrimaryColor,
                   ),

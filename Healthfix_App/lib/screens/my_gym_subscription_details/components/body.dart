@@ -28,8 +28,10 @@ class Body extends StatelessWidget {
               buildDataRow("Gym ID", gymSubscription.gymID),
               buildDataRow("Subscribed on", gymSubscription.subscribedOn),
               buildDataRow("Starting From", gymSubscription.startingFrom),
-              buildDataRow("Package Duration", gymSubscription.package["duration"]),
-              buildDataRow("Package Price", currency.format(gymSubscription.package["price"]).toString()),
+              buildDataRow(
+                  "Package Duration", gymSubscription.package["duration"]),
+              buildDataRow("Package Price",
+                  currency.format(gymSubscription.package["price"]).toString()),
             ],
           ),
         ),
@@ -51,7 +53,8 @@ class Body extends StatelessWidget {
           ),
         ),
         Padding(
-          padding: EdgeInsets.symmetric(horizontal: getProportionateScreenWidth(8)),
+          padding:
+              EdgeInsets.symmetric(horizontal: getProportionateScreenWidth(8)),
           child: Divider(
             color: Colors.black12,
           ),
@@ -78,7 +81,7 @@ class Body extends StatelessWidget {
         sizedBoxOfWidth(20),
         Text(
           "${gymSubscription.gymName}",
-          style: cusHeadingStyle(getProportionateScreenHeight(16)),
+          style: cusHeadingStyle(fontSize: getProportionateScreenHeight(16)),
         ),
       ],
     );

@@ -93,10 +93,14 @@ class FitnessTrainersSection extends StatelessWidget {
                   Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Text(name, style: cusHeadingStyle(20)),
+                      Text(name,
+                          style: cusHeadingStyle(
+                              fontSize: getProportionateScreenHeight(20))),
                       Text(title,
                           style: cusHeadingStyle(
-                              16, Colors.blue, null, FontWeight.w400)),
+                              fontSize: getProportionateScreenHeight(16),
+                              color: Colors.blue,
+                              fontWeight: FontWeight.w400)),
                       sizedBoxOfHeight(8),
                       Row(
                         children: [
@@ -145,7 +149,8 @@ class FitnessTrainersSection extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Text("Popular Trainer",
-                  style: cusHeadingStyle(getProportionateScreenHeight(28))),
+                  style: cusHeadingStyle(
+                      fontSize: getProportionateScreenHeight(28))),
               Text("in Kathmandu", style: cusHeadingStyle()),
               sizedBoxOfHeight(8),
             ],
@@ -176,10 +181,9 @@ class FitnessTrainersSection extends StatelessWidget {
                         child: Text(
                           "Search Products, Brands, Vendors",
                           style: cusHeadingStyle(
-                              getProportionateScreenHeight(14),
-                              Colors.grey,
-                              null,
-                              FontWeight.w400),
+                              fontSize: getProportionateScreenHeight(14),
+                              color: Colors.grey,
+                              fontWeight: FontWeight.w400),
                         ),
                       ),
                     ],

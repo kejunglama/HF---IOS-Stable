@@ -28,13 +28,19 @@ final headingStyle = TextStyle(
 );
 
 // Custom Font Styles
-cusHeadingStyle([double fs, Color color, bool hasShadow, FontWeight fw]) =>
+cusHeadingStyle(
+        {double fontSize,
+        Color color,
+        bool hasShadow,
+        FontWeight fontWeight,
+        double lineheight}) =>
     GoogleFonts.poppins(
       textStyle: TextStyle(
         color: color ?? Colors.black,
-        fontSize: fs ?? getProportionateScreenHeight(20),
-        fontWeight: fw ?? FontWeight.w500,
+        fontSize: fontSize ?? getProportionateScreenHeight(20),
+        fontWeight: fontWeight ?? FontWeight.w500,
         letterSpacing: 0.5,
+        height: lineheight ?? getProportionateScreenHeight(2),
         shadows: <Shadow>[
           if (hasShadow ?? false)
             Shadow(
