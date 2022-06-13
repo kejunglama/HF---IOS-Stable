@@ -1,6 +1,5 @@
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
-import 'package:healthfix/models/Product.dart';
 import 'package:healthfix/screens/product_details/provider_models/ProductImageSwiper.dart';
 import 'package:provider/provider.dart';
 
@@ -83,10 +82,11 @@ class _ProductImagesState extends State<ProductImages> {
               // ),
               // Product Image Slider
               Container(
-                height: getProportionateScreenHeight(360),
+                height: SizeConfig.screenWidth,
+                margin: EdgeInsets.only(top: SizeConfig.screenViewPadding),
                 child: CarouselSlider(
                   options: CarouselOptions(
-                    height: getProportionateScreenHeight(360),
+                    height: SizeConfig.screenWidth,
                     // aspectRatio: SizeConfig.screenWidth /getProportionateScreenHeight(360),
                     autoPlay: true,
                     enableInfiniteScroll: false,
@@ -102,8 +102,8 @@ class _ProductImagesState extends State<ProductImages> {
                   items: widget.imageList
                       .map(
                         (item) => Container(
-                          // height: SizeConfig.screenWidth,
-                          // width: SizeConfig.screenWidth,
+                          height: SizeConfig.screenWidth,
+                          width: SizeConfig.screenWidth,
                           child: Image.network(item,
                               fit: widget.imageFit ?? BoxFit.cover),
                         ),

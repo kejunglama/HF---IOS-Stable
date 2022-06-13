@@ -7,7 +7,7 @@ import 'package:healthfix/size_config.dart';
 import 'package:logger/logger.dart';
 
 class FitnessTrainerDetailsCard extends StatelessWidget {
-  String trainerID;
+  final String trainerID;
 
   static const String LOCATION_NAME_KEY = "address";
   static const String LOCATION_LINK_KEY = "map_link";

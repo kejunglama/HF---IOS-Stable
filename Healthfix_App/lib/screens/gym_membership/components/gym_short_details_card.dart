@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/rendering.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:healthfix/constants.dart';
 import 'package:healthfix/models/Gym.dart';
@@ -9,7 +8,7 @@ import 'package:healthfix/size_config.dart';
 import 'package:logger/logger.dart';
 
 class GymShortDetailsCard extends StatelessWidget {
-  String gymID;
+  final String gymID;
 
   static const String LOCATION_NAME_KEY = "address";
   static const String LOCATION_LINK_KEY = "map_link";

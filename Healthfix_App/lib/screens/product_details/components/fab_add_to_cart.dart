@@ -12,8 +12,8 @@ import 'package:logger/logger.dart';
 import '../../../utils.dart';
 
 class AddToCartFAB extends StatelessWidget {
-  Function fetchVariantId;
-  Product product;
+  final Function fetchVariantId;
+  final Product product;
 
   AddToCartFAB({
     Key key,

@@ -4,10 +4,10 @@ import 'package:healthfix/constants.dart';
 import '../../../size_config.dart';
 
 class ColorvariantsBuilder extends StatefulWidget {
-  List colors;
-  bool selectable; // Will be selectable when Size is Selected
-  Function setColor;
-  num selectedIndex;
+  final List colors;
+  final bool selectable; // Will be selectable when Size is Selected
+  final Function setColor;
+  final num selectedIndex;
 
   ColorvariantsBuilder({
     Key key,
@@ -23,7 +23,7 @@ class ColorvariantsBuilder extends StatefulWidget {
 
 class _ColorvariantsBuilderState extends State<ColorvariantsBuilder> {
   num _selectedIndex;
-  List _colorsDup;
+  // List _colorsDup;
 
   @override
   void initState() {
@@ -69,8 +69,8 @@ class _ColorvariantsBuilderState extends State<ColorvariantsBuilder> {
                 }
               },
               child: Container(
-                height: getProportionateScreenWidth(30),
-                width: getProportionateScreenWidth(30),
+                height: getProportionateScreenWidth(38),
+                width: getProportionateScreenWidth(38),
                 margin: EdgeInsets.only(
                   right: getProportionateScreenHeight(12),
                   // top: getProportionateScreenWidth(18),

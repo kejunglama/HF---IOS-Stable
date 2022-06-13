@@ -1,7 +1,4 @@
-// import 'dart:ffi';
-
 import 'package:healthfix/models/Model.dart';
-import 'package:healthfix/models/Product.dart';
 
 class CartItem extends Model {
   static const String PRODUCT_ID_KEY = "product_id";

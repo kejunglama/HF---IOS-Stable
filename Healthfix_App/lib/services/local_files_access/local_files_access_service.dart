@@ -24,13 +24,13 @@ Future<String> choseImageFromLocalFiles(
       return AlertDialog(
         title: Text("Chose image source"),
         actions: [
-          FlatButton(
+          TextButton(
             child: Text("Camera"),
             onPressed: () {
               Navigator.pop(context, ImageSource.camera);
             },
           ),
-          FlatButton(
+          TextButton(
             child: Text("Gallery"),
             onPressed: () {
               Navigator.pop(context, ImageSource.gallery);
@@ -44,7 +44,7 @@ Future<String> choseImageFromLocalFiles(
   if (imgSource == null)
     throw LocalImagePickingInvalidImageException(
         message: "No image source selected");
-  final PickedFile imagePicked = await imgPicker.getImage(source: imgSource);
+  final XFile imagePicked = await imgPicker.pickImage(source: imgSource);
   if (imagePicked == null) {
     throw LocalImagePickingInvalidImageException();
   } else {

@@ -73,10 +73,30 @@ class _ChangeEmailFormState extends State<ChangeEmailForm> {
     return TextFormField(
       controller: passwordController,
       obscureText: true,
+      style: cusHeadingStyle(
+        fontSize: getProportionateScreenHeight(14),
+        color: Colors.black,
+        fontWeight: FontWeight.w300,
+      ),
       decoration: InputDecoration(
         hintText: "Password",
         labelText: "Enter Password",
         floatingLabelBehavior: FloatingLabelBehavior.always,
+        enabledBorder: OutlineInputBorder(
+          borderSide: BorderSide(color: Colors.cyan, width: 0.1),
+        ),
+        focusedBorder: OutlineInputBorder(
+          borderSide: BorderSide(color: kPrimaryColor),
+        ),
+        border: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(5.0),
+        ),
+        contentPadding: EdgeInsets.all(10),
+        hintStyle: cusHeadingStyle(
+          fontSize: getProportionateScreenHeight(14),
+          color: Colors.grey,
+          fontWeight: FontWeight.w400,
+        ),
         suffixIcon: CustomSuffixIcon(
           svgIcon: "assets/icons/Lock.svg",
         ),
@@ -100,10 +120,30 @@ class _ChangeEmailFormState extends State<ChangeEmailForm> {
           currentEmail = snapshot.data.email;
         final textField = TextFormField(
           controller: currentEmailController,
+          style: cusHeadingStyle(
+            fontSize: getProportionateScreenHeight(14),
+            color: Colors.black,
+            fontWeight: FontWeight.w300,
+          ),
           decoration: InputDecoration(
-            hintText: "CurrentEmail",
-            labelText: "Current Email",
+            hintText: "Current Email",
+            labelText: "Enter Current Email",
             floatingLabelBehavior: FloatingLabelBehavior.always,
+            enabledBorder: OutlineInputBorder(
+              borderSide: BorderSide(color: Colors.cyan, width: 0.1),
+            ),
+            focusedBorder: OutlineInputBorder(
+              borderSide: BorderSide(color: kPrimaryColor),
+            ),
+            border: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(5.0),
+            ),
+            contentPadding: EdgeInsets.all(10),
+            hintStyle: cusHeadingStyle(
+              fontSize: getProportionateScreenHeight(14),
+              color: Colors.grey,
+              fontWeight: FontWeight.w400,
+            ),
             suffixIcon: CustomSuffixIcon(
               svgIcon: "assets/icons/Mail.svg",
             ),
@@ -119,10 +159,30 @@ class _ChangeEmailFormState extends State<ChangeEmailForm> {
   Widget buildNewEmailFormField() {
     return TextFormField(
       controller: newEmailController,
+      style: cusHeadingStyle(
+        fontSize: getProportionateScreenHeight(14),
+        color: Colors.black,
+        fontWeight: FontWeight.w300,
+      ),
       decoration: InputDecoration(
         hintText: "Enter New Email",
         labelText: "New Email",
         floatingLabelBehavior: FloatingLabelBehavior.always,
+        enabledBorder: OutlineInputBorder(
+          borderSide: BorderSide(color: Colors.cyan, width: 0.1),
+        ),
+        focusedBorder: OutlineInputBorder(
+          borderSide: BorderSide(color: kPrimaryColor),
+        ),
+        border: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(5.0),
+        ),
+        contentPadding: EdgeInsets.all(10),
+        hintStyle: cusHeadingStyle(
+          fontSize: getProportionateScreenHeight(14),
+          color: Colors.grey,
+          fontWeight: FontWeight.w400,
+        ),
         suffixIcon: CustomSuffixIcon(
           svgIcon: "assets/icons/Mail.svg",
         ),

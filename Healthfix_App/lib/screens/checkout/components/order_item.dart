@@ -2,8 +2,6 @@
 
 import 'package:flutter/material.dart';
 import 'package:healthfix/models/Product.dart';
-import 'package:healthfix/services/database/product_database_helper.dart';
-import 'package:logger/logger.dart';
 
 import '../../../size_config.dart';
 import '../../../constants.dart';
@@ -19,13 +17,13 @@ class OrderProductShortDetailCard extends StatelessWidget {
 
   OrderProductShortDetailCard({
     Key key,
-    @required this.productId,
+    this.productId,
     @required this.onPressed,
     this.variantId,
     this.itemCount,
     this.buildConfirmationToDelete,
     String variationId,
-    this.product,
+    @required this.product,
   }) : super(key: key);
 
   @override

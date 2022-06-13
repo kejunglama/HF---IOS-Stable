@@ -1,3 +1,5 @@
+// ignore_for_file: must_be_immutable
+
 import 'package:flutter/material.dart';
 import 'package:healthfix/constants.dart';
 import 'package:healthfix/size_config.dart';

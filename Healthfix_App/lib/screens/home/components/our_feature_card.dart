@@ -44,8 +44,10 @@ class OurFeatureCard extends StatelessWidget {
                             heading,
                             textAlign: TextAlign.start,
                             style: cusHeadingStyle(
-                                fontSize: getProportionateScreenWidth(16),
-                                color: kSecondaryColor),
+                              fontSize: getProportionateScreenWidth(14),
+                              color: kSecondaryColor,
+                              fontWeight: FontWeight.w300,
+                            ),
                           ),
                         ),
                         // SizedBox(height: getProportionateScreenHeight(2)),

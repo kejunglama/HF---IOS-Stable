@@ -13,7 +13,7 @@ class ToggleTabs extends StatefulWidget {
 }
 
 class _ToggleTabsState extends State<ToggleTabs> {
-  num _selectedIndex = 0;
+  // num _selectedIndex = 0;
 
   @override
   Widget build(BuildContext context) {
@@ -41,7 +41,9 @@ class _ToggleTabsState extends State<ToggleTabs> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Text("Information", style: cusHeadingStyle(getProportionateScreenHeight(20))),
+              Text("Information",
+                  style: cusHeadingStyle(
+                      fontSize: getProportionateScreenHeight(20))),
               sizedBoxOfHeight(getProportionateScreenHeight(12)),
               Text(
                 " A gym - physical exercises and activities performed inside, often using equipment, especially when done as a subject at school. Gymnasium is a large room with equipment for exercising the body and increasing strength or a club where you can go to exercise and keep fit. \n"

@@ -1,6 +1,6 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
+
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:healthfix/constants.dart';
 import 'package:healthfix/models/AppReview.dart';
@@ -34,22 +34,27 @@ class Body extends StatelessWidget {
                     const String linkedInUrl = "https://www.siteux.gq";
                     await launchUrl(linkedInUrl);
                   },
-                  child: Container(
-                    height: SizeConfig.screenWidth * 0.4,
-                    width: SizeConfig.screenWidth * 0.4,
-                    child: Image.asset('assets/logo/logo-SITEUX.png'),
+                  child: ClipRRect(
+                    borderRadius: BorderRadius.circular(
+                        getProportionateScreenHeight(100)),
+                    child: Container(
+                      height: getProportionateScreenHeight(200),
+                      width: getProportionateScreenHeight(200),
+                      padding: EdgeInsets.all(getProportionateScreenHeight(28)),
+                      color: Color(0xFF5f6880),
+                      child: Image.asset('assets/logo/logo-SITEUX.png'),
+                    ),
                   ),
                 ),
                 SizedBox(height: getProportionateScreenHeight(30)),
-                Text(
-                  'SiteUX Developers',
-                  style: cusCenterHeadingStyle(),
-                ),
+                Text('SiteUX Developers',
+                    style: cusHeadingStyle(
+                        fontSize: getProportionateScreenHeight(24))),
                 Text(
                   "Kupondole Heights, Kathmandu",
                   style: TextStyle(
-                    fontSize: 18,
-                    fontWeight: FontWeight.w500,
+                    fontSize: getProportionateScreenHeight(18),
+                    fontWeight: FontWeight.w300,
                   ),
                 ),
                 SizedBox(height: getProportionateScreenHeight(30)),
@@ -57,7 +62,8 @@ class Body extends StatelessWidget {
                   children: [
                     Spacer(),
                     IconButton(
-                      icon: SvgPicture.asset("assets/icons/facebook.svg", color: Color(0xff4182CB)),
+                      icon: SvgPicture.asset("assets/icons/facebook.svg",
+                          color: Colors.blue.withOpacity(0.75)),
                       iconSize: 50,
                       padding: EdgeInsets.all(8),
                       onPressed: () async {
@@ -66,7 +72,8 @@ class Body extends StatelessWidget {
                       },
                     ),
                     IconButton(
-                      icon: SvgPicture.asset("assets/icons/instagram.svg", color: Color(0xff4182CB)),
+                      icon: SvgPicture.asset("assets/icons/instagram.svg",
+                          color: Colors.blue.withOpacity(0.75)),
                       iconSize: 50,
                       padding: EdgeInsets.all(8),
                       onPressed: () async {
@@ -75,7 +82,8 @@ class Body extends StatelessWidget {
                       },
                     ),
                     IconButton(
-                      icon: SvgPicture.asset("assets/icons/link.svg", color: Color(0xff4182CB)),
+                      icon: SvgPicture.asset("assets/icons/link.svg",
+                          color: Colors.blue.withOpacity(0.75)),
                       iconSize: 50,
                       padding: EdgeInsets.all(8),
                       onPressed: () async {
@@ -92,7 +100,10 @@ class Body extends StatelessWidget {
                   children: [
                     Spacer(),
                     IconButton(
-                      icon: Icon(Icons.thumb_up_alt_rounded),
+                      icon: Icon(
+                        Icons.favorite_outline_rounded,
+                        size: getProportionateScreenHeight(36),
+                      ),
                       color: Colors.blue.withOpacity(0.75),
                       iconSize: 32,
                       padding: EdgeInsets.all(16),
@@ -100,15 +111,15 @@ class Body extends StatelessWidget {
                         submitAppReview(context, liked: true);
                       },
                     ),
-                    Text(
-                      "Liked the app?",
-                      style: TextStyle(
-                        fontSize: 18,
-                        color: Colors.blue,
-                      ),
-                    ),
+                    Text("Liked the app?",
+                        style: cusHeadingStyle(
+                            fontSize: getProportionateScreenHeight(16),
+                            fontWeight: FontWeight.w400)),
                     IconButton(
-                      icon: Icon(Icons.thumb_down_alt_rounded),
+                      icon: Icon(
+                        Icons.mood_bad_outlined,
+                        size: getProportionateScreenHeight(36),
+                      ),
                       padding: EdgeInsets.all(16),
                       color: Colors.blue.withOpacity(0.75),
                       iconSize: 32,
@@ -161,7 +172,8 @@ class Body extends StatelessWidget {
     }
   }
 
-  Future<void> submitAppReview(BuildContext context, {bool liked = true}) async {
+  Future<void> submitAppReview(BuildContext context,
+      {bool liked = true}) async {
     AppReview prevReview;
     try {
       prevReview = await AppReviewDatabaseHelper().getAppReviewOfCurrentUser();

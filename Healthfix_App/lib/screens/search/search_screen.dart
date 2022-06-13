@@ -7,7 +7,7 @@ import '../../size_config.dart';
 
 class SearchScreen extends StatelessWidget {
   SearchScreen();
-  final AllProductsStream allProductsStream = AllProductsStream();
+  final SomeProductsStream allProductsStream = SomeProductsStream();
 
   @override
   Widget build(BuildContext context) {
@@ -24,7 +24,7 @@ class SearchScreen extends StatelessWidget {
             padding: EdgeInsets.symmetric(horizontal: 8),
             child: SearchField(
                 // onSubmit: onSearchSubmitted,
-            ),
+                ),
           ),
           Container(
             height: SizeConfig.screenHeight * 0.36,

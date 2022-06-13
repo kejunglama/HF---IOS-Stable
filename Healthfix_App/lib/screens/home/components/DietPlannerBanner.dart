@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:healthfix/size_config.dart';
 
 class DietPlanBanner extends StatelessWidget {
-  String dietPlanBanner;
+  final String dietPlanBanner;
   DietPlanBanner(this.dietPlanBanner, {key}) : super(key: key);
 
   @override

@@ -1,5 +1,3 @@
-import 'dart:convert';
-
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:healthfix/screens/home/home_screen.dart';
 import 'package:healthfix/screens/sign_in/sign_in_screen.dart';
@@ -35,7 +33,8 @@ class _AuthenticationWrapperState extends State<AuthenticationWrapper> {
       versionStatus: status,
       dialogTitle: "New Update Available!",
       dismissButtonText: "LATER",
-      dialogText: "A New Version of Helathfix App is Available on Play/App Store. \n"
+      dialogText:
+          "A New Version of Helathfix App is Available on Play/App Store. \n"
           "\nAvailable Version: ${status.storeVersion}"
           "\nVersion Installed: ${status.localVersion} ",
       updateButtonText: "UPDATE NOW",
@@ -53,13 +52,14 @@ class _AuthenticationWrapperState extends State<AuthenticationWrapper> {
     // prefs.getUser().then((user) => print("User: $user"));
     // print("prefs");
 
-
     return StreamBuilder(
       stream: AuthentificationService().authStateChanges,
       builder: (context, snapshot) {
         if (snapshot.hasData) {
           User user = snapshot.data;
-          UserDatabaseHelper().getUserDataFromId(user.uid).then((user) => prefs.setUser((user)));
+          UserDatabaseHelper()
+              .getUserDataFromId(user.uid)
+              .then((user) => prefs.setUser((user)));
           prefs.getUser().then((user) => print("User: $user"));
 
           return HomeScreen();

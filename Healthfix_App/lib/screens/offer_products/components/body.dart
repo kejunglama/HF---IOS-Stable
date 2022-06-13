@@ -1,4 +1,4 @@
-import 'package:flutter/cupertino.dart';
+// import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:healthfix/constants.dart';
@@ -99,6 +99,7 @@ class Body extends StatelessWidget {
                               Container(
                                 child: RatingBar(
                                   initialRating: 4.5,
+                                  onRatingUpdate: (rating) {},
                                   direction: Axis.horizontal,
                                   allowHalfRating: true,
                                   itemCount: 5,

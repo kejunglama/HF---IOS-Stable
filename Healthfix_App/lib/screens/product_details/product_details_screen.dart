@@ -1,16 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:healthfix/components/rounded_icon_button.dart';
-import 'package:healthfix/models/Product.dart';
 import 'package:healthfix/screens/product_details/provider_models/ProductActions.dart';
 import 'package:provider/provider.dart';
 
-import '../../size_config.dart';
 import 'components/body.dart';
 
 class ProductDetailsScreen extends StatelessWidget {
-
   final String productId;
-  Product product;
 
   ProductDetailsScreen({
     Key key,

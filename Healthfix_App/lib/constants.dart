@@ -95,10 +95,10 @@ var cusCenterHeadingAccentStyle = GoogleFonts.poppins(
 var cusPdctCatNameStyle = GoogleFonts.montserrat(
   textStyle: TextStyle(
     letterSpacing: 0.3,
-    color: kPrimaryColor,
+    color: kSecondaryColor,
     fontSize: getProportionateScreenHeight(11),
     // fontSize: getProportionateScreenHeight(8),
-    fontWeight: FontWeight.w400,
+    fontWeight: FontWeight.w300,
   ),
 );
 

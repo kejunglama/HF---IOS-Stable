@@ -4,7 +4,6 @@ import 'package:healthfix/size_config.dart';
 
 import '../../constants.dart';
 
-
 class AddressScreen extends StatelessWidget {
   const AddressScreen({Key key}) : super(key: key);
 
@@ -52,10 +51,14 @@ class AddressScreen extends StatelessWidget {
     bool _isData = isData ?? false;
     return Container(
       alignment: Alignment.centerLeft,
-      padding: _isData ? EdgeInsets.only(bottom: getProportionateScreenHeight(12)) : EdgeInsets.symmetric(vertical: getProportionateScreenHeight(12)),
+      padding: _isData
+          ? EdgeInsets.only(bottom: getProportionateScreenHeight(12))
+          : EdgeInsets.symmetric(vertical: getProportionateScreenHeight(12)),
       child: Text(
         text,
-        style: _isData ? cusBodyStyle(14, null, null, 1) : cusBodyStyle(16, null, null, 1),
+        style: _isData
+            ? cusBodyStyle(14, null, null, 1)
+            : cusBodyStyle(16, null, null, 1),
       ),
     );
   }
@@ -77,7 +80,11 @@ class AddressScreen extends StatelessWidget {
           ),
           contentPadding: EdgeInsets.all(10),
           hintText: hint,
-          hintStyle: cusHeadingStyle(14, Colors.grey, null, FontWeight.w400),
+          hintStyle: cusHeadingStyle(
+            fontSize: getProportionateScreenHeight(14),
+            color: Colors.grey,
+            fontWeight: FontWeight.w400,
+          ),
           // labelText: "Email",
           floatingLabelBehavior: FloatingLabelBehavior.always,
         ),

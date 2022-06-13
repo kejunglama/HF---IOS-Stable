@@ -1,17 +1,10 @@
-import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
-import 'package:future_progress_dialog/future_progress_dialog.dart';
 import 'package:healthfix/constants.dart';
-import 'package:healthfix/services/authentification/authentification_service.dart';
-import 'package:healthfix/services/database/user_database_helper.dart';
 import 'package:healthfix/size_config.dart';
-import 'package:logger/logger.dart';
-
-import '../../../utils.dart';
 
 class BuyNowFAB extends StatelessWidget {
   final String productId;
-  Function onTap;
+  final Function onTap;
 
   BuyNowFAB({
     Key key,

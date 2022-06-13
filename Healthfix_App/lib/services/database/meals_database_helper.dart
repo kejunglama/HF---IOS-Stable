@@ -1,5 +1,4 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:healthfix/models/Gym.dart';
 import 'package:healthfix/models/Meal.dart';
 import 'package:healthfix/services/authentification/authentification_service.dart';
 

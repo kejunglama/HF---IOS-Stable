@@ -1,18 +1,16 @@
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:healthfix/models/Product.dart';
 import 'package:healthfix/screens/product_details/provider_models/ColorVariations.dart';
 import 'package:healthfix/screens/product_details/provider_models/VariantBuilder.dart';
 import 'package:healthfix/size_config.dart';
 
 import '../../../constants.dart';
-import 'expandable_text.dart';
 
 class ProductDescription extends StatelessWidget {
   final Product product;
   final sizes = new Set();
   final colors = new Set();
-  void Function(String size, Map color) setSelectedVariant;
+  final void Function(String size, Map color) setSelectedVariant;
 
   //
   // List jsonArray = [
@@ -46,9 +44,10 @@ class ProductDescription extends StatelessWidget {
     // print(product.variations);
 
     return Container(
+      // padding: EdgeInsets.only(top: getProportionateScreenHeight(24)),
       margin: EdgeInsets.symmetric(
           horizontal: getProportionateScreenHeight(16),
-          vertical: getProportionateScreenHeight(16)),
+          vertical: getProportionateScreenHeight(20)),
       child: Stack(
         children: [
           Column(
@@ -57,15 +56,13 @@ class ProductDescription extends StatelessWidget {
               Text("${product.brand?.toUpperCase()}",
                   style: cusHeadingStyle(
                       fontSize: getProportionateScreenHeight(14),
-                      color: Colors.black87,
+                      color: kSecondaryColor,
                       fontWeight: FontWeight.w500)),
               sizedBoxOfHeight(8),
-              Text(product.title.capitalize(),
-                  style: GoogleFonts.montserrat(
-                      textStyle: TextStyle(
-                    fontSize: getProportionateScreenHeight(24),
-                    color: kSecondaryColor,
-                  ))),
+              Text(
+                product.title.capitalize(),
+                style: cusHeadingStyle(),
+              ),
 
               // Product Title
 
@@ -119,7 +116,7 @@ class ProductDescription extends StatelessWidget {
 }
 
 class ProductVariationDescription extends StatefulWidget {
-  void Function(String size, Map color) setSelectedVariant;
+  final void Function(String size, Map color) setSelectedVariant;
 
   ProductVariationDescription({
     Key key,
@@ -193,7 +190,7 @@ class _ProductVariationDescriptionState
               SizedBox(height: getProportionateScreenHeight(12)),
               Visibility(
                 visible: hasSizeVariation(),
-                child: Row(
+                child: Column(
                   children: [
                     Container(
                       alignment: Alignment.centerLeft,
@@ -203,15 +200,18 @@ class _ProductVariationDescriptionState
                         "Size: ",
                         style: cusHeadingStyle(
                             fontSize: getProportionateScreenWidth(12),
-                            color: Colors.grey),
+                            fontWeight: FontWeight.w300,
+                            color: Colors.black87),
                       ),
                     ),
-                    // SizedBox(height: getProportionateScreenHeight(12)),
+                    SizedBox(height: getProportionateScreenHeight(12)),
                     variantsBuilder(
-                        variants: widget.sizes.toList(),
-                        json: widget.jsonArray,
-                        setSize: setSizeAndFetchColors,
-                        setSelectedColorIndex: setSelectedColorIndex),
+                      variants: widget.sizes.toList(),
+                      json: widget.jsonArray,
+                      setSize: setSizeAndFetchColors,
+                      setSelectedColorIndex: setSelectedColorIndex,
+                    ),
+                    SizedBox(height: getProportionateScreenHeight(12)),
                   ],
                 ),
               ),
@@ -219,20 +219,21 @@ class _ProductVariationDescriptionState
               sizedBoxOfHeight(12),
               Visibility(
                 visible: hasColorVariation(),
-                child: Row(
+                child: Column(
                   children: [
                     Container(
                       alignment: Alignment.centerLeft,
                       margin: EdgeInsets.only(
                           right: getProportionateScreenWidth(12)),
                       child: Text(
-                        "Available Colors: ",
+                        "Choose Color ",
                         style: cusHeadingStyle(
                             fontSize: getProportionateScreenWidth(12),
-                            color: Colors.grey),
+                            fontWeight: FontWeight.w300,
+                            color: Colors.black87),
                       ),
                     ),
-                    // SizedBox(height: getProportionateScreenHeight(12)),
+                    SizedBox(height: getProportionateScreenHeight(12)),
                     Visibility(
                       visible: hasColorVariation(),
                       child: ColorvariantsBuilder(
@@ -244,6 +245,7 @@ class _ProductVariationDescriptionState
                         setColor: setColor,
                       ),
                     ),
+                    SizedBox(height: getProportionateScreenHeight(12)),
                   ],
                 ),
               ),

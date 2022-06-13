@@ -18,7 +18,7 @@ class Body extends StatelessWidget {
             SizedBox(height: SizeConfig.screenHeight * 0.04),
             Text(
               "Change Display Name",
-              style: headingStyle,
+              style: cusHeadingStyle(),
             ),
             ChangeDisplayNameForm(),
           ],

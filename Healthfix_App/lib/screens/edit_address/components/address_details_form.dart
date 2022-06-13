@@ -342,7 +342,6 @@ class _AddressDetailsFormState extends State<AddressDetailsForm> {
     // if (_currentSelectedZone.isEmpty) {
     return FIELD_REQUIRED_MSG;
     // }
-    return null;
   }
 
   String cityValidator(value) {

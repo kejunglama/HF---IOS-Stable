@@ -1,7 +1,5 @@
 import 'package:enum_to_string/enum_to_string.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:healthfix/components/nothingtoshow_container.dart';
 import 'package:healthfix/components/product_card.dart';
 import 'package:healthfix/components/rounded_icon_button.dart';
@@ -14,6 +12,7 @@ import 'package:healthfix/services/data_streams/category_products_stream.dart';
 import 'package:healthfix/size_config.dart';
 import 'package:logger/logger.dart';
 
+// ignore: must_be_immutable
 class Body extends StatefulWidget {
   ProductType productType;
   final String subProductType;
@@ -259,8 +258,9 @@ class _BodyState extends State<Body> {
                       : Text(
                           _categoryName,
                           style: cusHeadingStyle(
-                              fontSize: getProportionateScreenHeight(20),
-                              color: kPrimaryColor),
+                            fontSize: getProportionateScreenHeight(16),
+                            color: kPrimaryColor,
+                          ),
                         ),
                   // isExpanded: true,
                   iconSize: getProportionateScreenHeight(20),

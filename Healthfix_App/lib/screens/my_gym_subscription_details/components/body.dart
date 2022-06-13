@@ -5,7 +5,7 @@ import '../../../constants.dart';
 import '../../../size_config.dart';
 
 class Body extends StatelessWidget {
-  GymSubscription gymSubscription;
+  final GymSubscription gymSubscription;
 
   Body(this.gymSubscription);
 
@@ -47,8 +47,10 @@ class Body extends StatelessWidget {
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              Text(title, style: cusBodyStyle(16, null, Colors.grey)),
-              Text(data, style: cusBodyStyle(16)),
+              Text(title,
+                  style: cusBodyStyle(
+                      getProportionateScreenHeight(16), null, Colors.grey)),
+              Text(data, style: cusBodyStyle(getProportionateScreenHeight(16))),
             ],
           ),
         ),

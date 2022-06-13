@@ -1,11 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:healthfix/app.dart';
 import 'package:healthfix/models/Trainer.dart';
 
 import 'components/body.dart';
 
 class FitnessTrainerDetailsScreen extends StatelessWidget {
-  Trainer trainer;
+  final Trainer trainer;
   FitnessTrainerDetailsScreen(this.trainer);
 
   @override

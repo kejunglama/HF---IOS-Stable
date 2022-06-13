@@ -5,7 +5,7 @@ import 'package:healthfix/models/GymSubscription.dart';
 import 'components/body.dart';
 
 class GymSubscriptionDetails extends StatelessWidget {
-  GymSubscription gymSubscription;
+  final GymSubscription gymSubscription;
 
   GymSubscriptionDetails(this.gymSubscription);
 
@@ -14,7 +14,8 @@ class GymSubscriptionDetails extends StatelessWidget {
     print(gymSubscription);
     return Scaffold(
       appBar: AppBar(
-        title: Text("Subscription Detail", style: cusHeadingStyle(),),
+        title: Text("Subscription Detail", style: cusHeadingStyle()),
+        leading: BackButton(color: kPrimaryColor),
       ),
       body: Body(gymSubscription),
     );

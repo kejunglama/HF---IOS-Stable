@@ -1,13 +1,10 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:healthfix/components/popup_dialog.dart';
 import 'package:healthfix/data.dart';
 import 'package:healthfix/models/Product.dart';
 import 'package:healthfix/screens/category_products/category_products_screen.dart';
 import 'package:healthfix/shared_preference.dart';
 import 'package:healthfix/size_config.dart';
 import 'package:healthfix/wrappers/authentification_wrapper.dart';
-import 'package:intl/intl.dart';
 
 import '../../../constants.dart';
 import 'home_screen_drawer.dart';
@@ -58,32 +55,32 @@ class HomeHeader extends StatelessWidget {
                     horizontal: getProportionateScreenWidth(8)),
                 child: Row(
                   children: [
-                    // Btn - Search
-                    Container(
-                      width: getProportionateScreenWidth(35),
-                      child: IconButton(
-                        // onPressed: () async {
-                        //   List searchedProductsId = await ProductDatabaseHelper().searchInProducts("");
-                        //   await Navigator.push(
-                        //     context,
-                        //     MaterialPageRoute(
-                        //       builder: (context) => CategoryProductsScreen(
-                        //         productType: ProductType.All,
-                        //         productTypes: pdctCategories,
-                        //         subProductType: "",
-                        //       ),
-                        //     ),
-                        //   );
-                        // },
-                        onPressed: () {
-                          UserPreferences prefs = new UserPreferences();
-                          prefs.getUser().then((user) => print("User: $user"));
-                        },
-                        icon: Icon(Icons.favorite_border_outlined),
-                        color: kPrimaryColor,
-                        splashRadius: 20,
-                      ),
-                    ),
+                    // Btn - Cart
+                    // Container(
+                    //   width: getProportionateScreenWidth(35),
+                    //   child: IconButton(
+                    //     // onPressed: () async {
+                    //     //   List searchedProductsId = await ProductDatabaseHelper().searchInProducts("");
+                    //     //   await Navigator.push(
+                    //     //     context,
+                    //     //     MaterialPageRoute(
+                    //     //       builder: (context) => CategoryProductsScreen(
+                    //     //         productType: ProductType.All,
+                    //     //         productTypes: pdctCategories,
+                    //     //         subProductType: "",
+                    //     //       ),
+                    //     //     ),
+                    //     //   );
+                    //     // },
+                    //     onPressed: () {
+                    //       UserPreferences prefs = new UserPreferences();
+                    //       prefs.getUser().then((user) => print("User: $user"));
+                    //     },
+                    //     icon: Icon(Icons.favorite_border_outlined),
+                    //     color: kPrimaryColor,
+                    //     splashRadius: 20,
+                    //   ),
+                    // ),
 
                     // Btn - Account
                     Container(
@@ -105,8 +102,8 @@ class HomeHeader extends StatelessWidget {
                                           AuthenticationWrapper()),
                                 ));
                         },
-                        icon: Icon(Icons.account_circle_outlined),
-                        color: kPrimaryColor,
+                        icon: Icon(Icons.menu),
+                        color: Colors.black.withOpacity(0.7),
                         splashRadius: 20,
                       ),
                     ),
@@ -166,19 +163,20 @@ class HomeHeader extends StatelessWidget {
       child: Container(
         margin:
             EdgeInsets.symmetric(horizontal: getProportionateScreenHeight(8)),
+        padding: EdgeInsets.all(getProportionateScreenHeight(8)),
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(5),
           border: Border.all(width: 0.3, color: Colors.grey),
         ),
         child: Container(
-          padding: EdgeInsets.all(getProportionateScreenHeight(10)),
+          padding: EdgeInsets.all(getProportionateScreenHeight(4)),
           height: getProportionateScreenHeight(40),
           child: Row(
             children: [
               Icon(
                 Icons.search_rounded,
                 color: Colors.cyan,
-                size: getProportionateScreenHeight(20),
+                size: getProportionateScreenHeight(28),
               ),
               Container(
                 margin: EdgeInsets.only(left: getProportionateScreenWidth(10)),
@@ -187,7 +185,7 @@ class HomeHeader extends StatelessWidget {
                   style: cusHeadingStyle(
                       fontSize: getProportionateScreenHeight(14),
                       color: Colors.grey,
-                      fontWeight: FontWeight.w400),
+                      fontWeight: FontWeight.w300),
                 ),
               ),
             ],

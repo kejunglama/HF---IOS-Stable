@@ -15,7 +15,7 @@ import '../../../constants.dart';
 import '../../../size_config.dart';
 
 class OrderDetails extends StatelessWidget {
-  OrderedProduct orderedProduct;
+  final OrderedProduct orderedProduct;
 
   OrderDetails({this.orderedProduct});
 
@@ -227,7 +227,7 @@ class OrderDetails extends StatelessWidget {
                           color: kPrimaryColor,
                           borderRadius: BorderRadius.circular(5),
                         ),
-                        child: FlatButton(
+                        child: TextButton(
                           onPressed: () async {
                             String currentUserUid =
                                 AuthentificationService().currentUser.uid;

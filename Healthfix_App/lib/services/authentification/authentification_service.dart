@@ -157,7 +157,7 @@ class AuthentificationService {
   }
 
   Future<void> updateCurrentUserDisplayName(String updatedDisplayName) async {
-    await currentUser.updateProfile(displayName: updatedDisplayName);
+    await currentUser.updateDisplayName(updatedDisplayName);
   }
 
   Future resetPasswordForEmail(String email) async {

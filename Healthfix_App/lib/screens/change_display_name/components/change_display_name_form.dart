@@ -1,4 +1,5 @@
 import 'package:healthfix/components/default_button.dart';
+import 'package:healthfix/constants.dart';
 import 'package:healthfix/services/authentification/authentification_service.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -70,11 +71,30 @@ class _ChangeDisplayNameFormState extends State<ChangeDisplayNameForm> {
     return TextFormField(
       controller: newDisplayNameController,
       keyboardType: TextInputType.name,
+      style: cusHeadingStyle(
+        fontSize: getProportionateScreenHeight(14),
+        color: Colors.black,
+        fontWeight: FontWeight.w300,
+      ),
       decoration: InputDecoration(
         hintText: "Enter New Display Name",
         labelText: "New Display Name",
         floatingLabelBehavior: FloatingLabelBehavior.always,
-        suffixIcon: Icon(Icons.person),
+        enabledBorder: OutlineInputBorder(
+          borderSide: BorderSide(color: Colors.cyan, width: 0.1),
+        ),
+        focusedBorder: OutlineInputBorder(
+          borderSide: BorderSide(color: kPrimaryColor),
+        ),
+        border: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(5.0),
+        ),
+        contentPadding: EdgeInsets.all(10),
+        hintStyle: cusHeadingStyle(
+          fontSize: getProportionateScreenHeight(14),
+          color: Colors.grey,
+          fontWeight: FontWeight.w400,
+        ),
       ),
       validator: (value) {
         if (newDisplayNameController.text.isEmpty) {
@@ -95,11 +115,29 @@ class _ChangeDisplayNameFormState extends State<ChangeDisplayNameForm> {
           displayName = snapshot.data.displayName;
         final textField = TextFormField(
           controller: currentDisplayNameController,
+          style: cusHeadingStyle(
+            fontSize: getProportionateScreenHeight(14),
+            color: Colors.black,
+            fontWeight: FontWeight.w300,
+          ),
           decoration: InputDecoration(
             hintText: "No Display Name available",
             labelText: "Current Display Name",
             floatingLabelBehavior: FloatingLabelBehavior.always,
-            suffixIcon: Icon(Icons.person),
+            enabledBorder: OutlineInputBorder(
+              borderSide: BorderSide(color: Colors.cyan, width: 0.1),
+            ),
+            focusedBorder: OutlineInputBorder(
+              borderSide: BorderSide(color: kPrimaryColor),
+            ),
+            border: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(5.0),
+            ),
+            contentPadding: EdgeInsets.all(10),
+            hintStyle: cusHeadingStyle(
+                fontSize: getProportionateScreenHeight(14),
+                color: Colors.grey,
+                fontWeight: FontWeight.w400),
           ),
           readOnly: true,
         );

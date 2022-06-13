@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:healthfix/constants.dart';
 import 'package:healthfix/models/Meal.dart';
 import 'package:healthfix/screens/healthy_meal_description/healthy_meal_desc_screen.dart';
-import 'package:healthfix/screens/healthy_meals/healthy_meals_screen.dart';
+// import 'package:healthfix/screens/healthy_meals/healthy_meals_screen.dart';
 // import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:healthfix/services/data_streams/all_meals_stream.dart';
 import 'package:healthfix/services/database/meals_database_helper.dart';
@@ -265,7 +265,7 @@ class _BodyState extends State<Body> {
                       height: getProportionateScreenHeight(30),
                       width: getProportionateScreenHeight(30),
                       child: Icon(
-                        Icons.add,
+                        Icons.keyboard_arrow_right,
                         size: getProportionateScreenHeight(20),
                         color: Colors.white,
                       ),
@@ -374,7 +374,7 @@ class _BodyState extends State<Body> {
                   height: getProportionateScreenHeight(30),
                   width: getProportionateScreenHeight(30),
                   child: Icon(
-                    Icons.add,
+                    Icons.keyboard_arrow_right,
                     size: getProportionateScreenHeight(20),
                     color: Colors.white,
                   ),
@@ -460,25 +460,25 @@ class _BodyState extends State<Body> {
               return Column(
                 children: temp,
               );
-              for (String mealId in mealIds) {
-                InkWell(
-                    onTap: () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => HealthyMealDescScreen(mealId),
-                        ),
-                      );
-                    },
-                    child: SizedBox(
-                        height: getProportionateScreenHeight(180),
-                        child: Column(
-                          children: [
-                            buildMealCardHorizontal(),
-                            sizedBoxOfHeight(10),
-                          ],
-                        )));
-              }
+              // for (String mealId in mealIds) {
+              //   InkWell(
+              //       onTap: () {
+              //         Navigator.push(
+              //           context,
+              //           MaterialPageRoute(
+              //             builder: (context) => HealthyMealDescScreen(mealId),
+              //           ),
+              //         );
+              //       },
+              //       child: SizedBox(
+              //           height: getProportionateScreenHeight(180),
+              //           child: Column(
+              //             children: [
+              //               buildMealCardHorizontal(),
+              //               sizedBoxOfHeight(10),
+              //             ],
+              //           )));
+              // }
               //   print(snapshot.data);
               //   return InkWell(
               //       onTap: () {

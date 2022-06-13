@@ -9,7 +9,7 @@ import 'product_type_box.dart';
 
 // Cleaned
 class ProductCategories extends StatelessWidget {
-  void Function() goToCategory;
+  final void Function() goToCategory;
 
   ProductCategories(
     this.goToCategory, {
@@ -19,21 +19,25 @@ class ProductCategories extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     List<Map> _pdctCategories = new List.from(pdctCategories);
-    if(_pdctCategories[0]["product_type"] == ProductType.All) _pdctCategories.removeAt(0);
+    if (_pdctCategories[0]["product_type"] == ProductType.All)
+      _pdctCategories.removeAt(0);
     // print(_pdctCategories);
     // print(pdctCategories);
 
     return Column(
       children: [
         Padding(
-          padding: EdgeInsets.symmetric(horizontal: getProportionateScreenHeight(10)),
+          padding: EdgeInsets.symmetric(
+              horizontal: getProportionateScreenHeight(10)),
           child: Padding(
             padding: EdgeInsets.only(bottom: getProportionateScreenHeight(12)),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Text("Category", style: cusHeadingStyle()),
-                GestureDetector(onTap: goToCategory, child: Text("See More >", style: cusHeadingLinkStyle)),
+                GestureDetector(
+                    onTap: goToCategory,
+                    child: Text("See More >", style: cusHeadingLinkStyle)),
               ],
             ),
           ),
@@ -55,7 +59,8 @@ class ProductCategories extends StatelessWidget {
                         context,
                         MaterialPageRoute(
                           builder: (context) => CategoryProductsScreen(
-                            productType: _pdctCategories[index][PRODUCT_TYPE_KEY],
+                            productType: _pdctCategories[index]
+                                [PRODUCT_TYPE_KEY],
                             productTypes: _pdctCategories,
                             subProductType: "",
                           ),

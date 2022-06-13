@@ -1,14 +1,14 @@
+// ignore_for_file: must_be_immutable
+
 import 'package:flutter/material.dart';
 import 'package:healthfix/components/default_button.dart';
 import 'package:healthfix/components/nothingtoshow_container.dart';
 import 'package:healthfix/models/Address.dart';
 import 'package:healthfix/models/Meal.dart';
-import 'package:healthfix/models/Product.dart';
 import 'package:healthfix/screens/checkout/payment_options_screen.dart';
 import 'package:healthfix/screens/manage_addresses/manage_addresses_screen.dart';
 import 'package:healthfix/services/data_streams/addresses_stream.dart';
 import 'package:healthfix/services/database/meals_database_helper.dart';
-import 'package:healthfix/services/database/product_database_helper.dart';
 import 'package:healthfix/services/database/user_database_helper.dart';
 import 'package:healthfix/size_config.dart';
 import 'package:logger/logger.dart';
@@ -18,13 +18,13 @@ import 'components/order_items.dart';
 import 'components/total_amounts.dart';
 
 class CheckoutScreen extends StatefulWidget {
-  Future<void> Function(Map orderDetails, List selectedCartItems)
+  final Future<void> Function(Map orderDetails, List selectedCartItems)
       onCheckoutPressed;
-  Future<void> Function(Map orderDetails, List selectedCartItems)
+  final Future<void> Function(Map orderDetails, List selectedCartItems)
       onCheckoutPressedForMeals;
-  List selectedCartItems;
+  final List selectedCartItems;
   bool isBuyNow;
-  bool isMeal;
+  final bool isMeal;
 
   CheckoutScreen({
     Key key,

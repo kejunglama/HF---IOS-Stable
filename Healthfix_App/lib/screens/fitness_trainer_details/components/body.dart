@@ -1,4 +1,3 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:healthfix/constants.dart';
@@ -6,7 +5,7 @@ import 'package:healthfix/models/Trainer.dart';
 import 'package:healthfix/size_config.dart';
 
 class Body extends StatelessWidget {
-  Trainer trainer;
+  final Trainer trainer;
 
   Body(this.trainer);
 
@@ -170,6 +169,7 @@ class Body extends StatelessWidget {
                     Container(
                       child: RatingBar(
                         initialRating: 4.5,
+                        onRatingUpdate: (Rating) {},
                         direction: Axis.horizontal,
                         allowHalfRating: true,
                         itemCount: 5,
@@ -197,7 +197,7 @@ class Body extends StatelessWidget {
     );
   }
 
-  List<Map> features = [
+  final List<Map> features = [
     {"text": "Live Group\nSession", "icon": Icons.online_prediction_rounded},
     {
       "text": "Diet Plan\nConsultation",

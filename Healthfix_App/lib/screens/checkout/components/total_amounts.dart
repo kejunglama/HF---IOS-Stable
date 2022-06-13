@@ -5,8 +5,8 @@ import '../../../constants.dart';
 import '../../../size_config.dart';
 
 class TotalAmounts extends StatelessWidget {
-  num deliveryCharge;
-  int cartTotal;
+  final num deliveryCharge;
+  final int cartTotal;
   TotalAmounts(
     this.cartTotal,
     this.deliveryCharge, {

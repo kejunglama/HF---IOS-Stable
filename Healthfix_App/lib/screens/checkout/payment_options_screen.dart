@@ -6,9 +6,10 @@ import '../../data.dart';
 import '../../size_config.dart';
 
 class PaymentOptionsScreen extends StatefulWidget {
-  Map orderDetails;
-  List selectedCartItems;
-  Future<void> Function(Map orderDetails, List selectedProductsUid) onCheckout;
+  final Map orderDetails;
+  final List selectedCartItems;
+  final Future<void> Function(Map orderDetails, List selectedProductsUid)
+      onCheckout;
 
   PaymentOptionsScreen(
       {this.orderDetails, this.onCheckout, this.selectedCartItems});

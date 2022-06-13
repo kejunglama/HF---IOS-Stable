@@ -138,7 +138,7 @@ class _ChangePhoneNumberFormState extends State<ChangePhoneNumberForm> {
           readOnly: true,
         );
         if (currentPhone != null)
-          currentPhoneNumberController.text = currentPhone;
+          currentPhoneNumberController.text = currentPhone.toString();
         return textField;
       },
     );

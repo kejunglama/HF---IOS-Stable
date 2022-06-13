@@ -1,14 +1,20 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+// import 'package:flutter_svg/flutter_svg.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:healthfix/components/rounded_icon_button.dart';
+// import 'package:healthfix/app.dart';
+// import 'package:healthfix/components/rounded_icon_button.dart';
 import 'package:healthfix/constants.dart';
+import 'package:healthfix/data.dart';
 import 'package:healthfix/models/OrderedProduct.dart';
 import 'package:healthfix/models/Product.dart';
 import 'package:healthfix/screens/cart/cart_screen.dart';
+import 'package:healthfix/screens/category_products/category_products_screen.dart';
 import 'package:healthfix/screens/checkout/checkout_screen.dart';
 import 'package:healthfix/screens/product_details/components/product_actions_section.dart';
 import 'package:healthfix/screens/product_details/components/product_images.dart';
+// import 'package:healthfix/screens/search/search_screen.dart';
 import 'package:healthfix/services/database/product_database_helper.dart';
 import 'package:healthfix/services/database/user_database_helper.dart';
 import 'package:healthfix/shared_preference.dart';
@@ -131,85 +137,185 @@ class _BodyState extends State<Body> {
               return Stack(
                 children: [
                   Scaffold(
-                    body: SafeArea(
-                      child: Container(
-                        color: Colors.white,
-                        child: Column(
-                          children: [
-                            SizedBox(
-                              height: getProportionateScreenHeight(50),
-                              child: Row(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceBetween,
+                    extendBodyBehindAppBar: true,
+
+                    appBar: AppBar(
+                      backgroundColor: Colors.transparent,
+                      systemOverlayStyle: SystemUiOverlayStyle(
+                        // Status bar color
+                        statusBarColor: Colors.red,
+                        // Status bar brightness (optional)
+                        statusBarIconBrightness:
+                            Brightness.dark, // For Android (dark icons)
+                        statusBarBrightness:
+                            Brightness.light, // For iOS (dark icons)
+                      ),
+                      actions: [
+                        GestureDetector(
+                          onTap: () {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) => CategoryProductsScreen(
+                                  productType: ProductType.All,
+                                  productTypes: pdctCategories,
+                                  subProductType: "",
+                                ),
+                              ),
+                            );
+                          },
+                          child: Container(
+                            margin: EdgeInsets.only(
+                                right: getProportionateScreenWidth(8)),
+                            child: Icon(Icons.search),
+                          ),
+                        ),
+                        GestureDetector(
+                          onTap: () {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => CartScreen()),
+                            );
+                          },
+                          child: Container(
+                            margin: EdgeInsets.only(
+                                right: getProportionateScreenWidth(8)),
+                            child: Icon(
+                              Icons.shopping_cart,
+                              color: Colors.black,
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                    // appBar: AppBar(
+                    //   // backgroundColor: Colors.transparent,
+                    //   title: Container(
+                    //     margin: EdgeInsets.zero,
+                    //     alignment: Alignment.center,
+                    //     height: getProportionateScreenHeight(30),
+                    //     child: Image.asset('assets/logo/HF-logo.png'),
+                    //   ),
+                    //   actions: [
+                    //     GestureDetector(
+                    //       onTap: () {
+                    //         Navigator.push(
+                    //           context,
+                    //           MaterialPageRoute(
+                    //             builder: (context) => CategoryProductsScreen(
+                    //               productType: ProductType.All,
+                    //               productTypes: pdctCategories,
+                    //               subProductType: "",
+                    //             ),
+                    //           ),
+                    //         );
+                    //       },
+                    //       child: Container(
+                    //         margin: EdgeInsets.only(
+                    //             right: getProportionateScreenWidth(8)),
+                    //         child: SvgPicture.asset(
+                    //           "assets/icons/Search Icon.svg",
+                    //           color: Colors.black,
+                    //         ),
+                    //       ),
+                    //     ),
+                    //     GestureDetector(
+                    //       onTap: () {
+                    //         Navigator.push(
+                    //           context,
+                    //           MaterialPageRoute(
+                    //               builder: (context) => CartScreen()),
+                    //         );
+                    //       },
+                    //       child: Container(
+                    //         margin: EdgeInsets.only(
+                    //             right: getProportionateScreenWidth(8)),
+                    //         child: SvgPicture.asset(
+                    //           "assets/icons/Cart Icon.svg",
+                    //           color: Colors.black,
+                    //         ),
+                    //       ),
+                    //     ),
+                    //   ],
+                    // ),
+                    body: Container(
+                      color: Colors.white,
+                      child: Column(
+                        children: [
+                          // SizedBox(
+                          //   height: getProportionateScreenHeight(50),
+                          //   child: Row(
+                          //     mainAxisAlignment:
+                          //         MainAxisAlignment.spaceBetween,
+                          //     children: [
+                          //       RoundedIconButton(
+                          //         iconData: Icons.arrow_back_ios_rounded,
+                          //         press: () {
+                          //           Navigator.pop(context);
+                          //         },
+                          //       ),
+                          //       SizedBox(
+                          //           width: getProportionateScreenWidth(15)),
+                          //       Expanded(
+                          //         child: Container(
+                          //           margin: EdgeInsets.zero,
+                          //           alignment: Alignment.centerLeft,
+                          //           height: getProportionateScreenHeight(30),
+                          //           child: Image.asset(
+                          //               'assets/logo/HF-logo.png'),
+                          //         ),
+                          //       ),
+                          //       Row(
+                          //         children: [
+                          //           Container(
+                          //             margin: EdgeInsets.only(
+                          //                 right:
+                          //                     getProportionateScreenWidth(8)),
+                          //             child: Icon(
+                          //               Icons.search_rounded,
+                          //               color: Colors.black,
+                          //             ),
+                          //           ),
+                          //           GestureDetector(
+                          //             onTap: () {
+                          //               Navigator.push(
+                          //                 context,
+                          //                 MaterialPageRoute(
+                          //                     builder: (context) =>
+                          //                         CartScreen()),
+                          //               );
+                          //             },
+                          //             child: Container(
+                          //               margin: EdgeInsets.only(
+                          //                   right:
+                          //                       getProportionateScreenWidth(
+                          //                           8)),
+                          //               child: Icon(
+                          //                 Icons.shopping_cart_rounded,
+                          //                 color: Colors.black,
+                          //               ),
+                          //             ),
+                          //           ),
+                          //         ],
+                          //       ),
+                          //     ],
+                          //   ),
+                          // ),
+                          Expanded(
+                            child: SingleChildScrollView(
+                              child: Column(
                                 children: [
-                                  RoundedIconButton(
-                                    iconData: Icons.arrow_back_ios_rounded,
-                                    press: () {
-                                      Navigator.pop(context);
-                                    },
-                                  ),
-                                  SizedBox(
-                                      width: getProportionateScreenWidth(15)),
-                                  Expanded(
-                                    child: Container(
-                                      margin: EdgeInsets.zero,
-                                      alignment: Alignment.centerLeft,
-                                      height: getProportionateScreenHeight(30),
-                                      child: Image.asset(
-                                          'assets/logo/HF-logo.png'),
-                                    ),
-                                  ),
-                                  Row(
-                                    children: [
-                                      Container(
-                                        margin: EdgeInsets.only(
-                                            right:
-                                                getProportionateScreenWidth(8)),
-                                        child: Icon(
-                                          Icons.search_rounded,
-                                          color: Colors.black,
-                                        ),
-                                      ),
-                                      GestureDetector(
-                                        onTap: () {
-                                          Navigator.push(
-                                            context,
-                                            MaterialPageRoute(
-                                                builder: (context) =>
-                                                    CartScreen()),
-                                          );
-                                        },
-                                        child: Container(
-                                          margin: EdgeInsets.only(
-                                              right:
-                                                  getProportionateScreenWidth(
-                                                      8)),
-                                          child: Icon(
-                                            Icons.shopping_cart_rounded,
-                                            color: Colors.black,
-                                          ),
-                                        ),
-                                      ),
-                                    ],
-                                  ),
+                                  ProductImages(imageList: product.images),
+                                  ProductActionsSection(
+                                      product: product,
+                                      setSelectedVariant: setSelectedVariant),
                                 ],
                               ),
                             ),
-                            Expanded(
-                              child: SingleChildScrollView(
-                                child: Column(
-                                  children: [
-                                    ProductImages(imageList: product.images),
-                                    ProductActionsSection(
-                                        product: product,
-                                        setSelectedVariant: setSelectedVariant),
-                                  ],
-                                ),
-                              ),
-                            ),
-                            SizedBox(height: getProportionateScreenHeight(80)),
-                          ],
-                        ),
+                          ),
+                          SizedBox(height: getProportionateScreenHeight(80)),
+                        ],
                       ),
                     ),
                   ),
@@ -348,13 +454,13 @@ class _BodyState extends State<Body> {
                 // print(_selectedColor);
                 // print(_selectedSize);
                 return getSeletedVariantId();
-                prefs.hasUser().then((hasUser) => hasUser
-                    ? getSeletedVariantId
-                    : Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => AuthenticationWrapper(),
-                        )));
+                // prefs.hasUser().then((hasUser) => hasUser
+                //     ? getSeletedVariantId
+                //     : Navigator.push(
+                //         context,
+                //         MaterialPageRoute(
+                //           builder: (context) => AuthenticationWrapper(),
+                //         )));
               },
             ),
             sizedBoxOfWidth(12),

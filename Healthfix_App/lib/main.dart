@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
-import 'package:flutter_local_notifications/flutter_local_notifications.dart';
+
 // import 'package:new_version/new_version.dart';
 
 // import 'package:';
@@ -22,8 +22,6 @@ Future<void> main() async {
     badge: true,
     sound: true,
   );
-
-
 
   // void _checkVersion() async {
   //   final newVersion = NewVersion(
@@ -48,4 +46,3 @@ Future<void> main() async {
 
   runApp(App());
 }
-

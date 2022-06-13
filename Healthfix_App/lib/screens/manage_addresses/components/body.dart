@@ -13,7 +13,7 @@ import 'package:logger/logger.dart';
 import '../components/address_box.dart';
 
 class Body extends StatefulWidget {
-  bool isSelectAddressScreen;
+  final bool isSelectAddressScreen;
 
   Body(this.isSelectAddressScreen);
 
@@ -149,7 +149,7 @@ class _BodyState extends State<Body> {
             style: TextStyle(fontSize: getProportionateScreenHeight(16)),
           ),
           actions: [
-            FlatButton(
+            TextButton(
               child: Text(
                 "Delete",
                 style: TextStyle(
@@ -160,7 +160,7 @@ class _BodyState extends State<Body> {
                 Navigator.pop(context, true);
               },
             ),
-            FlatButton(
+            TextButton(
               child: Text(
                 "Cancel",
                 style: TextStyle(fontSize: getProportionateScreenHeight(16)),

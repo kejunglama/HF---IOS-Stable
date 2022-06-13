@@ -1,4 +1,3 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:future_progress_dialog/future_progress_dialog.dart';
 import 'package:healthfix/data.dart';
@@ -9,7 +8,6 @@ import 'package:healthfix/screens/home/components/DietPlannerBanner.dart';
 import 'package:healthfix/screens/home/components/our_feature_section.dart';
 import 'package:healthfix/screens/home/components/product_categories.dart';
 import 'package:healthfix/screens/home/components/top_brands_section.dart';
-import 'package:healthfix/screens/offer_products/offer_products_screen.dart';
 import 'package:healthfix/screens/product_details/product_details_screen.dart';
 import 'package:healthfix/screens/search_result/search_result_screen.dart';
 import 'package:healthfix/services/authentification/authentification_service.dart';
@@ -28,8 +26,8 @@ import 'home_ongoing_offers.dart';
 import 'products_section.dart';
 
 class Body extends StatefulWidget {
-  void Function() goToCategory;
-  void Function() showNotification;
+  final void Function() goToCategory;
+  final void Function() showNotification;
 
   Body(this.goToCategory, this.showNotification);
 
@@ -70,7 +68,7 @@ class _BodyState extends State<Body> {
 
   final FavouriteProductsStream favouriteProductsStream =
       FavouriteProductsStream();
-  final AllProductsStream allProductsStream = AllProductsStream();
+  final SomeProductsStream someProductsStream = SomeProductsStream();
   final FeaturedProductsStream featuredProductsStream =
       FeaturedProductsStream();
   final FlashSalesProductsStream flashSalesProductsStream =
@@ -80,7 +78,7 @@ class _BodyState extends State<Body> {
   void initState() {
     super.initState();
     favouriteProductsStream.init();
-    allProductsStream.init();
+    someProductsStream.init();
     featuredProductsStream.init();
     flashSalesProductsStream.init();
   }
@@ -97,176 +95,173 @@ class _BodyState extends State<Body> {
   @override
   Widget build(BuildContext context) {
     return SafeArea(
-      child: RefreshIndicator(
-        onRefresh: refreshPage,
-        child: SingleChildScrollView(
-          physics: AlwaysScrollableScrollPhysics(),
-          child: Column(
-            mainAxisSize: MainAxisSize.max,
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              // Section - Home Header
-              HomeHeader(
-                showNotification: widget.showNotification,
-                onSearchSubmitted: (value) async {
-                  final query = value.toString();
-                  if (query.length <= 0) return;
-                  List<String> searchedProductsId;
-                  try {
-                    searchedProductsId = await ProductDatabaseHelper()
-                        .searchInProducts(query.toLowerCase());
-                    if (searchedProductsId != null) {
-                      await Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => SearchResultScreen(
-                            searchQuery: query,
-                            searchResultProductsId: searchedProductsId,
-                            searchIn: "All Products",
-                          ),
+      child: SingleChildScrollView(
+        physics: ClampingScrollPhysics(),
+        child: Column(
+          mainAxisSize: MainAxisSize.max,
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            // Section - Home Header
+            HomeHeader(
+              showNotification: widget.showNotification,
+              onSearchSubmitted: (value) async {
+                final query = value.toString();
+                if (query.length <= 0) return;
+                List<String> searchedProductsId;
+                try {
+                  searchedProductsId = await ProductDatabaseHelper()
+                      .searchInProducts(query.toLowerCase());
+                  if (searchedProductsId != null) {
+                    await Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => SearchResultScreen(
+                          searchQuery: query,
+                          searchResultProductsId: searchedProductsId,
+                          searchIn: "All Products",
                         ),
-                      );
-                      await refreshPage();
-                    } else {
-                      throw "Couldn't perform search due to some unknown reason";
-                    }
-                  } catch (e) {
-                    final error = e.toString();
-                    Logger().e(error);
-                    ScaffoldMessenger.of(context).showSnackBar(
-                      SnackBar(
-                        content: Text("$error"),
                       ),
                     );
+                    await refreshPage();
+                  } else {
+                    throw "Couldn't perform search due to some unknown reason";
                   }
-                },
-                onCartButtonPressed: () async {
-                  bool allowed = AuthentificationService().currentUserVerified;
-                  if (!allowed) {
-                    final reVerify = await showConfirmationDialog(context,
-                        "You haven't verified your email address. This action is only allowed for verified users.",
-                        positiveResponse: "Resend verification email",
-                        negativeResponse: "Go back");
-                    if (reVerify) {
-                      final future = AuthentificationService()
-                          .sendVerificationEmailToCurrentUser();
-                      await showDialog(
-                        context: context,
-                        builder: (context) {
-                          return FutureProgressDialog(
-                            future,
-                            message: Text("Resending verification email"),
-                          );
-                        },
-                      );
-                    }
-                    return;
-                  }
-                  await Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => CartScreen(),
+                } catch (e) {
+                  final error = e.toString();
+                  Logger().e(error);
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    SnackBar(
+                      content: Text("$error"),
                     ),
                   );
-                  await refreshPage();
-                },
-              ),
+                }
+              },
+              onCartButtonPressed: () async {
+                bool allowed = AuthentificationService().currentUserVerified;
+                if (!allowed) {
+                  final reVerify = await showConfirmationDialog(context,
+                      "You haven't verified your email address. This action is only allowed for verified users.",
+                      positiveResponse: "Resend verification email",
+                      negativeResponse: "Go back");
+                  if (reVerify) {
+                    final future = AuthentificationService()
+                        .sendVerificationEmailToCurrentUser();
+                    await showDialog(
+                      context: context,
+                      builder: (context) {
+                        return FutureProgressDialog(
+                          future,
+                          message: Text("Resending verification email"),
+                        );
+                      },
+                    );
+                  }
+                  return;
+                }
+                await Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => CartScreen(),
+                  ),
+                );
+                await refreshPage();
+              },
+            ),
 
-              // Section - Offer Banners
-              AdsBanners(adsBannerImagesList),
+            // Section - Offer Banners
+            AdsBanners(adsBannerImagesList),
 
-              sizedBoxOfHeight(5),
+            sizedBoxOfHeight(5),
 
-              // Section - Product Category
-              ProductCategories(widget.goToCategory),
+            // Section - Product Category
+            ProductCategories(widget.goToCategory),
 
-              // SizedBox(height: getProportionateScreenHeight(20)),
-              // SizedBox(
-              //   height: SizeConfig.screenHeight * 0.5,
-              //   child: ProductsSection(
-              //     sectionTitle: "Products You Like",
-              //     productsStreamController: favouriteProductsStream,
-              //     emptyListMessage: "Add Product to Favourites",
-              //     onProductCardTapped: onProductCardTapped,
-              //   ),
-              // ),
-              // SizedBox(height: getProportionateScreenHeight(20)),
+            // SizedBox(height: getProportionateScreenHeight(20)),
+            // SizedBox(
+            //   height: SizeConfig.screenHeight * 0.5,
+            //   child: ProductsSection(
+            //     sectionTitle: "Products You Like",
+            //     productsStreamController: favouriteProductsStream,
+            //     emptyListMessage: "Add Product to Favourites",
+            //     onProductCardTapped: onProductCardTapped,
+            //   ),
+            // ),
+            // SizedBox(height: getProportionateScreenHeight(20)),
 
-              // Section - Flash Sales
-              flashSalesProducts(),
+            // Section - Flash Sales
+            flashSalesProducts(),
 
-              // Section - Explore Products
-              exploreProducts(),
+            // Section - Explore Products
+            exploreProducts(),
 
-              // Section - Ongoing Offers
-              OngoingOffers(offerImagesList),
+            // Section - Ongoing Offers
+            OngoingOffers(offerImagesList),
 
-              // Section - Trending Products
-              trendingProducts(),
+            // Section - Trending Products
+            trendingProducts(),
 
-              // Top categories
-              // Container(
-              //   color: kPrimaryColor.withOpacity(0.1),
-              //   child: Column(
-              //     children: [
-              //       SizedBox(height: getProportionateScreenHeight(12)),
-              //       Text(
-              //         "Top Categories",
-              //         style: cusCenterHeadingStyle(),
-              //       ),
-              //       // SizedBox(height: getProportionateScreenHeight(10)),
-              //
-              //       // SizedBox(
-              //       //   height: 532,
-              //       //   child: GridView.count(
-              //       //     crossAxisCount: 2,
-              //       //     children: List.generate(
-              //       //       4,
-              //       //       (index) => Container(
-              //       //         height: 100,
-              //       //         child: TopCategoryCard(),
-              //       //       ),
-              //       //     ),
-              //       //   ),
-              //       // ),
-              //       Column(
-              //         mainAxisAlignment: MainAxisAlignment.center,
-              //         children: [
-              //           SizedBox(height: getProportionateScreenHeight(20)),
-              //           Row(
-              //             mainAxisAlignment: MainAxisAlignment.center,
-              //             children: [
-              //               TopCategoryCard(topCategoriesList[0]),
-              //               SizedBox(width: getProportionateScreenWidth(20)),
-              //               TopCategoryCard(topCategoriesList[1]),
-              //             ],
-              //           ),
-              //           SizedBox(height: getProportionateScreenHeight(20)),
-              //           Row(
-              //             mainAxisAlignment: MainAxisAlignment.center,
-              //             children: [
-              //               TopCategoryCard(topCategoriesList[1]),
-              //               SizedBox(width: getProportionateScreenWidth(20)),
-              //               TopCategoryCard(topCategoriesList[0]),
-              //             ],
-              //           ),
-              //           SizedBox(height: getProportionateScreenHeight(20)),
-              //         ],
-              //       )
-              //     ],
-              //   ),
-              // ),
+            // Top categories
+            // Container(
+            //   color: kPrimaryColor.withOpacity(0.1),
+            //   child: Column(
+            //     children: [
+            //       SizedBox(height: getProportionateScreenHeight(12)),
+            //       Text(
+            //         "Top Categories",
+            //         style: cusCenterHeadingStyle(),
+            //       ),
+            //       // SizedBox(height: getProportionateScreenHeight(10)),
+            //
+            //       // SizedBox(
+            //       //   height: 532,
+            //       //   child: GridView.count(
+            //       //     crossAxisCount: 2,
+            //       //     children: List.generate(
+            //       //       4,
+            //       //       (index) => Container(
+            //       //         height: 100,
+            //       //         child: TopCategoryCard(),
+            //       //       ),
+            //       //     ),
+            //       //   ),
+            //       // ),
+            //       Column(
+            //         mainAxisAlignment: MainAxisAlignment.center,
+            //         children: [
+            //           SizedBox(height: getProportionateScreenHeight(20)),
+            //           Row(
+            //             mainAxisAlignment: MainAxisAlignment.center,
+            //             children: [
+            //               TopCategoryCard(topCategoriesList[0]),
+            //               SizedBox(width: getProportionateScreenWidth(20)),
+            //               TopCategoryCard(topCategoriesList[1]),
+            //             ],
+            //           ),
+            //           SizedBox(height: getProportionateScreenHeight(20)),
+            //           Row(
+            //             mainAxisAlignment: MainAxisAlignment.center,
+            //             children: [
+            //               TopCategoryCard(topCategoriesList[1]),
+            //               SizedBox(width: getProportionateScreenWidth(20)),
+            //               TopCategoryCard(topCategoriesList[0]),
+            //             ],
+            //           ),
+            //           SizedBox(height: getProportionateScreenHeight(20)),
+            //         ],
+            //       )
+            //     ],
+            //   ),
+            // ),
 
-              // Section - Diet Plan Banner
-              DietPlanBanner(dietPlanBanner),
+            // Section - Diet Plan Banner
+            DietPlanBanner(dietPlanBanner),
 
-              // Section - Top Brands
-              TopBrandsSection(topBrandsList),
+            // Section - Top Brands
+            TopBrandsSection(topBrandsList),
 
-              // Section - Our Features
-              OurFeaturesSection(),
-            ],
-          ),
+            // Section - Our Features
+            OurFeaturesSection(),
+          ],
         ),
       ),
       // ),
@@ -293,14 +288,14 @@ class _BodyState extends State<Body> {
         productsStreamController: flashSalesProductsStream,
         emptyListMessage: "Looks like all Stores are closed",
         onProductCardTapped: onProductCardTapped,
-        onSeeMorePress: () {
-          Navigator.push(
-            context,
-            MaterialPageRoute(
-              builder: (context) => OfferProductsScreen(),
-            ),
-          );
-        },
+        // onSeeMorePress: () {
+        //   Navigator.push(
+        //     context,
+        //     MaterialPageRoute(
+        //       builder: (context) => OfferProductsScreen(),
+        //     ),
+        //   );
+        // },
       ),
     );
   }
@@ -310,7 +305,7 @@ class _BodyState extends State<Body> {
       height: getProportionateScreenHeight(280),
       child: ProductsSection(
         sectionTitle: "Explore All Products",
-        productsStreamController: allProductsStream,
+        productsStreamController: someProductsStream,
         emptyListMessage: "Looks like all Stores are closed",
         onProductCardTapped: onProductCardTapped,
         onSeeMorePress: () {
@@ -332,7 +327,7 @@ class _BodyState extends State<Body> {
 
   Future<void> refreshPage() {
     favouriteProductsStream.reload();
-    allProductsStream.reload();
+    someProductsStream.reload();
     featuredProductsStream.reload();
     flashSalesProductsStream.reload();
     return Future<void>.value();

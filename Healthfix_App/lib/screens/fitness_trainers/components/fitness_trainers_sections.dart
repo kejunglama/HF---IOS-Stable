@@ -63,10 +63,10 @@ class FitnessTrainersSection extends StatelessWidget {
     );
   }
 
-  String name = "Sadikshya Vaidya";
-  String title = "Certified Trainer/Nutritionist";
-  String experience = "8 years of Experience as a Trainer";
-  String availableTime = "09:45AM";
+  final String name = "Sadikshya Vaidya";
+  final String title = "Certified Trainer/Nutritionist";
+  final String experience = "8 years of Experience as a Trainer";
+  final String availableTime = "09:45AM";
 
   Widget DetailsCard(trainerID) {
     return Container(

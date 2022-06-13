@@ -7,7 +7,7 @@ import 'package:healthfix/models/Meal.dart';
 import 'package:healthfix/models/Product.dart';
 import 'package:healthfix/screens/healthy_meal_description/healthy_meal_desc_screen.dart';
 import 'package:healthfix/screens/product_details/product_details_screen.dart';
-import 'package:healthfix/services/data_streams/cart_items_stream.dart';
+
 import 'package:healthfix/services/data_streams/cart_product_id_stream.dart';
 import 'package:healthfix/services/database/meals_database_helper.dart';
 import 'package:healthfix/services/database/product_database_helper.dart';
@@ -19,9 +19,9 @@ import '../../../size_config.dart';
 import 'order_item.dart';
 
 class OrderItems extends StatefulWidget {
-  List selectedCartItems;
-  bool isBuyNow;
-  bool isMeal;
+  final List selectedCartItems;
+  final bool isBuyNow;
+  final bool isMeal;
 
   OrderItems({
     Key key,
@@ -108,6 +108,7 @@ class _OrderItemsState extends State<OrderItems> {
                             height: getProportionateScreenHeight(80));
                       }
                       print("order Items : $cartItemsId");
+                      return Container();
                       // return buildCartItem(cartItemsId[index], index);
                     },
                   ),
@@ -199,8 +200,8 @@ class _OrderItemsState extends State<OrderItems> {
     Map variation;
 
     String VARIANT_ID = "var_id";
-    int i = 1;
-    int j = 1;
+    // int i = 1;
+    // int j = 1;
 
     return Container(
       width: SizeConfig.screenWidth * 0.7,
@@ -257,7 +258,7 @@ class _OrderItemsState extends State<OrderItems> {
                       // });
                       // }
                     }
-                    i++;
+                    // i++;
 
                     return SizedBox(
                       child: OrderProductShortDetailCard(

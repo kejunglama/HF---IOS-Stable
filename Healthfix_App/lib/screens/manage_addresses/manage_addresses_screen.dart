@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'components/body.dart';
 
 class ManageAddressesScreen extends StatelessWidget {
-  bool isSelectAddressScreen;
+  final bool isSelectAddressScreen;
   ManageAddressesScreen({this.isSelectAddressScreen});
 
   @override

@@ -25,7 +25,7 @@ class SearchResultScreen extends StatefulWidget {
 }
 
 class _SearchResultScreenState extends State<SearchResultScreen> {
-  final AllProductsStream allProductsStream = AllProductsStream();
+  final SomeProductsStream allProductsStream = SomeProductsStream();
 
   @override
   void initState() {
@@ -46,7 +46,8 @@ class _SearchResultScreenState extends State<SearchResultScreen> {
       if (query.length <= 0) return;
       List<String> searchedProductsId;
       try {
-        searchedProductsId = await ProductDatabaseHelper().searchInProducts(query.toLowerCase());
+        searchedProductsId =
+            await ProductDatabaseHelper().searchInProducts(query.toLowerCase());
         if (searchedProductsId != null) {
           await Navigator.pushReplacement(
             context,

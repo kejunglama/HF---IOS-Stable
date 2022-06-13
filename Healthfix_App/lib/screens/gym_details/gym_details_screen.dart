@@ -1,12 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:healthfix/components/app_back_button.dart';
-import 'package:healthfix/constants.dart';
 import 'package:healthfix/models/Gym.dart';
 
 import 'components/body.dart';
 
 class GymDetailsScreen extends StatelessWidget {
-  Gym gym;
+  final Gym gym;
 
   GymDetailsScreen(this.gym);
 

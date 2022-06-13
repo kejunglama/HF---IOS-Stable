@@ -136,7 +136,7 @@ class ProductDatabaseHelper {
         .get()
         .asStream();
     await for (final querySnapshot in reviewesQuerySnapshot) {
-      List<Review> reviews = List<Review>();
+      List<Review> reviews = [];
       for (final reviewDoc in querySnapshot.docs) {
         Review review = Review.fromMap(reviewDoc.data(), id: reviewDoc.id);
         reviews.add(review);
@@ -197,7 +197,7 @@ class ProductDatabaseHelper {
       [String productSubType]) async {
     final productsCollectionReference =
         firestore.collection(PRODUCTS_COLLECTION_NAME);
-    List productsId = List<String>();
+    List<String> productsId = [];
     var queryResult;
     if (productType == ProductType.All || productType == null) {
       queryResult = await productsCollectionReference.get();
@@ -227,7 +227,7 @@ class ProductDatabaseHelper {
     final querySnapshot = await productsCollectionReference
         .where(Product.OWNER_KEY, isEqualTo: uid)
         .get();
-    List usersProducts = List<String>();
+    List<String> usersProducts = [];
     querySnapshot.docs.forEach((doc) {
       usersProducts.add(doc.id);
     });
@@ -236,7 +236,18 @@ class ProductDatabaseHelper {
 
   Future<List<String>> get allProductsList async {
     final products = await firestore.collection(PRODUCTS_COLLECTION_NAME).get();
-    List productsId = List<String>();
+    List<String> productsId = [];
+    for (final product in products.docs) {
+      final id = product.id;
+      productsId.add(id);
+    }
+    return productsId;
+  }
+
+  Future<List<String>> get someProductsList async {
+    final products =
+        await firestore.collection(PRODUCTS_COLLECTION_NAME).limit(10).get();
+    List<String> productsId = [];
     for (final product in products.docs) {
       final id = product.id;
       productsId.add(id);
@@ -251,7 +262,7 @@ class ProductDatabaseHelper {
     final queryResult = await productsCollectionReference
         .where(Product.IS_FEATURED_KEY, isEqualTo: true)
         .get();
-    List productsId = List<String>();
+    List<String> productsId = [];
     for (final product in queryResult.docs) {
       final id = product.id;
       productsId.add(id);

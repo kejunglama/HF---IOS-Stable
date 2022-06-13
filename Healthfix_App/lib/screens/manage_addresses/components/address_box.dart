@@ -6,7 +6,7 @@ import 'package:healthfix/size_config.dart';
 import 'package:logger/logger.dart';
 
 class AddressBox extends StatelessWidget {
-  bool isSelectAddressScreen;
+  final bool isSelectAddressScreen;
 
   AddressBox({
     Key key,

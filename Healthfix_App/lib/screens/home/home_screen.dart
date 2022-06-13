@@ -43,6 +43,7 @@ class _HomeScreenState extends State<HomeScreen> {
     } catch (err) {
       /// setMockInitialValues initiates shared preference
       /// Adds app-name
+      // ignore: invalid_use_of_visible_for_testing_member
       SharedPreferences.setMockInitialValues({});
       Future<SharedPreferences> _prefs = SharedPreferences.getInstance();
       final SharedPreferences prefs = await _prefs;

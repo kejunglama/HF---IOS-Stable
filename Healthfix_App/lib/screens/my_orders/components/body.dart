@@ -1,5 +1,5 @@
 import 'package:firebase_core/firebase_core.dart';
-import 'package:flutter/cupertino.dart';
+// import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:healthfix/components/nothingtoshow_container.dart';
 import 'package:healthfix/components/product_short_detail_card.dart';
@@ -15,7 +15,7 @@ import 'package:healthfix/services/database/product_database_helper.dart';
 import 'package:healthfix/services/database/user_database_helper.dart';
 import 'package:healthfix/size_config.dart';
 import 'package:logger/logger.dart';
-import 'package:pretty_json/pretty_json.dart';
+// import 'package:pretty_json/pretty_json.dart';
 
 import 'order_details_screen.dart';
 
@@ -180,7 +180,7 @@ class _BodyState extends State<Body> {
                           //       bottomRight: Radius.circular(16),
                           //     ),
                           //   ),
-                          //   child: FlatButton(
+                          //   child: TextButton(
                           //     onPressed: () async {
                           //       String currentUserUid = AuthentificationService().currentUser.uid;
                           //       Review prevReview;
@@ -427,7 +427,7 @@ class _BodyState extends State<Body> {
                       bottomRight: Radius.circular(16),
                     ),
                   ),
-                  child: FlatButton(
+                  child: TextButton(
                     onPressed: () async {
                       String currentUserUid =
                           AuthentificationService().currentUser.uid;
@@ -594,7 +594,7 @@ class _BodyState extends State<Body> {
 //                     bottomRight: Radius.circular(16),
 //                   ),
 //                 ),
-//                 child: FlatButton(
+//                 child: TextButton(
 //                   onPressed: () async {
 //                     String currentUserUid = AuthentificationService().currentUser.uid;
 //                     Review prevReview;

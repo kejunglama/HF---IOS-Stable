@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+// import 'package:healthfix/constants.dart';
 
 class PopUpDialog extends StatelessWidget {
   const PopUpDialog();
@@ -15,11 +16,11 @@ class PopUpDialog extends StatelessWidget {
         ],
       ),
       actions: <Widget>[
-        new FlatButton(
+        TextButton(
           onPressed: () {
             Navigator.of(context).pop();
           },
-          textColor: Theme.of(context).primaryColor,
+          // textColor: Theme.of(context).primaryColor,
           child: const Text('Close'),
         ),
       ],

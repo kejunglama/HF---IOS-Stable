@@ -1,13 +1,10 @@
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:future_progress_dialog/future_progress_dialog.dart';
 import 'package:healthfix/constants.dart';
 import 'package:healthfix/screens/about_developer/about_developer_screen.dart';
-import 'package:healthfix/screens/change_display_picture/change_display_picture_screen.dart';
 import 'package:healthfix/screens/change_email/change_email_screen.dart';
 import 'package:healthfix/screens/change_password/change_password_screen.dart';
-import 'package:healthfix/screens/change_phone/change_phone_screen.dart';
 import 'package:healthfix/screens/edit_product/edit_product_screen.dart';
 import 'package:healthfix/screens/manage_addresses/manage_addresses_screen.dart';
 import 'package:healthfix/screens/my_gym_subscriptions/my_gym_subscriptions_screen.dart';
@@ -35,6 +32,9 @@ class HomeScreenDrawer extends StatelessWidget {
           "My Account",
           style: cusCenterHeadingStyle(),
         ),
+        // leading: BackButton(
+        //   color: kPrimaryColor,
+        // ),
       ),
       body: Container(
         child: ListView(
@@ -67,7 +67,9 @@ class HomeScreenDrawer extends StatelessWidget {
                       leading: Icon(Icons.map_outlined, color: kSecondaryColor),
                       title: Text(
                         "My Addresses",
-                        style: cusPdctNameStyle,
+                        style: TextStyle(
+                            color: Colors.black,
+                            fontSize: getProportionateScreenHeight(16)),
                       ),
                       onTap: () async {
                         bool allowed =
@@ -107,7 +109,9 @@ class HomeScreenDrawer extends StatelessWidget {
                           color: kSecondaryColor),
                       title: Text(
                         "My Orders",
-                        style: cusPdctNameStyle,
+                        style: TextStyle(
+                            color: Colors.black,
+                            fontSize: getProportionateScreenHeight(16)),
                       ),
                       onTap: () async {
                         bool allowed =
@@ -147,7 +151,9 @@ class HomeScreenDrawer extends StatelessWidget {
                           Icon(Icons.fitness_center, color: kSecondaryColor),
                       title: Text(
                         "Gym Subscriptions",
-                        style: cusPdctNameStyle,
+                        style: TextStyle(
+                            color: Colors.black,
+                            fontSize: getProportionateScreenHeight(16)),
                       ),
                       onTap: () async {
                         bool allowed =
@@ -187,7 +193,9 @@ class HomeScreenDrawer extends StatelessWidget {
                       leading: Icon(Icons.info_outline, color: kSecondaryColor),
                       title: Text(
                         "About Developer",
-                        style: cusPdctNameStyle,
+                        style: TextStyle(
+                            color: Colors.black,
+                            fontSize: getProportionateScreenHeight(16)),
                       ),
                       onTap: () async {
                         Navigator.push(
@@ -204,7 +212,9 @@ class HomeScreenDrawer extends StatelessWidget {
                       leading: Icon(Icons.logout, color: kSecondaryColor),
                       title: Text(
                         "Sign out",
-                        style: cusPdctNameStyle,
+                        style: TextStyle(
+                            color: Colors.black,
+                            fontSize: getProportionateScreenHeight(16)),
                       ),
                       onTap: () async {
                         final confirmation = await showConfirmationDialog(
@@ -231,7 +241,7 @@ class HomeScreenDrawer extends StatelessWidget {
       width: double.infinity,
       margin: EdgeInsets.zero,
       decoration: BoxDecoration(
-          // color: kTextColor.withOpacity(0.15),
+          // color: kTextColor.withOpacity(0.16),
           ),
       child: Column(
         children: [
@@ -247,11 +257,11 @@ class HomeScreenDrawer extends StatelessWidget {
                 ),
                 child: IconButton(
                   onPressed: () {
-                    Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => ChangeDisplayPictureScreen(),
-                        ));
+                    // Navigator.push(
+                    //     context,
+                    //     MaterialPageRoute(
+                    //       builder: (context) => ChangeDisplayPictureScreen(),
+                    //     ));
                   },
                   icon: Icon(
                     Icons.camera_alt_rounded,
@@ -261,9 +271,9 @@ class HomeScreenDrawer extends StatelessWidget {
               ),
               // pp
               Container(
-                height: 100,
-                width: 100,
-                margin: EdgeInsets.all(30),
+                height: getProportionateScreenHeight(100),
+                width: getProportionateScreenHeight(100),
+                margin: EdgeInsets.all(getProportionateScreenHeight(20)),
                 child: FutureBuilder(
                   future: UserDatabaseHelper().displayPictureForCurrentUser,
                   builder: (context, snapshot) {
@@ -314,7 +324,7 @@ class HomeScreenDrawer extends StatelessWidget {
               user.displayName,
               style: cusHeadingStyle(
                   fontSize: getProportionateScreenHeight(22),
-                  color: kPrimaryColor),
+                  color: kSecondaryColor),
             ),
           ),
           Text(
@@ -334,13 +344,13 @@ class HomeScreenDrawer extends StatelessWidget {
     // UserAccountsDrawerHeader(
     //   margin: EdgeInsets.zero,
     //   decoration: BoxDecoration(
-    //     color: kTextColor.withOpacity(0.15),
+    //     color: kTextColor.withOpacity(0.16),
     //
     //   ),
     //   accountEmail: Text(
     //     user.email ?? "No Email",
     //     style: TextStyle(
-    //       fontSize: getProportionateScreenHeight(15),
+    //       fontSize: getProportionateScreenHeight(16),
     //       color: Colors.black,
     //     ),
     //   ),
@@ -379,34 +389,37 @@ class HomeScreenDrawer extends StatelessWidget {
 
   ExpansionTile buildEditAccountExpansionTile(BuildContext context) {
     return ExpansionTile(
-      leading: Icon(Icons.account_box_outlined, color: kSecondaryColor),
+      leading: Icon(Icons.account_circle_rounded, color: kSecondaryColor),
       title: Text(
         "Account Details",
-        style: cusPdctNameStyle,
+        style: TextStyle(
+          color: Colors.black,
+          fontSize: getProportionateScreenHeight(16),
+        ),
       ),
       children: [
-        ListTile(
-          title: Text(
-            "Change Display Picture",
-            style: TextStyle(
-              color: Colors.black,
-              fontSize: getProportionateScreenHeight(15),
-            ),
-          ),
-          onTap: () {
-            Navigator.push(
-                context,
-                MaterialPageRoute(
-                  builder: (context) => ChangeDisplayPictureScreen(),
-                ));
-          },
-        ),
+        // ListTile(
+        //   title: Text(
+        //     "Change Display Picture",
+        //     style: TextStyle(
+        //       color: Colors.black,
+        //       fontSize: getProportionateScreenHeight(16),
+        //     ),
+        //   ),
+        //   onTap: () {
+        //     Navigator.push(
+        //         context,
+        //         MaterialPageRoute(
+        //           builder: (context) => ChangeDisplayPictureScreen(),
+        //         ));
+        //   },
+        // ),
         ListTile(
           title: Text(
             "Change Display Name",
             style: TextStyle(
               color: Colors.black,
-              fontSize: getProportionateScreenHeight(15),
+              fontSize: getProportionateScreenHeight(16),
             ),
           ),
           onTap: () {
@@ -422,15 +435,15 @@ class HomeScreenDrawer extends StatelessWidget {
             "Change Phone Number",
             style: TextStyle(
               color: Colors.black,
-              fontSize: getProportionateScreenHeight(15),
+              fontSize: getProportionateScreenHeight(16),
             ),
           ),
           onTap: () {
-            Navigator.push(
-                context,
-                MaterialPageRoute(
-                  builder: (context) => ChangePhoneScreen(),
-                ));
+            // Navigator.push(
+            //     context,
+            //     MaterialPageRoute(
+            //       builder: (context) => ChangePhoneScreen(),
+            //     ));
           },
         ),
         ListTile(
@@ -438,7 +451,7 @@ class HomeScreenDrawer extends StatelessWidget {
             "Change Email",
             style: TextStyle(
               color: Colors.black,
-              fontSize: getProportionateScreenHeight(15),
+              fontSize: getProportionateScreenHeight(16),
             ),
           ),
           onTap: () {
@@ -454,7 +467,7 @@ class HomeScreenDrawer extends StatelessWidget {
             "Change Password",
             style: TextStyle(
               color: Colors.black,
-              fontSize: getProportionateScreenHeight(15),
+              fontSize: getProportionateScreenHeight(16),
             ),
           ),
           onTap: () {
@@ -482,7 +495,7 @@ class HomeScreenDrawer extends StatelessWidget {
             "Add New Product",
             style: TextStyle(
               color: Colors.black,
-              fontSize: getProportionateScreenHeight(15),
+              fontSize: getProportionateScreenHeight(16),
             ),
           ),
           onTap: () async {
@@ -516,7 +529,7 @@ class HomeScreenDrawer extends StatelessWidget {
             "Manage My Products",
             style: TextStyle(
               color: Colors.black,
-              fontSize: getProportionateScreenHeight(15),
+              fontSize: getProportionateScreenHeight(16),
             ),
           ),
           onTap: () async {
@@ -555,7 +568,7 @@ class HomeScreenDrawer extends StatelessWidget {
 }
 
 class CardDesign extends StatelessWidget {
-  Widget child;
+  final Widget child;
 
   CardDesign({this.child});
 

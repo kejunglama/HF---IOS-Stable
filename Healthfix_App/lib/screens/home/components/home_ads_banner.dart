@@ -4,7 +4,7 @@ import 'package:healthfix/size_config.dart';
 
 // Cleaned
 class AdsBanners extends StatelessWidget {
-  List imagesList;
+  final List imagesList;
 
   AdsBanners(this.imagesList, {key}) : super(key: key);
 
@@ -26,7 +26,8 @@ class AdsBanners extends StatelessWidget {
             return GestureDetector(
               child: Container(
                 margin: EdgeInsets.all(getProportionateScreenWidth(8)),
-                decoration: BoxDecoration(borderRadius: BorderRadius.circular(5)),
+                decoration:
+                    BoxDecoration(borderRadius: BorderRadius.circular(5)),
                 child: ClipRRect(
                   borderRadius: BorderRadius.circular(5),
                   child: Image.network(

@@ -56,14 +56,15 @@ class _variantsState extends State<variantsBuilder> {
             },
             child: Container(
               margin: EdgeInsets.only(
-                right: getProportionateScreenHeight(12),
+                right: getProportionateScreenHeight(16),
                 // top: getProportionateScreenWidth(18),
                 // bottom: getProportionateScreenWidth(18),
               ),
-              width: getProportionateScreenWidth(30),
-              height: getProportionateScreenWidth(30),
+              width: getProportionateScreenWidth(36),
+              height: getProportionateScreenWidth(36),
               decoration: BoxDecoration(
-                color: i == _selected ? Colors.cyan : Colors.transparent,
+                color:
+                    i == _selected ? Colors.cyan : Colors.cyan.withOpacity(0.2),
                 // border: Border.all(
                 //   width: 1,
                 //   color: i == _selected ? kPrimaryColor : Colors.transparent,
@@ -76,7 +77,7 @@ class _variantsState extends State<variantsBuilder> {
                   style: TextStyle(
                     fontSize: getProportionateScreenWidth(14),
                     fontWeight: FontWeight.w600,
-                    color: i == _selected ? Colors.white : Colors.black,
+                    color: i == _selected ? Colors.white : Colors.black54,
                   ),
                 ),
               ),

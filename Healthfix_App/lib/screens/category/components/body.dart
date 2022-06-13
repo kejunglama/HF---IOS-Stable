@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/svg.dart';
+
 import 'package:healthfix/constants.dart';
 import 'package:healthfix/data.dart';
 import 'package:healthfix/screens/category_products/category_products_screen.dart';
@@ -44,8 +44,8 @@ class Body extends StatelessWidget {
 }
 
 class CategoryHierarchyList extends StatelessWidget {
-  List keyList;
-  Map categoryHierarchy;
+  final List keyList;
+  final Map categoryHierarchy;
 
   CategoryHierarchyList(this.categoryHierarchy, this.keyList);
 
@@ -129,13 +129,13 @@ class CategoryHierarchyList extends StatelessWidget {
 }
 
 class CategoryList extends StatelessWidget {
-  List categories;
-  List keyList;
-  Future Function([GlobalKey key]) scrollToCat;
+  final List categories;
+  final List keyList;
+  final Future Function([GlobalKey key]) scrollToCat;
 
-  String ICON_KEY = "icon";
-  String IMAGE_LOCATION_KEY = "image_location";
-  String TITLE_KEY = "title";
+  final String ICON_KEY = "icon";
+  final String IMAGE_LOCATION_KEY = "image_location";
+  final String TITLE_KEY = "title";
 
   CategoryList(this.categories, this.scrollToCat, this.keyList);
 

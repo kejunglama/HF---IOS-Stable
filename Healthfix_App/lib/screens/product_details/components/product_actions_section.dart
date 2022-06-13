@@ -1,4 +1,3 @@
-import 'package:healthfix/components/top_rounded_container.dart';
 import 'package:healthfix/models/Product.dart';
 import 'package:healthfix/screens/product_details/components/product_description.dart';
 import 'package:healthfix/screens/product_details/provider_models/ProductActions.dart';
@@ -14,7 +13,7 @@ import '../../../utils.dart';
 
 class ProductActionsSection extends StatelessWidget {
   final Product product;
-  void Function(String size, Map color) setSelectedVariant;
+  final void Function(String size, Map color) setSelectedVariant;
 
   ProductActionsSection({
     Key key,

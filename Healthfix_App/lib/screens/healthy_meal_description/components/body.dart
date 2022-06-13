@@ -1,18 +1,12 @@
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:healthfix/constants.dart';
 import 'package:healthfix/models/Meal.dart';
 import 'package:healthfix/models/OrderedProduct.dart';
 import 'package:healthfix/screens/checkout/checkout_screen.dart';
 import 'package:healthfix/screens/healthy_meal_description/components/temp.dart';
-import 'package:healthfix/screens/product_details/components/fab_add_to_cart.dart';
-import 'package:healthfix/screens/product_details/components/fab_buy_now.dart';
-import 'package:healthfix/screens/product_details/components/product_images.dart';
 import 'package:healthfix/services/database/meals_database_helper.dart';
 import 'package:healthfix/services/database/user_database_helper.dart';
-import 'package:healthfix/shared_preference.dart';
 import 'package:healthfix/size_config.dart';
 import 'package:intl/intl.dart';
 import 'package:logger/logger.dart';
@@ -264,7 +258,7 @@ class Body extends StatelessWidget {
   }
 
   Positioned bottomBtnBar(BuildContext context, Meal meal) {
-    UserPreferences prefs = new UserPreferences();
+    // UserPreferences prefs = new UserPreferences();
     bool hasDisPrice = meal.discountPrice != null;
     final numFormat = NumberFormat('#,##,000');
 

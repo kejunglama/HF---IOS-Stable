@@ -59,6 +59,8 @@ class ProductsSection extends StatelessWidget {
     return StreamBuilder<List<String>>(
       stream: productsStreamController.stream,
       builder: (context, snapshot) {
+        print(snapshot.data);
+        print((snapshot.data).runtimeType);
         if (snapshot.hasData) {
           if (snapshot.data.length == 0) {
             return Center(
@@ -102,6 +104,7 @@ class ProductsSection extends StatelessWidget {
           productId: productsId[index],
           press: () {
             onProductCardTapped.call(productsId[index]);
+            print(productsId[index]);
           },
         );
       },

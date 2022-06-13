@@ -2,7 +2,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:healthfix/models/Meal.dart';
-import 'package:logger/logger.dart';
+// import 'package:logger/logger.dart';
 
 import '../constants.dart';
 import '../size_config.dart';
@@ -29,7 +29,7 @@ class MealShortDetailCard extends StatelessWidget {
   Widget build(BuildContext context) {
     // print(variation != null && variation.isNotEmpty);
     // print(variantId);
-    Map variation;
+    // Map variation;
 
     // print("item count --- ${itemCount}");
     return InkWell(

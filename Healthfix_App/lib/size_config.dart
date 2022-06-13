@@ -4,6 +4,7 @@ class SizeConfig {
   static MediaQueryData _mediaQueryData;
   static double screenWidth;
   static double screenHeight;
+  static double screenViewPadding;
   static double defaultSize;
   static Orientation orientation;
 
@@ -11,6 +12,8 @@ class SizeConfig {
     _mediaQueryData = MediaQuery.of(context);
     screenWidth = _mediaQueryData.size.width;
     screenHeight = _mediaQueryData.size.height;
+    screenViewPadding = _mediaQueryData.viewPadding.top;
+    ;
     orientation = _mediaQueryData.orientation;
   }
 }
@@ -29,10 +32,14 @@ double getProportionateScreenWidth(double inputWidth) {
   return (inputWidth / 375.0) * screenWidth;
 }
 
-Widget sizedBoxOfHeight(double inputHeight){
-  return SizedBox(height: getProportionateScreenHeight(inputHeight),);
+Widget sizedBoxOfHeight(double inputHeight) {
+  return SizedBox(
+    height: getProportionateScreenHeight(inputHeight),
+  );
 }
 
-Widget sizedBoxOfWidth(double inputWidth){
-  return SizedBox(width: getProportionateScreenWidth(inputWidth),);
+Widget sizedBoxOfWidth(double inputWidth) {
+  return SizedBox(
+    width: getProportionateScreenWidth(inputWidth),
+  );
 }

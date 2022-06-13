@@ -25,6 +25,10 @@ class AppReviewDialog extends StatelessWidget {
         Center(
           child: TextFormField(
             initialValue: appReview.feedback,
+            style: cusHeadingStyle(
+                fontSize: getProportionateScreenHeight(14),
+                color: Colors.black,
+                fontWeight: FontWeight.w400),
             decoration: InputDecoration(
               hintText: "Feedback for App",
               labelText: "Feedback (optional)",

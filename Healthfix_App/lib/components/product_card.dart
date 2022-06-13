@@ -9,7 +9,7 @@ import '../constants.dart';
 class ProductCard extends StatelessWidget {
   final String productId;
   final GestureTapCallback press;
-  bool noSpacing;
+  final bool noSpacing;
 
   ProductCard({
     Key key,

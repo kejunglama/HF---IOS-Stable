@@ -12,7 +12,7 @@ import 'package:healthfix/models/Product.dart';
 import 'package:healthfix/screens/checkout/checkout_screen.dart';
 import 'package:healthfix/screens/product_details/product_details_screen.dart';
 import 'package:healthfix/services/data_streams/cart_items_stream.dart';
-import 'package:healthfix/services/data_streams/cart_product_id_stream.dart';
+
 import 'package:healthfix/services/database/product_database_helper.dart';
 import 'package:healthfix/services/database/user_database_helper.dart';
 import 'package:healthfix/size_config.dart';
@@ -394,7 +394,7 @@ class _BodyState extends State<Body> {
         future: Future.wait([pdct, cartItem]),
         builder: (context, AsyncSnapshot<List<dynamic>> snapshot) {
           if (snapshot.hasData) {
-            Product product = snapshot.data[0];
+            // Product product = snapshot.data[0];
             CartItem cartItem = snapshot.data[1];
 
             int itemCount = 0;
@@ -553,9 +553,9 @@ class _BodyState extends State<Body> {
     orderFuture.then((orderedProductsUid) async {
       if (orderedProductsUid != null) {
         // print(orderedProductsUid);
-        final dateTime = DateTime.now();
-        final formatedDateTime =
-            "${dateTime.day}-${dateTime.month}-${dateTime.year}";
+        // final dateTime = DateTime.now();
+        // final formatedDateTime =
+        //     "${dateTime.day}-${dateTime.month}-${dateTime.year}";
         // List<OrderedProduct> orderedProducts =
         // orderedProductsUid.map((e) => OrderedProduct(null, productUid: e, orderDate: formatedDateTime)).toList();
         List orderedProducts = [];
@@ -565,10 +565,10 @@ class _BodyState extends State<Body> {
             OrderedProduct.ITEM_COUNT_KEY: entry.value["item_count"],
           });
         }
-        OrderedProduct order = OrderedProduct(null,
-            products: orderedProducts,
-            orderDate: formatedDateTime,
-            orderDetails: orderDetails);
+        // OrderedProduct order = OrderedProduct(null,
+        //     products: orderedProducts,
+        //     orderDate: formatedDateTime,
+        //     orderDetails: orderDetails);
         // print(order);
 
         // bool addedProductsToMyProducts = false;

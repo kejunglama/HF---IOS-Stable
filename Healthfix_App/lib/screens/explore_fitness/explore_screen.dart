@@ -9,7 +9,7 @@ import 'package:healthfix/size_config.dart';
 class ExploreScreen extends StatelessWidget {
   ExploreScreen();
 
-  List imageList = [
+  final List imageList = [
     "https://media.istockphoto.com/photos/empty-gym-picture-id1132006407?k=20&m=1132006407&s=612x612&w=0&h=Z7nJu8jntywb9jOhvjlCS7lijbU4_hwHcxoVkxv77sg=",
     "https://exceedmasterclass.com/wp-content/uploads/2016/09/nutrition-consultation-fitness-trainer.png",
     "https://cdn.thewirecutter.com/wp-content/uploads/2020/03/onlineworkout-lowres-2x1-1.jpg?auto=webp&quality=75&crop=2:1&width=1024",
@@ -17,7 +17,7 @@ class ExploreScreen extends StatelessWidget {
     "https://media.glamour.com/photos/5f0ded3c6ebfe4554e35b781/master/w_1600%2Cc_limit/Freshly-MealGroup_2160x1500.jpg",
   ];
 
-  List captionList = [
+  final List captionList = [
     "Membership in Kathmandu's Best Gyms",
     "Diet Plan, Personal Training, Workout Programs",
     "Online Fitness Classes",
@@ -25,7 +25,7 @@ class ExploreScreen extends StatelessWidget {
     "Healthy Meals",
   ];
 
-  List titleList = [
+  final List titleList = [
     "Gym Membership",
     "Trainer/Consultation",
     "Fitness Classes",
@@ -33,7 +33,7 @@ class ExploreScreen extends StatelessWidget {
     "Healthy Meals",
   ];
 
-  List toScreen = [
+  final List toScreen = [
     GymMembershipScreen(),
     GymMembershipScreen(),
     // FitnessTrainerDetailsScreen(),
@@ -117,7 +117,7 @@ class ExploreCard extends StatelessWidget {
   final Color color;
   final String caption;
   final String text;
-  Widget toScreen;
+  final Widget toScreen;
 
   @override
   Widget build(BuildContext context) {
@@ -187,7 +187,7 @@ class ExploreCard extends StatelessWidget {
 }
 
 class cusButton extends StatelessWidget {
-  String text;
+  final String text;
 
   cusButton({
     Key key,

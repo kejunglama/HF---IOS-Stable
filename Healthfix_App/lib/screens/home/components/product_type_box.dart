@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/svg.dart';
 
 import '../../../constants.dart';
 import '../../../size_config.dart';
@@ -51,7 +50,9 @@ class ProductTypeBox extends StatelessWidget {
           ),
           // SizedBox(height: 2),
           Container(
-            margin: EdgeInsets.only(left: getProportionateScreenHeight(12), top: getProportionateScreenHeight(5)),
+            margin: EdgeInsets.only(
+                left: getProportionateScreenHeight(12),
+                top: getProportionateScreenHeight(5)),
             width: getProportionateScreenWidth(70),
             child: Text(
               title,

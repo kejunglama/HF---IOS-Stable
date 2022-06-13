@@ -24,9 +24,12 @@ class SectionTile extends StatelessWidget {
               title,
               style: cusHeadingStyle(),
             ),
-            Text(
-              "See More >",
-              style: cusHeadingLinkStyle,
+            Visibility(
+              visible: onPress != null,
+              child: Text(
+                "See More >",
+                style: cusHeadingLinkStyle,
+              ),
             ),
           ],
         ),

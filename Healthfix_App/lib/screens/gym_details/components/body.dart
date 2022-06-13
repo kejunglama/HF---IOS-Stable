@@ -1,9 +1,6 @@
-import 'dart:ui';
-
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:future_progress_dialog/future_progress_dialog.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:healthfix/models/Gym.dart';
@@ -19,7 +16,7 @@ import '../../../size_config.dart';
 import '../../../utils.dart';
 
 class Body extends StatefulWidget {
-  Gym gym;
+  final Gym gym;
 
   Body(this.gym);
 
@@ -55,13 +52,11 @@ class _BodyState extends State<Body> {
 
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
   }
 
   @override
   void dispose() {
-    // TODO: implement dispose
     super.dispose();
   }
 
@@ -404,7 +399,7 @@ class _BodyState extends State<Body> {
     );
   }
 
-  DateTime _chosenDateTime;
+  // DateTime _chosenDateTime;
 
   // Show the modal that contains the CupertinoDatePicker
   void showDatePickerPopup() {
