@@ -411,15 +411,18 @@ class _BodyState extends State<Body> {
             ),
           );
         },
-        gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-          crossAxisCount: 2,
-          childAspectRatio: 0.95,
+        gridDelegate: SliverGridDelegateWithMaxCrossAxisExtent(
+          // crossAxisCount: 2,
+          // childAspectRatio: 4 / 4,
+          maxCrossAxisExtent:
+              SizeConfig.screenWidth / 2 - getProportionateScreenHeight(10),
+          mainAxisExtent: getProportionateScreenHeight(200),
           mainAxisSpacing: getProportionateScreenWidth(8),
           crossAxisSpacing: getProportionateScreenWidth(8),
         ),
         padding: EdgeInsets.symmetric(
           // horizontal: 4,
-          vertical: 12,
+          vertical: getProportionateScreenHeight(12),
         ),
       ),
     );

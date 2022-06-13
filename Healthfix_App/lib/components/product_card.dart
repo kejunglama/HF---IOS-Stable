@@ -23,6 +23,7 @@ class ProductCard extends StatelessWidget {
     return GestureDetector(
       onTap: press,
       child: Container(
+        // height: 300,
         margin: noSpacing ?? false
             ? null
             : EdgeInsets.only(left: getProportionateScreenWidth(12)),
