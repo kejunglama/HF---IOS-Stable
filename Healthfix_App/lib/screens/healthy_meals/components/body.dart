@@ -101,7 +101,7 @@ class _BodyState extends State<Body> {
             builder: (context, snapshot) {
               if (snapshot.hasData) {
                 return buildMealCardHorizontal(
-                    imageSize: getProportionateScreenHeight(60),
+                    imageSize: getProportionateScreenHeight(48),
                     titleFontSize: getProportionateScreenHeight(12),
                     meal: snapshot.data);
               } else if (snapshot.connectionState == ConnectionState.waiting) {
