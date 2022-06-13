@@ -11,18 +11,25 @@ class HealthyMealsScreen extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         title: Row(
+          mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Text("Healthy Meals",
-                style: cusHeadingStyle(
-                    fontSize: getProportionateScreenHeight(20),
-                    fontWeight: FontWeight.w300)),
-            Text(" from Fitcal",
+            Text("Fitcal ",
                 style: cusHeadingStyle(
                     fontSize: getProportionateScreenHeight(20),
                     color: Colors.purple,
-                    fontWeight: FontWeight.w400)),
+                    fontWeight: FontWeight.w500)),
+            Text("Meals",
+                style: cusHeadingStyle(
+                    fontSize: getProportionateScreenHeight(20),
+                    fontWeight: FontWeight.w300)),
           ],
         ),
+        actions: [
+          Padding(
+            padding: EdgeInsets.all(getProportionateScreenHeight(8)),
+            child: Icon(Icons.search),
+          )
+        ],
         backgroundColor: kPrimaryColor.withOpacity(0.05),
         // foregroundColor: Colors.grey.withOpacity(0.8),
       ),

@@ -50,11 +50,8 @@ class _BodyState extends State<Body> {
                 // Text("What do you want to find",
                 //     style: cusHeadingStyle(null, null, null, FontWeight.w300)),
                 ClipRRect(
-                  borderRadius: BorderRadius.circular(10),
-                  child: Image.network(
-                      // "https://psdfree.net/wp-content/uploads/2021/08/10x.jpg",
-                      "https://image.shutterstock.com/image-vector/delicious-hamburger-fries-banner-ads-260nw-1203026587.jpg"),
-                ),
+                    borderRadius: BorderRadius.circular(10),
+                    child: Image.asset("assets/images/banner-fitcal.png")),
                 sizedBoxOfHeight(20),
                 buildPopularMeals(),
                 buildOurMeals(),

@@ -40,7 +40,7 @@ cusHeadingStyle(
         fontSize: fontSize ?? getProportionateScreenHeight(20),
         fontWeight: fontWeight ?? FontWeight.w500,
         letterSpacing: 0.5,
-        height: lineheight ?? getProportionateScreenHeight(2),
+        height: lineheight ?? null,
         shadows: <Shadow>[
           if (hasShadow ?? false)
             Shadow(
