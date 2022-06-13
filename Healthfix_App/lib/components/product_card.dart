@@ -133,7 +133,7 @@ class ProductCard extends StatelessWidget {
                             "${hasDisPrice ? product.calculatePercentageDiscount() : null}% OFF",
                             style: TextStyle(
                               color: Colors.red,
-                              fontSize: getProportionateScreenHeight(10),
+                              fontSize: getProportionateScreenHeight(8),
                               fontWeight: FontWeight.w900,
                             ),
                           ),

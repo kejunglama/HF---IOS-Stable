@@ -110,7 +110,7 @@ cusPdctDisPriceStyle([double fs, Color color]) => GoogleFonts.poppins(
       textStyle: TextStyle(
         color: color ?? kSecondaryColor,
         // fontWeight: FontWeight.w600,
-        fontSize: fs ?? getProportionateScreenHeight(14),
+        fontSize: fs ?? getProportionateScreenHeight(12),
         letterSpacing: 0.5,
       ),
     );
@@ -128,7 +128,7 @@ cusPdctOriPriceStyle([double fs]) => GoogleFonts.poppins(
         color: kTextColor,
         decoration: TextDecoration.lineThrough,
         fontWeight: FontWeight.normal,
-        fontSize: fs ?? getProportionateScreenHeight(12),
+        fontSize: fs ?? getProportionateScreenHeight(10),
         // letterSpacing: 0.5,
       ),
     );
@@ -137,7 +137,7 @@ var cusPdctNameStyle = GoogleFonts.montserrat(
   textStyle: TextStyle(
     color: Colors.black,
     fontWeight: FontWeight.w400,
-    fontSize: getProportionateScreenHeight(12),
+    fontSize: getProportionateScreenHeight(10),
     letterSpacing: 0.2,
   ),
 );

@@ -102,7 +102,7 @@ class _BodyState extends State<Body> {
               if (snapshot.hasData) {
                 return buildMealCardHorizontal(
                     imageSize: getProportionateScreenHeight(60),
-                    titleFontSize: getProportionateScreenHeight(14),
+                    titleFontSize: getProportionateScreenHeight(12),
                     meal: snapshot.data);
               } else if (snapshot.connectionState == ConnectionState.waiting) {
                 return Center(child: CircularProgressIndicator());
@@ -201,7 +201,9 @@ class _BodyState extends State<Body> {
                 Text(
                   meal != null ? meal.title : "Stir Brown Rice",
                   style: cusHeadingStyle(
-                      fontSize: titleFontSize, fontWeight: FontWeight.w400),
+                      fontSize:
+                          titleFontSize ?? getProportionateScreenHeight(14),
+                      fontWeight: FontWeight.w400),
                   overflow: TextOverflow.ellipsis,
                   maxLines: 1,
                 ),
@@ -221,7 +223,7 @@ class _BodyState extends State<Body> {
                       child: Text(
                         "1 Meal",
                         style: cusBodyStyle(
-                            fontSize: getProportionateScreenHeight(12),
+                            fontSize: getProportionateScreenHeight(10),
                             fontWeight: FontWeight.w500,
                             color: kPrimaryColor),
                       ),
@@ -254,7 +256,7 @@ class _BodyState extends State<Body> {
                             ? currency.format(meal.originalPrice)
                             : "Rs. 200",
                         style: cusPdctDisPriceStyle(
-                            getProportionateScreenHeight(16))),
+                            getProportionateScreenHeight(14))),
                     // Add to Cart Button
                     Container(
                       decoration: BoxDecoration(
@@ -304,7 +306,7 @@ class _BodyState extends State<Body> {
             Text(
               meal != null ? meal.title : "Stir Brown Rice",
               style: cusHeadingStyle(
-                  fontSize: getProportionateScreenHeight(16),
+                  fontSize: getProportionateScreenHeight(14),
                   fontWeight: FontWeight.w400),
               overflow: TextOverflow.ellipsis,
               maxLines: 1,
@@ -366,7 +368,7 @@ class _BodyState extends State<Body> {
                         ? currency.format(meal.originalPrice)
                         : "Rs. 200",
                     style:
-                        cusPdctDisPriceStyle(getProportionateScreenHeight(16))),
+                        cusPdctDisPriceStyle(getProportionateScreenHeight(14))),
                 // Add to Cart Button
                 Container(
                   decoration: BoxDecoration(
