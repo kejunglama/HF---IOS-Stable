@@ -135,9 +135,11 @@ class _ChangeDisplayNameFormState extends State<ChangeDisplayNameForm> {
             ),
             contentPadding: EdgeInsets.all(10),
             hintStyle: cusHeadingStyle(
-                fontSize: getProportionateScreenHeight(14),
-                color: Colors.grey,
-                fontWeight: FontWeight.w400),
+              fontSize: getProportionateScreenHeight(14),
+              color: Colors.grey,
+              fontWeight: FontWeight.w400,
+            ),
+            suffixIcon: Icon(Icons.person_outline_rounded),
           ),
           readOnly: true,
         );

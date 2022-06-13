@@ -115,7 +115,8 @@ class CategoryHierarchyList extends StatelessWidget {
                         },
                         child: Text(
                           arrValue,
-                          style: cusBodyStyle(getProportionateScreenHeight(16)),
+                          style: cusBodyStyle(
+                              fontSize: getProportionateScreenHeight(16)),
                         ),
                       ),
                     ),

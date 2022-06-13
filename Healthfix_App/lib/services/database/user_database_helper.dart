@@ -118,7 +118,7 @@ class UserDatabaseHelper {
         .doc(uid)
         .collection(ADDRESSES_COLLECTION_NAME)
         .get();
-    final addresses = [];
+    final List<String> addresses = [];
     snapshot.docs.forEach((doc) {
       addresses.add(doc.id);
     });
@@ -469,7 +469,7 @@ class UserDatabaseHelper {
         .doc(uid)
         .collection(CART_COLLECTION_NAME)
         .get();
-    List itemsId = [];
+    List<String> itemsId = [];
     for (final item in querySnapshot.docs) {
       bool hasVariant = item["product_id"] != null;
       itemsId.add(hasVariant ? item.id : item["product_id"]);
@@ -486,7 +486,7 @@ class UserDatabaseHelper {
         .collection(ORDERED_PRODUCTS_COLLECTION_NAME)
         .orderBy('order_date', descending: true)
         .get();
-    List orderedProductsId = [];
+    List<String> orderedProductsId = [];
     for (final doc in orderedProductsSnapshot.docs) {
       orderedProductsId.add(doc.id);
     }
@@ -500,7 +500,7 @@ class UserDatabaseHelper {
         .doc(uid)
         .collection(GYM_SUBSCRIPTIONS_COLLECTION_NAME)
         .get();
-    List gymSubscriptionsId = [];
+    List<String> gymSubscriptionsId = [];
     for (final doc in gymSubscriptionsSnapshot.docs) {
       gymSubscriptionsId.add(doc.id);
     }

@@ -74,6 +74,21 @@ class _ChangePasswordFormState extends State<ChangePasswordForm> {
         hintText: "Confirm New Password",
         labelText: "Confirm New Password",
         floatingLabelBehavior: FloatingLabelBehavior.always,
+        enabledBorder: OutlineInputBorder(
+          borderSide: BorderSide(color: Colors.cyan, width: 0.1),
+        ),
+        focusedBorder: OutlineInputBorder(
+          borderSide: BorderSide(color: kPrimaryColor),
+        ),
+        border: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(5.0),
+        ),
+        contentPadding: EdgeInsets.all(10),
+        hintStyle: cusHeadingStyle(
+          fontSize: getProportionateScreenHeight(14),
+          color: Colors.grey,
+          fontWeight: FontWeight.w400,
+        ),
         suffixIcon: CustomSuffixIcon(
           svgIcon: "assets/icons/Lock.svg",
         ),
@@ -96,6 +111,21 @@ class _ChangePasswordFormState extends State<ChangePasswordForm> {
         hintText: "Enter Current Password",
         labelText: "Current Password",
         floatingLabelBehavior: FloatingLabelBehavior.always,
+        enabledBorder: OutlineInputBorder(
+          borderSide: BorderSide(color: Colors.cyan, width: 0.1),
+        ),
+        focusedBorder: OutlineInputBorder(
+          borderSide: BorderSide(color: kPrimaryColor),
+        ),
+        border: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(5.0),
+        ),
+        contentPadding: EdgeInsets.all(10),
+        hintStyle: cusHeadingStyle(
+          fontSize: getProportionateScreenHeight(14),
+          color: Colors.grey,
+          fontWeight: FontWeight.w400,
+        ),
         suffixIcon: CustomSuffixIcon(
           svgIcon: "assets/icons/Lock.svg",
         ),
@@ -112,9 +142,24 @@ class _ChangePasswordFormState extends State<ChangePasswordForm> {
       controller: newPasswordController,
       obscureText: true,
       decoration: InputDecoration(
-        hintText: "Enter New password",
+        hintText: "Enter New Password",
         labelText: "New Password",
         floatingLabelBehavior: FloatingLabelBehavior.always,
+        enabledBorder: OutlineInputBorder(
+          borderSide: BorderSide(color: Colors.cyan, width: 0.1),
+        ),
+        focusedBorder: OutlineInputBorder(
+          borderSide: BorderSide(color: kPrimaryColor),
+        ),
+        border: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(5.0),
+        ),
+        contentPadding: EdgeInsets.all(10),
+        hintStyle: cusHeadingStyle(
+          fontSize: getProportionateScreenHeight(14),
+          color: Colors.grey,
+          fontWeight: FontWeight.w400,
+        ),
         suffixIcon: CustomSuffixIcon(
           svgIcon: "assets/icons/Lock.svg",
         ),

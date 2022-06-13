@@ -56,11 +56,12 @@ class _BodyState extends State<Body> {
                         ? "Select Address"
                         : "Manage Addresses",
                     style: cusHeadingStyle(
-                        fontSize: getProportionateScreenHeight(28)),
+                        fontSize: getProportionateScreenHeight(20)),
                   ),
                   SizedBox(height: getProportionateScreenHeight(4)),
                   Text("Swipe LEFT to Edit, Swipe RIGHT to Delete",
-                      style: cusBodyStyle(getProportionateScreenHeight(12))),
+                      style: cusBodyStyle(
+                          fontSize: getProportionateScreenHeight(12))),
                   Visibility(
                     visible: !widget.isSelectAddressScreen,
                     child: Column(
@@ -276,7 +277,7 @@ class _BodyState extends State<Body> {
       padding: EdgeInsets.only(right: 20),
       decoration: BoxDecoration(
         color: Colors.green,
-        borderRadius: BorderRadius.circular(15),
+        borderRadius: BorderRadius.circular(5),
       ),
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.center,
@@ -306,7 +307,7 @@ class _BodyState extends State<Body> {
       padding: EdgeInsets.only(left: 20),
       decoration: BoxDecoration(
         color: Colors.red,
-        borderRadius: BorderRadius.circular(15),
+        borderRadius: BorderRadius.circular(5),
       ),
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.center,

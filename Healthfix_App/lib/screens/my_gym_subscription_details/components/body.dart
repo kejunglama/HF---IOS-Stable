@@ -49,8 +49,11 @@ class Body extends StatelessWidget {
             children: [
               Text(title,
                   style: cusBodyStyle(
-                      getProportionateScreenHeight(16), null, Colors.grey)),
-              Text(data, style: cusBodyStyle(getProportionateScreenHeight(16))),
+                      fontSize: getProportionateScreenHeight(16),
+                      color: Colors.grey)),
+              Text(data,
+                  style:
+                      cusBodyStyle(fontSize: getProportionateScreenHeight(16))),
             ],
           ),
         ),

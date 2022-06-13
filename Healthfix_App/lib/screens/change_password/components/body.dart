@@ -19,7 +19,7 @@ class Body extends StatelessWidget {
                 SizedBox(height: SizeConfig.screenHeight * 0.04),
                 Text(
                   "Change Password",
-                  style: headingStyle,
+                  style: cusHeadingStyle(),
                 ),
                 SizedBox(height: SizeConfig.screenHeight * 0.1),
                 ChangePasswordForm(),

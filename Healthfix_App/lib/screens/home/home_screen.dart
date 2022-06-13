@@ -172,15 +172,17 @@ class _HomeScreenState extends State<HomeScreen> {
 
   BottomNavigationBar buildBottomNavigationBar() {
     return BottomNavigationBar(
+      selectedLabelStyle: cusBodyStyle(),
+      unselectedLabelStyle: cusBodyStyle(),
       items: <BottomNavigationBarItem>[
         BottomNavigationBarItem(
-          icon: Icon(Icons.water_damage_outlined),
-          activeIcon: Icon(Icons.water_damage_rounded),
-          label: 'Home',
+          icon: Icon(Icons.storefront_outlined),
+          activeIcon: Icon(Icons.storefront_rounded),
+          label: ('Home'),
         ),
         BottomNavigationBarItem(
-          icon: Icon(Icons.grid_view),
-          activeIcon: Icon(Icons.grid_view_rounded),
+          icon: Icon(Icons.inventory_2_outlined),
+          activeIcon: Icon(Icons.inventory_2_rounded),
           label: 'Categories',
         ),
         BottomNavigationBarItem(

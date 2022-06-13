@@ -64,7 +64,7 @@ class _CusTabsState extends State<CusTabs> with SingleTickerProviderStateMixin {
         TabBar(
           controller: _tabController,
           // labelColor: kPrimaryColor,
-          labelStyle: cusBodyStyle(getProportionateScreenHeight(16)),
+          labelStyle: cusBodyStyle(fontSize: getProportionateScreenHeight(16)),
           tabs: widget.tabsHeader,
           padding: EdgeInsets.zero,
           labelPadding: EdgeInsets.zero,

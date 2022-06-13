@@ -51,7 +51,8 @@ class Body extends StatelessWidget {
                                   Text(
                                     "240 gm - ",
                                     style: cusBodyStyle(
-                                        getProportionateScreenHeight(20)),
+                                        fontSize:
+                                            getProportionateScreenHeight(20)),
                                   ),
                                   Text(
                                     "${currency.format(meal.originalPrice)}",
@@ -166,7 +167,8 @@ class Body extends StatelessWidget {
         Text(data, style: cusHeadingStyle()),
         Text(key,
             style: cusBodyStyle(
-                getProportionateScreenHeight(16), null, kSecondaryColor)),
+                fontSize: getProportionateScreenHeight(16),
+                color: kSecondaryColor)),
       ],
     );
   }

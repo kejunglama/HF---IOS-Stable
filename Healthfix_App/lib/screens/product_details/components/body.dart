@@ -383,8 +383,8 @@ class _BodyState extends State<Body> {
                         children: [
                           Text(
                             "Starting From",
-                            style:
-                                cusBodyStyle(getProportionateScreenHeight(14)),
+                            style: cusBodyStyle(
+                                fontSize: getProportionateScreenHeight(14)),
                           ),
                           Text(
                               "${currency.format(product.priceRange != null ? product.priceRange : 0)}",

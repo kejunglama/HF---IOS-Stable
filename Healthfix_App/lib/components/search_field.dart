@@ -18,7 +18,7 @@ class SearchField extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       margin: EdgeInsets.symmetric(horizontal: getProportionateScreenHeight(8)),
-      padding: EdgeInsets.all(getProportionateScreenHeight(8)),
+      padding: EdgeInsets.all(getProportionateScreenHeight(4)),
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(5),
         border: Border.all(width: 0.3, color: Colors.grey),
@@ -50,9 +50,9 @@ class SearchField extends StatelessWidget {
             prefixIcon: Icon(
               Icons.search_rounded,
               color: Colors.cyan,
-              size: getProportionateScreenHeight(28),
+              size: getProportionateScreenHeight(24),
             ),
-            contentPadding: EdgeInsets.all(getProportionateScreenHeight(4)),
+            contentPadding: EdgeInsets.all(getProportionateScreenHeight(10)),
           ),
           // onSubmitted: onSubmit,
           onFieldSubmitted: onSubmit,

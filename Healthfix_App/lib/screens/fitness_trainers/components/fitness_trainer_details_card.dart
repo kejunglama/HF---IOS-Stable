@@ -81,9 +81,9 @@ class FitnessTrainerDetailsCard extends StatelessWidget {
                                   sizedBoxOfWidth(4),
                                   Text(trainer.experience,
                                       style: cusBodyStyle(
-                                          getProportionateScreenHeight(12),
-                                          null,
-                                          Colors.black54)),
+                                          fontSize:
+                                              getProportionateScreenHeight(12),
+                                          color: Colors.black54)),
                                 ],
                               ),
                               sizedBoxOfHeight(4),
@@ -99,9 +99,9 @@ class FitnessTrainerDetailsCard extends StatelessWidget {
                                       "Next Available Time: ${trainer.timings[0]}",
                                       overflow: TextOverflow.ellipsis,
                                       style: cusBodyStyle(
-                                          getProportionateScreenHeight(12),
-                                          null,
-                                          Colors.black54)),
+                                          fontSize:
+                                              getProportionateScreenHeight(12),
+                                          color: Colors.black54)),
                                 ],
                               ),
                             ],

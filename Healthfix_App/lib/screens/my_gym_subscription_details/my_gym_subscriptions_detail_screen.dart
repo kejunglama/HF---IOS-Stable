@@ -15,7 +15,6 @@ class GymSubscriptionDetails extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         title: Text("Subscription Detail", style: cusHeadingStyle()),
-        leading: BackButton(color: kPrimaryColor),
       ),
       body: Body(gymSubscription),
     );

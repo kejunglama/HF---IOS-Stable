@@ -53,11 +53,13 @@ class AddressBox extends StatelessWidget {
                             children: [
                               Text("Receiver's Name: ",
                                   style: cusBodyStyle(
-                                      getProportionateScreenHeight(16))),
+                                      fontSize:
+                                          getProportionateScreenHeight(16))),
                               Text("${address.receiver}",
                                   style: cusBodyStyle(
-                                      getProportionateScreenHeight(16),
-                                      FontWeight.w400)),
+                                      fontSize:
+                                          getProportionateScreenHeight(16),
+                                      fontWeight: FontWeight.w400)),
                             ],
                           ),
                           sizedBoxOfHeight(8),
@@ -67,11 +69,13 @@ class AddressBox extends StatelessWidget {
                             children: [
                               Text("Address: ",
                                   style: cusBodyStyle(
-                                      getProportionateScreenHeight(16))),
+                                      fontSize:
+                                          getProportionateScreenHeight(16))),
                               Text("${address.address}",
                                   style: cusBodyStyle(
-                                      getProportionateScreenHeight(16),
-                                      FontWeight.w400)),
+                                      fontSize:
+                                          getProportionateScreenHeight(16),
+                                      fontWeight: FontWeight.w400)),
                             ],
                           ),
                           sizedBoxOfHeight(8),
@@ -81,11 +85,13 @@ class AddressBox extends StatelessWidget {
                             children: [
                               Text("Landmark: ",
                                   style: cusBodyStyle(
-                                      getProportionateScreenHeight(16))),
+                                      fontSize:
+                                          getProportionateScreenHeight(16))),
                               Text("${address.landmark}",
                                   style: cusBodyStyle(
-                                      getProportionateScreenHeight(16),
-                                      FontWeight.w400)),
+                                      fontSize:
+                                          getProportionateScreenHeight(16),
+                                      fontWeight: FontWeight.w400)),
                             ],
                           ),
                           sizedBoxOfHeight(8),
@@ -95,11 +101,13 @@ class AddressBox extends StatelessWidget {
                             children: [
                               Text("City: ",
                                   style: cusBodyStyle(
-                                      getProportionateScreenHeight(16))),
+                                      fontSize:
+                                          getProportionateScreenHeight(16))),
                               Text("${address.city}, ${address.zone}",
                                   style: cusBodyStyle(
-                                      getProportionateScreenHeight(16),
-                                      FontWeight.w400)),
+                                      fontSize:
+                                          getProportionateScreenHeight(16),
+                                      fontWeight: FontWeight.w400)),
                             ],
                           ),
                           sizedBoxOfHeight(8),
@@ -108,11 +116,13 @@ class AddressBox extends StatelessWidget {
                             children: [
                               Text("Contact: ",
                                   style: cusBodyStyle(
-                                      getProportionateScreenHeight(16))),
+                                      fontSize:
+                                          getProportionateScreenHeight(16))),
                               Text("${address.phone}",
                                   style: cusBodyStyle(
-                                      getProportionateScreenHeight(16),
-                                      FontWeight.w400)),
+                                      fontSize:
+                                          getProportionateScreenHeight(16),
+                                      fontWeight: FontWeight.w400)),
                             ],
                           ),
 
@@ -128,9 +138,9 @@ class AddressBox extends StatelessWidget {
                               child: Text(
                                 "Select Address",
                                 style: cusBodyStyle(
-                                    getProportionateScreenHeight(16),
-                                    FontWeight.w500,
-                                    kPrimaryColor),
+                                    fontSize: getProportionateScreenHeight(16),
+                                    fontWeight: FontWeight.w500,
+                                    color: kPrimaryColor),
                               ),
                             ),
                           ),

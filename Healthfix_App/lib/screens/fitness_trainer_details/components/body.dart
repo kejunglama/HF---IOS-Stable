@@ -126,7 +126,8 @@ class Body extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: timings
                     .map((e) => Text(e,
-                        style: cusBodyStyle(getProportionateScreenHeight(16))))
+                        style: cusBodyStyle(
+                            fontSize: getProportionateScreenHeight(16))))
                     .toList(),
               ),
             ],
@@ -229,7 +230,9 @@ class Body extends StatelessWidget {
             Icon(icon,
                 size: getProportionateScreenHeight(28), color: Colors.blue),
             sizedBoxOfWidth(8),
-            Text(title, style: cusBodyStyle(getProportionateScreenHeight(12))),
+            Text(title,
+                style:
+                    cusBodyStyle(fontSize: getProportionateScreenHeight(12))),
           ],
         ),
       ),

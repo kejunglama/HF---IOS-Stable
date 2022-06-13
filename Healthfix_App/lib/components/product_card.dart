@@ -97,7 +97,8 @@ class ProductCard extends StatelessWidget {
                   children: [
                     Text(
                       "Starting From",
-                      style: cusBodyStyle(getProportionateScreenHeight(12)),
+                      style: cusBodyStyle(
+                          fontSize: getProportionateScreenHeight(12)),
                     ),
                     Text(
                         "${currency.format(product.priceRange != null ? product.priceRange : 0)}",

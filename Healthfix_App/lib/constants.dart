@@ -58,13 +58,17 @@ cusHeadingStyle(
       ),
     );
 
-cusBodyStyle([double fs, FontWeight fw, Color color, double ls]) =>
+cusBodyStyle(
+        {double fontSize,
+        FontWeight fontWeight,
+        Color color,
+        double letterSpacing}) =>
     GoogleFonts.poppins(
       textStyle: TextStyle(
         color: color ?? Colors.black,
-        fontSize: fs ?? getProportionateScreenHeight(14),
-        fontWeight: fw ?? FontWeight.w300,
-        letterSpacing: ls ?? 0.4,
+        fontSize: fontSize ?? getProportionateScreenHeight(14),
+        fontWeight: fontWeight ?? FontWeight.w300,
+        letterSpacing: letterSpacing ?? 0.4,
       ),
     );
 

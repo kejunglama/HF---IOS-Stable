@@ -57,8 +57,8 @@ class AddressScreen extends StatelessWidget {
       child: Text(
         text,
         style: _isData
-            ? cusBodyStyle(14, null, null, 1)
-            : cusBodyStyle(16, null, null, 1),
+            ? cusBodyStyle()
+            : cusBodyStyle(fontSize: getProportionateScreenHeight(16)),
       ),
     );
   }

@@ -31,22 +31,10 @@ class HomeHeader extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               // Logo
-              GestureDetector(
-                child: Container(
-                  margin:
-                      EdgeInsets.only(left: getProportionateScreenWidth(12)),
-                  height: getProportionateScreenHeight(30),
-                  child: Image.asset('assets/logo/HF-logo.png'),
-                ),
-                onTap: () {
-                  print(cusDateTimeFormatter.format(DateTime.now()));
-
-                  // Navigator.push(
-                  //   context,
-                  //   MaterialPageRoute(
-                  //       builder: (context) => AuthenticationWrapper()),
-                  // );
-                },
+              Container(
+                margin: EdgeInsets.only(left: getProportionateScreenWidth(12)),
+                height: getProportionateScreenHeight(30),
+                child: Image.asset('assets/logo/HF-logo.png'),
               ),
 
               // Icons

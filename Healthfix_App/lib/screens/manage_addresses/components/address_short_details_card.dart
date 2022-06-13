@@ -42,7 +42,7 @@ class AddressShortDetailsCard extends StatelessWidget {
                       child: Center(
                         child: Text(
                           address.title,
-                          style: TextStyle(
+                          style: cusBodyStyle(
                             color: Colors.white,
                             fontSize: getProportionateScreenHeight(18),
                             fontWeight: FontWeight.w600,
@@ -73,15 +73,16 @@ class AddressShortDetailsCard extends StatelessWidget {
                         children: [
                           Text(
                             address.receiver,
-                            style: TextStyle(
+                            style: cusBodyStyle(
                               color: Colors.black,
-                              fontWeight: FontWeight.bold,
-                              fontSize: getProportionateScreenHeight(15),
+                              fontWeight: FontWeight.w500,
+                              fontSize: getProportionateScreenHeight(16),
                             ),
                           ),
+                          sizedBoxOfHeight(4),
                           Text(
                             "${address.landmark}",
-                            style: TextStyle(
+                            style: cusBodyStyle(
                               fontSize: getProportionateScreenHeight(12),
                             ),
                           ),
@@ -89,13 +90,13 @@ class AddressShortDetailsCard extends StatelessWidget {
                             children: [
                               Text(
                                 "${address.address}, ",
-                                style: TextStyle(
+                                style: cusBodyStyle(
                                   fontSize: getProportionateScreenHeight(12),
                                 ),
                               ),
                               Text(
                                 "${address.city}",
-                                style: TextStyle(
+                                style: cusBodyStyle(
                                   fontSize: getProportionateScreenHeight(12),
                                 ),
                               ),

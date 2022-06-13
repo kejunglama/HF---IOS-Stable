@@ -7,9 +7,7 @@ class AboutDeveloperScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        leading: BackButton(color: kPrimaryColor),
-      ),
+      appBar: AppBar(),
       body: Body(),
     );
   }

@@ -87,15 +87,17 @@ class OrderDetails extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   SizedBox(height: getProportionateScreenHeight(10)),
-                  Text("Order Details", style: headingStyle),
+                  Text("Order Details",
+                      style: cusHeadingStyle(
+                          fontSize: getProportionateScreenHeight(20))),
                   Text(orderedProduct.id,
-                      style: TextStyle(
+                      style: cusBodyStyle(
                           fontSize: getProportionateScreenHeight(12))),
                   SizedBox(height: getProportionateScreenHeight(20)),
                   buildOrderDetails(
                       orderDetailsAddress, currency, orderDetailsTotals),
                   SizedBox(height: getProportionateScreenHeight(20)),
-                  buildStatusTimeline(_fetchedStatusTime),
+                  // buildStatusTimeline(_fetchedStatusTime),
                   SizedBox(height: getProportionateScreenHeight(20)),
                   SizedBox(
                     height: SizeConfig.screenHeight * 0.75,
@@ -169,9 +171,7 @@ class OrderDetails extends StatelessWidget {
                             : Colors.black38)),
                 Text(_statusSubText,
                     style: cusBodyStyle(
-                        null,
-                        null,
-                        datetime.isNotEmpty ?? false
+                        color: datetime.isNotEmpty ?? false
                             ? Colors.black
                             : Colors.black38)),
               ],
@@ -199,19 +199,19 @@ class OrderDetails extends StatelessWidget {
             children: [
               Text(
                 "Receiver: ${orderDetailsAddress["receiver"]}",
-                style: TextStyle(fontSize: getProportionateScreenHeight(12)),
+                style: cusBodyStyle(fontSize: getProportionateScreenHeight(12)),
               ),
               Text(
                 "Phone: ${orderDetailsAddress["phone"]}",
-                style: TextStyle(fontSize: getProportionateScreenHeight(12)),
+                style: cusBodyStyle(fontSize: getProportionateScreenHeight(12)),
               ),
               Text(
                 "Address: ${orderDetailsAddress["landmark"]}, ${orderDetailsAddress["address_line_1"]}",
-                style: TextStyle(fontSize: getProportionateScreenHeight(12)),
+                style: cusBodyStyle(fontSize: getProportionateScreenHeight(12)),
               ),
               Text(
                 "Email: ${orderDetailsAddress["email"]}",
-                style: TextStyle(fontSize: getProportionateScreenHeight(12)),
+                style: cusBodyStyle(fontSize: getProportionateScreenHeight(12)),
               ),
             ],
           ),
@@ -220,15 +220,15 @@ class OrderDetails extends StatelessWidget {
             children: [
               Text(
                 "Cart Total: ${currency.format(orderDetailsTotals["cartTotal"])}",
-                style: TextStyle(fontSize: getProportionateScreenHeight(12)),
+                style: cusBodyStyle(fontSize: getProportionateScreenHeight(12)),
               ),
               Text(
                 "Delivery Charge: ${currency.format(orderDetailsTotals["deliveryCharge"])}",
-                style: TextStyle(fontSize: getProportionateScreenHeight(12)),
+                style: cusBodyStyle(fontSize: getProportionateScreenHeight(12)),
               ),
               Text(
                 "Net Total: ${currency.format(orderDetailsTotals["netTotal"])}",
-                style: TextStyle(fontSize: getProportionateScreenHeight(12)),
+                style: cusBodyStyle(fontSize: getProportionateScreenHeight(12)),
               ),
             ],
           )
@@ -410,7 +410,7 @@ class OrderDetails extends StatelessWidget {
                           },
                           child: Text(
                             "Give Product Review",
-                            style: TextStyle(
+                            style: cusBodyStyle(
                               color: Colors.white,
                               fontWeight: FontWeight.w600,
                               fontSize: getProportionateScreenHeight(16),
@@ -453,7 +453,7 @@ class OrderDetails extends StatelessWidget {
               children: [
                 Container(
                   decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(10),
+                    borderRadius: BorderRadius.circular(5),
                     border: Border.symmetric(
                       vertical: BorderSide(
                         color: kTextColor.withOpacity(0.15),
@@ -479,10 +479,10 @@ class OrderDetails extends StatelessWidget {
                       ),
                       Container(
                         width: double.infinity,
-                        padding: EdgeInsets.symmetric(
-                          horizontal: getProportionateScreenHeight(8),
-                          vertical: getProportionateScreenHeight(2),
-                        ),
+                        // padding: EdgeInsets.symmetric(
+                        //   horizontal: getProportionateScreenHeight(8),
+                        //   vertical: getProportionateScreenHeight(1),
+                        // ),
                         decoration: BoxDecoration(
                           color: kPrimaryColor,
                           borderRadius: BorderRadius.circular(5),
@@ -548,7 +548,7 @@ class OrderDetails extends StatelessWidget {
                           },
                           child: Text(
                             "Give Product Review",
-                            style: TextStyle(
+                            style: cusBodyStyle(
                               color: Colors.white,
                               fontWeight: FontWeight.w600,
                               fontSize: getProportionateScreenHeight(16),

@@ -223,8 +223,10 @@ class _BodyState extends State<Body> {
                       // Meal Portion
                       child: Text(
                         "1 Meal",
-                        style: cusBodyStyle(getProportionateScreenHeight(12),
-                            FontWeight.w500, kPrimaryColor),
+                        style: cusBodyStyle(
+                            fontSize: getProportionateScreenHeight(12),
+                            fontWeight: FontWeight.w500,
+                            color: kPrimaryColor),
                       ),
                     ),
                     sizedBoxOfWidth(12),
@@ -238,7 +240,8 @@ class _BodyState extends State<Body> {
                         // Ratings
                         Text(
                           "4.9",
-                          style: cusBodyStyle(getProportionateScreenHeight(12)),
+                          style: cusBodyStyle(
+                              fontSize: getProportionateScreenHeight(12)),
                         ),
                       ],
                     ),
@@ -332,8 +335,10 @@ class _BodyState extends State<Body> {
                   // Meal Portion
                   child: Text(
                     "1 Meal",
-                    style: cusBodyStyle(getProportionateScreenHeight(12),
-                        FontWeight.w500, kPrimaryColor),
+                    style: cusBodyStyle(
+                        fontSize: getProportionateScreenHeight(12),
+                        fontWeight: FontWeight.w500,
+                        color: kPrimaryColor),
                   ),
                 ),
                 sizedBoxOfWidth(12),
@@ -347,7 +352,8 @@ class _BodyState extends State<Body> {
                     // Ratings
                     Text(
                       "4.9",
-                      style: cusBodyStyle(getProportionateScreenHeight(12)),
+                      style: cusBodyStyle(
+                          fontSize: getProportionateScreenHeight(12)),
                     ),
                   ],
                 ),

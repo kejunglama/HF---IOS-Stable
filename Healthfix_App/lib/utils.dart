@@ -25,9 +25,9 @@ Future<bool> showConfirmationDialog(
           FlatButton(
             child: Text(
               positiveResponse,
-              style: TextStyle(
+              style: cusHeadingStyle(
                 fontSize: getProportionateScreenHeight(16),
-                fontWeight: FontWeight.bold,
+                fontWeight: FontWeight.w300,
               ),
             ),
             onPressed: () {
@@ -37,9 +37,9 @@ Future<bool> showConfirmationDialog(
           FlatButton(
             child: Text(
               negativeResponse,
-              style: TextStyle(
+              style: cusHeadingStyle(
                 fontSize: getProportionateScreenHeight(16),
-                fontWeight: FontWeight.bold,
+                fontWeight: FontWeight.w300,
               ),
             ),
             onPressed: () {

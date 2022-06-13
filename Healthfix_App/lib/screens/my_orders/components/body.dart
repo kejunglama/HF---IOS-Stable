@@ -42,30 +42,20 @@ class _BodyState extends State<Body> {
   @override
   Widget build(BuildContext context) {
     return SafeArea(
-      child: RefreshIndicator(
-        onRefresh: refreshPage,
-        child: SingleChildScrollView(
-          physics: AlwaysScrollableScrollPhysics(),
-          child: Padding(
-            padding: EdgeInsets.symmetric(
-                horizontal: getProportionateScreenWidth(screenPadding)),
-            child: SizedBox(
-              width: double.infinity,
-              child: Column(
-                children: [
-                  SizedBox(height: getProportionateScreenHeight(10)),
-                  Text(
-                    "Your Orders",
-                    style: headingStyle,
-                  ),
-                  SizedBox(height: getProportionateScreenHeight(20)),
-                  SizedBox(
-                    height: SizeConfig.screenHeight * 0.75,
-                    child: buildOrderedList(),
-                  ),
-                ],
+      child: Padding(
+        padding: EdgeInsets.symmetric(
+            horizontal: getProportionateScreenWidth(screenPadding)),
+        child: SizedBox(
+          height: SizeConfig.screenHeight - SizeConfig.screenViewPadding,
+          child: Column(
+            children: [
+              // SizedBox(height: getProportionateScreenHeight(10)),
+
+              // SizedBox(height: getProportionateScreenHeight(20)),
+              Expanded(
+                child: buildOrderedList(),
               ),
-            ),
+            ],
           ),
         ),
       ),
@@ -114,7 +104,7 @@ class _BodyState extends State<Body> {
                             ),
                             width: double.infinity,
                             decoration: BoxDecoration(
-                              color: kPrimaryColor.withOpacity(0.12),
+                              color: kPrimaryColor.withOpacity(0.08),
                               borderRadius: BorderRadius.circular(5),
                             ),
                             child: InkWell(
@@ -132,17 +122,26 @@ class _BodyState extends State<Body> {
                                     MainAxisAlignment.spaceBetween,
                                 // crossAxisAlignment: CrossAxisAlignment.center,
                                 children: [
-                                  Column(
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.start,
-                                    children: [
-                                      Text(
-                                        "Order ID: ${orderedProduct.id}",
-                                        style: TextStyle(color: Colors.black),
-                                      ),
-                                      Text(
-                                          "Ordered on: ${orderedProduct.orderDate}"),
-                                    ],
+                                  Expanded(
+                                    child: Column(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
+                                      children: [
+                                        Text(
+                                          "Order ID: ${orderedProduct.id}",
+                                          style: cusHeadingStyle(
+                                              color: Colors.black,
+                                              fontSize:
+                                                  getProportionateScreenHeight(
+                                                      16)),
+                                          maxLines: 1,
+                                          overflow: TextOverflow.clip,
+                                        ),
+                                        Text(
+                                            "Ordered on: ${orderedProduct.orderDate}",
+                                            style: cusBodyStyle()),
+                                      ],
+                                    ),
                                   ),
                                   Icon(
                                     Icons.arrow_forward_ios_rounded,

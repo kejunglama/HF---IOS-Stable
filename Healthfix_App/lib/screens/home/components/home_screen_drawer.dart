@@ -236,6 +236,10 @@ class HomeScreenDrawer extends StatelessWidget {
     );
   }
 
+  String getInitials(String name) => name.isNotEmpty
+      ? name.trim().split(' ').map((l) => l[0]).take(2).join()
+      : 'HF';
+
   Widget buildUserAccountsHeader(User user, BuildContext context) {
     return Container(
       width: double.infinity,
@@ -293,7 +297,7 @@ class HomeScreenDrawer extends StatelessWidget {
                     return CircleAvatar(
                         // backgroundColor: kTextColor,
                         backgroundColor: kPrimaryColor.withOpacity(0.2),
-                        child: Text('HF'));
+                        child: Text(getInitials(user.displayName)));
                   },
                 ),
               ),
@@ -307,7 +311,11 @@ class HomeScreenDrawer extends StatelessWidget {
                 child: IconButton(
                   onPressed: () async {
                     final confirmation = await showConfirmationDialog(
-                        context, "Confirm Sign out ?");
+                      context,
+                      "Are you sure you want to Log out?",
+                      positiveResponse: "Log Out",
+                      negativeResponse: "Stay",
+                    );
                     if (confirmation) AuthentificationService().signOut();
                   },
                   icon: Icon(

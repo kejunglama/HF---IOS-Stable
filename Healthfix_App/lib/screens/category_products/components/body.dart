@@ -37,6 +37,7 @@ class _BodyState extends State<Body> {
   Map category;
   String _categoryName;
   String _selectedSubCat;
+  bool isLoading = false;
   List<dynamic> _categoryList = [];
   List<String> _subCatList = [];
 
@@ -93,6 +94,7 @@ class _BodyState extends State<Body> {
                   subCategory(),
                   sizedBoxOfHeight(10),
                   searchBar(),
+                  buildLoadingIndicator(isLoading),
                   buildProductCatalog(),
                   sizedBoxOfHeight(20),
                 ],
@@ -100,6 +102,18 @@ class _BodyState extends State<Body> {
             ),
           ),
         ),
+      ),
+    );
+  }
+
+  Visibility buildLoadingIndicator(bool isLoading) {
+    return Visibility(
+      visible: isLoading,
+      child: Container(
+        height: getProportionateScreenHeight(getProportionateScreenHeight(4)),
+        margin:
+            EdgeInsets.symmetric(horizontal: getProportionateScreenHeight(12)),
+        child: Container(child: LinearProgressIndicator()),
       ),
     );
   }
@@ -141,9 +155,13 @@ class _BodyState extends State<Body> {
                 child: Text(
                   _subCat,
                   style: _selectedSubCat == _subCat
-                      ? cusBodyStyle(getProportionateScreenHeight(14),
-                          FontWeight.w500, kPrimaryColor, 0.5)
-                      : cusBodyStyle(getProportionateScreenHeight(14)),
+                      ? cusBodyStyle(
+                          fontSize: getProportionateScreenHeight(14),
+                          fontWeight: FontWeight.w500,
+                          color: kPrimaryColor,
+                          letterSpacing: getProportionateScreenHeight(0.5))
+                      : cusBodyStyle(
+                          fontSize: getProportionateScreenHeight(14)),
                 ),
               ),
             ),
@@ -174,8 +192,11 @@ class _BodyState extends State<Body> {
             }
             return buildProductsGrid(productsId);
           } else if (snapshot.connectionState == ConnectionState.waiting) {
-            return Center(
-              child: CircularProgressIndicator(),
+            return SizedBox(
+              height: SizeConfig.screenHeight / 2,
+              child: Center(
+                child: CircularProgressIndicator(),
+              ),
             );
           } else if (snapshot.hasError) {
             final error = snapshot.error;
@@ -252,6 +273,7 @@ class _BodyState extends State<Body> {
               child: DropdownButtonHideUnderline(
                 child: DropdownButton(
                   elevation: 1,
+                  alignment: Alignment.center,
                   dropdownColor: Colors.white,
                   hint: _categoryName == null
                       ? Text('Dropdown')
@@ -307,12 +329,14 @@ class _BodyState extends State<Body> {
   }
 
   reInitProductStream([String selectedSubCat, String searchString]) {
+    isLoading = true;
     categoryProductsStream.dispose();
     widget.productType = category["product_type"];
     categoryProductsStream = CategoryProductsStream(
         widget.productType, selectedSubCat ?? null, searchString ?? null);
     // print(categoryProductsStream.stream.first);
     categoryProductsStream.init();
+    isLoading = false;
 
     // print(categoryProductsStream.category);
   }

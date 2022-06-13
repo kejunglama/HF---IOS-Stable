@@ -9,7 +9,6 @@ class MyGymSubscriptionsScreen extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         title: Text("Gym Subscription", style: cusHeadingStyle()),
-        leading: BackButton(color: kPrimaryColor),
       ),
       body: Body(),
     );

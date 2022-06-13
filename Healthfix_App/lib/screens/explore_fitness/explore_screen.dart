@@ -1,8 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:healthfix/constants.dart';
+import 'package:healthfix/data.dart';
+import 'package:healthfix/models/Product.dart';
+import 'package:healthfix/screens/category_products/category_products_screen.dart';
 import 'package:healthfix/screens/fitness_trainers/fitness_trainer_screen.dart';
 import 'package:healthfix/screens/gym_membership/gym_membership_screen.dart';
 import 'package:healthfix/screens/healthy_meals/healthy_meals_screen.dart';
+import 'package:healthfix/screens/home/home_screen.dart';
 // import 'package:healthfix/screens/healthy_meals/healthy_meals_screen.dart';
 import 'package:healthfix/size_config.dart';
 
@@ -10,36 +14,48 @@ class ExploreScreen extends StatelessWidget {
   ExploreScreen();
 
   final List imageList = [
+    "https://media.glamour.com/photos/5f0ded3c6ebfe4554e35b781/master/w_1600%2Cc_limit/Freshly-MealGroup_2160x1500.jpg",
+    "https://www.theindustry.fashion/wp-content/uploads/2021/10/Gymshark-Heroines-1024x859.jpg",
     "https://media.istockphoto.com/photos/empty-gym-picture-id1132006407?k=20&m=1132006407&s=612x612&w=0&h=Z7nJu8jntywb9jOhvjlCS7lijbU4_hwHcxoVkxv77sg=",
     "https://exceedmasterclass.com/wp-content/uploads/2016/09/nutrition-consultation-fitness-trainer.png",
     "https://cdn.thewirecutter.com/wp-content/uploads/2020/03/onlineworkout-lowres-2x1-1.jpg?auto=webp&quality=75&crop=2:1&width=1024",
-    "https://www.theindustry.fashion/wp-content/uploads/2021/10/Gymshark-Heroines-1024x859.jpg",
-    "https://media.glamour.com/photos/5f0ded3c6ebfe4554e35b781/master/w_1600%2Cc_limit/Freshly-MealGroup_2160x1500.jpg",
   ];
 
   final List captionList = [
+    "Healthy Meals",
+    "Fitness Wears Ecommerce",
     "Membership in Kathmandu's Best Gyms",
     "Diet Plan, Personal Training, Workout Programs",
     "Online Fitness Classes",
-    "Fitness Wears Ecommerce",
-    "Healthy Meals",
   ];
 
   final List titleList = [
+    "Healthy Meals",
+    "Fitness Wears",
     "Gym Membership",
     "Trainer/Consultation",
     "Fitness Classes",
-    "Fitness Wears",
-    "Healthy Meals",
   ];
 
   final List toScreen = [
-    GymMembershipScreen(),
-    GymMembershipScreen(),
-    // FitnessTrainerDetailsScreen(),
-    FitnessTrainersScreen(),
-    GymMembershipScreen(),
     HealthyMealsScreen(),
+    CategoryProductsScreen(
+      productType: ProductType.All,
+      productTypes: pdctCategories,
+      subProductType: "",
+    ),
+    null,
+    null,
+    null,
+    // HomeScreen(),
+    // HomeScreen(),
+    // HomeScreen(),
+    // HomeScreen(),
+    // GymMembershipScreen(),
+    // GymMembershipScreen(),
+    // FitnessTrainerDetailsScreen(),
+    // FitnessTrainersScreen(),
+    // GymMembershipScreen(),
     // GymMembershipScreen(),
   ];
 
@@ -122,62 +138,74 @@ class ExploreCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: () {
-        Navigator.push(
-          context,
-          MaterialPageRoute(builder: (context) => toScreen),
-        );
-      },
-      child: Container(
-        width: SizeConfig.screenWidth,
-        alignment: Alignment.center,
-        margin:
-            EdgeInsets.symmetric(horizontal: getProportionateScreenHeight(16)),
-        decoration: BoxDecoration(
-          gradient: LinearGradient(
-            begin: Alignment.topRight,
-            end: Alignment.bottomCenter,
-            colors: [
-              Colors.blue,
-              Colors.black,
-            ],
+      onTap: toScreen != null
+          ? () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => toScreen),
+              );
+            }
+          : () {
+              ScaffoldMessenger.of(context).showSnackBar(
+                SnackBar(
+                  content: Text("Feature will be added soon!"),
+                ),
+              );
+            },
+      child: Opacity(
+        opacity: toScreen != null ? 1 : 0.6,
+        child: Container(
+          width: SizeConfig.screenWidth,
+          alignment: Alignment.center,
+          margin: EdgeInsets.symmetric(
+              horizontal: getProportionateScreenHeight(16)),
+          decoration: BoxDecoration(
+            gradient: LinearGradient(
+              begin: Alignment.topRight,
+              end: Alignment.bottomCenter,
+              colors: [
+                Colors.blue,
+                Colors.black,
+              ],
+            ),
+            image: DecorationImage(
+              image: NetworkImage(imageURL),
+              fit: BoxFit.cover,
+              // colorFilter: ColorFilter.mode(color, BlendMode.colorBurn),
+              opacity: 0.5,
+            ),
+            borderRadius: BorderRadius.circular(10),
           ),
-          image: DecorationImage(
-            image: NetworkImage(imageURL),
-            fit: BoxFit.cover,
-            // colorFilter: ColorFilter.mode(color, BlendMode.colorBurn),
-            opacity: 0.5,
-          ),
-          borderRadius: BorderRadius.circular(10),
-        ),
-        child: Padding(
-          padding: const EdgeInsets.all(20.0),
-          child: Align(
-            alignment: Alignment.bottomLeft,
-            child: Wrap(
-              direction: Axis.vertical,
-              children: [
-                Container(
-                  margin:
-                      EdgeInsets.only(bottom: getProportionateScreenHeight(8)),
-                  child: Text(
-                    text,
-                    maxLines: 1,
-                    style: cusHeadingStyle(
-                        fontSize: getProportionateScreenHeight(24),
+          child: Padding(
+            padding: const EdgeInsets.all(20.0),
+            child: Align(
+              alignment: Alignment.bottomLeft,
+              child: Wrap(
+                direction: Axis.vertical,
+                children: [
+                  Container(
+                    margin: EdgeInsets.only(
+                        bottom: getProportionateScreenHeight(8)),
+                    child: Text(
+                      text,
+                      maxLines: 1,
+                      style: cusHeadingStyle(
+                          fontSize: getProportionateScreenHeight(24),
+                          color: Colors.white),
+                    ),
+                  ),
+                  // SizedBox(height: getProportionateScreenHeight()),
+                  Text(
+                    caption,
+                    maxLines: 2,
+                    style: cusBodyStyle(
+                        fontSize: getProportionateScreenHeight(16),
                         color: Colors.white),
                   ),
-                ),
-                // SizedBox(height: getProportionateScreenHeight()),
-                Text(
-                  caption,
-                  maxLines: 2,
-                  style: cusBodyStyle(
-                      getProportionateScreenHeight(16), null, Colors.white),
-                ),
-                // SizedBox(height: getProportionateScreenHeight(8)),
-                // cusButton(text: "Learn More"),
-              ],
+                  // SizedBox(height: getProportionateScreenHeight(8)),
+                  // cusButton(text: "Learn More"),
+                ],
+              ),
             ),
           ),
         ),

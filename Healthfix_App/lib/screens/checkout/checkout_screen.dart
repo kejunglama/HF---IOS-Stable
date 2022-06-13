@@ -106,10 +106,8 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
                             children: [
                               buildAddressSection(context),
                               sizedBoxOfHeight(12),
-                              buildIconWithTextField(
-                                  Icons.contact_phone_outlined,
-                                  "Your Number",
-                                  phoneFieldController),
+                              buildIconWithTextField(Icons.smartphone_rounded,
+                                  "Your Number", phoneFieldController),
                               sizedBoxOfHeight(12),
                               buildIconWithTextField(Icons.mail_outline_rounded,
                                   "Your Email", emailFieldController),
@@ -291,8 +289,10 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
             // print(address.receiver);
           },
           child: Text("EDIT",
-              style: cusBodyStyle(getProportionateScreenHeight(16),
-                  FontWeight.w400, kPrimaryColor.withOpacity(0.8))),
+              style: cusBodyStyle(
+                  fontSize: getProportionateScreenHeight(16),
+                  fontWeight: FontWeight.w400,
+                  color: kPrimaryColor.withOpacity(0.8))),
         ),
       ],
     );

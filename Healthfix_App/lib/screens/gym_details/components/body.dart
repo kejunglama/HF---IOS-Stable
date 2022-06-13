@@ -229,7 +229,9 @@ class _BodyState extends State<Body> {
                         child: Text.rich(
                           TextSpan(
                             text: "Starting From:\n",
-                            style: cusBodyStyle(16, null, Colors.white),
+                            style: cusBodyStyle(
+                                fontSize: getProportionateScreenHeight(16),
+                                color: Colors.white),
                             children: [
                               TextSpan(
                                 text: "$selectedDate  ",

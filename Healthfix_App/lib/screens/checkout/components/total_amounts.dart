@@ -39,8 +39,10 @@ class TotalAmounts extends StatelessWidget {
           Text(text, style: cusPdctNameStyle),
           Text("Rs. " + price,
               style: _isMain
-                  ? cusPdctDisPriceStyle()
-                  : cusPdctDisPriceStyle(null, Colors.black)),
+                  ? cusBodyStyle(fontSize: getProportionateScreenHeight(14))
+                  : cusBodyStyle(
+                      fontSize: getProportionateScreenHeight(14),
+                      color: Colors.black)),
         ],
       ),
     );
