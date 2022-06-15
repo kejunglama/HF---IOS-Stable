@@ -6,7 +6,7 @@ import 'package:logger/logger.dart';
 
 import '../constants.dart';
 
-class ProductCard extends StatelessWidget {
+class ProductCard extends StatefulWidget {
   final String productId;
   final GestureTapCallback press;
   final bool noSpacing;
@@ -19,12 +19,24 @@ class ProductCard extends StatelessWidget {
   }) : super(key: key);
 
   @override
+  State<ProductCard> createState() => _ProductCardState();
+}
+
+class _ProductCardState extends State<ProductCard> {
+  Future<Product> productFuture;
+  @override
+  void initState() {
+    productFuture = ProductDatabaseHelper().getProductWithID(widget.productId);
+    super.initState();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: press,
+      onTap: widget.press,
       child: Container(
         // height: 300,
-        margin: noSpacing ?? false
+        margin: widget.noSpacing ?? false
             ? null
             : EdgeInsets.only(left: getProportionateScreenWidth(12)),
         decoration: BoxDecoration(
@@ -37,7 +49,7 @@ class ProductCard extends StatelessWidget {
               horizontal: getProportionateScreenHeight(12),
               vertical: getProportionateScreenHeight(12)),
           child: FutureBuilder<Product>(
-            future: ProductDatabaseHelper().getProductWithID(productId),
+            future: productFuture,
             builder: (context, snapshot) {
               if (snapshot.hasData) {
                 final Product product = snapshot.data;

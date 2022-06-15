@@ -153,6 +153,7 @@ class _HomeScreenState extends State<HomeScreen> {
       child: Scaffold(
         body: PageView(
             controller: _tabsPageController,
+            allowImplicitScrolling: true,
             onPageChanged: (num) {
               setState(() {
                 _selectedIndex = num;

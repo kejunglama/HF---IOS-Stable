@@ -8,7 +8,7 @@ import 'package:logger/logger.dart';
 import '../../../size_config.dart';
 
 // Cleaned
-class ProductsSection extends StatelessWidget {
+class ProductsSection extends StatefulWidget {
   final String sectionTitle;
   final DataStream productsStreamController;
   final String emptyListMessage;
@@ -23,6 +23,18 @@ class ProductsSection extends StatelessWidget {
     this.onProductCardTapped,
     this.onSeeMorePress,
   }) : super(key: key);
+
+  @override
+  State<ProductsSection> createState() => _ProductsSectionState();
+}
+
+class _ProductsSectionState extends State<ProductsSection> {
+  Stream _productStream;
+  @override
+  void initState() {
+    _productStream = widget.productsStreamController.stream;
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -42,8 +54,8 @@ class ProductsSection extends StatelessWidget {
               horizontal: getProportionateScreenHeight(10),
             ),
             child: SectionTile(
-              title: sectionTitle,
-              onPress: onSeeMorePress,
+              title: widget.sectionTitle,
+              onPress: widget.onSeeMorePress,
             ),
           ),
           sizedBoxOfHeight(12),
@@ -57,14 +69,15 @@ class ProductsSection extends StatelessWidget {
 
   Widget buildProductsList() {
     return StreamBuilder<List<String>>(
-      stream: productsStreamController.stream,
+      stream: _productStream,
       builder: (context, snapshot) {
         print(snapshot.data);
         print((snapshot.data).runtimeType);
         if (snapshot.hasData) {
           if (snapshot.data.length == 0) {
             return Center(
-              child: NothingToShowContainer(secondaryMessage: emptyListMessage),
+              child: NothingToShowContainer(
+                  secondaryMessage: widget.emptyListMessage),
             );
           }
           return buildProductGrid(snapshot.data);
@@ -103,7 +116,7 @@ class ProductsSection extends StatelessWidget {
         return ProductCard(
           productId: productsId[index],
           press: () {
-            onProductCardTapped.call(productsId[index]);
+            widget.onProductCardTapped.call(productsId[index]);
             print(productsId[index]);
           },
         );
