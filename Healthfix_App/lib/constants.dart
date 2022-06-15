@@ -39,7 +39,7 @@ cusHeadingStyle(
         color: color ?? Colors.black,
         fontSize: fontSize ?? getProportionateScreenHeight(20),
         fontWeight: fontWeight ?? FontWeight.w500,
-        letterSpacing: 0.5,
+        letterSpacing: 0.0075 * (fontSize ?? getProportionateScreenHeight(20)),
         height: lineheight ?? null,
         shadows: <Shadow>[
           if (hasShadow ?? false)
@@ -63,12 +63,14 @@ cusBodyStyle(
         FontWeight fontWeight,
         Color color,
         double letterSpacing}) =>
-    GoogleFonts.poppins(
+    GoogleFonts.roboto(
       textStyle: TextStyle(
         color: color ?? Colors.black,
         fontSize: fontSize ?? getProportionateScreenHeight(14),
         fontWeight: fontWeight ?? FontWeight.w300,
-        letterSpacing: letterSpacing ?? 0.4,
+        letterSpacing: letterSpacing ??
+            (0.03125 * (fontSize ?? getProportionateScreenHeight(14))),
+        height: 1.5,
       ),
     );
 
@@ -133,12 +135,12 @@ cusPdctOriPriceStyle([double fs]) => GoogleFonts.poppins(
       ),
     );
 
-var cusPdctNameStyle = GoogleFonts.poppins(
+var cusPdctNameStyle = GoogleFonts.roboto(
   textStyle: TextStyle(
     color: Colors.black,
     fontWeight: FontWeight.w400,
     fontSize: getProportionateScreenHeight(10),
-    letterSpacing: 0.4,
+    letterSpacing: 0.03125 * getProportionateScreenHeight(10),
   ),
 );
 

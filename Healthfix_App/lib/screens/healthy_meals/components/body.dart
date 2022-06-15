@@ -76,10 +76,21 @@ class _BodyState extends State<Body> {
           future: MealsDatabaseHelper().getMealsWithID(featuredMealsIds.first),
           builder: (context, snapshot) {
             if (snapshot.hasData) {
-              return buildMealCardVertical(
-                  // imageSize: getProportionateScreenHeight(60),
-                  // titleFontSize: getProportionateScreenHeight(14),
-                  meal: snapshot.data);
+              return GestureDetector(
+                onTap: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) =>
+                          HealthyMealDescScreen(snapshot.data.id),
+                    ),
+                  );
+                },
+                child: buildMealCardVertical(
+                    // imageSize: getProportionateScreenHeight(60),
+                    // titleFontSize: getProportionateScreenHeight(14),
+                    meal: snapshot.data),
+              );
             } else if (snapshot.connectionState == ConnectionState.waiting) {
               return Center(child: CircularProgressIndicator());
             } else if (snapshot.hasError) {
@@ -100,10 +111,21 @@ class _BodyState extends State<Body> {
             future: MealsDatabaseHelper().getMealsWithID(featuredMealId),
             builder: (context, snapshot) {
               if (snapshot.hasData) {
-                return buildMealCardHorizontal(
-                    imageSize: getProportionateScreenHeight(48),
-                    titleFontSize: getProportionateScreenHeight(12),
-                    meal: snapshot.data);
+                return GestureDetector(
+                  onTap: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) =>
+                            HealthyMealDescScreen(snapshot.data.id),
+                      ),
+                    );
+                  },
+                  child: buildMealCardHorizontal(
+                      imageSize: getProportionateScreenHeight(48),
+                      titleFontSize: getProportionateScreenHeight(12),
+                      meal: snapshot.data),
+                );
               } else if (snapshot.connectionState == ConnectionState.waiting) {
                 return Center(child: CircularProgressIndicator());
               } else if (snapshot.hasError) {

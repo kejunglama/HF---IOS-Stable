@@ -9,11 +9,8 @@ class CartScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(
-          "Your Cart",
-          style: cusCenterHeadingStyle(
-              null, null, getProportionateScreenHeight(24.0)),
-        ),
+        title: Text("Your Cart", style: cusCenterHeadingStyle(Colors.white)),
+        backgroundColor: kPrimaryColor.withOpacity(0.9),
       ),
       body: Body(),
     );
