@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:healthfix/constants.dart';
-import 'package:healthfix/size_config.dart';
+// import 'package:healthfix/size_config.dart';
 
 import 'components/body.dart';
 

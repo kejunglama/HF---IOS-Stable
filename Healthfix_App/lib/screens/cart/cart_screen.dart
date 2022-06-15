@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:healthfix/size_config.dart';
+// import 'package:healthfix/size_config.dart';
 
 import '../../constants.dart';
 import 'components/body.dart';

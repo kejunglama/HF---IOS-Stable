@@ -34,7 +34,7 @@ class HomeHeader extends StatelessWidget {
               Container(
                 margin: EdgeInsets.only(left: getProportionateScreenWidth(12)),
                 height: getProportionateScreenHeight(30),
-                child: Image.asset('assets/logo/HF-logo.png'),
+                child: Image.asset('assets/logo/hf-logo-cropped.png'),
               ),
 
               // Icons

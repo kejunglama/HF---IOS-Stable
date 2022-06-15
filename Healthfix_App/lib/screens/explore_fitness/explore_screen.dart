@@ -3,10 +3,7 @@ import 'package:healthfix/constants.dart';
 import 'package:healthfix/data.dart';
 import 'package:healthfix/models/Product.dart';
 import 'package:healthfix/screens/category_products/category_products_screen.dart';
-import 'package:healthfix/screens/fitness_trainers/fitness_trainer_screen.dart';
-import 'package:healthfix/screens/gym_membership/gym_membership_screen.dart';
 import 'package:healthfix/screens/healthy_meals/healthy_meals_screen.dart';
-import 'package:healthfix/screens/home/home_screen.dart';
 // import 'package:healthfix/screens/healthy_meals/healthy_meals_screen.dart';
 import 'package:healthfix/size_config.dart';
 
