@@ -190,8 +190,9 @@ class ExploreCard extends StatelessWidget {
                       text,
                       maxLines: 1,
                       style: cusHeadingStyle(
-                          fontSize: getProportionateScreenHeight(24),
-                          color: Colors.white),
+                        fontSize: getProportionateScreenHeight(20),
+                        color: Colors.white,
+                      ),
                     ),
                   ),
                   // SizedBox(height: getProportionateScreenHeight()),
@@ -199,7 +200,7 @@ class ExploreCard extends StatelessWidget {
                     caption,
                     maxLines: 2,
                     style: cusBodyStyle(
-                        fontSize: getProportionateScreenHeight(16),
+                        fontSize: getProportionateScreenHeight(14),
                         color: Colors.white),
                   ),
                   // SizedBox(height: getProportionateScreenHeight(8)),

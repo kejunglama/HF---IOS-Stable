@@ -22,9 +22,7 @@ class OngoingOffers extends StatelessWidget {
               Text("November Deals", style: cusCenterHeadingAccentStyle),
             ],
           ),
-
           sizedBoxOfHeight(8),
-
           Container(
             child: Container(
               margin: EdgeInsets.all(getProportionateScreenHeight(8)),

@@ -99,7 +99,7 @@ class ProductCard extends StatelessWidget {
                     Text(
                       "Starting From",
                       style: cusBodyStyle(
-                          fontSize: getProportionateScreenHeight(12)),
+                          fontSize: getProportionateScreenHeight(10)),
                     ),
                     Text(
                         "${currency.format(product.priceRange != null ? product.priceRange : 0)}",

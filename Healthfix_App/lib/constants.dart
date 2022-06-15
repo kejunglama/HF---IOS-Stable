@@ -84,7 +84,7 @@ cusCenterHeadingStyle([Color color, FontWeight fw, num fs]) =>
       textStyle: TextStyle(
         color: color ?? Colors.black,
         fontSize: fs ?? getProportionateScreenHeight(20),
-        fontWeight: fw ?? FontWeight.w500,
+        fontWeight: fw ?? FontWeight.w400,
         letterSpacing: 0.5,
       ),
     );
@@ -133,12 +133,12 @@ cusPdctOriPriceStyle([double fs]) => GoogleFonts.poppins(
       ),
     );
 
-var cusPdctNameStyle = GoogleFonts.montserrat(
+var cusPdctNameStyle = GoogleFonts.poppins(
   textStyle: TextStyle(
     color: Colors.black,
     fontWeight: FontWeight.w400,
     fontSize: getProportionateScreenHeight(10),
-    letterSpacing: 0.2,
+    letterSpacing: 0.4,
   ),
 );
 

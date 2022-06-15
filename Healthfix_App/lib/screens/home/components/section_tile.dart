@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:healthfix/constants.dart';
+import 'package:healthfix/size_config.dart';
 
 class SectionTile extends StatelessWidget {
   final String title;
@@ -20,10 +21,10 @@ class SectionTile extends StatelessWidget {
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            Text(
-              title,
-              style: cusHeadingStyle(),
-            ),
+            Text(title,
+                style: cusHeadingStyle(
+                    fontSize: getProportionateScreenHeight(18),
+                    fontWeight: FontWeight.w400)),
             Visibility(
               visible: onPress != null,
               child: Text(

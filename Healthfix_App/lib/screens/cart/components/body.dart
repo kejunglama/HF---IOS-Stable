@@ -49,26 +49,16 @@ class _BodyState extends State<Body> {
     return SafeArea(
       child: RefreshIndicator(
         onRefresh: refreshPage,
-        child: SingleChildScrollView(
-          physics: AlwaysScrollableScrollPhysics(),
-          child: Padding(
-            padding: EdgeInsets.symmetric(
-                horizontal: getProportionateScreenWidth(screenPadding)),
-            child: SizedBox(
-              width: double.infinity,
-              child: Column(
-                children: [
-                  // Text("Swipe RIGHT to Delete",
-                  // style: cusBodyStyle(getProportionateScreenHeight(12))),
-                  // SizedBox(height: getProportionateScreenHeight(20)),
-                  SizedBox(
-                    height: SizeConfig.screenHeight * 0.7,
-                    child: Center(
-                      child: buildCartItemsList(),
-                    ),
-                  ),
-                ],
-              ),
+        child: Padding(
+          padding: EdgeInsets.all(getProportionateScreenWidth(screenPadding)),
+          child: SizedBox(
+            width: double.infinity,
+            child: Column(
+              children: [
+                Expanded(
+                  child: buildCartItemsList(),
+                ),
+              ],
             ),
           ),
         ),
