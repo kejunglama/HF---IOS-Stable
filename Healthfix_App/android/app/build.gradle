@@ -13,12 +13,12 @@ if (flutterRoot == null) {
 
 def flutterVersionCode = localProperties.getProperty('flutter.versionCode')
 if (flutterVersionCode == null) {
-    flutterVersionCode = '1'
+    flutterVersionCode = '128'
 }
 
 def flutterVersionName = localProperties.getProperty('flutter.versionName')
 if (flutterVersionName == null) {
-    flutterVersionName = '1.0'
+    flutterVersionName = '2.0.0'
 }
 
 apply plugin: 'com.android.application'
@@ -37,13 +37,13 @@ android {
         applicationId "com.siteux.healthfix"
         minSdkVersion 21
         targetSdkVersion 30
-        versionCode 110
-        versionName "V1.1.0"
+        versionCode 133
+        versionName "V2.0.1"
     }
 
     buildTypes {
         release {
-            // TODO: Add your own signing config for the release build.
+            // TODO: Add your own signing config for the release build
             signingConfig signingConfigs.debug
         }
     }
