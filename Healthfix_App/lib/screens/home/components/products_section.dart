@@ -61,7 +61,7 @@ class _ProductsSectionState extends State<ProductsSection> {
           sizedBoxOfHeight(12),
           Container(
               height: getProportionateScreenHeight(200),
-              child: Expanded(child: buildProductsList())),
+              child: buildProductsList()),
         ],
       ),
     );
