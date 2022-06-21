@@ -12,7 +12,7 @@ import 'package:healthfix/screens/product_details/product_details_screen.dart';
 import 'package:healthfix/screens/search_result/search_result_screen.dart';
 import 'package:healthfix/services/authentification/authentification_service.dart';
 import 'package:healthfix/services/data_streams/all_products_stream.dart';
-import 'package:healthfix/services/data_streams/favourite_products_stream.dart';
+// import 'package:healthfix/services/data_streams/favourite_products_stream.dart';
 import 'package:healthfix/services/data_streams/featured_products_stream.dart';
 import 'package:healthfix/services/data_streams/flash_sales_products_stream.dart';
 import 'package:healthfix/services/database/product_database_helper.dart';
@@ -66,8 +66,8 @@ class _BodyState extends State<Body> {
   final String dietPlanBanner =
       "https://fitclic.net/wp-content/uploads/2021/10/custom-keto-diet-banner.png";
 
-  final FavouriteProductsStream favouriteProductsStream =
-      FavouriteProductsStream();
+  // final FavouriteProductsStream favouriteProductsStream =
+  // FavouriteProductsStream();
   final SomeProductsStream someProductsStream = SomeProductsStream();
   final FeaturedProductsStream featuredProductsStream =
       FeaturedProductsStream();
@@ -77,7 +77,7 @@ class _BodyState extends State<Body> {
   @override
   void initState() {
     super.initState();
-    favouriteProductsStream.init();
+    // favouriteProductsStream.init();
     someProductsStream.init();
     featuredProductsStream.init();
     flashSalesProductsStream.init();
@@ -326,7 +326,7 @@ class _BodyState extends State<Body> {
   }
 
   Future<void> refreshPage() {
-    favouriteProductsStream.reload();
+    // favouriteProductsStream.reload();
     someProductsStream.reload();
     featuredProductsStream.reload();
     flashSalesProductsStream.reload();

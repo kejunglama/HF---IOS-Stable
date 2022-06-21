@@ -49,15 +49,17 @@ class Body extends StatelessWidget {
                                 mainAxisAlignment: MainAxisAlignment.center,
                                 children: [
                                   Text(
-                                    "240 gm - ",
-                                    style: cusBodyStyle(
-                                        fontSize:
-                                            getProportionateScreenHeight(20)),
+                                    "${meal.values["calories"]} Calories - ",
+                                    style: cusHeadingStyle(
+                                      fontSize:
+                                          getProportionateScreenHeight(16),
+                                      fontWeight: FontWeight.w300,
+                                    ),
                                   ),
                                   Text(
                                     "${currency.format(meal.originalPrice)}",
                                     style: cusPdctDisPriceStyle(
-                                        getProportionateScreenHeight(20)),
+                                        getProportionateScreenHeight(16)),
                                   ),
                                 ],
                               ),
@@ -159,12 +161,12 @@ class Body extends StatelessWidget {
         });
   }
 
-  Column buildSingleValue(String data, String key) {
+  Column buildSingleValue(var data, String key) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         // Icon(Icons.ene ),
-        Text(data, style: cusHeadingStyle()),
+        Text(data.toString(), style: cusHeadingStyle()),
         Text(key,
             style: cusBodyStyle(
                 fontSize: getProportionateScreenHeight(16),
@@ -186,7 +188,8 @@ class Body extends StatelessWidget {
           runSpacing: getProportionateScreenWidth(40),
           children: [
             for (var meal in values.entries)
-              buildSingleValue(meal.value, meal.key),
+              if (meal.key.toString().toLowerCase() != "calories")
+                buildSingleValue(meal.value, meal.key),
           ],
         ),
       ),

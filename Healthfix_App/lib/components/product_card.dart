@@ -84,6 +84,7 @@ class _ProductCardState extends State<ProductCard> {
         Container(
           width: getProportionateScreenHeight(80),
           height: getProportionateScreenHeight(80),
+          color: Colors.grey.withOpacity(0.2),
           child: ClipRRect(
             borderRadius: BorderRadius.circular(5),
             child: Image.network(
@@ -98,7 +99,7 @@ class _ProductCardState extends State<ProductCard> {
             children: [
               Text(
                 "${product.title.trim()}\n",
-                style: cusPdctNameStyle,
+                style: cusPdctNameStyle(),
                 maxLines: 2,
                 overflow: TextOverflow.ellipsis,
               ),

@@ -65,9 +65,9 @@ class _BodyState extends State<Body> {
 
   Widget buildPopularMeals() {
     List featuredMealsIds = [
-      "fa66ef10-e6e2-11ec-a59d-f1527b8d2e37",
-      "fa859aa0-e6e2-11ec-a59d-f1527b8d2e37",
-      "fa98d480-e6e2-11ec-a59d-f1527b8d2e37",
+      "7f98e5f0-f041-11ec-9970-8beccbe446e9",
+      "7f7e8020-f041-11ec-9970-8beccbe446e9",
+      "7fa6efb0-f041-11ec-9970-8beccbe446e9",
     ];
 
     List<Widget> featuredCardsHori = [];
@@ -145,16 +145,11 @@ class _BodyState extends State<Body> {
       crossAxisAlignment: CrossAxisAlignment.start,
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
-        Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            Text("Popular",
-                style: cusHeadingStyle(
-                    fontSize: getProportionateScreenHeight(20),
-                    fontWeight: FontWeight.w400)),
-            Text("See All", style: cusHeadingLinkStyle),
-          ],
-        ),
+        Text("Popular Meals",
+            style: cusHeadingStyle(
+              fontSize: getProportionateScreenHeight(16),
+              fontWeight: FontWeight.w400,
+            )),
         sizedBoxOfHeight(20),
         SizedBox(
           // width: (SizeConfig.screenWidth - getProportionateScreenWidth(20)) / 2,
@@ -419,16 +414,11 @@ class _BodyState extends State<Body> {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         sizedBoxOfHeight(28),
-        Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            Text("Our Meals",
-                style: cusHeadingStyle(
-                    fontSize: getProportionateScreenHeight(20),
-                    fontWeight: FontWeight.w400)),
-            Text("See All", style: cusHeadingLinkStyle),
-          ],
-        ),
+        Text("Our Healthy Meals",
+            style: cusHeadingStyle(
+              fontSize: getProportionateScreenHeight(16),
+              fontWeight: FontWeight.w400,
+            )),
         sizedBoxOfHeight(20),
         StreamBuilder(
           stream: mealsStream.stream,

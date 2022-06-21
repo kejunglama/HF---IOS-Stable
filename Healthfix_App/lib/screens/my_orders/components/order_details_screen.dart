@@ -40,6 +40,7 @@ class OrderDetails extends StatelessWidget {
     Map orderDetails = orderedProduct.orderDetails;
     Map orderDetailsAddress = orderDetails["address"];
     Map orderDetailsTotals = orderDetails["totals"];
+    Timestamp orderDeliveryDateTime = orderDetails["deliveryDateTime"];
 
     Map orderStatus = orderedProduct.orderStatus ?? {};
 
@@ -96,8 +97,8 @@ class OrderDetails extends StatelessWidget {
                       style: cusBodyStyle(
                           fontSize: getProportionateScreenHeight(12))),
                   SizedBox(height: getProportionateScreenHeight(20)),
-                  buildOrderDetails(
-                      orderDetailsAddress, currency, orderDetailsTotals),
+                  buildOrderDetails(orderDetailsAddress, currency,
+                      orderDetailsTotals, orderDeliveryDateTime),
                   SizedBox(height: getProportionateScreenHeight(20)),
                   // buildStatusTimeline(_fetchedStatusTime),
                   SizedBox(height: getProportionateScreenHeight(20)),
@@ -189,51 +190,68 @@ class OrderDetails extends StatelessWidget {
     );
   }
 
-  Container buildOrderDetails(
-      orderDetailsAddress, NumberFormat currency, orderDetailsTotals) {
+  Container buildOrderDetails(orderDetailsAddress, NumberFormat currency,
+      orderDetailsTotals, Timestamp orderDeliveryDateTime) {
     return Container(
       padding: EdgeInsets.symmetric(horizontal: 12),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              Text(
-                "Receiver: ${orderDetailsAddress["receiver"]}",
-                style: cusBodyStyle(fontSize: getProportionateScreenHeight(12)),
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    "Receiver: ${orderDetailsAddress["receiver"]}",
+                    style: cusBodyStyle(
+                        fontSize: getProportionateScreenHeight(12)),
+                  ),
+                  Text(
+                    "Phone: ${orderDetailsAddress["phone"]}",
+                    style: cusBodyStyle(
+                        fontSize: getProportionateScreenHeight(12)),
+                  ),
+                  Text(
+                    "Address: ${orderDetailsAddress["landmark"]}, ${orderDetailsAddress["address_line_1"]}",
+                    style: cusBodyStyle(
+                        fontSize: getProportionateScreenHeight(12)),
+                  ),
+                  Text(
+                    "Email: ${orderDetailsAddress["email"]}",
+                    style: cusBodyStyle(
+                        fontSize: getProportionateScreenHeight(12)),
+                  ),
+                ],
               ),
-              Text(
-                "Phone: ${orderDetailsAddress["phone"]}",
-                style: cusBodyStyle(fontSize: getProportionateScreenHeight(12)),
-              ),
-              Text(
-                "Address: ${orderDetailsAddress["landmark"]}, ${orderDetailsAddress["address_line_1"]}",
-                style: cusBodyStyle(fontSize: getProportionateScreenHeight(12)),
-              ),
-              Text(
-                "Email: ${orderDetailsAddress["email"]}",
-                style: cusBodyStyle(fontSize: getProportionateScreenHeight(12)),
-              ),
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    "Cart Total: ${currency.format(orderDetailsTotals["cartTotal"])}",
+                    style: cusBodyStyle(
+                        fontSize: getProportionateScreenHeight(12)),
+                  ),
+                  Text(
+                    "Delivery Charge: ${currency.format(orderDetailsTotals["deliveryCharge"])}",
+                    style: cusBodyStyle(
+                        fontSize: getProportionateScreenHeight(12)),
+                  ),
+                  Text(
+                    "Net Total: ${currency.format(orderDetailsTotals["netTotal"])}",
+                    style: cusBodyStyle(
+                        fontSize: getProportionateScreenHeight(12)),
+                  ),
+                ],
+              )
             ],
           ),
-          Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Text(
-                "Cart Total: ${currency.format(orderDetailsTotals["cartTotal"])}",
-                style: cusBodyStyle(fontSize: getProportionateScreenHeight(12)),
-              ),
-              Text(
-                "Delivery Charge: ${currency.format(orderDetailsTotals["deliveryCharge"])}",
-                style: cusBodyStyle(fontSize: getProportionateScreenHeight(12)),
-              ),
-              Text(
-                "Net Total: ${currency.format(orderDetailsTotals["netTotal"])}",
-                style: cusBodyStyle(fontSize: getProportionateScreenHeight(12)),
-              ),
-            ],
-          )
+          if (orderDeliveryDateTime != null)
+            Text(
+              "Delivery: ${DateFormat('yyyy-MM-dd, hh:mm a').format(orderDeliveryDateTime.toDate())}",
+              style: cusBodyStyle(fontSize: getProportionateScreenHeight(12)),
+            ),
         ],
       ),
     );

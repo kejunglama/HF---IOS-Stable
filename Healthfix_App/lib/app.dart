@@ -1,6 +1,6 @@
 import 'package:animated_splash_screen/animated_splash_screen.dart';
 import 'package:flutter/material.dart';
-import 'package:healthfix/size_config.dart';
+// import 'package:healthfix/size_config.dart';
 // import 'package:healthfix/wrappers/authentification_wrapper.dart';
 import 'package:page_transition/page_transition.dart';
 // import 'package:shared_preferences/shared_preferences.dart';

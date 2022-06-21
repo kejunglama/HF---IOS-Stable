@@ -36,7 +36,7 @@ class TotalAmounts extends StatelessWidget {
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          Text(text, style: cusPdctNameStyle),
+          Text(text, style: cusPdctNameStyle()),
           Text("Rs. " + price,
               style: _isMain
                   ? cusBodyStyle(fontSize: getProportionateScreenHeight(14))

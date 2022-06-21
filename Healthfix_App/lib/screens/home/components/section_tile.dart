@@ -23,12 +23,13 @@ class SectionTile extends StatelessWidget {
           children: [
             Text(title,
                 style: cusHeadingStyle(
-                    fontSize: getProportionateScreenHeight(18),
-                    fontWeight: FontWeight.w400)),
+                  fontSize: getProportionateScreenHeight(16),
+                  fontWeight: FontWeight.w400,
+                )),
             Visibility(
               visible: onPress != null,
               child: Text(
-                "See More >",
+                "See More",
                 style: cusHeadingLinkStyle,
               ),
             ),

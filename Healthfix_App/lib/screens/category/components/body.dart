@@ -159,47 +159,49 @@ class CategoryList extends StatelessWidget {
       ),
       child: Container(
         width: SizeConfig.screenWidth * 0.35,
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            for (int i = 1; i < categories.length; i++)
-              Material(
-                color: Colors.white,
-                child: InkWell(
-                  onTap: () {
-                    scrollToCat(keyList[i]);
-                  },
-                  child: Center(
-                    child: Container(
-                      height: getProportionateScreenHeight(120),
-                      padding: EdgeInsets.symmetric(
-                          horizontal: getProportionateScreenHeight(20)),
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          Container(
-                            width: getProportionateScreenHeight(430),
-                            height: getProportionateScreenHeight(50),
-                            margin: EdgeInsets.only(
-                                bottom: getProportionateScreenHeight(12)),
-                            child:
-                                Image.asset(categories[i][IMAGE_LOCATION_KEY]),
-                          ),
-                          Text(
-                            categories[i][TITLE_KEY],
-                            style: cusHeadingStyle(
-                                fontSize: getProportionateScreenHeight(14),
-                                color: kPrimaryColor,
-                                fontWeight: FontWeight.w300),
-                            textAlign: TextAlign.center,
-                          ),
-                        ],
+        child: SingleChildScrollView(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              for (int i = 1; i < categories.length; i++)
+                Material(
+                  color: Colors.white,
+                  child: InkWell(
+                    onTap: () {
+                      scrollToCat(keyList[i]);
+                    },
+                    child: Center(
+                      child: Container(
+                        height: getProportionateScreenHeight(120),
+                        padding: EdgeInsets.symmetric(
+                            horizontal: getProportionateScreenHeight(20)),
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Container(
+                              width: getProportionateScreenHeight(430),
+                              height: getProportionateScreenHeight(50),
+                              margin: EdgeInsets.only(
+                                  bottom: getProportionateScreenHeight(12)),
+                              child: Image.asset(
+                                  categories[i][IMAGE_LOCATION_KEY]),
+                            ),
+                            Text(
+                              categories[i][TITLE_KEY],
+                              style: cusHeadingStyle(
+                                  fontSize: getProportionateScreenHeight(14),
+                                  color: kPrimaryColor,
+                                  fontWeight: FontWeight.w300),
+                              textAlign: TextAlign.center,
+                            ),
+                          ],
+                        ),
                       ),
                     ),
                   ),
                 ),
-              ),
-          ],
+            ],
+          ),
         ),
       ),
     );

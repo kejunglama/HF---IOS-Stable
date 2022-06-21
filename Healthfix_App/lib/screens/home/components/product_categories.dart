@@ -36,11 +36,12 @@ class ProductCategories extends StatelessWidget {
               children: [
                 Text("Category",
                     style: cusHeadingStyle(
-                        fontSize: getProportionateScreenHeight(18),
-                        fontWeight: FontWeight.w400)),
+                      fontSize: getProportionateScreenHeight(16),
+                      fontWeight: FontWeight.w400,
+                    )),
                 GestureDetector(
                     onTap: goToCategory,
-                    child: Text("See More >", style: cusHeadingLinkStyle)),
+                    child: Text("See More", style: cusHeadingLinkStyle)),
               ],
             ),
           ),

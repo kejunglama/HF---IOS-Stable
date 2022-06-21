@@ -1,6 +1,8 @@
 // ignore_for_file: must_be_immutable
 
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:healthfix/components/default_button.dart';
 import 'package:healthfix/components/nothingtoshow_container.dart';
 import 'package:healthfix/models/Address.dart';
@@ -161,6 +163,9 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
                           ),
                           DefaultButton(
                             text: "Proceed to Payment",
+                            // press: () {
+                            //   if (widget.isMeal) _selectDateTime(context);
+                            // },
                             press: () {
                               if (address.phone != phoneFieldController.text)
                                 address.phone = phoneFieldController.text;
@@ -172,30 +177,51 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
                                 "deliveryCharge": deliveryCharge,
                                 "netTotal": cartTotal + deliveryCharge
                               };
-
-                              print(_address);
-                              print("");
-                              print(totals);
                               final Map orderDetails = {
                                 "address": _address,
                                 "totals": totals,
                                 "pay_method": "",
                               };
 
-                              Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                  builder: (context) => PaymentOptionsScreen(
-                                    onCheckout: widget.isMeal ?? false
-                                        ? widget.onCheckoutPressedForMeals
-                                        : widget.onCheckoutPressed,
-                                    orderDetails: orderDetails,
-                                    selectedCartItems: widget.selectedCartItems,
+                              if (widget.isMeal)
+                                _selectDateTime(context)
+                                    .then((DateTime deliveryDateTime) {
+                                  if (deliveryDateTime != null) {
+                                    orderDetails["deliveryDateTime"] =
+                                        deliveryDateTime;
+                                    print(deliveryDateTime);
+                                    Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                        builder: (context) =>
+                                            PaymentOptionsScreen(
+                                          onCheckout:
+                                              widget.onCheckoutPressedForMeals,
+                                          orderDetails: orderDetails,
+                                          selectedCartItems:
+                                              widget.selectedCartItems,
+                                        ),
+                                      ),
+                                    );
+                                  }
+                                });
+                              else {
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: (context) => PaymentOptionsScreen(
+                                      onCheckout: widget.isMeal ?? false
+                                          ? widget.onCheckoutPressedForMeals
+                                          : widget.onCheckoutPressed,
+                                      orderDetails: orderDetails,
+                                      selectedCartItems:
+                                          widget.selectedCartItems,
+                                    ),
                                   ),
-                                ),
-                              );
+                                );
+                              }
 
-                              (orderDetails);
+                              // (orderDetails);
                             },
                           ),
                           // buildHintText("District"),
@@ -221,6 +247,67 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
             );
           }),
     );
+  }
+
+  Future<DateTime> _selectDate(BuildContext context) async {
+    final DateTime _selectedDate = await showDatePicker(
+      context: context,
+      initialDate:
+          now.hour < 12 ? now : DateTime(now.year, now.month, now.day + 1),
+      firstDate:
+          now.hour < 12 ? now : DateTime(now.year, now.month, now.day + 1),
+      lastDate: DateTime(now.year, now.month, now.day + 7),
+      helpText: "Choose Your Delivery Date".toUpperCase(),
+      builder: (BuildContext context, Widget child) {
+        return Theme(
+          data: ThemeData.light().copyWith(
+              primaryColor: kPrimaryColor,
+              colorScheme: ColorScheme.light(primary: kPrimaryColor)),
+          child: child,
+        );
+      },
+    );
+    return _selectedDate;
+  }
+
+  // Select for Time
+  Future<TimeOfDay> _selectTime(BuildContext context) async {
+    DateTime _now = DateTime.now();
+    final _selectedTime = await showTimePicker(
+      context: context,
+      initialTime: TimeOfDay(hour: _now.hour, minute: _now.minute),
+      helpText: "Choose Your Delivery Time".toUpperCase(),
+      builder: (BuildContext context, Widget child) {
+        return Theme(
+          data: ThemeData.light().copyWith(
+            primaryColor: kPrimaryColor,
+            colorScheme: ColorScheme.light(
+              primary: kPrimaryColor,
+              onSurface: Colors.black38,
+              onBackground: kPrimaryColor,
+            ),
+          ),
+          child: child,
+        );
+      },
+    );
+    return _selectedTime;
+  }
+
+  Future<DateTime> _selectDateTime(BuildContext context) async {
+    final date = await _selectDate(context);
+    if (date == null) return null;
+    final time = await _selectTime(context);
+    if (time == null) return null;
+
+    DateTime deliveryDateTime = DateTime(
+      date.year,
+      date.month,
+      date.day,
+      time.hour,
+      time.minute,
+    );
+    return deliveryDateTime;
   }
 
   Row buildIconWithTextField(IconData iconData, String hintText,

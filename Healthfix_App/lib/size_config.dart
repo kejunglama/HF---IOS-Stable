@@ -13,16 +13,18 @@ class SizeConfig {
     screenWidth = _mediaQueryData.size.width;
     screenHeight = _mediaQueryData.size.height;
     screenViewPadding = _mediaQueryData.viewPadding.top;
-    ;
     orientation = _mediaQueryData.orientation;
   }
 }
 
+num breakHeight = 700;
 // Get the proportionate height as per screen size
 double getProportionateScreenHeight(double inputHeight) {
   double screenHeight = SizeConfig.screenHeight;
   // 812 is the layout height that designer use
-  return (inputHeight / 812.0) * screenHeight;
+  return screenHeight > breakHeight
+      ? (inputHeight / 812.0) * screenHeight
+      : inputHeight;
 }
 
 // Get the proportionate height as per screen size

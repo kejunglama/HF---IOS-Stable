@@ -150,7 +150,7 @@ class Body extends StatelessWidget {
                   children: [
                     Text("24", style: cusHeadingStyle()),
                     sizedBoxOfHeight(4),
-                    Text("People Trained", style: cusPdctNameStyle),
+                    Text("People Trained", style: cusPdctNameStyle()),
                   ],
                 ),
               ),
@@ -185,7 +185,7 @@ class Body extends StatelessWidget {
                       ),
                     ),
                     sizedBoxOfHeight(4),
-                    Text("Rating: 4.5 / 5", style: cusPdctNameStyle),
+                    Text("Rating: 4.5 / 5", style: cusPdctNameStyle()),
                   ],
                 ),
               ),

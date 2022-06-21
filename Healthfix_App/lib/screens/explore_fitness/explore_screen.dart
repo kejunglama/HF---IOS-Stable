@@ -10,12 +10,12 @@ import 'package:healthfix/size_config.dart';
 class ExploreScreen extends StatelessWidget {
   ExploreScreen();
 
-  final List imageList = [
-    "https://media.glamour.com/photos/5f0ded3c6ebfe4554e35b781/master/w_1600%2Cc_limit/Freshly-MealGroup_2160x1500.jpg",
-    "https://www.theindustry.fashion/wp-content/uploads/2021/10/Gymshark-Heroines-1024x859.jpg",
-    "https://media.istockphoto.com/photos/empty-gym-picture-id1132006407?k=20&m=1132006407&s=612x612&w=0&h=Z7nJu8jntywb9jOhvjlCS7lijbU4_hwHcxoVkxv77sg=",
-    "https://exceedmasterclass.com/wp-content/uploads/2016/09/nutrition-consultation-fitness-trainer.png",
-    "https://cdn.thewirecutter.com/wp-content/uploads/2020/03/onlineworkout-lowres-2x1-1.jpg?auto=webp&quality=75&crop=2:1&width=1024",
+  final List imageFileName = [
+    "Banner Image - Healthy Meals.jpeg",
+    "Banner Image - Fitness Wears.jpeg",
+    "Banner Image - Gym.jpeg",
+    "Banner Image - Diet Consultation.png",
+    "Banner Image - Home Workout.jpeg",
   ];
 
   final List captionList = [
@@ -103,7 +103,7 @@ class ExploreScreen extends StatelessWidget {
             children: List.generate(
               titleList.length,
               (i) => ExploreCard(
-                imageURL: imageList[i],
+                imageFileName: imageFileName[i],
                 caption: captionList[i],
                 text: titleList[i],
                 toScreen: toScreen[i],
@@ -119,14 +119,14 @@ class ExploreScreen extends StatelessWidget {
 class ExploreCard extends StatelessWidget {
   ExploreCard({
     Key key,
-    @required this.imageURL,
+    @required this.imageFileName,
     this.color,
     @required this.caption,
     @required this.text,
     @required this.toScreen,
   }) : super(key: key);
 
-  final String imageURL;
+  final String imageFileName;
   final Color color;
   final String caption;
   final String text;
@@ -166,7 +166,7 @@ class ExploreCard extends StatelessWidget {
               ],
             ),
             image: DecorationImage(
-              image: NetworkImage(imageURL),
+              image: AssetImage("assets/images/explore/$imageFileName"),
               fit: BoxFit.cover,
               // colorFilter: ColorFilter.mode(color, BlendMode.colorBurn),
               opacity: 0.5,

@@ -495,7 +495,7 @@ class HomeScreenDrawer extends StatelessWidget {
       leading: Icon(Icons.verified_outlined, color: kSecondaryColor),
       title: Text(
         "Vendor",
-        style: cusPdctNameStyle,
+        style: cusPdctNameStyle(),
       ),
       children: [
         ListTile(

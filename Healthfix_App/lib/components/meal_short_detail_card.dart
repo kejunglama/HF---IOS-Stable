@@ -75,7 +75,7 @@ class MealShortDetailCard extends StatelessWidget {
                       : meal.title,
                   softWrap: true,
                   overflow: TextOverflow.ellipsis,
-                  style: cusPdctNameStyle,
+                  style: cusPdctNameStyle(),
                   // maxLines: 1,
                 ),
                 // Visibility(

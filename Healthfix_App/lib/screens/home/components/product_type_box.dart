@@ -57,7 +57,7 @@ class ProductTypeBox extends StatelessWidget {
             child: Text(
               title,
               textAlign: TextAlign.center,
-              style: cusPdctCatNameStyle,
+              style: cusPdctCatNameStyle(),
               maxLines: 2,
               overflow: TextOverflow.ellipsis,
             ),

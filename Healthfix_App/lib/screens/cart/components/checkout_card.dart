@@ -50,11 +50,14 @@ class CheckoutCard extends StatelessWidget {
                       return Text.rich(
                         TextSpan(
                           text: "Total\n",
-                          style: cusPdctNameStyle,
+                          style: cusPdctNameStyle(),
                           children: [
                             TextSpan(
                               text: "Rs. $cartTotal",
-                              style: TextStyle(fontSize: 20, color: Colors.black, fontWeight: FontWeight.w700),
+                              style: TextStyle(
+                                  fontSize: 20,
+                                  color: Colors.black,
+                                  fontWeight: FontWeight.w700),
                             ),
                           ],
                         ),

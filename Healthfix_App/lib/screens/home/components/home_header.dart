@@ -31,10 +31,17 @@ class HomeHeader extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               // Logo
-              Container(
-                margin: EdgeInsets.only(left: getProportionateScreenWidth(12)),
-                height: getProportionateScreenHeight(30),
-                child: Image.asset('assets/logo/hf-logo-cropped.png'),
+              GestureDetector(
+                onTap: () {
+                  print(SizeConfig.screenHeight);
+                  print(getProportionateScreenHeight(12));
+                },
+                child: Container(
+                  margin:
+                      EdgeInsets.only(left: getProportionateScreenWidth(12)),
+                  height: getProportionateScreenHeight(30),
+                  child: Image.asset('assets/logo/hf-logo-cropped.png'),
+                ),
               ),
 
               // Icons

@@ -39,7 +39,7 @@ cusHeadingStyle(
         color: color ?? Colors.black,
         fontSize: fontSize ?? getProportionateScreenHeight(20),
         fontWeight: fontWeight ?? FontWeight.w500,
-        letterSpacing: 0.0075 * (fontSize ?? getProportionateScreenHeight(20)),
+        letterSpacing: getProportionateScreenHeight(0.25),
         height: lineheight ?? null,
         shadows: <Shadow>[
           if (hasShadow ?? false)
@@ -74,10 +74,10 @@ cusBodyStyle(
       ),
     );
 
-var cusHeadingLinkStyle = GoogleFonts.poppins(
+var cusHeadingLinkStyle = GoogleFonts.roboto(
   textStyle: TextStyle(
     color: kPrimaryColor,
-    fontSize: getProportionateScreenHeight(14),
+    fontSize: getProportionateScreenHeight(12),
   ),
 );
 
@@ -98,15 +98,15 @@ var cusCenterHeadingAccentStyle = GoogleFonts.poppins(
   ),
 );
 
-var cusPdctCatNameStyle = GoogleFonts.montserrat(
-  textStyle: TextStyle(
-    letterSpacing: 0.3,
-    color: kSecondaryColor,
-    fontSize: getProportionateScreenHeight(11),
-    // fontSize: getProportionateScreenHeight(8),
-    fontWeight: FontWeight.w300,
-  ),
-);
+cusPdctCatNameStyle() => GoogleFonts.poppins(
+      textStyle: TextStyle(
+        letterSpacing: getProportionateScreenHeight(0.25),
+        color: kSecondaryColor,
+        fontSize: getProportionateScreenHeight(10),
+        // fontSize: getProportionateScreenHeight(8),
+        fontWeight: FontWeight.w300,
+      ),
+    );
 
 cusPdctDisPriceStyle([double fs, Color color]) => GoogleFonts.poppins(
       textStyle: TextStyle(
@@ -135,14 +135,14 @@ cusPdctOriPriceStyle([double fs]) => GoogleFonts.poppins(
       ),
     );
 
-var cusPdctNameStyle = GoogleFonts.roboto(
-  textStyle: TextStyle(
-    color: Colors.black,
-    fontWeight: FontWeight.w400,
-    fontSize: getProportionateScreenHeight(10),
-    letterSpacing: 0.03125 * getProportionateScreenHeight(10),
-  ),
-);
+cusPdctNameStyle() => GoogleFonts.poppins(
+      textStyle: TextStyle(
+        color: Colors.black,
+        fontWeight: FontWeight.w300,
+        fontSize: getProportionateScreenHeight(10),
+        letterSpacing: getProportionateScreenHeight(0.25),
+      ),
+    );
 
 const defaultDuration = Duration(milliseconds: 250);
 

@@ -1,4 +1,5 @@
 import 'package:firebase_messaging/firebase_messaging.dart';
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
@@ -112,7 +113,7 @@ class _HomeScreenState extends State<HomeScreen> {
   void _onItemTapped(int index) {
     _tabsPageController.animateToPage(
       index,
-      duration: Duration(seconds: 1),
+      duration: Duration(milliseconds: 600),
       curve: Curves.easeOutCubic,
     );
   }
@@ -148,9 +149,24 @@ class _HomeScreenState extends State<HomeScreen> {
         statusBarColor: kPrimaryColor,
         // For iOS.
         // Use [dark] for white status bar and [light] for black status bar.
-        statusBarBrightness: Brightness.light,
+        statusBarBrightness: Brightness.dark,
       ),
       child: Scaffold(
+        appBar: AppBar(
+          // foregroundColor: Colors.white,
+          backgroundColor: kPrimaryColor.withOpacity(0.9),
+
+          systemOverlayStyle: SystemUiOverlayStyle(
+            // For Android.
+            // Use [light] for white status bar and [dark] for black status bar.
+            statusBarIconBrightness: Brightness.light,
+            statusBarColor: kPrimaryColor,
+            // For iOS.
+            // Use [dark] for white status bar and [light] for black status bar.
+            statusBarBrightness: Brightness.dark,
+          ),
+          toolbarHeight: 0,
+        ),
         body: PageView(
             controller: _tabsPageController,
             allowImplicitScrolling: true,
@@ -199,7 +215,7 @@ class _HomeScreenState extends State<HomeScreen> {
       ],
       currentIndex: _selectedIndex,
       selectedItemColor: Colors.cyan,
-      unselectedItemColor: Colors.grey,
+      unselectedItemColor: Colors.black54,
       backgroundColor: Colors.white,
       type: BottomNavigationBarType.fixed,
       onTap: _onItemTapped,

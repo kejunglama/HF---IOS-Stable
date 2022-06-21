@@ -105,7 +105,7 @@ class ProductShortDetailCard extends StatelessWidget {
                             : product.title,
                         softWrap: true,
                         overflow: TextOverflow.ellipsis,
-                        style: cusPdctNameStyle,
+                        style: cusPdctNameStyle(),
                         maxLines: (product.variations == null) ? 2 : 1,
                         // maxLines: 1,
                       ),
@@ -134,7 +134,7 @@ class ProductShortDetailCard extends StatelessWidget {
                           children: [
                             Text(
                               variantText,
-                              style: cusPdctCatNameStyle,
+                              style: cusPdctCatNameStyle(),
                             ),
                             Container(
                                 height: getProportionateScreenHeight(10),
