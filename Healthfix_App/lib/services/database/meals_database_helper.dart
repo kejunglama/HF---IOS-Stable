@@ -33,14 +33,14 @@ class MealsDatabaseHelper {
     return _firebaseFirestore;
   }
 
-  Future<void> createNewGym(String uid) async {
-    await firestore.collection(MEALS_COLLECTION_NAME).doc(uid).set({
-      NAME_KEY: null,
-      OPENING_TIME_KEY: null,
-      LOCATION_KEY: [],
-      PACKAGES_KEY: {},
-    });
-  }
+  // Future<void> createNewGym(String uid) async {
+  //   await firestore.collection(MEALS_COLLECTION_NAME).doc(uid).set({
+  //     NAME_KEY: null,
+  //     OPENING_TIME_KEY: null,
+  //     LOCATION_KEY: [],
+  //     PACKAGES_KEY: {},
+  //   });
+  // }
 
   // Future<void> deleteCurrentGymData() async {
   //   final uid = AuthentificationService().currentUser.uid;
@@ -77,5 +77,30 @@ class MealsDatabaseHelper {
       return meal;
     }
     return null;
+  }
+
+  Future<List<Meal>> searchInMeals(String queryText) async {
+    queryText = queryText.toLowerCase().trim();
+    final queryRef = firestore.collection(MEALS_COLLECTION_NAME);
+    final queryRefDocs = await queryRef.get();
+
+    List<Meal> meals = [];
+
+    // print(queryRefDocs.docs);
+    for (final doc in queryRefDocs.docs) {
+      // print(doc.data().runtimeType);
+      final mealsCollections = Meal.fromMap(doc.data(), id: doc.id);
+      // print(meals);
+      if (mealsCollections.title.toString().toLowerCase().contains(queryText) ||
+          mealsCollections.desc.toString().toLowerCase().contains(queryText) ||
+          mealsCollections.ingredients
+              .toString()
+              .toLowerCase()
+              .contains(queryText)) {
+        meals.add(mealsCollections);
+      }
+    }
+    print(meals.length);
+    return meals;
   }
 }

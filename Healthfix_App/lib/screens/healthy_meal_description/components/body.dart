@@ -15,134 +15,26 @@ import '../../../components/nothingtoshow_container.dart';
 
 class Body extends StatelessWidget {
   final String mealId;
-  const Body(this.mealId, {Key key}) : super(key: key);
+  final Meal meal;
+  const Body(this.mealId, this.meal, {Key key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
+    return mealId == null ? buildMealwithMeal(context) : buildMealwithID();
+  }
+
+  Widget buildMealwithMeal(context) {
+    return buildMealScreen(meal, context);
+  }
+
+  FutureBuilder<Meal> buildMealwithID() {
     return FutureBuilder(
         future: MealsDatabaseHelper().getMealsWithID(mealId),
         builder: (context, snapshot) {
           if (snapshot.hasData) {
-            Meal meal = snapshot.data;
-            print(meal);
-            return Stack(
-              children: [
-                SingleChildScrollView(
-                  child: Padding(
-                    padding: EdgeInsets.all(getProportionateScreenWidth(8.0)),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Align(
-                          alignment: Alignment.center,
-                          child: Column(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              Text(
-                                meal.title.capitalize(),
-                                textAlign: TextAlign.center,
-                                style: cusHeadingStyle(
-                                    fontSize: getProportionateScreenHeight(22)),
-                              ),
-                              sizedBoxOfHeight(12),
-                              Row(
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                children: [
-                                  Text(
-                                    "${meal.values["calories"]} Calories - ",
-                                    style: cusHeadingStyle(
-                                      fontSize:
-                                          getProportionateScreenHeight(16),
-                                      fontWeight: FontWeight.w300,
-                                    ),
-                                  ),
-                                  Text(
-                                    "${currency.format(meal.originalPrice)}",
-                                    style: cusPdctDisPriceStyle(
-                                        getProportionateScreenHeight(16)),
-                                  ),
-                                ],
-                              ),
-                            ],
-                          ),
-                        ),
-                        Container(
-                          height: getProportionateScreenHeight(280),
-                          padding: EdgeInsets.symmetric(
-                              vertical: getProportionateScreenHeight(20)),
-                          // child: ProductImages(
-                          //     imageList: meal.images,
-                          //     imageFit: BoxFit.contain)
-                          child: Center(
-                              child: Image.network(meal.images[0],
-                                  fit: BoxFit.cover)),
-                        ),
-
-                        buildFactValues(meal.values),
-                        // sizedBoxOfHeight(24),
-                        // Text(
-                        //   "${meal.brand?.toUpperCase()}",
-                        //   style: cusHeadingStyle(
-                        //       fontSize: getProportionateScreenHeight(14),
-                        //       color: Colors.black87,
-                        //       fontWeight: FontWeight.w500),
-                        // ),
-                        // sizedBoxOfHeight(12),
-                        // Text(
-                        //   meal.title.capitalize(),
-                        //   style: GoogleFonts.montserrat(
-                        //       textStyle: TextStyle(
-                        //           fontSize: getProportionateScreenHeight(24),
-                        //           color: kSecondaryColor)),
-                        // ),
-                        sizedBoxOfHeight(20),
-                        // buildInfoTabs(meal.desc, meal.highlights),
-                        Container(
-                          child: CusTabs(
-                            tabsHeader: [
-                              Tab(text: 'About'),
-                              Tab(text: 'Ingredients'),
-                              Tab(text: 'Reviews'),
-                            ],
-                            tabsBody: [
-                              Text(
-                                  meal.desc != null
-                                      ? meal.desc.trim().replaceAll("\\n", "\n")
-                                      : "",
-                                  style: cusBodyStyle()),
-                              Text(
-                                  meal.ingredients != null
-                                      ? meal.ingredients
-                                          .trim()
-                                          .replaceAll("\\n", "\n")
-                                      : "",
-                                  style: cusBodyStyle()),
-                              Text("No Reviews yet.", style: cusBodyStyle()),
-                            ],
-                          ),
-                        ),
-                        // Text(
-                        //   "${meal.highlights}",
-                        //   style: cusHeadingStyle(
-                        //       fontSize: getProportionateScreenHeight(14),
-                        //       color: Colors.black87,
-                        //       fontWeight: FontWeight.w500),
-                        // ),
-                        // Text("Details", style: cusHeadingStyle()),
-                        sizedBoxOfHeight(100),
-                        // Text(
-                        //   meal.desc != null
-                        //       ? meal.desc.trim().replaceAll("\\n", "\n")
-                        //       : "",
-                        //   style: cusBodyStyle(),
-                        // ),
-                      ],
-                    ),
-                  ),
-                ),
-                bottomBtnBar(context, meal),
-              ],
-            );
+            Meal _meal = snapshot.data;
+            print(_meal);
+            return buildMealScreen(_meal, context);
           } else if (snapshot.connectionState == ConnectionState.waiting) {
             return Center(
               child: CircularProgressIndicator(),
@@ -159,6 +51,123 @@ class Body extends StatelessWidget {
             ),
           );
         });
+  }
+
+  Stack buildMealScreen(Meal _meal, BuildContext context) {
+    return Stack(
+      children: [
+        SingleChildScrollView(
+          child: Padding(
+            padding: EdgeInsets.all(getProportionateScreenWidth(8.0)),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Align(
+                  alignment: Alignment.center,
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Text(
+                        _meal.title.capitalize(),
+                        textAlign: TextAlign.center,
+                        style: cusHeadingStyle(
+                            fontSize: getProportionateScreenHeight(22)),
+                      ),
+                      sizedBoxOfHeight(12),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Text(
+                            "${_meal.values["calories"]} Calories - ",
+                            style: cusHeadingStyle(
+                              fontSize: getProportionateScreenHeight(16),
+                              fontWeight: FontWeight.w300,
+                            ),
+                          ),
+                          Text(
+                            "${currency.format(_meal.originalPrice)}",
+                            style: cusPdctDisPriceStyle(
+                                getProportionateScreenHeight(16)),
+                          ),
+                        ],
+                      ),
+                    ],
+                  ),
+                ),
+                Container(
+                  height: getProportionateScreenHeight(280),
+                  padding: EdgeInsets.symmetric(
+                      vertical: getProportionateScreenHeight(20)),
+                  // child: ProductImages(
+                  //     imageList: meal.images,
+                  //     imageFit: BoxFit.contain)
+                  child: Center(
+                      child: Image.network(_meal.images[0], fit: BoxFit.cover)),
+                ),
+
+                buildFactValues(_meal.values),
+                // sizedBoxOfHeight(24),
+                // Text(
+                //   "${meal.brand?.toUpperCase()}",
+                //   style: cusHeadingStyle(
+                //       fontSize: getProportionateScreenHeight(14),
+                //       color: Colors.black87,
+                //       fontWeight: FontWeight.w500),
+                // ),
+                // sizedBoxOfHeight(12),
+                // Text(
+                //   meal.title.capitalize(),
+                //   style: GoogleFonts.montserrat(
+                //       textStyle: TextStyle(
+                //           fontSize: getProportionateScreenHeight(24),
+                //           color: kSecondaryColor)),
+                // ),
+                sizedBoxOfHeight(20),
+                // buildInfoTabs(meal.desc, meal.highlights),
+                Container(
+                  child: CusTabs(
+                    tabsHeader: [
+                      Tab(text: 'About'),
+                      Tab(text: 'Ingredients'),
+                      Tab(text: 'Reviews'),
+                    ],
+                    tabsBody: [
+                      Text(
+                          _meal.desc != null
+                              ? _meal.desc.trim().replaceAll("\\n", "\n")
+                              : "",
+                          style: cusBodyStyle()),
+                      Text(
+                          _meal.ingredients != null
+                              ? _meal.ingredients.trim().replaceAll("\\n", "\n")
+                              : "",
+                          style: cusBodyStyle()),
+                      Text("No Reviews yet.", style: cusBodyStyle()),
+                    ],
+                  ),
+                ),
+                // Text(
+                //   "${meal.highlights}",
+                //   style: cusHeadingStyle(
+                //       fontSize: getProportionateScreenHeight(14),
+                //       color: Colors.black87,
+                //       fontWeight: FontWeight.w500),
+                // ),
+                // Text("Details", style: cusHeadingStyle()),
+                sizedBoxOfHeight(100),
+                // Text(
+                //   meal.desc != null
+                //       ? meal.desc.trim().replaceAll("\\n", "\n")
+                //       : "",
+                //   style: cusBodyStyle(),
+                // ),
+              ],
+            ),
+          ),
+        ),
+        bottomBtnBar(context, _meal),
+      ],
+    );
   }
 
   Column buildSingleValue(var data, String key) {

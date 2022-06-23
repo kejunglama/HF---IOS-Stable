@@ -20,7 +20,7 @@ class Body extends StatefulWidget {
 }
 
 class _BodyState extends State<Body> {
-  AllMealsStream mealsStream = AllMealsStream();
+  MealsStream mealsStream = MealsStream();
 
   void initState() {
     mealsStream.init();
