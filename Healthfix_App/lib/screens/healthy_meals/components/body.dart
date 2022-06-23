@@ -40,8 +40,7 @@ class _BodyState extends State<Body> {
         child: Container(
           color: kPrimaryColor.withOpacity(0.05),
           child: Padding(
-            padding: EdgeInsets.symmetric(
-                horizontal: getProportionateScreenHeight(12)),
+            padding: EdgeInsets.symmetric(horizontal: getProportionateScreenHeight(12)),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
@@ -50,8 +49,7 @@ class _BodyState extends State<Body> {
                 // Text("What do you want to find",
                 //     style: cusHeadingStyle(null, null, null, FontWeight.w300)),
                 ClipRRect(
-                    borderRadius: BorderRadius.circular(10),
-                    child: Image.asset("assets/images/banner-fitcal.png")),
+                    borderRadius: BorderRadius.circular(10), child: Image.asset("assets/images/banner-fitcal.png")),
                 sizedBoxOfHeight(20),
                 buildPopularMeals(),
                 buildOurMeals(),
@@ -71,41 +69,8 @@ class _BodyState extends State<Body> {
     ];
 
     List<Widget> featuredCardsHori = [];
-    featuredCardsHori.add(
-      FutureBuilder<Meal>(
-          future: MealsDatabaseHelper().getMealsWithID(featuredMealsIds.first),
-          builder: (context, snapshot) {
-            if (snapshot.hasData) {
-              return GestureDetector(
-                onTap: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) =>
-                          HealthyMealDescScreen(snapshot.data.id),
-                    ),
-                  );
-                },
-                child: buildMealCardVertical(
-                    // imageSize: getProportionateScreenHeight(60),
-                    // titleFontSize: getProportionateScreenHeight(14),
-                    meal: snapshot.data),
-              );
-            } else if (snapshot.connectionState == ConnectionState.waiting) {
-              return Center(child: CircularProgressIndicator());
-            } else if (snapshot.hasError) {
-              final error = snapshot.error;
-              Logger().w(error.toString());
-              return Center(
-                child: Text(error.toString()),
-              );
-            } else {
-              return Center(child: Icon(Icons.error));
-            }
-          }),
-    );
 
-    for (var featuredMealId in featuredMealsIds.sublist(1)) {
+    for (var featuredMealId in featuredMealsIds) {
       featuredCardsHori.add(
         FutureBuilder<Meal>(
             future: MealsDatabaseHelper().getMealsWithID(featuredMealId),
@@ -116,15 +81,11 @@ class _BodyState extends State<Body> {
                     Navigator.push(
                       context,
                       MaterialPageRoute(
-                        builder: (context) =>
-                            HealthyMealDescScreen(snapshot.data.id),
+                        builder: (context) => HealthyMealDescScreen(snapshot.data.id),
                       ),
                     );
                   },
-                  child: buildMealCardHorizontal(
-                      imageSize: getProportionateScreenHeight(48),
-                      titleFontSize: getProportionateScreenHeight(12),
-                      meal: snapshot.data),
+                  child: buildMealCardVertical(meal: snapshot.data),
                 );
               } else if (snapshot.connectionState == ConnectionState.waiting) {
                 return Center(child: CircularProgressIndicator());
@@ -157,18 +118,16 @@ class _BodyState extends State<Body> {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             // spacing: getProportionateScreenWidth(12),
             children: [
-              SizedBox(
-                child: featuredCardsHori.first,
-                width: getProportionateScreenWidth(140),
-                height: getProportionateScreenHeight(244),
-              ),
-              sizedBoxOfWidth(8),
               Expanded(
                 child: SizedBox(
-                  height: getProportionateScreenHeight(244),
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: featuredCardsHori.sublist(1),
+                  height: getProportionateScreenHeight(240),
+                  child: SingleChildScrollView(
+                    scrollDirection: Axis.horizontal,
+                    child: Wrap(
+                      spacing: getProportionateScreenWidth(12),
+                      // mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: featuredCardsHori,
+                    ),
                   ),
                 ),
               ),
@@ -179,8 +138,7 @@ class _BodyState extends State<Body> {
     );
   }
 
-  Widget buildMealCardHorizontal(
-      {num imageSize, double titleFontSize, Meal meal}) {
+  Widget buildMealCardHorizontal({num imageSize, double titleFontSize, Meal meal}) {
     // print(meal);
     return Container(
       // width: SizeConfig.screenWidth - 2 * getProportionateScreenWidth(20),
@@ -202,7 +160,7 @@ class _BodyState extends State<Body> {
         children: [
           Container(
             height: imageSize ?? getProportionateScreenHeight(120),
-            width: imageSize ?? getProportionateScreenHeight(120),
+            width: imageSize ?? getProportionateScreenWidth(100),
             // padding: EdgeInsets.all(getProportionateScreenWidth(8)),
             child: Image.network(meal != null
                 ? meal.images.first
@@ -218,9 +176,7 @@ class _BodyState extends State<Body> {
                 Text(
                   meal != null ? meal.title : "Stir Brown Rice",
                   style: cusHeadingStyle(
-                      fontSize:
-                          titleFontSize ?? getProportionateScreenHeight(14),
-                      fontWeight: FontWeight.w400),
+                      fontSize: titleFontSize ?? getProportionateScreenHeight(14), fontWeight: FontWeight.w400),
                   overflow: TextOverflow.ellipsis,
                   maxLines: 1,
                 ),
@@ -229,13 +185,11 @@ class _BodyState extends State<Body> {
                   children: [
                     Container(
                       decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(
-                            getProportionateScreenHeight(30)),
+                        borderRadius: BorderRadius.circular(getProportionateScreenHeight(30)),
                         color: kPrimaryColor.withOpacity(0.2),
                       ),
                       padding: EdgeInsets.symmetric(
-                          horizontal: getProportionateScreenWidth(8),
-                          vertical: getProportionateScreenHeight(4)),
+                          horizontal: getProportionateScreenWidth(8), vertical: getProportionateScreenHeight(4)),
                       // Meal Portion
                       child: Text(
                         "1 Meal",
@@ -256,8 +210,7 @@ class _BodyState extends State<Body> {
                         // Ratings
                         Text(
                           "4.9",
-                          style: cusBodyStyle(
-                              fontSize: getProportionateScreenHeight(12)),
+                          style: cusBodyStyle(fontSize: getProportionateScreenHeight(12)),
                         ),
                       ],
                     ),
@@ -268,17 +221,12 @@ class _BodyState extends State<Body> {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     // Price
-                    Text(
-                        meal != null
-                            ? currency.format(meal.originalPrice)
-                            : "Rs. 200",
-                        style: cusPdctDisPriceStyle(
-                            getProportionateScreenHeight(14))),
+                    Text(meal != null ? currency.format(meal.originalPrice) : "Rs. 200",
+                        style: cusPdctDisPriceStyle(getProportionateScreenHeight(14))),
                     // Add to Cart Button
                     Container(
                       decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(
-                            getProportionateScreenHeight(30)),
+                        borderRadius: BorderRadius.circular(getProportionateScreenHeight(30)),
                         color: kPrimaryColor,
                       ),
                       height: getProportionateScreenHeight(30),
@@ -301,7 +249,7 @@ class _BodyState extends State<Body> {
 
   Widget buildMealCardVertical({Meal meal}) {
     return Container(
-      // width: SizeConfig.screenWidth - 2 * getProportionateScreenWidth(20),
+      width: getProportionateScreenWidth(160),
       // height: 200,
       decoration: BoxDecoration(
         color: Colors.white,
@@ -319,42 +267,39 @@ class _BodyState extends State<Body> {
       child: Expanded(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          crossAxisAlignment: CrossAxisAlignment.center,
           children: [
             Text(
               meal != null ? meal.title : "Stir Brown Rice",
-              style: cusHeadingStyle(
-                  fontSize: getProportionateScreenHeight(14),
-                  fontWeight: FontWeight.w400),
+              style: cusHeadingStyle(fontSize: getProportionateScreenHeight(14), fontWeight: FontWeight.w400),
               overflow: TextOverflow.ellipsis,
               maxLines: 1,
             ),
             // sizedBoxOfHeight(8),
+            sizedBoxOfHeight(10),
             Container(
-              height: getProportionateScreenHeight(120),
+              height: getProportionateScreenHeight(100),
               width: getProportionateScreenHeight(120),
               // padding: EdgeInsets.all(getProportionateScreenWidth(8)),
               child: Image.network(meal != null
                   ? meal.images.first
                   : "https://fitcal.com.np/wp-content/uploads/2022/03/Chicken-Breast-768x768.png"),
             ),
+            sizedBoxOfHeight(10),
             Row(
               children: [
                 Container(
                   decoration: BoxDecoration(
-                    borderRadius:
-                        BorderRadius.circular(getProportionateScreenHeight(30)),
+                    borderRadius: BorderRadius.circular(getProportionateScreenHeight(30)),
                     color: kPrimaryColor.withOpacity(0.2),
                   ),
                   padding: EdgeInsets.symmetric(
-                      horizontal: getProportionateScreenWidth(8),
-                      vertical: getProportionateScreenHeight(4)),
+                      horizontal: getProportionateScreenWidth(8), vertical: getProportionateScreenHeight(4)),
                   // Meal Portion
                   child: Text(
                     "1 Meal",
                     style: cusBodyStyle(
-                        fontSize: getProportionateScreenHeight(12),
-                        fontWeight: FontWeight.w500,
-                        color: kPrimaryColor),
+                        fontSize: getProportionateScreenHeight(12), fontWeight: FontWeight.w500, color: kPrimaryColor),
                   ),
                 ),
                 sizedBoxOfWidth(12),
@@ -368,8 +313,7 @@ class _BodyState extends State<Body> {
                     // Ratings
                     Text(
                       "4.9",
-                      style: cusBodyStyle(
-                          fontSize: getProportionateScreenHeight(12)),
+                      style: cusBodyStyle(fontSize: getProportionateScreenHeight(12)),
                     ),
                   ],
                 ),
@@ -380,17 +324,12 @@ class _BodyState extends State<Body> {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 // Price
-                Text(
-                    meal != null
-                        ? currency.format(meal.originalPrice)
-                        : "Rs. 200",
-                    style:
-                        cusPdctDisPriceStyle(getProportionateScreenHeight(14))),
+                Text(meal != null ? currency.format(meal.originalPrice) : "Rs. 200",
+                    style: cusPdctDisPriceStyle(getProportionateScreenHeight(14))),
                 // Add to Cart Button
                 Container(
                   decoration: BoxDecoration(
-                    borderRadius:
-                        BorderRadius.circular(getProportionateScreenHeight(30)),
+                    borderRadius: BorderRadius.circular(getProportionateScreenHeight(30)),
                     color: kPrimaryColor,
                   ),
                   height: getProportionateScreenHeight(30),
@@ -428,8 +367,7 @@ class _BodyState extends State<Body> {
               // String mealId = snapshot.data[0];
               List<Widget> temp = [];
               for (String mealId in mealIds) {
-                Future<Meal> mealFuture =
-                    MealsDatabaseHelper().getMealsWithID(mealId);
+                Future<Meal> mealFuture = MealsDatabaseHelper().getMealsWithID(mealId);
                 temp.add(InkWell(
                     onTap: () {
                       Navigator.push(
@@ -447,10 +385,8 @@ class _BodyState extends State<Body> {
                                 future: mealFuture,
                                 builder: (context, snapshot) {
                                   if (snapshot.hasData) {
-                                    return buildMealCardHorizontal(
-                                        meal: snapshot.data);
-                                  } else if (snapshot.connectionState ==
-                                      ConnectionState.waiting) {
+                                    return buildMealCardHorizontal(meal: snapshot.data);
+                                  } else if (snapshot.connectionState == ConnectionState.waiting) {
                                     return Center(
                                       child: CircularProgressIndicator(),
                                     );

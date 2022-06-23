@@ -13,13 +13,12 @@ import 'home_screen_drawer.dart';
 class HomeHeader extends StatelessWidget {
   final Function onSearchSubmitted;
   final Function onCartButtonPressed;
-  final Function() showNotification;
+  // final Function() showNotification;
 
   HomeHeader({
     Key key,
     @required this.onSearchSubmitted,
     @required this.onCartButtonPressed,
-    this.showNotification,
   }) : super(key: key);
 
   @override

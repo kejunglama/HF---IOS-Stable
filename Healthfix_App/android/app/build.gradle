@@ -37,8 +37,8 @@ android {
         applicationId "com.siteux.healthfix"
         minSdkVersion 21
         targetSdkVersion 30
-        versionCode 133
-        versionName "V2.0.1"
+        versionCode 134
+        versionName "V2.0.2"
     }
 
     buildTypes {

@@ -39,7 +39,7 @@ dependencies:
   flex_color_picker: ^2.2.0
   pretty_json: ^2.0.0
   flutter_toggle_tab: ^1.1.7
-  flutter_local_notifications: ^9.2.0
+  # flutter_local_notifications: ^9.2.0
   firebase_messaging: ^11.2.6
   new_version: ^0.3.0
   timelines: ^0.1.0

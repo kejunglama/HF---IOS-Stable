@@ -1,16 +1,18 @@
 // ignore_for_file: must_be_immutable
 
-import 'package:flutter/cupertino.dart';
+// import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:healthfix/components/default_button.dart';
 import 'package:healthfix/components/nothingtoshow_container.dart';
 import 'package:healthfix/models/Address.dart';
+import 'package:healthfix/models/CartItem.dart';
 import 'package:healthfix/models/Meal.dart';
+import 'package:healthfix/models/Product.dart';
 import 'package:healthfix/screens/checkout/payment_options_screen.dart';
 import 'package:healthfix/screens/manage_addresses/manage_addresses_screen.dart';
 import 'package:healthfix/services/data_streams/addresses_stream.dart';
 import 'package:healthfix/services/database/meals_database_helper.dart';
+import 'package:healthfix/services/database/product_database_helper.dart';
 import 'package:healthfix/services/database/user_database_helper.dart';
 import 'package:healthfix/size_config.dart';
 import 'package:logger/logger.dart';
@@ -20,10 +22,8 @@ import 'components/order_items.dart';
 import 'components/total_amounts.dart';
 
 class CheckoutScreen extends StatefulWidget {
-  final Future<void> Function(Map orderDetails, List selectedCartItems)
-      onCheckoutPressed;
-  final Future<void> Function(Map orderDetails, List selectedCartItems)
-      onCheckoutPressedForMeals;
+  final Future<void> Function(Map orderDetails, List selectedCartItems) onCheckoutPressed;
+  final Future<void> Function(Map orderDetails, List selectedCartItems) onCheckoutPressedForMeals;
   final List selectedCartItems;
   bool isBuyNow;
   final bool isMeal;
@@ -108,11 +108,9 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
                             children: [
                               buildAddressSection(context),
                               sizedBoxOfHeight(12),
-                              buildIconWithTextField(Icons.smartphone_rounded,
-                                  "Your Number", phoneFieldController),
+                              buildIconWithTextField(Icons.smartphone_rounded, "Your Number", phoneFieldController),
                               sizedBoxOfHeight(12),
-                              buildIconWithTextField(Icons.mail_outline_rounded,
-                                  "Your Email", emailFieldController),
+                              buildIconWithTextField(Icons.mail_outline_rounded, "Your Email", emailFieldController),
                               sizedBoxOfHeight(12),
                               Divider(thickness: 0.1, color: Colors.cyan),
                               sizedBoxOfHeight(12),
@@ -128,34 +126,56 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
                               Divider(thickness: 0.1, color: Colors.cyan),
                               sizedBoxOfHeight(12),
                               widget.isBuyNow ?? false
-                                  ? FutureBuilder(
-                                      future: MealsDatabaseHelper()
-                                          .getMealsWithID(
-                                              widget.selectedCartItems[0]),
-                                      builder: (context, snapshot) {
-                                        if (snapshot.hasData) {
-                                          Meal meal = snapshot.data;
-                                          int price = meal.discountPrice ??
-                                              meal.originalPrice;
-                                          cartTotal = price.toInt();
-                                          deliveryCharge = 100;
-                                          // print(cartTotal.runtimeType);
-                                          return TotalAmounts(
-                                              price, deliveryCharge);
-                                        }
-                                        return CircularProgressIndicator();
-                                      })
+                                  ? widget.isMeal ?? false
+                                      // For Meal
+                                      ? FutureBuilder(
+                                          future: MealsDatabaseHelper().getMealsWithID(widget.selectedCartItems.first),
+                                          builder: (context, snapshot) {
+                                            if (snapshot.hasData) {
+                                              Meal meal = snapshot.data;
+                                              int price = meal.discountPrice ?? meal.originalPrice;
+                                              cartTotal = price.toInt();
+                                              deliveryCharge = 100;
+                                              // print(cartTotal.runtimeType);
+                                              return TotalAmounts(price, deliveryCharge);
+                                            }
+                                            return CircularProgressIndicator();
+                                          })
+                                      // From Buy Now
+                                      : FutureBuilder(
+                                          future: ProductDatabaseHelper()
+                                              .getProductWithID(widget.selectedCartItems[0][CartItem.PRODUCT_ID_KEY]),
+                                          builder: (context, snapshot) {
+                                            if (snapshot.hasData) {
+                                              print("product");
+                                              print(widget.selectedCartItems[0]);
+                                              Product pdct = snapshot.data;
+                                              print(pdct.variations);
+                                              int price;
+                                              if (pdct.variations == null)
+                                                price = pdct.discountPrice.toInt();
+                                              else
+                                                price = pdct.variations
+                                                    .where((p) =>
+                                                        p[CartItem.VARIATION_ID_KEY] ==
+                                                        widget.selectedCartItems[0][CartItem.VARIATION_ID_KEY])
+                                                    .first["price"];
+                                              cartTotal = price;
+                                              deliveryCharge = 100;
+                                              // print(cartTotal.runtimeType);
+                                              return TotalAmounts(price, deliveryCharge);
+                                            }
+                                            return CircularProgressIndicator();
+                                          })
+                                  // From Cart
                                   : FutureBuilder(
-                                      future: UserDatabaseHelper()
-                                          .selectedCartTotal(
-                                              widget.selectedCartItems),
+                                      future: UserDatabaseHelper().selectedCartTotal(widget.selectedCartItems),
                                       builder: (context, snapshot) {
                                         if (snapshot.hasData) {
                                           cartTotal = snapshot.data;
                                           deliveryCharge = 100;
                                           print(cartTotal.runtimeType);
-                                          return TotalAmounts(
-                                              cartTotal, deliveryCharge);
+                                          return TotalAmounts(cartTotal, deliveryCharge);
                                         }
                                         return CircularProgressIndicator();
                                       }),
@@ -167,8 +187,7 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
                             //   if (widget.isMeal) _selectDateTime(context);
                             // },
                             press: () {
-                              if (address.phone != phoneFieldController.text)
-                                address.phone = phoneFieldController.text;
+                              if (address.phone != phoneFieldController.text) address.phone = phoneFieldController.text;
 
                               final Map _address = address.toMap();
                               _address["email"] = emailFieldController.text;
@@ -183,23 +202,18 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
                                 "pay_method": "",
                               };
 
-                              if (widget.isMeal)
-                                _selectDateTime(context)
-                                    .then((DateTime deliveryDateTime) {
+                              if (widget.isMeal ?? false)
+                                _selectDateTime(context).then((DateTime deliveryDateTime) {
                                   if (deliveryDateTime != null) {
-                                    orderDetails["deliveryDateTime"] =
-                                        deliveryDateTime;
+                                    orderDetails["deliveryDateTime"] = deliveryDateTime;
                                     print(deliveryDateTime);
                                     Navigator.push(
                                       context,
                                       MaterialPageRoute(
-                                        builder: (context) =>
-                                            PaymentOptionsScreen(
-                                          onCheckout:
-                                              widget.onCheckoutPressedForMeals,
+                                        builder: (context) => PaymentOptionsScreen(
+                                          onCheckout: widget.onCheckoutPressedForMeals,
                                           orderDetails: orderDetails,
-                                          selectedCartItems:
-                                              widget.selectedCartItems,
+                                          selectedCartItems: widget.selectedCartItems,
                                         ),
                                       ),
                                     );
@@ -214,8 +228,7 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
                                           ? widget.onCheckoutPressedForMeals
                                           : widget.onCheckoutPressed,
                                       orderDetails: orderDetails,
-                                      selectedCartItems:
-                                          widget.selectedCartItems,
+                                      selectedCartItems: widget.selectedCartItems,
                                     ),
                                   ),
                                 );
@@ -252,17 +265,14 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
   Future<DateTime> _selectDate(BuildContext context) async {
     final DateTime _selectedDate = await showDatePicker(
       context: context,
-      initialDate:
-          now.hour < 12 ? now : DateTime(now.year, now.month, now.day + 1),
-      firstDate:
-          now.hour < 12 ? now : DateTime(now.year, now.month, now.day + 1),
+      initialDate: now.hour < 12 ? now : DateTime(now.year, now.month, now.day + 1),
+      firstDate: now.hour < 12 ? now : DateTime(now.year, now.month, now.day + 1),
       lastDate: DateTime(now.year, now.month, now.day + 7),
       helpText: "Choose Your Delivery Date".toUpperCase(),
       builder: (BuildContext context, Widget child) {
         return Theme(
-          data: ThemeData.light().copyWith(
-              primaryColor: kPrimaryColor,
-              colorScheme: ColorScheme.light(primary: kPrimaryColor)),
+          data: ThemeData.light()
+              .copyWith(primaryColor: kPrimaryColor, colorScheme: ColorScheme.light(primary: kPrimaryColor)),
           child: child,
         );
       },
@@ -310,8 +320,7 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
     return deliveryDateTime;
   }
 
-  Row buildIconWithTextField(IconData iconData, String hintText,
-      TextEditingController textController) {
+  Row buildIconWithTextField(IconData iconData, String hintText, TextEditingController textController) {
     return Row(
       children: [
         Icon(
@@ -348,14 +357,11 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
             Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text(address != null ? address.receiver : "Receiver's Name",
-                    style: cusBodyStyle()),
+                Text(address != null ? address.receiver : "Receiver's Name", style: cusBodyStyle()),
                 Row(
                   children: [
-                    Text((address != null ? address.address : "Address") + ", ",
-                        style: cusBodyStyle()),
-                    Text(address != null ? address.city : "City",
-                        style: cusBodyStyle()),
+                    Text((address != null ? address.address : "Address") + ", ", style: cusBodyStyle()),
+                    Text(address != null ? address.city : "City", style: cusBodyStyle()),
                   ],
                 ),
               ],
@@ -365,10 +371,7 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
         GestureDetector(
           onTap: () async {
             Address _address = await Navigator.push(
-                context,
-                MaterialPageRoute(
-                    builder: (context) =>
-                        ManageAddressesScreen(isSelectAddressScreen: true)));
+                context, MaterialPageRoute(builder: (context) => ManageAddressesScreen(isSelectAddressScreen: true)));
             setState(() {
               address = _address;
               phoneFieldController.text = address.phone;
@@ -385,8 +388,7 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
     );
   }
 
-  TextFormField buildTextFormField(
-      TextEditingController textController, String hint) {
+  TextFormField buildTextFormField(TextEditingController textController, String hint) {
     return TextFormField(
       // keyboardType: TextInputType.emailAddress,
       style: TextStyle(fontSize: getProportionateScreenHeight(14)),
@@ -404,9 +406,7 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
         contentPadding: EdgeInsets.all(getProportionateScreenHeight(10)),
         hintText: hint,
         hintStyle: cusHeadingStyle(
-            fontSize: getProportionateScreenHeight(14),
-            color: Colors.grey,
-            fontWeight: FontWeight.w400),
+            fontSize: getProportionateScreenHeight(14), color: Colors.grey, fontWeight: FontWeight.w400),
 
         // labelText: "Email",
         floatingLabelBehavior: FloatingLabelBehavior.always,

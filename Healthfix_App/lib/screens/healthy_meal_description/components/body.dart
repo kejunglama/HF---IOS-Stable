@@ -5,6 +5,7 @@ import 'package:healthfix/models/Meal.dart';
 import 'package:healthfix/models/OrderedProduct.dart';
 import 'package:healthfix/screens/checkout/checkout_screen.dart';
 import 'package:healthfix/screens/healthy_meal_description/components/temp.dart';
+import 'package:healthfix/screens/seller/seller_screen.dart';
 import 'package:healthfix/services/database/meals_database_helper.dart';
 import 'package:healthfix/services/database/user_database_helper.dart';
 import 'package:healthfix/size_config.dart';
@@ -70,8 +71,7 @@ class Body extends StatelessWidget {
                       Text(
                         _meal.title.capitalize(),
                         textAlign: TextAlign.center,
-                        style: cusHeadingStyle(
-                            fontSize: getProportionateScreenHeight(22)),
+                        style: cusHeadingStyle(fontSize: getProportionateScreenHeight(22)),
                       ),
                       sizedBoxOfHeight(12),
                       Row(
@@ -86,8 +86,7 @@ class Body extends StatelessWidget {
                           ),
                           Text(
                             "${currency.format(_meal.originalPrice)}",
-                            style: cusPdctDisPriceStyle(
-                                getProportionateScreenHeight(16)),
+                            style: cusPdctDisPriceStyle(getProportionateScreenHeight(16)),
                           ),
                         ],
                       ),
@@ -96,13 +95,11 @@ class Body extends StatelessWidget {
                 ),
                 Container(
                   height: getProportionateScreenHeight(280),
-                  padding: EdgeInsets.symmetric(
-                      vertical: getProportionateScreenHeight(20)),
+                  padding: EdgeInsets.symmetric(vertical: getProportionateScreenHeight(20)),
                   // child: ProductImages(
                   //     imageList: meal.images,
                   //     imageFit: BoxFit.contain)
-                  child: Center(
-                      child: Image.network(_meal.images[0], fit: BoxFit.cover)),
+                  child: Center(child: Image.network(_meal.images[0], fit: BoxFit.cover)),
                 ),
 
                 buildFactValues(_meal.values),
@@ -132,15 +129,23 @@ class Body extends StatelessWidget {
                       Tab(text: 'Reviews'),
                     ],
                     tabsBody: [
-                      Text(
-                          _meal.desc != null
-                              ? _meal.desc.trim().replaceAll("\\n", "\n")
-                              : "",
-                          style: cusBodyStyle()),
-                      Text(
-                          _meal.ingredients != null
-                              ? _meal.ingredients.trim().replaceAll("\\n", "\n")
-                              : "",
+                      Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(_meal.desc != null ? _meal.desc.trim().replaceAll("\\n", "\n") : "",
+                              style: cusBodyStyle()),
+                          sizedBoxOfHeight(20),
+                          GestureDetector(
+                            // onTap: () =>
+                            // Navigator.push(context, MaterialPageRoute(builder: (context) => SellerScreen())),
+                            child: Text(
+                              "By Fitcal",
+                              style: cusHeadingStyle(fontSize: getProportionateScreenHeight(14), color: Colors.purple),
+                            ),
+                          ),
+                        ],
+                      ),
+                      Text(_meal.ingredients != null ? _meal.ingredients.trim().replaceAll("\\n", "\n") : "",
                           style: cusBodyStyle()),
                       Text("No Reviews yet.", style: cusBodyStyle()),
                     ],
@@ -176,10 +181,7 @@ class Body extends StatelessWidget {
       children: [
         // Icon(Icons.ene ),
         Text(data.toString(), style: cusHeadingStyle()),
-        Text(key,
-            style: cusBodyStyle(
-                fontSize: getProportionateScreenHeight(16),
-                color: kSecondaryColor)),
+        Text(key, style: cusBodyStyle(fontSize: getProportionateScreenHeight(16), color: kSecondaryColor)),
       ],
     );
   }
@@ -197,8 +199,7 @@ class Body extends StatelessWidget {
           runSpacing: getProportionateScreenWidth(40),
           children: [
             for (var meal in values.entries)
-              if (meal.key.toString().toLowerCase() != "calories")
-                buildSingleValue(meal.value, meal.key),
+              if (meal.key.toString().toLowerCase() != "calories") buildSingleValue(meal.value, meal.key),
           ],
         ),
       ),
@@ -228,17 +229,13 @@ class Body extends StatelessWidget {
             Expanded(
               child: Container(
                 // height: 400, //height of TabBarView
-                decoration: BoxDecoration(
-                    border: Border(
-                        top: BorderSide(color: Colors.grey, width: 0.5))),
+                decoration: BoxDecoration(border: Border(top: BorderSide(color: Colors.grey, width: 0.5))),
                 child: TabBarView(
                   children: <Widget>[
                     Container(
                       child: Center(
                         child: Text(
-                          description != null
-                              ? description.trim().replaceAll("\\n", "\n")
-                              : "",
+                          description != null ? description.trim().replaceAll("\\n", "\n") : "",
                           style: cusBodyStyle(),
                         ),
                       ),
@@ -246,9 +243,7 @@ class Body extends StatelessWidget {
                     Container(
                       child: Center(
                         child: Text(
-                          ingredients != null
-                              ? ingredients.trim().replaceAll("\\n", "\n")
-                              : "",
+                          ingredients != null ? ingredients.trim().replaceAll("\\n", "\n") : "",
                           style: cusBodyStyle(),
                         ),
                       ),
@@ -277,8 +272,7 @@ class Body extends StatelessWidget {
     final numFormat = NumberFormat('#,##,000');
 
     // print("new color is set to $_selectedColor $_productDisPrice");
-    Future<void> selectedCheckoutButtonCallbackForMeals(
-        Map orderDetails, List selectedCartItems) async {
+    Future<void> selectedCheckoutButtonCallbackForMeals(Map orderDetails, List selectedCartItems) async {
       final formatedDateTime = cusDateTimeFormatter.format(DateTime.now());
 
       OrderedProduct order = OrderedProduct(
@@ -290,8 +284,7 @@ class Body extends StatelessWidget {
       bool addedProductsToMyProducts = false;
       String snackbarmMessage;
       try {
-        addedProductsToMyProducts =
-            await UserDatabaseHelper().addToMyOrders(order);
+        addedProductsToMyProducts = await UserDatabaseHelper().addToMyOrders(order);
         if (addedProductsToMyProducts) {
           snackbarmMessage = "Products ordered Successfully";
         } else {
@@ -317,30 +310,25 @@ class Body extends StatelessWidget {
       }
     }
 
-    Future<void> selectedCheckoutButtonFromBuyNowCallback(
-        Map orderDetails, List selectedProductsUid) async {
+    Future<void> selectedCheckoutButtonFromBuyNowCallback(Map orderDetails, List selectedProductsUid) async {
       if (selectedProductsUid != null) {
         // print(orderedProductsUid);
 
-        final formatedDateTime =
-            cusDateTimeFormatter.format(DateTime.now()).toString();
+        final formatedDateTime = cusDateTimeFormatter.format(DateTime.now()).toString();
 
         List orderedProducts = [];
         orderedProducts.add({
           OrderedProduct.PRODUCT_UID_KEY: selectedProductsUid[0],
           OrderedProduct.ITEM_COUNT_KEY: 1,
         });
-        OrderedProduct order = OrderedProduct(null,
-            products: orderedProducts,
-            orderDate: formatedDateTime,
-            orderDetails: orderDetails);
+        OrderedProduct order =
+            OrderedProduct(null, products: orderedProducts, orderDate: formatedDateTime, orderDetails: orderDetails);
         // print(order);
 
         bool addedProductsToMyProducts = false;
         String snackbarmMessage;
         try {
-          addedProductsToMyProducts =
-              await UserDatabaseHelper().addToMyOrders(order);
+          addedProductsToMyProducts = await UserDatabaseHelper().addToMyOrders(order);
           if (addedProductsToMyProducts) {
             snackbarmMessage = "Products ordered Successfully";
           } else {
@@ -368,8 +356,7 @@ class Body extends StatelessWidget {
       left: 0,
       child: Container(
         decoration: BoxDecoration(
-          borderRadius: BorderRadius.only(
-              topLeft: Radius.circular(10), topRight: Radius.circular(10)),
+          borderRadius: BorderRadius.only(topLeft: Radius.circular(10), topRight: Radius.circular(10)),
           color: Colors.white,
           // boxShadow: [
           //   BoxShadow(
@@ -420,9 +407,7 @@ class Body extends StatelessWidget {
                               visible: hasDisPrice,
                               child: Text(
                                 "Rs. ${hasDisPrice ? (numFormat.format(meal.discountPrice ?? 0)) : null}  ",
-                                style: cusPdctPageDisPriceStyle(
-                                    getProportionateScreenHeight(26),
-                                    Colors.black),
+                                style: cusPdctPageDisPriceStyle(getProportionateScreenHeight(26), Colors.black),
                               ),
                             ),
                             Row(
@@ -432,11 +417,8 @@ class Body extends StatelessWidget {
                                 Text(
                                   "Rs. ${numFormat.format(meal.originalPrice ?? 0)}",
                                   style: hasDisPrice
-                                      ? cusPdctOriPriceStyle(
-                                          getProportionateScreenHeight(12))
-                                      : cusPdctPageDisPriceStyle(
-                                          getProportionateScreenHeight(24),
-                                          kPrimaryColor),
+                                      ? cusPdctOriPriceStyle(getProportionateScreenHeight(12))
+                                      : cusPdctPageDisPriceStyle(getProportionateScreenHeight(24), kPrimaryColor),
                                 ),
                                 // sizedBoxOfWidth(8),
                                 // Visibility(
@@ -472,8 +454,7 @@ class Body extends StatelessWidget {
               child: Container(
                 height: getProportionateScreenHeight(80),
                 child: FloatingActionButton.extended(
-                  extendedPadding:
-                      EdgeInsets.all(getProportionateScreenHeight(12)),
+                  extendedPadding: EdgeInsets.all(getProportionateScreenHeight(12)),
                   heroTag: "buyNow",
                   backgroundColor: kPrimaryColor,
                   shape: RoundedRectangleBorder(
@@ -486,10 +467,8 @@ class Body extends StatelessWidget {
                       MaterialPageRoute(
                         builder: (context) => CheckoutScreen(
                           selectedCartItems: [meal.id],
-                          onCheckoutPressed:
-                              selectedCheckoutButtonFromBuyNowCallback,
-                          onCheckoutPressedForMeals:
-                              selectedCheckoutButtonCallbackForMeals,
+                          onCheckoutPressed: selectedCheckoutButtonFromBuyNowCallback,
+                          onCheckoutPressedForMeals: selectedCheckoutButtonCallbackForMeals,
                           isBuyNow: true,
                           isMeal: true,
                         ),
@@ -499,9 +478,7 @@ class Body extends StatelessWidget {
                   elevation: 0,
                   label: Text(
                     "Buy Now".toUpperCase(),
-                    style: cusHeadingStyle(
-                        fontSize: getProportionateScreenHeight(20),
-                        color: Colors.white),
+                    style: cusHeadingStyle(fontSize: getProportionateScreenHeight(20), color: Colors.white),
                   ),
                 ),
               ),

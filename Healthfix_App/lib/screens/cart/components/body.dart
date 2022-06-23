@@ -99,16 +99,14 @@ class _BodyState extends State<Body> {
               // SizedBox(height: getProportionateScreenHeight(20)),
               Expanded(
                 child: ListView.builder(
-                  padding: EdgeInsets.symmetric(
-                      vertical: getProportionateScreenHeight(16)),
+                  padding: EdgeInsets.symmetric(vertical: getProportionateScreenHeight(16)),
                   physics: BouncingScrollPhysics(),
                   itemCount: cartItemsList.length,
                   itemBuilder: (context, index) {
                     if (index >= cartItemsList.length) {
                       return SizedBox(height: getProportionateScreenHeight(80));
                     }
-                    return buildSelectableCartItemDismissible(
-                        context, cartItemsList[index], index);
+                    return buildSelectableCartItemDismissible(context, cartItemsList[index], index);
                   },
                 ),
               ),
@@ -124,8 +122,7 @@ class _BodyState extends State<Body> {
                   // );
                   print(selectedCartItems);
 
-                  String snackbarNotSelectedMessage =
-                      "Please Select a Item to Checkout";
+                  String snackbarNotSelectedMessage = "Please Select a Item to Checkout";
                   selectedCartItems.isNotEmpty
                       ? Navigator.push(
                           context,
@@ -163,8 +160,7 @@ class _BodyState extends State<Body> {
                   onTap: () {
                     Navigator.push(
                       context,
-                      MaterialPageRoute(
-                          builder: (context) => AuthenticationWrapper()),
+                      MaterialPageRoute(builder: (context) => AuthenticationWrapper()),
                     );
                   },
                   child: Text(
@@ -250,6 +246,8 @@ class _BodyState extends State<Body> {
       if (direction == DismissDirection.startToEnd) {
         bool result = false;
         String snackbarMessage;
+        print("cartItemId");
+        print(cartItemId);
         try {
           result = await UserDatabaseHelper().removeProductFromCart(cartItemId);
           if (result == true) {
@@ -277,11 +275,9 @@ class _BodyState extends State<Body> {
     }
   }
 
-  Widget buildSelectableCartItemDismissible(
-      BuildContext context, Map cartItemIdMap, int index) {
+  Widget buildSelectableCartItemDismissible(BuildContext context, Map cartItemIdMap, int index) {
     bool _isSelected = selectedCartItems.contains(cartItemIdMap);
-    String cartItemPdctId =
-        cartItemIdMap["product_id"] ?? cartItemIdMap["var_id"];
+    String cartItemPdctId = cartItemIdMap["product_id"] ?? cartItemIdMap["var_id"];
     String cartItemId = cartItemIdMap["var_id"] ?? cartItemIdMap["product_id"];
     return Dismissible(
       key: Key(cartItemId),
@@ -299,26 +295,21 @@ class _BodyState extends State<Body> {
             IconButton(
               icon: _isSelected
                   ? Icon(Icons.check_box_rounded, color: kPrimaryColor)
-                  : Icon(Icons.check_box_outline_blank_rounded,
-                      color: kPrimaryColor),
+                  : Icon(Icons.check_box_outline_blank_rounded, color: kPrimaryColor),
               onPressed: () {
                 setState(() {
-                  _isSelected
-                      ? selectedCartItems.remove(cartItemIdMap)
-                      : selectedCartItems.add(cartItemIdMap);
+                  _isSelected ? selectedCartItems.remove(cartItemIdMap) : selectedCartItems.add(cartItemIdMap);
                 });
                 // print(selectedCartItems);
               },
             ),
-            Expanded(
-                child: buildCartItem(
-                    cartItemIdMap, cartItemId, cartItemPdctId, index)),
+            Expanded(child: buildCartItem(cartItemIdMap, cartItemId, cartItemPdctId, index)),
           ],
         ),
       ),
       confirmDismiss: (direction) async {
         if (direction == DismissDirection.startToEnd) {
-          buildConfirmationToDelete(DismissDirection.startToEnd, cartItemIdMap);
+          buildConfirmationToDelete(DismissDirection.startToEnd, cartItemId);
 
           // final confirmation = await showConfirmationDialog(
           //   context,
@@ -361,12 +352,9 @@ class _BodyState extends State<Body> {
     );
   }
 
-  Widget buildCartItem(
-      Map cartItemMap, String cartItemId, String cartItemPdctId, int index) {
-    Future<Product> pdct =
-        ProductDatabaseHelper().getProductWithID(cartItemPdctId);
-    Future<CartItem> cartItem =
-        UserDatabaseHelper().getCartItemFromId(cartItemId);
+  Widget buildCartItem(Map cartItemMap, String cartItemId, String cartItemPdctId, int index) {
+    Future<Product> pdct = ProductDatabaseHelper().getProductWithID(cartItemPdctId);
+    Future<CartItem> cartItem = UserDatabaseHelper().getCartItemFromId(cartItemId);
 
     return Container(
       padding: EdgeInsets.only(
@@ -467,8 +455,7 @@ class _BodyState extends State<Body> {
                                   color: kPrimaryColor.withOpacity(0.3),
                                 ),
                           onTap: () async {
-                            if (itemCount > 1)
-                              await arrowDownCallback(cartItemId);
+                            if (itemCount > 1) await arrowDownCallback(cartItemId);
                           },
                         ),
                       ],
@@ -530,100 +517,7 @@ class _BodyState extends State<Body> {
     );
   }
 
-  Future<void> checkoutButtonCallback(Map orderDetails) async {
-    shutBottomSheet();
-    // final confirmation = await showConfirmationDialog(
-    //   context,
-    //   "This is just a Project Testing App so, no actual Payment Interface is available.\nDo you want to proceed for Mock Ordering of Products?",
-    // );
-    // if (confirmation == false) {
-    //   return;
-    // }
-    final orderFuture = UserDatabaseHelper().emptyCart();
-    orderFuture.then((orderedProductsUid) async {
-      if (orderedProductsUid != null) {
-        // print(orderedProductsUid);
-        // final dateTime = DateTime.now();
-        // final formatedDateTime =
-        //     "${dateTime.day}-${dateTime.month}-${dateTime.year}";
-        // List<OrderedProduct> orderedProducts =
-        // orderedProductsUid.map((e) => OrderedProduct(null, productUid: e, orderDate: formatedDateTime)).toList();
-        List orderedProducts = [];
-        for (var entry in orderedProductsUid.entries) {
-          orderedProducts.add({
-            OrderedProduct.PRODUCT_UID_KEY: entry.key,
-            OrderedProduct.ITEM_COUNT_KEY: entry.value["item_count"],
-          });
-        }
-        // OrderedProduct order = OrderedProduct(null,
-        //     products: orderedProducts,
-        //     orderDate: formatedDateTime,
-        //     orderDetails: orderDetails);
-        // print(order);
-
-        // bool addedProductsToMyProducts = false;
-        // String snackbarmMessage;
-        // try {
-        //   addedProductsToMyProducts = await UserDatabaseHelper().addToMyOrders(order);
-        //   if (addedProductsToMyProducts) {
-        //     snackbarmMessage = "Products ordered Successfully";
-        //   } else {
-        //     throw "Could not order products due to unknown issue";
-        //   }
-        // } on FirebaseException catch (e) {
-        //   Logger().e(e.toString());
-        //   snackbarmMessage = e.toString();
-        // } catch (e) {
-        //   Logger().e(e.toString());
-        //   snackbarmMessage = e.toString();
-        // } finally {
-        //   Navigator.of(context).popUntil((route) => route.isFirst);
-        //   // Navigator.push(
-        //   //   context,
-        //   //   MaterialPageRoute(
-        //   //     builder: (context) => (home),
-        //   //   ),
-        //   // );
-        //   ScaffoldMessenger.of(context).showSnackBar(
-        //     SnackBar(
-        //       content: Text(snackbarmMessage ?? "Something went wrong"),
-        //     ),
-        //   );
-        // }
-      } else {
-        throw "Something went wrong while clearing cart";
-      }
-      await showDialog(
-        context: context,
-        builder: (context) {
-          return FutureProgressDialog(
-            orderFuture,
-            message: Text("Placing the Order"),
-          );
-        },
-      );
-    }).catchError((e) {
-      Logger().e(e.toString());
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(
-          content: Text("Something went wrong"),
-        ),
-      );
-    });
-    await showDialog(
-      context: context,
-      builder: (context) {
-        return FutureProgressDialog(
-          orderFuture,
-          message: Text("Placing the Order"),
-        );
-      },
-    );
-    await refreshPage();
-  }
-
-  Future<void> selectedCheckoutButtonCallback(
-      Map orderDetails, List selectedCartItems) async {
+  Future<void> selectedCheckoutButtonCallback(Map orderDetails, List selectedCartItems, {bool isBuyNow}) async {
     shutBottomSheet();
     // final confirmation = await showConfirmationDialog(
     //   context,
@@ -636,11 +530,10 @@ class _BodyState extends State<Body> {
     selectedCartItems.forEach((cartItem) {
       selectedCartItemsIds.add(cartItem["var_id"] ?? cartItem["product_id"]);
     });
-    print("selectedCartItemsIds");
+    print("hellooooo");
     print(selectedCartItemsIds);
 
-    final orderFuture =
-        UserDatabaseHelper().emptySelectedCart(selectedCartItemsIds);
+    final orderFuture = UserDatabaseHelper().emptySelectedCart(selectedCartItemsIds);
     orderFuture.then((orderedProductsUid) async {
       if (orderedProductsUid != null) {
         print("orderedProductsUid");
@@ -657,8 +550,7 @@ class _BodyState extends State<Body> {
           print(entry.key);
 
           if (entry.value["product_id"] != null) {
-            orderedProduct[OrderedProduct.PRODUCT_UID_KEY] =
-                entry.value["product_id"];
+            orderedProduct[OrderedProduct.PRODUCT_UID_KEY] = entry.value["product_id"];
             orderedProduct[OrderedProduct.VARIATION_UID_KEY] = entry.key;
           } else {
             orderedProduct[OrderedProduct.PRODUCT_UID_KEY] = entry.key;
@@ -668,8 +560,7 @@ class _BodyState extends State<Body> {
           //     entry.value["product_id"] ?? entry.key;
           // if (entry.value["var_id"] == null)
           //   orderedProduct[OrderedProduct.VARIATION_UID_KEY] = entry.key;
-          orderedProduct[OrderedProduct.ITEM_COUNT_KEY] =
-              entry.value["item_count"];
+          orderedProduct[OrderedProduct.ITEM_COUNT_KEY] = entry.value["item_count"];
           print("orderedProduct");
           print(orderedProduct);
           orderedProducts.add(orderedProduct);
@@ -685,8 +576,7 @@ class _BodyState extends State<Body> {
         bool addedProductsToMyProducts = false;
         String snackbarmMessage;
         try {
-          addedProductsToMyProducts =
-              await UserDatabaseHelper().addToMyOrders(order);
+          addedProductsToMyProducts = await UserDatabaseHelper().addToMyOrders(order);
           if (addedProductsToMyProducts) {
             snackbarmMessage = "Products ordered Successfully";
           } else {
@@ -755,8 +645,7 @@ class _BodyState extends State<Body> {
 
   Future<void> arrowUpCallback(String cartItemId) async {
     shutBottomSheet();
-    final future =
-        UserDatabaseHelper().increaseCartItemCount(cartItemId, variation);
+    final future = UserDatabaseHelper().increaseCartItemCount(cartItemId, variation);
     future.then((status) async {
       if (status) {
         await refreshPage();
@@ -802,8 +691,7 @@ class _BodyState extends State<Body> {
           future,
           message: Text("Please wait"),
           decoration: BoxDecoration(
-            borderRadius:
-                BorderRadius.circular(getProportionateScreenHeight(5)),
+            borderRadius: BorderRadius.circular(getProportionateScreenHeight(5)),
           ),
         );
       },

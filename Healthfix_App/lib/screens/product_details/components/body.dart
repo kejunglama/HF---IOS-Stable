@@ -7,6 +7,7 @@ import 'package:google_fonts/google_fonts.dart';
 // import 'package:healthfix/components/rounded_icon_button.dart';
 import 'package:healthfix/constants.dart';
 import 'package:healthfix/data.dart';
+import 'package:healthfix/models/CartItem.dart';
 import 'package:healthfix/models/OrderedProduct.dart';
 import 'package:healthfix/models/Product.dart';
 import 'package:healthfix/screens/cart/cart_screen.dart';
@@ -57,27 +58,18 @@ class _BodyState extends State<Body> {
     if (_selectedColor != null && _selectedSize != null) {
       variant = product.variations
           .where((variant) => (variant["size"] == _selectedSize))
-          .where(
-              (variant) => variant["color"]["name"] == _selectedColor["name"])
+          .where((variant) => variant["color"]["name"] == _selectedColor["name"])
           .toList();
     } else if (_selectedColor == null) {
-      variant = product.variations
-          .where((variant) => (variant["size"] == _selectedSize))
-          .toList();
+      variant = product.variations.where((variant) => (variant["size"] == _selectedSize)).toList();
     } else if (_selectedSize == null) {
-      variant = product.variations
-          .where(
-              (variant) => variant["color"]["name"] == _selectedColor["name"])
-          .toList();
+      variant = product.variations.where((variant) => variant["color"]["name"] == _selectedColor["name"]).toList();
     }
 
     setState(() {
       _productDisPrice = variant.first["price"];
-      _productOriPrice =
-          variant.first["dis_price"] ?? (1.2 * _productDisPrice).toInt();
-      discountPercent =
-          ((_productOriPrice - _productDisPrice) * 100 / _productOriPrice)
-              .round();
+      _productOriPrice = variant.first["dis_price"] ?? (1.2 * _productDisPrice).toInt();
+      discountPercent = ((_productOriPrice - _productDisPrice) * 100 / _productOriPrice).round();
       _selected = true;
     });
     // print(
@@ -102,11 +94,8 @@ class _BodyState extends State<Body> {
         );
       } else {
         seletedVarId = product.variations
-            .where((variant) =>
-                ((hasSizeVariation ? variant["size"] == _selectedSize : true) &&
-                    (hasColorVariation
-                        ? variant["color"]["hex"] == _selectedColor["hex"]
-                        : true)))
+            .where((variant) => ((hasSizeVariation ? variant["size"] == _selectedSize : true) &&
+                (hasColorVariation ? variant["color"]["hex"] == _selectedColor["hex"] : true)))
             .first["var_id"];
         // print(seletedVarId);
         // selectedVariations = {"size": _selectedSize, "color": _selectedColor};
@@ -145,10 +134,8 @@ class _BodyState extends State<Body> {
                         // Status bar color
                         statusBarColor: Colors.red,
                         // Status bar brightness (optional)
-                        statusBarIconBrightness:
-                            Brightness.dark, // For Android (dark icons)
-                        statusBarBrightness:
-                            Brightness.light, // For iOS (dark icons)
+                        statusBarIconBrightness: Brightness.dark, // For Android (dark icons)
+                        statusBarBrightness: Brightness.light, // For iOS (dark icons)
                       ),
                       actions: [
                         GestureDetector(
@@ -165,8 +152,7 @@ class _BodyState extends State<Body> {
                             );
                           },
                           child: Container(
-                            margin: EdgeInsets.only(
-                                right: getProportionateScreenWidth(8)),
+                            margin: EdgeInsets.only(right: getProportionateScreenWidth(8)),
                             child: Icon(Icons.search),
                           ),
                         ),
@@ -174,13 +160,11 @@ class _BodyState extends State<Body> {
                           onTap: () {
                             Navigator.push(
                               context,
-                              MaterialPageRoute(
-                                  builder: (context) => CartScreen()),
+                              MaterialPageRoute(builder: (context) => CartScreen()),
                             );
                           },
                           child: Container(
-                            margin: EdgeInsets.only(
-                                right: getProportionateScreenWidth(8)),
+                            margin: EdgeInsets.only(right: getProportionateScreenWidth(8)),
                             child: Icon(
                               Icons.shopping_cart,
                               color: Colors.black,
@@ -307,9 +291,7 @@ class _BodyState extends State<Body> {
                               child: Column(
                                 children: [
                                   ProductImages(imageList: product.images),
-                                  ProductActionsSection(
-                                      product: product,
-                                      setSelectedVariant: setSelectedVariant),
+                                  ProductActionsSection(product: product, setSelectedVariant: setSelectedVariant),
                                 ],
                               ),
                             ),
@@ -351,8 +333,7 @@ class _BodyState extends State<Body> {
       left: 0,
       child: Container(
         decoration: BoxDecoration(
-          borderRadius: BorderRadius.only(
-              topLeft: Radius.circular(10), topRight: Radius.circular(10)),
+          borderRadius: BorderRadius.only(topLeft: Radius.circular(10), topRight: Radius.circular(10)),
           color: Colors.white,
           boxShadow: [
             BoxShadow(
@@ -363,8 +344,7 @@ class _BodyState extends State<Body> {
             ),
           ],
         ),
-        padding:
-            EdgeInsets.symmetric(horizontal: getProportionateScreenWidth(20)),
+        padding: EdgeInsets.symmetric(horizontal: getProportionateScreenWidth(20)),
         height: getProportionateScreenHeight(70),
         width: SizeConfig.screenWidth,
         child: Row(
@@ -383,11 +363,9 @@ class _BodyState extends State<Body> {
                         children: [
                           Text(
                             "Starting From",
-                            style: cusBodyStyle(
-                                fontSize: getProportionateScreenHeight(14)),
+                            style: cusBodyStyle(fontSize: getProportionateScreenHeight(14)),
                           ),
-                          Text(
-                              "${currency.format(product.priceRange != null ? product.priceRange : 0)}",
+                          Text("${currency.format(product.priceRange != null ? product.priceRange : 0)}",
                               style: cusHeadingStyle(color: kPrimaryColor)),
                         ],
                       ),
@@ -402,9 +380,7 @@ class _BodyState extends State<Body> {
                             visible: hasDisPrice,
                             child: Text(
                               "Rs. ${hasDisPrice ? (numFormat.format(_productDisPrice ?? 0)) : null}  ",
-                              style: cusPdctPageDisPriceStyle(
-                                  getProportionateScreenHeight(26),
-                                  Colors.black),
+                              style: cusPdctPageDisPriceStyle(getProportionateScreenHeight(26), Colors.black),
                             ),
                           ),
                           Row(
@@ -414,11 +390,8 @@ class _BodyState extends State<Body> {
                               Text(
                                 "Rs. ${numFormat.format(_productOriPrice ?? 0)}",
                                 style: hasDisPrice
-                                    ? cusPdctOriPriceStyle(
-                                        getProportionateScreenHeight(12))
-                                    : cusPdctPageDisPriceStyle(
-                                        getProportionateScreenHeight(24),
-                                        kPrimaryColor),
+                                    ? cusPdctOriPriceStyle(getProportionateScreenHeight(12))
+                                    : cusPdctPageDisPriceStyle(getProportionateScreenHeight(24), kPrimaryColor),
                               ),
                               sizedBoxOfWidth(8),
                               Visibility(
@@ -429,11 +402,9 @@ class _BodyState extends State<Body> {
                                   style: GoogleFonts.poppins(
                                     textStyle: TextStyle(
                                       color: Colors.red,
-                                      fontSize:
-                                          getProportionateScreenHeight(12),
+                                      fontSize: getProportionateScreenHeight(12),
                                       fontWeight: FontWeight.w600,
-                                      letterSpacing:
-                                          getProportionateScreenHeight(0.5),
+                                      letterSpacing: getProportionateScreenHeight(0.5),
                                     ),
                                   ),
                                 ),
@@ -472,17 +443,17 @@ class _BodyState extends State<Body> {
                         context,
                         MaterialPageRoute(
                           builder: (context) => CheckoutScreen(
-                            selectedCartItems: [product.id],
-                            onCheckoutPressed:
-                                selectedCheckoutButtonFromBuyNowCallback,
+                            selectedCartItems: [
+                              {CartItem.VARIATION_ID_KEY: getSeletedVariantId(), CartItem.PRODUCT_ID_KEY: product.id}
+                            ],
+                            onCheckoutPressed: selectedCheckoutButtonFromBuyNowCallback,
                             isBuyNow: true,
                           ),
                         ),
                       )
                     : Navigator.push(
                         context,
-                        MaterialPageRoute(
-                            builder: (context) => AuthenticationWrapper()),
+                        MaterialPageRoute(builder: (context) => AuthenticationWrapper()),
                       ));
               },
             ),
@@ -499,30 +470,24 @@ class _BodyState extends State<Body> {
     });
   }
 
-  Future<void> selectedCheckoutButtonFromBuyNowCallback(
-      Map orderDetails, List selectedProductsUid) async {
+  Future<void> selectedCheckoutButtonFromBuyNowCallback(Map orderDetails, List selectedProductsUid) async {
     if (selectedProductsUid != null) {
-      // print(orderedProductsUid);
-
-      final formatedDateTime =
-          cusDateTimeFormatter.format(DateTime.now()).toString();
+      final formatedDateTime = cusDateTimeFormatter.format(DateTime.now()).toString();
 
       List orderedProducts = [];
       orderedProducts.add({
-        OrderedProduct.PRODUCT_UID_KEY: selectedProductsUid[0],
+        OrderedProduct.PRODUCT_UID_KEY: selectedProductsUid.first[CartItem.PRODUCT_ID_KEY],
+        if (selectedProductsUid.first[CartItem.VARIATION_ID_KEY] != null)
+          OrderedProduct.VARIATION_UID_KEY: selectedProductsUid.first[CartItem.VARIATION_ID_KEY],
         OrderedProduct.ITEM_COUNT_KEY: 1,
       });
-      OrderedProduct order = OrderedProduct(null,
-          products: orderedProducts,
-          orderDate: formatedDateTime,
-          orderDetails: orderDetails);
-      // print(order);
+      OrderedProduct order =
+          OrderedProduct(null, products: orderedProducts, orderDate: formatedDateTime, orderDetails: orderDetails);
 
       bool addedProductsToMyProducts = false;
       String snackbarmMessage;
       try {
-        addedProductsToMyProducts =
-            await UserDatabaseHelper().addToMyOrders(order);
+        addedProductsToMyProducts = await UserDatabaseHelper().addToMyOrders(order);
         if (addedProductsToMyProducts) {
           snackbarmMessage = "Products ordered Successfully";
         } else {

@@ -20,6 +20,7 @@ class CategoryProductsScreen extends StatelessWidget {
     return GestureDetector(
       onTap: () => FocusManager.instance.primaryFocus?.unfocus(),
       child: Scaffold(
+        appBar: AppBar(toolbarHeight: 0),
         body: Body(
           productType: productType,
           productTypes: productTypes,

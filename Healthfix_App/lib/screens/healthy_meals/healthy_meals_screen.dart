@@ -6,7 +6,6 @@ import 'package:healthfix/screens/healthy_meals/components/body.dart';
 // import 'package:healthfix/screens/healthy_meals_search/healthy_meals_search_screen.dart';
 import 'package:healthfix/services/data_streams/all_meals_stream.dart';
 import 'package:healthfix/size_config.dart';
-import 'package:logger/logger.dart';
 
 class HealthyMealsScreen extends StatefulWidget {
   const HealthyMealsScreen({Key key}) : super(key: key);

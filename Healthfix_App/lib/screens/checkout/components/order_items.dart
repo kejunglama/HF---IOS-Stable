@@ -61,9 +61,7 @@ class _OrderItemsState extends State<OrderItems> {
               size: getProportionateScreenHeight(20),
             ),
             sizedBoxOfWidth(12),
-            Text("OrderItems",
-                style: cusCenterHeadingStyle(
-                    null, null, getProportionateScreenHeight(18))),
+            Text("OrderItems", style: cusCenterHeadingStyle(null, null, getProportionateScreenHeight(18))),
           ],
         ),
         // SizedBox(height: SizeConfig.screenHeight * 0.14, child: buildCartItemsList()),
@@ -98,14 +96,12 @@ class _OrderItemsState extends State<OrderItems> {
                 Expanded(
                   child: ListView.builder(
                     scrollDirection: Axis.horizontal,
-                    padding: EdgeInsets.symmetric(
-                        vertical: getProportionateScreenHeight(16)),
+                    padding: EdgeInsets.symmetric(vertical: getProportionateScreenHeight(16)),
                     physics: BouncingScrollPhysics(),
                     itemCount: widget.isBuyNow ? 1 : cartItemsId.length,
                     itemBuilder: (context, index) {
                       if (index >= cartItemsId.length) {
-                        return SizedBox(
-                            height: getProportionateScreenHeight(80));
+                        return SizedBox(height: getProportionateScreenHeight(80));
                       }
                       print("order Items : $cartItemsId");
                       return Container();
@@ -163,12 +159,8 @@ class _OrderItemsState extends State<OrderItems> {
                 if (index >= widget.selectedCartItems.length) {
                   return SizedBox(height: getProportionateScreenHeight(80));
                 }
-                return widget.isBuyNow ?? false
-                    ? buildCartItemWithBuyNow(
-                        widget.selectedCartItems[index],
-                        index,
-                        widget.isMeal,
-                      )
+                return widget.isMeal
+                    ? buildCartItemWithBuyNow(widget.selectedCartItems[index], index, isMeal: widget.isMeal)
                     : buildCartItem(widget.selectedCartItems[index], index);
               },
             ),
@@ -191,13 +183,17 @@ class _OrderItemsState extends State<OrderItems> {
   }
 
   Widget buildCartItem(Map cartItemIdMap, int index) {
+    print(cartItemIdMap);
     String cartItemId = cartItemIdMap["var_id"] ?? cartItemIdMap["product_id"];
+    print(cartItemId);
 
-    Future<CartItem> cartItemFuture =
-        UserDatabaseHelper().getCartItemFromId(cartItemId);
+    CartItem cartItemFromBuyNow = widget.isBuyNow
+        ? CartItem(id: cartItemId, productId: cartItemIdMap["var_id"] != null ? cartItemIdMap["product_id"] : null)
+        : null;
 
-    // print("cartItemId $cartItemId");
-    Map variation;
+    Future<CartItem> cartItemFuture = !widget.isBuyNow ? UserDatabaseHelper().getCartItemFromId(cartItemId) : null;
+
+    // print("cartItemId $cartItemIdMap");
 
     String VARIANT_ID = "var_id";
     // int i = 1;
@@ -210,122 +206,100 @@ class _OrderItemsState extends State<OrderItems> {
         top: getProportionateScreenHeight(4),
         right: getProportionateScreenHeight(4),
       ),
-      margin: EdgeInsets.symmetric(
-          vertical: getProportionateScreenHeight(4),
-          horizontal: getProportionateScreenHeight(4)),
+      margin:
+          EdgeInsets.symmetric(vertical: getProportionateScreenHeight(4), horizontal: getProportionateScreenHeight(4)),
       decoration: BoxDecoration(
         border: Border.all(color: kTextColor.withOpacity(0.15)),
         borderRadius: BorderRadius.circular(5),
       ),
-      child: FutureBuilder(
-        future: cartItemFuture,
-        builder: (context, snapshot) {
-          if (snapshot.hasData) {
-            CartItem cartItem = snapshot.data;
-
-            // print("cartItem $cartItem");
-            // print("product Id ${cartItem.productId ?? cartItem.id}");
-
-            Future<Product> pdctFuture = ProductDatabaseHelper()
-                .getProductWithID(cartItem.productId ?? cartItem.id);
-
-            return FutureBuilder(
-                future: pdctFuture,
-                builder: (context, pdctSnapshot) {
-                  if (pdctSnapshot.hasData) {
-                    Product product = pdctSnapshot.data;
-                    // print("order items - product - $product");
-                    int itemCount = 0;
-                    // print(i);
-                    // if (i == 1) {
-                    if (cartItem.productId != null) {
-                      // variation = cartItem.variation[0];
-                      variation = product.variations
-                          .where(
-                              (variant) => variant[VARIANT_ID] == cartItem.id)
-                          .first;
-                      // print({product.id: variation});
-                      itemCount = variation["item_count"];
-                      // print(i);
-                      // print(product.title);
-                    } else {
-                      itemCount = cartItem.itemCount;
-                      // print(product.title);
-
-                      // print(itemCount);
-                      // print({
-                      //   product.id: {"item_count": itemCount}
-                      // });
-                      // }
-                    }
-                    // i++;
-
-                    return SizedBox(
-                      child: OrderProductShortDetailCard(
-                        // productId: product.id,
-                        product: product,
-                        itemCount: itemCount,
-                        variantId: cartItem.id,
-                        onPressed: () {
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                              builder: (context) => ProductDetailsScreen(
-                                productId: product.id,
-                              ),
-                            ),
-                          );
-                        },
-                      ),
-                    );
-                  } else if (pdctSnapshot.connectionState ==
-                      ConnectionState.waiting) {
-                    return Center(
-                      child: CircularProgressIndicator(),
-                    );
-                  } else if (pdctSnapshot.hasError) {
-                    final error = snapshot.error;
-                    Logger().w(error.toString());
-                    return Center(
-                      child: Text(
-                        error.toString(),
-                      ),
-                    );
-                  } else {
-                    return Center(
-                      child: Icon(
-                        Icons.error,
-                      ),
-                    );
-                  }
-                });
-          } else if (snapshot.connectionState == ConnectionState.waiting) {
-            return Center(
-              child: CircularProgressIndicator(),
-            );
-          } else if (snapshot.hasError) {
-            final error = snapshot.error;
-            Logger().w(error.toString());
-            return Center(
-              child: Text(
-                error.toString(),
-              ),
-            );
-          } else {
-            return Center(
-              child: Icon(
-                Icons.error,
-              ),
-            );
-          }
-        },
-      ),
+      child: widget.isBuyNow ? productFutureBuilder(cartItemFromBuyNow) : cartFutureBuilder(cartItemFuture),
     );
   }
 
-  Widget buildCartItemWithBuyNow(String cartItemId, int index, [bool isMeal]) {
-    Future<Product> pdctFuture =
-        ProductDatabaseHelper().getProductWithID(cartItemId);
+  FutureBuilder<CartItem> cartFutureBuilder(Future<CartItem> cartItemFuture) {
+    return FutureBuilder(
+      future: cartItemFuture,
+      builder: (context, snapshot) {
+        if (snapshot.hasData) {
+          CartItem cartItem = snapshot.data;
+          return productFutureBuilder(cartItem);
+        } else if (snapshot.connectionState == ConnectionState.waiting) {
+          return Center(
+            child: CircularProgressIndicator(),
+          );
+        } else if (snapshot.hasError) {
+          final error = snapshot.error;
+          Logger().w(error.toString());
+          return Center(
+            child: Text(
+              error.toString(),
+            ),
+          );
+        } else {
+          return Center(
+            child: Icon(
+              Icons.error,
+            ),
+          );
+        }
+      },
+    );
+  }
+
+  FutureBuilder<Product> productFutureBuilder(CartItem cartItem) {
+    Map variation;
+    Future<Product> pdctFuture = ProductDatabaseHelper().getProductWithID(cartItem.productId ?? cartItem.id);
+    return FutureBuilder(
+        future: pdctFuture,
+        builder: (context, pdctSnapshot) {
+          if (pdctSnapshot.hasData) {
+            Product product = pdctSnapshot.data;
+
+            int itemCount = 0;
+
+            if (cartItem.productId != null) {
+              variation =
+                  product.variations.where((variant) => variant[CartItem.VARIATION_ID_KEY] == cartItem.id).first;
+              itemCount = variation["item_count"];
+            } else {
+              itemCount = cartItem.itemCount;
+            }
+
+            return SizedBox(
+              child: OrderProductShortDetailCard(
+                product: product,
+                itemCount: itemCount,
+                variantId: cartItem.id,
+                onPressed: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => ProductDetailsScreen(productId: product.id),
+                    ),
+                  );
+                },
+              ),
+            );
+          } else if (pdctSnapshot.connectionState == ConnectionState.waiting) {
+            return Center(
+              child: CircularProgressIndicator(),
+            );
+          } else if (pdctSnapshot.hasError) {
+            final error = pdctSnapshot.error;
+            Logger().w(error.toString());
+            return Center(
+              child: Text(error.toString()),
+            );
+          } else {
+            return Center(
+              child: Icon(Icons.error),
+            );
+          }
+        });
+  }
+
+  Widget buildCartItemWithBuyNow(String cartItemId, int index, {bool isMeal}) {
+    Future<Product> pdctFuture = ProductDatabaseHelper().getProductWithID(cartItemId);
     Future<Meal> mealFuture;
     print("cartItemId");
     print(cartItemId);
@@ -359,14 +333,12 @@ class _OrderItemsState extends State<OrderItems> {
                         Navigator.push(
                             context,
                             MaterialPageRoute(
-                              builder: (context) =>
-                                  HealthyMealDescScreen(meal.id),
+                              builder: (context) => HealthyMealDescScreen(meal.id),
                             ));
                       },
                     ),
                   );
-                } else if (snapshot.connectionState ==
-                    ConnectionState.waiting) {
+                } else if (snapshot.connectionState == ConnectionState.waiting) {
                   return Center(child: CircularProgressIndicator());
                 } else if (snapshot.hasError) {
                   final error = snapshot.error;
@@ -392,14 +364,12 @@ class _OrderItemsState extends State<OrderItems> {
                         Navigator.push(
                             context,
                             MaterialPageRoute(
-                              builder: (context) =>
-                                  ProductDetailsScreen(productId: product.id),
+                              builder: (context) => ProductDetailsScreen(productId: product.id),
                             ));
                       },
                     ),
                   );
-                } else if (snapshot.connectionState ==
-                    ConnectionState.waiting) {
+                } else if (snapshot.connectionState == ConnectionState.waiting) {
                   return Center(child: CircularProgressIndicator());
                 } else if (snapshot.hasError) {
                   final error = snapshot.error;

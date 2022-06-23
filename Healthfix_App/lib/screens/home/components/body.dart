@@ -18,6 +18,7 @@ import 'package:healthfix/services/data_streams/flash_sales_products_stream.dart
 import 'package:healthfix/services/database/product_database_helper.dart';
 import 'package:healthfix/size_config.dart';
 import 'package:logger/logger.dart';
+import 'package:new_version/new_version.dart';
 
 import '../../../utils.dart';
 import '../components/home_header.dart';
@@ -27,9 +28,9 @@ import 'products_section.dart';
 
 class Body extends StatefulWidget {
   final void Function() goToCategory;
-  final void Function() showNotification;
+  // final void Function() showNotification;
 
-  Body(this.goToCategory, this.showNotification);
+  Body(this.goToCategory);
 
   @override
   _BodyState createState() => _BodyState();
@@ -81,6 +82,7 @@ class _BodyState extends State<Body> {
     someProductsStream.init();
     featuredProductsStream.init();
     flashSalesProductsStream.init();
+    checkNewVersion();
   }
 
   @override
@@ -90,6 +92,27 @@ class _BodyState extends State<Body> {
     // featuredProductsStream.dispose();
     // flashSalesProductsStream.dispose();
     super.dispose();
+  }
+
+  void checkNewVersion() async {
+    final newVersion = NewVersion(
+      androidId: "com.siteux.healthfix",
+    );
+    final status = await newVersion.getVersionStatus();
+    newVersion.showUpdateDialog(
+      context: context,
+      versionStatus: status,
+      dialogTitle: "New Update Available!",
+      dismissButtonText: "LATER",
+      dialogText:
+          "A New Version of Helathfix App is Available on Play/App Store. \n"
+          "\nAvailable Version: ${status.storeVersion}"
+          "\nVersion Installed: ${status.localVersion} ",
+      updateButtonText: "UPDATE",
+    );
+
+    print("DEVICE : " + status.localVersion);
+    print("STORE : " + status.storeVersion);
   }
 
   @override
@@ -103,7 +126,7 @@ class _BodyState extends State<Body> {
           children: [
             // Section - Home Header
             HomeHeader(
-              showNotification: widget.showNotification,
+              // showNotification: widget.showNotification,
               onSearchSubmitted: (value) async {
                 final query = value.toString();
                 if (query.length <= 0) return;

@@ -1,9 +1,5 @@
-import 'package:firebase_messaging/firebase_messaging.dart';
-import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter_local_notifications/flutter_local_notifications.dart';
-import 'package:healthfix/components/popup_dialog.dart';
 import 'package:healthfix/constants.dart';
 import 'package:healthfix/screens/cart/cart_screen.dart';
 import 'package:healthfix/screens/category/category_screen.dart';
@@ -22,17 +18,17 @@ class HomeScreen extends StatefulWidget {
 
 class _HomeScreenState extends State<HomeScreen> {
   var _selectedIndex = 0;
-  num _counter = 0;
+  // num _counter = 0;
   PageController _tabsPageController;
-  final FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin =
-      FlutterLocalNotificationsPlugin();
-  AndroidNotificationChannel channel = AndroidNotificationChannel(
-      'high_importance_channel', // id
-      'High Importance Notifications', // title
-      description:
-          'This channel is used for important notifications.', // description
-      importance: Importance.high,
-      playSound: true);
+  // final FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin =
+  //     FlutterLocalNotificationsPlugin();
+  // AndroidNotificationChannel channel = AndroidNotificationChannel(
+  //     'high_importance_channel', // id
+  //     'High Importance Notifications', // title
+  //     description:
+  //         'This channel is used for important notifications.', // description
+  //     importance: Importance.high,
+  //     playSound: true);
 
   /// Initializes shared_preference
   void sharedPrefInit() async {
@@ -58,50 +54,50 @@ class _HomeScreenState extends State<HomeScreen> {
 
     super.initState();
     _tabsPageController = PageController();
-    FirebaseMessaging.onMessage.listen((RemoteMessage message) {
-      RemoteNotification notification = message.notification;
-      AndroidNotification android = message.notification?.android;
-      if (notification != null && android != null) {
-        flutterLocalNotificationsPlugin.show(
-            notification.hashCode,
-            notification.title,
-            notification.body,
-            NotificationDetails(
-              android: AndroidNotificationDetails(
-                channel.id,
-                channel.name,
-                channelDescription: channel.description,
-                color: Colors.blue,
-                playSound: true,
-                icon: '@mipmap/ic_launcher',
-              ),
-            ));
-      }
-    });
+    //   FirebaseMessaging.onMessage.listen((RemoteMessage message) {
+    //     RemoteNotification notification = message.notification;
+    //     AndroidNotification android = message.notification?.android;
+    //     if (notification != null && android != null) {
+    //       flutterLocalNotificationsPlugin.show(
+    //           notification.hashCode,
+    //           notification.title,
+    //           notification.body,
+    //           NotificationDetails(
+    //             android: AndroidNotificationDetails(
+    //               channel.id,
+    //               channel.name,
+    //               channelDescription: channel.description,
+    //               color: Colors.blue,
+    //               playSound: true,
+    //               icon: '@mipmap/ic_launcher',
+    //             ),
+    //           ));
+    //     }
+    //   });
 
-    FirebaseMessaging.onMessageOpenedApp.listen((RemoteMessage message) {
-      RemoteNotification notification = message.notification;
-      AndroidNotification android = message.notification?.android;
-      if (notification != null && android != null) {
-        showDialog(
-          context: context,
-          builder: (BuildContext context) => PopUpDialog(),
-        );
-        // showDialog(
-        //     context: context,
-        //     builder: (_) {
-        //       return AlertDialog(
-        //         title: Text(notification.title),
-        //         content: SingleChildScrollView(
-        //           child: Column(
-        //             crossAxisAlignment: CrossAxisAlignment.start,
-        //             children: [Text(notification.body)],
-        //           ),
-        //         ),
-        //       );
-        //     });
-      }
-    });
+    //   FirebaseMessaging.onMessageOpenedApp.listen((RemoteMessage message) {
+    //     RemoteNotification notification = message.notification;
+    //     AndroidNotification android = message.notification?.android;
+    //     if (notification != null && android != null) {
+    //       showDialog(
+    //         context: context,
+    //         builder: (BuildContext context) => PopUpDialog(),
+    //       );
+    //       // showDialog(
+    //       //     context: context,
+    //       //     builder: (_) {
+    //       //       return AlertDialog(
+    //       //         title: Text(notification.title),
+    //       //         content: SingleChildScrollView(
+    //       //           child: Column(
+    //       //             crossAxisAlignment: CrossAxisAlignment.start,
+    //       //             children: [Text(notification.body)],
+    //       //           ),
+    //       //         ),
+    //       //       );
+    //       //     });
+    //     }
+    //   });
   }
 
   @override
@@ -118,24 +114,24 @@ class _HomeScreenState extends State<HomeScreen> {
     );
   }
 
-  void showNotification() {
-    setState(() {
-      _counter++;
-    });
-    flutterLocalNotificationsPlugin.show(
-      0,
-      "Testing $_counter",
-      "How you doing?",
-      NotificationDetails(
-        android: AndroidNotificationDetails(channel.id, channel.name,
-            channelDescription: channel.description,
-            importance: Importance.high,
-            color: Colors.blue,
-            playSound: true,
-            icon: '@mipmap/ic_launcher'),
-      ),
-    );
-  }
+  // void showNotification() {
+  //   setState(() {
+  //     _counter++;
+  //   });
+  //   flutterLocalNotificationsPlugin.show(
+  //     0,
+  //     "Testing $_counter",
+  //     "How you doing?",
+  //     NotificationDetails(
+  //       android: AndroidNotificationDetails(channel.id, channel.name,
+  //           channelDescription: channel.description,
+  //           importance: Importance.high,
+  //           color: Colors.blue,
+  //           playSound: true,
+  //           icon: '@mipmap/ic_launcher'),
+  //     ),
+  //   );
+  // }
 
   @override
   Widget build(BuildContext context) {
@@ -176,7 +172,7 @@ class _HomeScreenState extends State<HomeScreen> {
               });
             },
             children: [
-              Body(goToCategory, showNotification),
+              Body(goToCategory),
               CategoryScreen(),
               ExploreScreen(),
               CartScreen(),
