@@ -113,25 +113,14 @@ class _BodyState extends State<Body> {
             )),
         sizedBoxOfHeight(20),
         SizedBox(
-          // width: (SizeConfig.screenWidth - getProportionateScreenWidth(20)) / 2,
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            // spacing: getProportionateScreenWidth(12),
-            children: [
-              Expanded(
-                child: SizedBox(
-                  height: getProportionateScreenHeight(240),
-                  child: SingleChildScrollView(
-                    scrollDirection: Axis.horizontal,
-                    child: Wrap(
-                      spacing: getProportionateScreenWidth(12),
-                      // mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: featuredCardsHori,
-                    ),
-                  ),
-                ),
-              ),
-            ],
+          height: getProportionateScreenHeight(240),
+          child: SingleChildScrollView(
+            scrollDirection: Axis.horizontal,
+            child: Wrap(
+              spacing: getProportionateScreenWidth(12),
+              // mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: featuredCardsHori,
+            ),
           ),
         ),
       ],

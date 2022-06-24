@@ -88,20 +88,18 @@ class ExploreScreen extends StatelessWidget {
 
     return Scaffold(
       appBar: AppBar(
-        title: Text("Explore Fitness with Healthfix",
-            style: cusCenterHeadingStyle(Colors.white)),
+        title: Text("Explore Fitness with Healthfix", style: cusCenterHeadingStyle(Colors.white)),
         backgroundColor: kPrimaryColor.withOpacity(0.9),
       ),
       body: SafeArea(
         child: Padding(
-          padding:
-              EdgeInsets.symmetric(vertical: getProportionateScreenHeight(16)),
+          padding: EdgeInsets.symmetric(vertical: getProportionateScreenHeight(16)),
           child: GridView.count(
             crossAxisCount: 1,
             childAspectRatio: 6 / 3,
             mainAxisSpacing: getProportionateScreenHeight(16),
             children: List.generate(
-              titleList.length,
+              2,
               (i) => ExploreCard(
                 imageFileName: imageFileName[i],
                 caption: captionList[i],
@@ -149,61 +147,54 @@ class ExploreCard extends StatelessWidget {
                 ),
               );
             },
-      child: Opacity(
-        opacity: toScreen != null ? 1 : 0.6,
-        child: Container(
-          width: SizeConfig.screenWidth,
-          alignment: Alignment.center,
-          margin: EdgeInsets.symmetric(
-              horizontal: getProportionateScreenHeight(16)),
-          decoration: BoxDecoration(
-            gradient: LinearGradient(
-              begin: Alignment.topRight,
-              end: Alignment.bottomCenter,
-              colors: [
-                Colors.blue,
-                Colors.black,
-              ],
-            ),
-            image: DecorationImage(
-              image: AssetImage("assets/images/explore/$imageFileName"),
-              fit: BoxFit.cover,
-              // colorFilter: ColorFilter.mode(color, BlendMode.colorBurn),
-              opacity: 0.5,
-            ),
-            borderRadius: BorderRadius.circular(10),
+      child: Container(
+        width: SizeConfig.screenWidth,
+        alignment: Alignment.center,
+        margin: EdgeInsets.symmetric(horizontal: getProportionateScreenHeight(16)),
+        decoration: BoxDecoration(
+          gradient: LinearGradient(
+            begin: Alignment.topRight,
+            end: Alignment.bottomCenter,
+            colors: [
+              Colors.blue,
+              Colors.black,
+            ],
           ),
-          child: Padding(
-            padding: const EdgeInsets.all(20.0),
-            child: Align(
-              alignment: Alignment.bottomLeft,
-              child: Wrap(
-                direction: Axis.vertical,
-                children: [
-                  Container(
-                    margin: EdgeInsets.only(
-                        bottom: getProportionateScreenHeight(8)),
-                    child: Text(
-                      text,
-                      maxLines: 1,
-                      style: cusHeadingStyle(
-                        fontSize: getProportionateScreenHeight(20),
-                        color: Colors.white,
-                      ),
+          image: DecorationImage(
+            image: AssetImage("assets/images/explore/$imageFileName"),
+            fit: BoxFit.cover,
+            // colorFilter: ColorFilter.mode(color, BlendMode.colorBurn),
+            opacity: 0.5,
+          ),
+          borderRadius: BorderRadius.circular(10),
+        ),
+        child: Padding(
+          padding: const EdgeInsets.all(20.0),
+          child: Align(
+            alignment: Alignment.bottomLeft,
+            child: Wrap(
+              direction: Axis.vertical,
+              children: [
+                Container(
+                  margin: EdgeInsets.only(bottom: getProportionateScreenHeight(8)),
+                  child: Text(
+                    text,
+                    maxLines: 1,
+                    style: cusHeadingStyle(
+                      fontSize: getProportionateScreenHeight(20),
+                      color: Colors.white,
                     ),
                   ),
-                  // SizedBox(height: getProportionateScreenHeight()),
-                  Text(
-                    caption,
-                    maxLines: 2,
-                    style: cusBodyStyle(
-                        fontSize: getProportionateScreenHeight(14),
-                        color: Colors.white),
-                  ),
-                  // SizedBox(height: getProportionateScreenHeight(8)),
-                  // cusButton(text: "Learn More"),
-                ],
-              ),
+                ),
+                // SizedBox(height: getProportionateScreenHeight()),
+                Text(
+                  caption,
+                  maxLines: 2,
+                  style: cusBodyStyle(fontSize: getProportionateScreenHeight(14), color: Colors.white),
+                ),
+                // SizedBox(height: getProportionateScreenHeight(8)),
+                // cusButton(text: "Learn More"),
+              ],
             ),
           ),
         ),
@@ -238,8 +229,7 @@ class cusButton extends StatelessWidget {
             ),
             TextButton(
               style: TextButton.styleFrom(
-                padding:
-                    const EdgeInsets.symmetric(horizontal: 16, vertical: 2),
+                padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 2),
                 primary: Colors.white,
                 // fixedSize: ,
                 // textStyle: const TextStyle(fontSize: 20),
@@ -247,9 +237,7 @@ class cusButton extends StatelessWidget {
               onPressed: () {},
               child: Text(
                 text ?? 'Learn More',
-                style: cusHeadingStyle(
-                    fontSize: getProportionateScreenHeight(16),
-                    color: Colors.white),
+                style: cusHeadingStyle(fontSize: getProportionateScreenHeight(16), color: Colors.white),
               ),
             ),
           ],

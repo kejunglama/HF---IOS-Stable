@@ -153,13 +153,16 @@ class HomeHeader extends StatelessWidget {
       },
       child: Container(
         margin: EdgeInsets.symmetric(horizontal: getProportionateScreenHeight(8)),
-        padding: EdgeInsets.all(getProportionateScreenHeight(8)),
+        padding: EdgeInsets.symmetric(
+          horizontal: getProportionateScreenHeight(8),
+          vertical: getProportionateScreenHeight(2),
+        ),
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(5),
           border: Border.all(width: 0.3, color: Colors.grey),
         ),
         child: Container(
-          padding: EdgeInsets.all(getProportionateScreenHeight(4)),
+          padding: EdgeInsets.symmetric(horizontal: getProportionateScreenHeight(4)),
           height: getProportionateScreenHeight(40),
           child: Row(
             children: [

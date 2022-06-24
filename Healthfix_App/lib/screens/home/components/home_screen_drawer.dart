@@ -52,7 +52,12 @@ class HomeScreenDrawer extends StatelessWidget {
                       leading: Icon(Icons.map_outlined, color: kSecondaryColor),
                       title: Text(
                         "My Addresses",
-                        style: TextStyle(color: Colors.black, fontSize: getProportionateScreenHeight(16)),
+                        style: cusHeadingStyle(
+                          color: Colors.black,
+                          fontSize: getProportionateScreenHeight(14),
+                          fontWeight: FontWeight.w300,
+                          letterSpacing: 0.6,
+                        ),
                       ),
                       onTap: () async {
                         bool allowed = AuthentificationService().currentUserVerified;
@@ -88,7 +93,12 @@ class HomeScreenDrawer extends StatelessWidget {
                       leading: Icon(Icons.shopping_bag_outlined, color: kSecondaryColor),
                       title: Text(
                         "My Orders",
-                        style: TextStyle(color: Colors.black, fontSize: getProportionateScreenHeight(16)),
+                        style: cusHeadingStyle(
+                          color: Colors.black,
+                          fontSize: getProportionateScreenHeight(14),
+                          fontWeight: FontWeight.w300,
+                          letterSpacing: 0.6,
+                        ),
                       ),
                       onTap: () async {
                         bool allowed = AuthentificationService().currentUserVerified;
@@ -119,49 +129,54 @@ class HomeScreenDrawer extends StatelessWidget {
                       },
                     ),
                   ),
-                  CardDesign(
-                    child: ListTile(
-                      leading: Icon(Icons.fitness_center, color: kSecondaryColor),
-                      title: Text(
-                        "Gym Subscriptions",
-                        style: TextStyle(color: Colors.black, fontSize: getProportionateScreenHeight(16)),
-                      ),
-                      onTap: () async {
-                        bool allowed = AuthentificationService().currentUserVerified;
-                        if (!allowed) {
-                          final reverify = await showConfirmationDialog(context,
-                              "You haven't verified your email address. This action is only allowed for verified users.",
-                              positiveResponse: "Resend verification email", negativeResponse: "Go back");
-                          if (reverify) {
-                            final future = AuthentificationService().sendVerificationEmailToCurrentUser();
-                            await showDialog(
-                              context: context,
-                              builder: (context) {
-                                return FutureProgressDialog(
-                                  future,
-                                  message: Text("Resending verification email"),
-                                );
-                              },
-                            );
-                          }
-                          return;
-                        }
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) => MyGymSubscriptionsScreen(),
-                          ),
-                        );
-                      },
-                    ),
-                  ),
-                  // CardDesign(child: buildSellerExpansionTile(context)),
+                  // CardDesign(
+                  //   child: ListTile(
+                  //     leading: Icon(Icons.fitness_center, color: kSecondaryColor),
+                  //     title: Text(
+                  //       "Gym Subscriptions",
+                  //       style: TextStyle(color: Colors.black, fontSize: getProportionateScreenHeight(16)),
+                  //     ),
+                  //     onTap: () async {
+                  //       bool allowed = AuthentificationService().currentUserVerified;
+                  //       if (!allowed) {
+                  //         final reverify = await showConfirmationDialog(context,
+                  //             "You haven't verified your email address. This action is only allowed for verified users.",
+                  //             positiveResponse: "Resend verification email", negativeResponse: "Go back");
+                  //         if (reverify) {
+                  //           final future = AuthentificationService().sendVerificationEmailToCurrentUser();
+                  //           await showDialog(
+                  //             context: context,
+                  //             builder: (context) {
+                  //               return FutureProgressDialog(
+                  //                 future,
+                  //                 message: Text("Resending verification email"),
+                  //               );
+                  //             },
+                  //           );
+                  //         }
+                  //         return;
+                  //       }
+                  //       Navigator.push(
+                  //         context,
+                  //         MaterialPageRoute(
+                  //           builder: (context) => MyGymSubscriptionsScreen(),
+                  //         ),
+                  //       );
+                  //     },
+                  //   ),
+                  // ),
+                  // // CardDesign(child: buildSellerExpansionTile(context)),
                   CardDesign(
                     child: ListTile(
                       leading: Icon(Icons.info_outline, color: kSecondaryColor),
                       title: Text(
                         "About Developer",
-                        style: TextStyle(color: Colors.black, fontSize: getProportionateScreenHeight(16)),
+                        style: cusHeadingStyle(
+                          color: Colors.black,
+                          fontSize: getProportionateScreenHeight(14),
+                          fontWeight: FontWeight.w300,
+                          letterSpacing: 0.6,
+                        ),
                       ),
                       onTap: () async {
                         Navigator.push(
@@ -178,7 +193,12 @@ class HomeScreenDrawer extends StatelessWidget {
                       leading: Icon(Icons.logout, color: kSecondaryColor),
                       title: Text(
                         "Sign out",
-                        style: TextStyle(color: Colors.black, fontSize: getProportionateScreenHeight(16)),
+                        style: cusHeadingStyle(
+                          color: Colors.black,
+                          fontSize: getProportionateScreenHeight(14),
+                          fontWeight: FontWeight.w300,
+                          letterSpacing: 0.6,
+                        ),
                       ),
                       onTap: () async {
                         final confirmation = await showConfirmationDialog(context, "Confirm Sign out ?");
@@ -365,15 +385,22 @@ class HomeScreenDrawer extends StatelessWidget {
           visible: user["name"].isNotEmpty,
           child: Text(
             user["name"],
-            style: cusHeadingStyle(fontSize: getProportionateScreenHeight(22), color: kSecondaryColor),
+            style: cusHeadingStyle(
+              fontSize: getProportionateScreenHeight(18),
+              color: kSecondaryColor,
+              letterSpacing: 0.5,
+              fontWeight: FontWeight.w300,
+            ),
           ),
         ),
         Text(
           user["email"] ?? "No Email",
           style: user["name"].isNotEmpty
-              ? TextStyle(
-                  fontSize: getProportionateScreenHeight(16),
-                  color: Colors.black,
+              ? cusBodyStyle(
+                  fontSize: getProportionateScreenHeight(12),
+                  color: Colors.black87,
+                  fontWeight: FontWeight.w300,
+                  letterSpacing: 0.5,
                 )
               : cusHeadingStyle(fontSize: getProportionateScreenHeight(22), color: kPrimaryColor),
         ),
@@ -386,9 +413,11 @@ class HomeScreenDrawer extends StatelessWidget {
       leading: Icon(Icons.account_circle_rounded, color: kSecondaryColor),
       title: Text(
         "Account Details",
-        style: TextStyle(
+        style: cusHeadingStyle(
           color: Colors.black,
-          fontSize: getProportionateScreenHeight(16),
+          fontSize: getProportionateScreenHeight(14),
+          fontWeight: FontWeight.w300,
+          letterSpacing: 0.6,
         ),
       ),
       children: [
@@ -411,9 +440,11 @@ class HomeScreenDrawer extends StatelessWidget {
         ListTile(
           title: Text(
             "Change Display Name",
-            style: TextStyle(
+            style: cusHeadingStyle(
               color: Colors.black,
-              fontSize: getProportionateScreenHeight(16),
+              fontSize: getProportionateScreenHeight(14),
+              fontWeight: FontWeight.w300,
+              letterSpacing: 0.6,
             ),
           ),
           onTap: () {
@@ -427,9 +458,11 @@ class HomeScreenDrawer extends StatelessWidget {
         ListTile(
           title: Text(
             "Change Phone Number",
-            style: TextStyle(
+            style: cusHeadingStyle(
               color: Colors.black,
-              fontSize: getProportionateScreenHeight(16),
+              fontSize: getProportionateScreenHeight(14),
+              fontWeight: FontWeight.w300,
+              letterSpacing: 0.6,
             ),
           ),
           onTap: () {
@@ -443,9 +476,11 @@ class HomeScreenDrawer extends StatelessWidget {
         ListTile(
           title: Text(
             "Change Email",
-            style: TextStyle(
+            style: cusHeadingStyle(
               color: Colors.black,
-              fontSize: getProportionateScreenHeight(16),
+              fontSize: getProportionateScreenHeight(14),
+              fontWeight: FontWeight.w300,
+              letterSpacing: 0.6,
             ),
           ),
           onTap: () {
@@ -459,9 +494,11 @@ class HomeScreenDrawer extends StatelessWidget {
         ListTile(
           title: Text(
             "Change Password",
-            style: TextStyle(
+            style: cusHeadingStyle(
               color: Colors.black,
-              fontSize: getProportionateScreenHeight(16),
+              fontSize: getProportionateScreenHeight(14),
+              fontWeight: FontWeight.w300,
+              letterSpacing: 0.6,
             ),
           ),
           onTap: () {

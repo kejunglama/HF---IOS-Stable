@@ -46,8 +46,7 @@ class ProductDescription extends StatelessWidget {
     return Container(
       // padding: EdgeInsets.only(top: getProportionateScreenHeight(24)),
       margin: EdgeInsets.symmetric(
-          horizontal: getProportionateScreenHeight(16),
-          vertical: getProportionateScreenHeight(20)),
+          horizontal: getProportionateScreenHeight(16), vertical: getProportionateScreenHeight(20)),
       child: Stack(
         children: [
           Column(
@@ -55,13 +54,15 @@ class ProductDescription extends StatelessWidget {
             children: [
               Text("${product.brand?.toUpperCase()}",
                   style: cusHeadingStyle(
-                      fontSize: getProportionateScreenHeight(14),
-                      color: kSecondaryColor,
-                      fontWeight: FontWeight.w500)),
+                      fontSize: getProportionateScreenHeight(14), color: kSecondaryColor, fontWeight: FontWeight.w500)),
               sizedBoxOfHeight(8),
               Text(
                 product.title.capitalize(),
-                style: cusHeadingStyle(),
+                style: cusHeadingStyle(
+                  fontSize: getProportionateScreenHeight(16),
+                  fontWeight: FontWeight.w500,
+                  letterSpacing: 0,
+                ),
               ),
 
               // Product Title
@@ -81,9 +82,7 @@ class ProductDescription extends StatelessWidget {
 
               const SizedBox(height: 12),
               Text(
-                product.description != null
-                    ? product.description.trim().replaceAll("\\n", "\n")
-                    : "",
+                product.description != null ? product.description.trim().replaceAll("\\n", "\n") : "",
                 style: cusBodyStyle(),
               ),
               // ExpandableText(
@@ -94,9 +93,7 @@ class ProductDescription extends StatelessWidget {
               Text.rich(
                 TextSpan(
                   text: "By ",
-                  style: cusHeadingStyle(
-                      fontSize: getProportionateScreenHeight(14),
-                      color: kSecondaryColor),
+                  style: cusHeadingStyle(fontSize: getProportionateScreenHeight(14), color: kSecondaryColor),
                   children: [
                     TextSpan(
                       text: "${product.seller}",
@@ -133,12 +130,10 @@ class ProductVariationDescription extends StatefulWidget {
   final Set colors;
 
   @override
-  State<ProductVariationDescription> createState() =>
-      _ProductVariationDescriptionState();
+  State<ProductVariationDescription> createState() => _ProductVariationDescriptionState();
 }
 
-class _ProductVariationDescriptionState
-    extends State<ProductVariationDescription> {
+class _ProductVariationDescriptionState extends State<ProductVariationDescription> {
   List _colors = [];
   String _selectedSize;
   Map _selectedColor;
@@ -194,8 +189,7 @@ class _ProductVariationDescriptionState
                   children: [
                     Container(
                       alignment: Alignment.centerLeft,
-                      margin: EdgeInsets.only(
-                          right: getProportionateScreenWidth(12)),
+                      margin: EdgeInsets.only(right: getProportionateScreenWidth(12)),
                       child: Text(
                         "Size: ",
                         style: cusHeadingStyle(
@@ -223,8 +217,7 @@ class _ProductVariationDescriptionState
                   children: [
                     Container(
                       alignment: Alignment.centerLeft,
-                      margin: EdgeInsets.only(
-                          right: getProportionateScreenWidth(12)),
+                      margin: EdgeInsets.only(right: getProportionateScreenWidth(12)),
                       child: Text(
                         "Choose Color ",
                         style: cusHeadingStyle(
@@ -238,9 +231,7 @@ class _ProductVariationDescriptionState
                       visible: hasColorVariation(),
                       child: ColorvariantsBuilder(
                         selectedIndex: _selectedColorIndex ?? null,
-                        colors: _colors.isNotEmpty
-                            ? _colors
-                            : widget.colors.toList(),
+                        colors: _colors.isNotEmpty ? _colors : widget.colors.toList(),
                         selectable: _colors.isNotEmpty || hasColorVariation(),
                         setColor: setColor,
                       ),

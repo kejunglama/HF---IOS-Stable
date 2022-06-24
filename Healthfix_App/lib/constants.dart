@@ -33,13 +33,14 @@ cusHeadingStyle(
         Color color,
         bool hasShadow,
         FontWeight fontWeight,
-        double lineheight}) =>
+        double lineheight,
+        double letterSpacing}) =>
     GoogleFonts.poppins(
       textStyle: TextStyle(
         color: color ?? Colors.black,
         fontSize: fontSize ?? getProportionateScreenHeight(20),
         fontWeight: fontWeight ?? FontWeight.w500,
-        letterSpacing: getProportionateScreenHeight(0.25),
+        letterSpacing: letterSpacing ?? getProportionateScreenHeight(0.25),
         height: lineheight ?? null,
         shadows: <Shadow>[
           if (hasShadow ?? false)
@@ -58,18 +59,12 @@ cusHeadingStyle(
       ),
     );
 
-cusBodyStyle(
-        {double fontSize,
-        FontWeight fontWeight,
-        Color color,
-        double letterSpacing}) =>
-    GoogleFonts.roboto(
+cusBodyStyle({double fontSize, FontWeight fontWeight, Color color, double letterSpacing}) => GoogleFonts.roboto(
       textStyle: TextStyle(
         color: color ?? Colors.black,
         fontSize: fontSize ?? getProportionateScreenHeight(14),
         fontWeight: fontWeight ?? FontWeight.w300,
-        letterSpacing: letterSpacing ??
-            (0.03125 * (fontSize ?? getProportionateScreenHeight(14))),
+        letterSpacing: letterSpacing ?? (0.03125 * (fontSize ?? getProportionateScreenHeight(14))),
         height: 1.5,
       ),
     );
@@ -81,26 +76,25 @@ var cusHeadingLinkStyle = GoogleFonts.roboto(
   ),
 );
 
-cusCenterHeadingStyle([Color color, FontWeight fw, num fs]) =>
-    GoogleFonts.poppins(
+cusCenterHeadingStyle([Color color, FontWeight fw, num fs]) => GoogleFonts.poppins(
       textStyle: TextStyle(
         color: color ?? Colors.black,
-        fontSize: fs ?? getProportionateScreenHeight(20),
+        fontSize: fs ?? getProportionateScreenHeight(16),
         fontWeight: fw ?? FontWeight.w400,
         letterSpacing: 0.5,
       ),
     );
 
-var cusCenterHeadingAccentStyle = GoogleFonts.poppins(
-  textStyle: TextStyle(
-    color: kSecondaryColor,
-    fontSize: getProportionateScreenHeight(20),
-  ),
-);
+cusCenterHeadingAccentStyle() => GoogleFonts.poppins(
+      textStyle: TextStyle(
+        color: kSecondaryColor,
+        fontSize: getProportionateScreenHeight(16),
+      ),
+    );
 
 cusPdctCatNameStyle() => GoogleFonts.poppins(
       textStyle: TextStyle(
-        letterSpacing: getProportionateScreenHeight(0.25),
+        letterSpacing: getProportionateScreenHeight(0.5),
         color: kSecondaryColor,
         fontSize: getProportionateScreenHeight(10),
         // fontSize: getProportionateScreenHeight(8),
@@ -140,15 +134,14 @@ cusPdctNameStyle() => GoogleFonts.poppins(
         color: Colors.black,
         fontWeight: FontWeight.w300,
         fontSize: getProportionateScreenHeight(10),
-        letterSpacing: getProportionateScreenHeight(0.25),
+        letterSpacing: getProportionateScreenHeight(0.5),
       ),
     );
 
 const defaultDuration = Duration(milliseconds: 250);
 
 // Form Error
-final RegExp emailValidatorRegExp =
-    RegExp(r"^[a-zA-Z0-9.]+@[a-zA-Z0-9]+\.[a-zA-Z]+");
+final RegExp emailValidatorRegExp = RegExp(r"^[a-zA-Z0-9.]+@[a-zA-Z0-9]+\.[a-zA-Z]+");
 const String kEmailNullError = "Please Enter your email";
 const String kInvalidEmailError = "Please Enter Valid Email";
 const String kPassNullError = "Please Enter your password";
@@ -160,8 +153,7 @@ const String kAddressNullError = "Please Enter your address";
 const String FIELD_REQUIRED_MSG = "This field is required";
 
 final otpInputDecoration = InputDecoration(
-  contentPadding:
-      EdgeInsets.symmetric(vertical: getProportionateScreenHeight(15)),
+  contentPadding: EdgeInsets.symmetric(vertical: getProportionateScreenHeight(15)),
   border: outlineInputBorder(),
   focusedBorder: outlineInputBorder(),
   enabledBorder: outlineInputBorder(),
@@ -180,8 +172,7 @@ extension StringExtension on String {
   }
 }
 
-var currency = new NumberFormat.currency(
-    locale: "en_US", symbol: "Rs. ", decimalDigits: 0);
+var currency = new NumberFormat.currency(locale: "en_US", symbol: "Rs. ", decimalDigits: 0);
 
 DateTime now = new DateTime.now();
 

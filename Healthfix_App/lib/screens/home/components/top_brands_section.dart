@@ -18,7 +18,7 @@ class TopBrandsSection extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               Text("Top Brands | ", style: cusCenterHeadingStyle()),
-              Text("We Trust", style: cusCenterHeadingAccentStyle),
+              Text("We Trust", style: cusCenterHeadingAccentStyle()),
             ],
           ),
 

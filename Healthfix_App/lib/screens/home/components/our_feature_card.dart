@@ -8,8 +8,7 @@ class OurFeatureCard extends StatelessWidget {
   final String heading;
   final String subHeading;
 
-  const OurFeatureCard(this.icon, this.heading, this.subHeading, {key})
-      : super(key: key);
+  const OurFeatureCard(this.icon, this.heading, this.subHeading, {key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -34,8 +33,7 @@ class OurFeatureCard extends StatelessWidget {
                 Container(
                   width: getProportionateScreenWidth(250),
                   child: Padding(
-                    padding:
-                        EdgeInsets.only(left: getProportionateScreenWidth(18)),
+                    padding: EdgeInsets.only(left: getProportionateScreenWidth(18)),
                     child: Column(
                       children: [
                         Container(
@@ -53,7 +51,7 @@ class OurFeatureCard extends StatelessWidget {
                         // SizedBox(height: getProportionateScreenHeight(2)),
                         Container(
                           alignment: Alignment.centerLeft,
-                          child: Text(subHeading, style: cusBodyStyle()),
+                          child: Text(subHeading, style: cusBodyStyle(letterSpacing: 0.5)),
                         ),
                       ],
                     ),

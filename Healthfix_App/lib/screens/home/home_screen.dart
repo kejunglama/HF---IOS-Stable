@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:healthfix/components/keep_alive_page.dart';
 import 'package:healthfix/constants.dart';
 import 'package:healthfix/screens/cart/cart_screen.dart';
 import 'package:healthfix/screens/category/category_screen.dart';
@@ -172,9 +173,9 @@ class _HomeScreenState extends State<HomeScreen> {
               });
             },
             children: [
-              Body(goToCategory),
-              CategoryScreen(),
-              ExploreScreen(),
+              KeepAlivePage(child: Body(goToCategory)),
+              KeepAlivePage(child: CategoryScreen()),
+              KeepAlivePage(child: ExploreScreen()),
               CartScreen(),
             ]),
         // drawer: HomeScreenDrawer(),

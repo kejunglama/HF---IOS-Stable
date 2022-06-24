@@ -17,8 +17,7 @@ class Body extends StatelessWidget {
 
   Future scrollToCat([GlobalKey key]) async {
     final context = key.currentContext;
-    await Scrollable.ensureVisible(context,
-        duration: Duration(milliseconds: 500), alignment: 1);
+    await Scrollable.ensureVisible(context, duration: Duration(milliseconds: 500), alignment: 1);
   }
 
   @override
@@ -68,11 +67,8 @@ class CategoryHierarchyList extends StatelessWidget {
                 children: [
                   Container(
                     alignment: Alignment.centerLeft,
-                    margin: EdgeInsets.fromLTRB(
-                        getProportionateScreenWidth(40),
-                        getProportionateScreenHeight(20),
-                        getProportionateScreenWidth(20),
-                        getProportionateScreenHeight(10)),
+                    margin: EdgeInsets.fromLTRB(getProportionateScreenWidth(40), getProportionateScreenHeight(20),
+                        getProportionateScreenWidth(20), getProportionateScreenHeight(10)),
                     child: GestureDetector(
                         onTap: () {
                           // print(j++);
@@ -81,23 +77,19 @@ class CategoryHierarchyList extends StatelessWidget {
                               MaterialPageRoute(
                                 builder: (context) => CategoryProductsScreen(
                                   productType: pdctCategories
-                                      .where(
-                                          (ele) => ele[TITLE_KEY] == entry.key)
+                                      .where((ele) => ele[TITLE_KEY] == entry.key)
                                       .first[PRODUCT_TYPE_KEY],
                                   productTypes: pdctCategories,
                                 ),
                               ));
                         },
                         child: Text(entry.key,
-                            style: cusHeadingStyle(
-                                fontSize: getProportionateScreenHeight(18),
-                                color: kPrimaryColor))),
+                            style: cusHeadingStyle(fontSize: getProportionateScreenHeight(18), color: kPrimaryColor))),
                   ),
                   for (var arrValue in entry.value)
                     Container(
                       margin: EdgeInsets.symmetric(
-                          vertical: getProportionateScreenHeight(8),
-                          horizontal: getProportionateScreenWidth(40)),
+                          vertical: getProportionateScreenHeight(8), horizontal: getProportionateScreenWidth(40)),
                       child: GestureDetector(
                         onTap: () {
                           Navigator.push(
@@ -105,8 +97,7 @@ class CategoryHierarchyList extends StatelessWidget {
                               MaterialPageRoute(
                                 builder: (context) => CategoryProductsScreen(
                                   productType: pdctCategories
-                                      .where(
-                                          (ele) => ele[TITLE_KEY] == entry.key)
+                                      .where((ele) => ele[TITLE_KEY] == entry.key)
                                       .first[PRODUCT_TYPE_KEY],
                                   productTypes: pdctCategories,
                                   subProductType: arrValue,
@@ -115,8 +106,7 @@ class CategoryHierarchyList extends StatelessWidget {
                         },
                         child: Text(
                           arrValue,
-                          style: cusBodyStyle(
-                              fontSize: getProportionateScreenHeight(14)),
+                          style: cusBodyStyle(fontSize: getProportionateScreenHeight(14)),
                         ),
                       ),
                     ),
@@ -143,18 +133,22 @@ class CategoryList extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
+      margin: EdgeInsets.only(
+        left: getProportionateScreenWidth(12),
+      ),
       decoration: BoxDecoration(
         boxShadow: [
           BoxShadow(
             color: Colors.grey.withOpacity(0.1),
             spreadRadius: 5,
             blurRadius: 7,
-            offset: Offset(0, 3),
+            offset: Offset(-5, 0),
           ),
         ],
         border: Border(
           right: BorderSide(width: 1.0, color: Colors.grey.shade100),
         ),
+        // borderRadius: BorderRadius.circular(1),
         color: Colors.white,
       ),
       child: Container(
@@ -173,25 +167,23 @@ class CategoryList extends StatelessWidget {
                     child: Center(
                       child: Container(
                         height: getProportionateScreenHeight(120),
-                        padding: EdgeInsets.symmetric(
-                            horizontal: getProportionateScreenHeight(20)),
+                        padding: EdgeInsets.symmetric(horizontal: getProportionateScreenHeight(20)),
                         child: Column(
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
                             Container(
                               width: getProportionateScreenHeight(430),
                               height: getProportionateScreenHeight(50),
-                              margin: EdgeInsets.only(
-                                  bottom: getProportionateScreenHeight(12)),
-                              child: Image.asset(
-                                  categories[i][IMAGE_LOCATION_KEY]),
+                              margin: EdgeInsets.only(bottom: getProportionateScreenHeight(12)),
+                              child: Image.asset(categories[i][IMAGE_LOCATION_KEY]),
                             ),
                             Text(
                               categories[i][TITLE_KEY],
-                              style: cusHeadingStyle(
-                                  fontSize: getProportionateScreenHeight(14),
-                                  color: kPrimaryColor,
-                                  fontWeight: FontWeight.w300),
+                              style: cusBodyStyle(
+                                fontSize: getProportionateScreenHeight(14),
+                                color: kPrimaryColor,
+                                fontWeight: FontWeight.w300,
+                              ),
                               textAlign: TextAlign.center,
                             ),
                           ],
