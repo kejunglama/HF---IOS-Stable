@@ -11,6 +11,7 @@ import 'package:healthfix/models/OrderedProduct.dart';
 import 'package:healthfix/models/Product.dart';
 import 'package:healthfix/screens/checkout/checkout_screen.dart';
 import 'package:healthfix/screens/product_details/product_details_screen.dart';
+import 'package:healthfix/services/authentification/authentification_service.dart';
 import 'package:healthfix/services/data_streams/cart_items_stream.dart';
 
 import 'package:healthfix/services/database/product_database_helper.dart';
@@ -56,7 +57,7 @@ class _BodyState extends State<Body> {
             child: Column(
               children: [
                 Expanded(
-                  child: buildCartItemsList(),
+                  child: AuthentificationService().currentUser != null ? buildCartItemsList() : buildLoginToContinue(),
                 ),
               ],
             ),
@@ -151,34 +152,37 @@ class _BodyState extends State<Body> {
           final error = snapshot.error;
           Logger().w(error.toString());
         }
-        return Center(
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Center(
-                child: GestureDetector(
-                  onTap: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(builder: (context) => AuthenticationWrapper()),
-                    );
-                  },
-                  child: Text(
-                    "Login to Continue",
-                    style: cusHeadingLinkStyle,
-                  ),
-                ),
-              ),
-              // NothingToShowContainer(
-              //   iconPath: "assets/icons/network_error.svg",
-              //   primaryMessage: "Something went wrong",
-              //   secondaryMessage: "Unable to connect to Database",
-              // ),
-            ],
-          ),
-        );
+        return buildLoginToContinue();
       },
     );
+  }
+
+  Widget buildLoginToContinue() {
+    return Center(
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          Center(
+            child: GestureDetector(
+              onTap: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => AuthenticationWrapper()),
+                );
+              },
+              child: Text(
+                "Login to Continue",
+                style: cusHeadingStyle(
+                  color: kPrimaryColor,
+                  fontWeight: FontWeight.w300,
+                ),
+              ),
+            ),
+          ),
+        ],
+      ),
+    );
+    ;
   }
 
   // Widget buildCartItemDismissible(

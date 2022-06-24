@@ -33,11 +33,8 @@ class _AuthenticationWrapperState extends State<AuthenticationWrapper> {
       builder: (context, snapshot) {
         if (snapshot.hasData) {
           User user = snapshot.data;
-          UserDatabaseHelper()
-              .getUserDataFromId(user.uid)
-              .then((user) => prefs.setUser((user)));
-          prefs.getUser().then((user) => print("User: $user"));
-
+          UserDatabaseHelper().getUserDataFromId(user.uid).then((user) => prefs.setUser((user)));
+          // prefs.getUser().then((user) => print("User: $user"));
           return HomeScreen();
         } else {
           return SignInScreen();

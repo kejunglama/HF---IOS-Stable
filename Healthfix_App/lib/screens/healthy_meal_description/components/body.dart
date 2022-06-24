@@ -6,9 +6,11 @@ import 'package:healthfix/models/OrderedProduct.dart';
 import 'package:healthfix/screens/checkout/checkout_screen.dart';
 import 'package:healthfix/screens/healthy_meal_description/components/temp.dart';
 import 'package:healthfix/screens/seller/seller_screen.dart';
+import 'package:healthfix/services/authentification/authentification_service.dart';
 import 'package:healthfix/services/database/meals_database_helper.dart';
 import 'package:healthfix/services/database/user_database_helper.dart';
 import 'package:healthfix/size_config.dart';
+import 'package:healthfix/wrappers/authentification_wrapper.dart';
 import 'package:intl/intl.dart';
 import 'package:logger/logger.dart';
 
@@ -462,18 +464,21 @@ class Body extends StatelessWidget {
                     side: BorderSide(color: kPrimaryColor, width: 1),
                   ),
                   onPressed: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) => CheckoutScreen(
-                          selectedCartItems: [meal.id],
-                          onCheckoutPressed: selectedCheckoutButtonFromBuyNowCallback,
-                          onCheckoutPressedForMeals: selectedCheckoutButtonCallbackForMeals,
-                          isBuyNow: true,
-                          isMeal: true,
-                        ),
-                      ),
-                    );
+                    AuthentificationService().currentUser != null
+                        ? Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => CheckoutScreen(
+                                selectedCartItems: [meal.id],
+                                onCheckoutPressed: selectedCheckoutButtonFromBuyNowCallback,
+                                onCheckoutPressedForMeals: selectedCheckoutButtonCallbackForMeals,
+                                isBuyNow: true,
+                                isMeal: true,
+                              ),
+                            ),
+                          )
+                        : Navigator.push(context, MaterialPageRoute(builder: (context) => AuthenticationWrapper()));
+                    ;
                   },
                   elevation: 0,
                   label: Text(

@@ -1,7 +1,9 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:healthfix/data.dart';
 import 'package:healthfix/models/Product.dart';
 import 'package:healthfix/screens/category_products/category_products_screen.dart';
+import 'package:healthfix/services/authentification/authentification_service.dart';
 import 'package:healthfix/shared_preference.dart';
 import 'package:healthfix/size_config.dart';
 import 'package:healthfix/wrappers/authentification_wrapper.dart';
@@ -32,12 +34,11 @@ class HomeHeader extends StatelessWidget {
               // Logo
               GestureDetector(
                 onTap: () {
-                  print(SizeConfig.screenHeight);
-                  print(getProportionateScreenHeight(12));
+                  User user = AuthentificationService().currentUser;
+                  print(user);
                 },
                 child: Container(
-                  margin:
-                      EdgeInsets.only(left: getProportionateScreenWidth(12)),
+                  margin: EdgeInsets.only(left: getProportionateScreenWidth(12)),
                   height: getProportionateScreenHeight(30),
                   child: Image.asset('assets/logo/hf-logo-cropped.png'),
                 ),
@@ -45,8 +46,7 @@ class HomeHeader extends StatelessWidget {
 
               // Icons
               Container(
-                margin: EdgeInsets.symmetric(
-                    horizontal: getProportionateScreenWidth(8)),
+                margin: EdgeInsets.symmetric(horizontal: getProportionateScreenWidth(8)),
                 child: Row(
                   children: [
                     // Btn - Cart
@@ -83,18 +83,15 @@ class HomeHeader extends StatelessWidget {
                         onPressed: () {
                           UserPreferences prefs = new UserPreferences();
 
-                          prefs.hasUser().then((hasUser) => hasUser
+                          AuthentificationService().currentUser != null
                               ? Navigator.push(
                                   context,
-                                  MaterialPageRoute(
-                                      builder: (context) => HomeScreenDrawer()),
+                                  MaterialPageRoute(builder: (context) => HomeScreenDrawer()),
                                 )
                               : Navigator.push(
                                   context,
-                                  MaterialPageRoute(
-                                      builder: (context) =>
-                                          AuthenticationWrapper()),
-                                ));
+                                  MaterialPageRoute(builder: (context) => AuthenticationWrapper()),
+                                );
                         },
                         icon: Icon(Icons.menu),
                         color: Colors.black.withOpacity(0.7),
@@ -155,8 +152,7 @@ class HomeHeader extends StatelessWidget {
         );
       },
       child: Container(
-        margin:
-            EdgeInsets.symmetric(horizontal: getProportionateScreenHeight(8)),
+        margin: EdgeInsets.symmetric(horizontal: getProportionateScreenHeight(8)),
         padding: EdgeInsets.all(getProportionateScreenHeight(8)),
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(5),
@@ -177,9 +173,7 @@ class HomeHeader extends StatelessWidget {
                 child: Text(
                   "Search Products, Brands, Vendors",
                   style: cusHeadingStyle(
-                      fontSize: getProportionateScreenHeight(14),
-                      color: Colors.grey,
-                      fontWeight: FontWeight.w300),
+                      fontSize: getProportionateScreenHeight(14), color: Colors.grey, fontWeight: FontWeight.w300),
                 ),
               ),
             ],

@@ -15,6 +15,7 @@ import 'package:healthfix/screens/category_products/category_products_screen.dar
 import 'package:healthfix/screens/checkout/checkout_screen.dart';
 import 'package:healthfix/screens/product_details/components/product_actions_section.dart';
 import 'package:healthfix/screens/product_details/components/product_images.dart';
+import 'package:healthfix/services/authentification/authentification_service.dart';
 // import 'package:healthfix/screens/search/search_screen.dart';
 import 'package:healthfix/services/database/product_database_helper.dart';
 import 'package:healthfix/services/database/user_database_helper.dart';
@@ -424,21 +425,15 @@ class _BodyState extends State<Body> {
                 // print("VAIATTION ${product.variations}");
                 // print(_selectedColor);
                 // print(_selectedSize);
+                // return getSeletedVariantId();
                 return getSeletedVariantId();
-                // prefs.hasUser().then((hasUser) => hasUser
-                //     ? getSeletedVariantId
-                //     : Navigator.push(
-                //         context,
-                //         MaterialPageRoute(
-                //           builder: (context) => AuthenticationWrapper(),
-                //         )));
               },
             ),
             sizedBoxOfWidth(12),
             BuyNowFAB(
               productId: product.id,
               onTap: () {
-                prefs.hasUser().then((hasUser) => hasUser
+                AuthentificationService().currentUser != null
                     ? Navigator.push(
                         context,
                         MaterialPageRoute(
@@ -451,10 +446,7 @@ class _BodyState extends State<Body> {
                           ),
                         ),
                       )
-                    : Navigator.push(
-                        context,
-                        MaterialPageRoute(builder: (context) => AuthenticationWrapper()),
-                      ));
+                    : Navigator.push(context, MaterialPageRoute(builder: (context) => AuthenticationWrapper()));
               },
             ),
           ],
