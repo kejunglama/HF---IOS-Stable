@@ -138,8 +138,8 @@ class Body extends StatelessWidget {
                               style: cusBodyStyle()),
                           sizedBoxOfHeight(20),
                           GestureDetector(
-                            // onTap: () =>
-                            // Navigator.push(context, MaterialPageRoute(builder: (context) => SellerScreen())),
+                            onTap: () =>
+                                Navigator.push(context, MaterialPageRoute(builder: (context) => SellerScreen())),
                             child: Text(
                               "By Fitcal",
                               style: cusHeadingStyle(fontSize: getProportionateScreenHeight(14), color: Colors.purple),
