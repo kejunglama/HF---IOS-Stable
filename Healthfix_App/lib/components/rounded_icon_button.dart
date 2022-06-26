@@ -34,7 +34,7 @@ class RoundedIconButton extends StatelessWidget {
           onPressed: press,
           child: Icon(
             iconData,
-            color: kTextColor.withOpacity(0.8),
+            // color: kTextColor.withOpacity(0.8),
             size: getProportionateScreenHeight(18),
           ),
         ),

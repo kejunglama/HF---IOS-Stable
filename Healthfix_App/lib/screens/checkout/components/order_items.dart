@@ -159,7 +159,7 @@ class _OrderItemsState extends State<OrderItems> {
                 if (index >= widget.selectedCartItems.length) {
                   return SizedBox(height: getProportionateScreenHeight(80));
                 }
-                return widget.isMeal
+                return widget.isMeal ?? false
                     ? buildCartItemWithBuyNow(widget.selectedCartItems[index], index, isMeal: widget.isMeal)
                     : buildCartItem(widget.selectedCartItems[index], index);
               },

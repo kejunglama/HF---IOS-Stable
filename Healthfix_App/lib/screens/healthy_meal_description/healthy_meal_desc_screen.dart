@@ -10,7 +10,10 @@ class HealthyMealDescScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(),
+      appBar: AppBar(
+        backgroundColor: Colors.purple,
+        toolbarHeight: 0,
+      ),
       body: Body(mealId, meal),
     );
   }

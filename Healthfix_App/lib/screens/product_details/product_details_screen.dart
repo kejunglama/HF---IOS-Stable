@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:healthfix/constants.dart';
 import 'package:healthfix/screens/product_details/provider_models/ProductActions.dart';
 import 'package:provider/provider.dart';
 
@@ -38,7 +39,10 @@ class ProductDetailsScreen extends StatelessWidget {
     return ChangeNotifierProvider(
       create: (context) => ProductActions(),
       child: Scaffold(
-        // backgroundColor: Colors.white,
+        appBar: AppBar(
+          toolbarHeight: 0,
+          backgroundColor: kPrimaryColor,
+        ),
         body: Body(
           productId: productId,
         ),

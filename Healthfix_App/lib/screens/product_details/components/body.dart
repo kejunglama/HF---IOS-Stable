@@ -45,6 +45,7 @@ class _BodyState extends State<Body> {
   String seletedVarId;
   Map selectedVariations;
   bool _selected = false;
+  var _variantId;
   var numFormat = NumberFormat('#,##,000');
 
   @override
@@ -433,20 +434,24 @@ class _BodyState extends State<Body> {
             BuyNowFAB(
               productId: product.id,
               onTap: () {
-                AuthentificationService().currentUser != null
-                    ? Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => CheckoutScreen(
-                            selectedCartItems: [
-                              {CartItem.VARIATION_ID_KEY: getSeletedVariantId(), CartItem.PRODUCT_ID_KEY: product.id}
-                            ],
-                            onCheckoutPressed: selectedCheckoutButtonFromBuyNowCallback,
-                            isBuyNow: true,
+                setState(() {
+                  _variantId = getSeletedVariantId();
+                });
+                if (_variantId != null)
+                  AuthentificationService().currentUser != null
+                      ? Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => CheckoutScreen(
+                              selectedCartItems: [
+                                {CartItem.VARIATION_ID_KEY: _variantId, CartItem.PRODUCT_ID_KEY: product.id}
+                              ],
+                              onCheckoutPressed: selectedCheckoutButtonFromBuyNowCallback,
+                              isBuyNow: true,
+                            ),
                           ),
-                        ),
-                      )
-                    : Navigator.push(context, MaterialPageRoute(builder: (context) => AuthenticationWrapper()));
+                        )
+                      : Navigator.push(context, MaterialPageRoute(builder: (context) => AuthenticationWrapper()));
               },
             ),
           ],

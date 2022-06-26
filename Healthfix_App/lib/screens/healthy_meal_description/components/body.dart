@@ -65,6 +65,7 @@ class Body extends StatelessWidget {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
+                IconButton(onPressed: () => Navigator.pop(context), icon: Icon(Icons.arrow_back_ios_outlined)),
                 Align(
                   alignment: Alignment.center,
                   child: Column(

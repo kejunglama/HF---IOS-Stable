@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:healthfix/constants.dart';
 import 'package:healthfix/models/Product.dart';
 
 import 'components/body.dart';
@@ -20,7 +21,10 @@ class CategoryProductsScreen extends StatelessWidget {
     return GestureDetector(
       onTap: () => FocusManager.instance.primaryFocus?.unfocus(),
       child: Scaffold(
-        appBar: AppBar(toolbarHeight: 0),
+        appBar: AppBar(
+          toolbarHeight: 0,
+          backgroundColor: kPrimaryColor,
+        ),
         body: Body(
           productType: productType,
           productTypes: productTypes,
