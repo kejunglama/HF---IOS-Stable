@@ -18,7 +18,7 @@ class NothingToShowContainer extends StatelessWidget {
   Widget build(BuildContext context) {
     return SizedBox(
       width: SizeConfig.screenWidth * 0.75,
-      height: SizeConfig.screenHeight * 0.2,
+      height: getProportionateScreenHeight(200),
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [

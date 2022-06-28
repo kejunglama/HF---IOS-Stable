@@ -184,6 +184,8 @@ class _BodyState extends State<Body> {
               },
             ),
 
+            sizedBoxOfHeight(12),
+
             // Section - Offer Banners
             AdsBanners(adsBannerImagesList),
 

@@ -51,7 +51,7 @@ class MealShortDetailCard extends StatelessWidget {
                   borderRadius: BorderRadius.circular(5),
                   color: Colors.grey.withOpacity(0.03),
                 ),
-                margin: EdgeInsets.all(getProportionateScreenHeight(10)),
+                margin: EdgeInsets.all(getProportionateScreenHeight(4)),
                 child: meal.images.length > 0
                     ? Image.network(
                         meal.images[0],

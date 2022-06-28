@@ -437,7 +437,7 @@ class _BodyState extends State<Body> {
                 setState(() {
                   _variantId = getSeletedVariantId();
                 });
-                if (_variantId != null)
+                if (_variantId != null || product.variations == null)
                   AuthentificationService().currentUser != null
                       ? Navigator.push(
                           context,

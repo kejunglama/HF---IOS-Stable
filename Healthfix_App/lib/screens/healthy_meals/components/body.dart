@@ -181,7 +181,7 @@ class _BodyState extends State<Body> {
                           horizontal: getProportionateScreenWidth(8), vertical: getProportionateScreenHeight(4)),
                       // Meal Portion
                       child: Text(
-                        "1 Meal",
+                        "${meal.values["calories"]} Cal.",
                         style: cusBodyStyle(
                             fontSize: getProportionateScreenHeight(10),
                             fontWeight: FontWeight.w500,
@@ -253,86 +253,84 @@ class _BodyState extends State<Body> {
         ],
       ),
       padding: EdgeInsets.all(getProportionateScreenHeight(12)),
-      child: Expanded(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: [
-            Text(
-              meal != null ? meal.title : "Stir Brown Rice",
-              style: cusHeadingStyle(fontSize: getProportionateScreenHeight(14), fontWeight: FontWeight.w400),
-              overflow: TextOverflow.ellipsis,
-              maxLines: 1,
-            ),
-            // sizedBoxOfHeight(8),
-            sizedBoxOfHeight(10),
-            Container(
-              height: getProportionateScreenHeight(100),
-              width: getProportionateScreenHeight(120),
-              // padding: EdgeInsets.all(getProportionateScreenWidth(8)),
-              child: Image.network(meal != null
-                  ? meal.images.first
-                  : "https://fitcal.com.np/wp-content/uploads/2022/03/Chicken-Breast-768x768.png"),
-            ),
-            sizedBoxOfHeight(10),
-            Row(
-              children: [
-                Container(
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(getProportionateScreenHeight(30)),
-                    color: kPrimaryColor.withOpacity(0.2),
-                  ),
-                  padding: EdgeInsets.symmetric(
-                      horizontal: getProportionateScreenWidth(8), vertical: getProportionateScreenHeight(4)),
-                  // Meal Portion
-                  child: Text(
-                    "1 Meal",
-                    style: cusBodyStyle(
-                        fontSize: getProportionateScreenHeight(12), fontWeight: FontWeight.w500, color: kPrimaryColor),
-                  ),
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: [
+          Text(
+            meal != null ? meal.title : "Stir Brown Rice",
+            style: cusHeadingStyle(fontSize: getProportionateScreenHeight(14), fontWeight: FontWeight.w400),
+            overflow: TextOverflow.ellipsis,
+            maxLines: 1,
+          ),
+          // sizedBoxOfHeight(8),
+          sizedBoxOfHeight(10),
+          Container(
+            height: getProportionateScreenHeight(100),
+            width: getProportionateScreenHeight(120),
+            // padding: EdgeInsets.all(getProportionateScreenWidth(8)),
+            child: Image.network(meal != null
+                ? meal.images.first
+                : "https://fitcal.com.np/wp-content/uploads/2022/03/Chicken-Breast-768x768.png"),
+          ),
+          sizedBoxOfHeight(10),
+          Row(
+            children: [
+              Container(
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(getProportionateScreenHeight(30)),
+                  color: kPrimaryColor.withOpacity(0.2),
                 ),
-                sizedBoxOfWidth(12),
-                Row(
-                  children: [
-                    Icon(
-                      Icons.star,
-                      color: Color.fromARGB(255, 238, 222, 83),
-                      size: getProportionateScreenHeight(20),
-                    ),
-                    // Ratings
-                    Text(
-                      "4.9",
-                      style: cusBodyStyle(fontSize: getProportionateScreenHeight(12)),
-                    ),
-                  ],
+                padding: EdgeInsets.symmetric(
+                    horizontal: getProportionateScreenWidth(8), vertical: getProportionateScreenHeight(4)),
+                // Meal Portion
+                child: Text(
+                  "${meal.values["calories"]} Cal.",
+                  style: cusBodyStyle(
+                      fontSize: getProportionateScreenHeight(12), fontWeight: FontWeight.w500, color: kPrimaryColor),
                 ),
-              ],
-            ),
-            // sizedBoxOfHeight(16),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                // Price
-                Text(meal != null ? currency.format(meal.originalPrice) : "Rs. 200",
-                    style: cusPdctDisPriceStyle(getProportionateScreenHeight(14))),
-                // Add to Cart Button
-                Container(
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(getProportionateScreenHeight(30)),
-                    color: kPrimaryColor,
-                  ),
-                  height: getProportionateScreenHeight(30),
-                  width: getProportionateScreenHeight(30),
-                  child: Icon(
-                    Icons.keyboard_arrow_right,
+              ),
+              sizedBoxOfWidth(12),
+              Row(
+                children: [
+                  Icon(
+                    Icons.star,
+                    color: Color.fromARGB(255, 238, 222, 83),
                     size: getProportionateScreenHeight(20),
-                    color: Colors.white,
                   ),
-                )
-              ],
-            ),
-          ],
-        ),
+                  // Ratings
+                  Text(
+                    "4.9",
+                    style: cusBodyStyle(fontSize: getProportionateScreenHeight(12)),
+                  ),
+                ],
+              ),
+            ],
+          ),
+          // sizedBoxOfHeight(16),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              // Price
+              Text(meal != null ? currency.format(meal.originalPrice) : "Rs. 200",
+                  style: cusPdctDisPriceStyle(getProportionateScreenHeight(14))),
+              // Add to Cart Button
+              Container(
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(getProportionateScreenHeight(30)),
+                  color: kPrimaryColor,
+                ),
+                height: getProportionateScreenHeight(30),
+                width: getProportionateScreenHeight(30),
+                child: Icon(
+                  Icons.keyboard_arrow_right,
+                  size: getProportionateScreenHeight(20),
+                  color: Colors.white,
+                ),
+              )
+            ],
+          ),
+        ],
       ),
     );
   }

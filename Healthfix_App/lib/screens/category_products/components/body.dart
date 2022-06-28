@@ -7,6 +7,7 @@ import 'package:healthfix/components/search_field.dart';
 import 'package:healthfix/constants.dart';
 import 'package:healthfix/data.dart';
 import 'package:healthfix/models/Product.dart';
+import 'package:healthfix/screens/healthy_meals/healthy_meals_screen.dart';
 import 'package:healthfix/screens/product_details/product_details_screen.dart';
 import 'package:healthfix/services/data_streams/category_products_stream.dart';
 import 'package:healthfix/size_config.dart';
@@ -27,8 +28,7 @@ class Body extends StatefulWidget {
   });
 
   @override
-  _BodyState createState() =>
-      _BodyState(categoryProductsStream: CategoryProductsStream(productType));
+  _BodyState createState() => _BodyState(categoryProductsStream: CategoryProductsStream(productType));
 }
 
 class _BodyState extends State<Body> {
@@ -50,21 +50,17 @@ class _BodyState extends State<Body> {
     // print(widget.productTypes);
 
     // Fetch Category
-    category = widget.productTypes
-        .where((type) => type["product_type"] == widget.productType)
-        .first;
+    category = widget.productTypes.where((type) => type["product_type"] == widget.productType).first;
     _categoryName = category["title"];
 
     // Fetch All Product Types
     widget.productTypes.forEach((pt) {
-      _categoryList
-          .add([EnumToString.convertToString(pt['product_type']), pt["title"]]);
+      _categoryList.add([EnumToString.convertToString(pt['product_type']), pt["title"]]);
     });
 
     // Fetch Sub Categories
     fetchSubCategories(_categoryName);
-    _selectedSubCat =
-        (widget.subProductType != null) ? widget.subProductType : "";
+    _selectedSubCat = (widget.subProductType != null) ? widget.subProductType : "";
     // if (category["product_type"] == ProductType.All) {}
   }
 
@@ -82,8 +78,7 @@ class _BodyState extends State<Body> {
         child: SingleChildScrollView(
           physics: AlwaysScrollableScrollPhysics(),
           child: Padding(
-            padding: EdgeInsets.symmetric(
-                horizontal: getProportionateScreenWidth(screenPadding)),
+            padding: EdgeInsets.symmetric(horizontal: getProportionateScreenWidth(screenPadding)),
             child: SizedBox(
               width: double.infinity,
               child: Column(
@@ -111,8 +106,7 @@ class _BodyState extends State<Body> {
       visible: isLoading,
       child: Container(
         height: getProportionateScreenHeight(getProportionateScreenHeight(4)),
-        margin:
-            EdgeInsets.symmetric(horizontal: getProportionateScreenHeight(12)),
+        margin: EdgeInsets.symmetric(horizontal: getProportionateScreenHeight(12)),
         child: Container(child: LinearProgressIndicator()),
       ),
     );
@@ -139,16 +133,20 @@ class _BodyState extends State<Body> {
           for (String _subCat in _subCatList)
             GestureDetector(
               onTap: () {
-                setState(() {
-                  _selectedSubCat = _subCat;
-                  if (_categoryName == "All Products") {
-                    fetchCategoryWithTypeName(fetchTypeNameWithName(_subCat));
-                    reInitProductStream();
-                    _categoryName = category["title"];
-                    fetchSubCategories(_categoryName);
-                  } else
-                    reInitProductStream(_selectedSubCat);
-                });
+                if (_subCat.toLowerCase().contains("food")) {
+                  Navigator.push(context, MaterialPageRoute(builder: (context) => HealthyMealsScreen()));
+                } else {
+                  setState(() {
+                    _selectedSubCat = _subCat;
+                    if (_categoryName == "All Products") {
+                      fetchCategoryWithTypeName(fetchTypeNameWithName(_subCat));
+                      reInitProductStream();
+                      _categoryName = category["title"];
+                      fetchSubCategories(_categoryName);
+                    } else
+                      reInitProductStream(_selectedSubCat);
+                  });
+                }
               },
               child: Container(
                 margin: EdgeInsets.only(right: 20),
@@ -160,8 +158,7 @@ class _BodyState extends State<Body> {
                           fontWeight: FontWeight.w500,
                           color: kPrimaryColor,
                           letterSpacing: getProportionateScreenHeight(0.5))
-                      : cusBodyStyle(
-                          fontSize: getProportionateScreenHeight(14)),
+                      : cusBodyStyle(fontSize: getProportionateScreenHeight(14)),
                 ),
               ),
             ),
@@ -303,16 +300,20 @@ class _BodyState extends State<Body> {
                     },
                   ).toList(),
                   onChanged: (val) {
-                    setState(() {
-                      fetchCategoryWithTypeName(val);
-                      _categoryName = category["title"];
-                      // _categoryName == "All Products"
-                      // ? _subCatList = ["Sports Nutrition", "Vitamin/Supplement", "Health Food & Drink", "Clothing Apparel", "Explore Fitness"]
-                      fetchSubCategories(_categoryName);
-                      reInitProductStream();
-                      _selectedSubCat = "";
-                      // buildProductCatalog();
-                    });
+                    if (val == "Food") {
+                      Navigator.push(context, MaterialPageRoute(builder: (context) => HealthyMealsScreen()));
+                    } else {
+                      setState(() {
+                        fetchCategoryWithTypeName(val);
+                        _categoryName = category["title"];
+                        // _categoryName == "All Products"
+                        // ? _subCatList = ["Sports Nutrition", "Vitamin/Supplement", "Health Food & Drink", "Clothing Apparel", "Explore Fitness"]
+                        fetchSubCategories(_categoryName);
+                        reInitProductStream();
+                        _selectedSubCat = "";
+                        // buildProductCatalog();
+                      });
+                    }
                   },
                 ),
               ),
@@ -332,8 +333,7 @@ class _BodyState extends State<Body> {
     isLoading = true;
     categoryProductsStream.dispose();
     widget.productType = category["product_type"];
-    categoryProductsStream = CategoryProductsStream(
-        widget.productType, selectedSubCat ?? null, searchString ?? null);
+    categoryProductsStream = CategoryProductsStream(widget.productType, selectedSubCat ?? null, searchString ?? null);
     // print(categoryProductsStream.stream.first);
     categoryProductsStream.init();
     isLoading = false;
@@ -414,8 +414,7 @@ class _BodyState extends State<Body> {
         gridDelegate: SliverGridDelegateWithMaxCrossAxisExtent(
           // crossAxisCount: 2,
           // childAspectRatio: 4 / 4,
-          maxCrossAxisExtent:
-              SizeConfig.screenWidth / 2 - getProportionateScreenHeight(10),
+          maxCrossAxisExtent: SizeConfig.screenWidth / 2 - getProportionateScreenHeight(10),
           mainAxisExtent: getProportionateScreenHeight(200),
           mainAxisSpacing: getProportionateScreenWidth(8),
           crossAxisSpacing: getProportionateScreenWidth(8),
@@ -487,10 +486,7 @@ class _BodyState extends State<Body> {
     // print(name == "All" ? "Wow" : "");
     category = (typeName == "All")
         ? {"title": "All Products"}
-        : widget.productTypes
-            .where((type) =>
-                EnumToString.convertToString(type["product_type"]) == typeName)
-            .first;
+        : widget.productTypes.where((type) => EnumToString.convertToString(type["product_type"]) == typeName).first;
   }
 
   fetchSubCategories(String cat) {

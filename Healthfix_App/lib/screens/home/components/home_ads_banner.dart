@@ -15,21 +15,20 @@ class AdsBanners extends StatelessWidget {
         child: CarouselSlider.builder(
           itemCount: imagesList.length,
           options: CarouselOptions(
-            viewportFraction: 0.9,
+            viewportFraction: 1,
             height: getProportionateScreenHeight(172),
             autoPlay: true,
-            autoPlayInterval: Duration(seconds: 3),
+            autoPlayInterval: Duration(milliseconds: 2000),
             reverse: false,
             aspectRatio: 5.0,
           ),
           itemBuilder: (context, i, id) {
             return GestureDetector(
               child: Container(
-                margin: EdgeInsets.all(getProportionateScreenWidth(8)),
-                decoration:
-                    BoxDecoration(borderRadius: BorderRadius.circular(5)),
+                // margin: EdgeInsets.all(getProportionateScreenWidth(8)),
+                // decoration: BoxDecoration(borderRadius: BorderRadius.circular(5)),
                 child: ClipRRect(
-                  borderRadius: BorderRadius.circular(5),
+                  // borderRadius: BorderRadius.circular(5),
                   child: Image.network(
                     imagesList[i],
                     width: getProportionateScreenWidth(500),

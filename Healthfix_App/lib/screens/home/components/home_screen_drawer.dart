@@ -265,7 +265,7 @@ class HomeScreenDrawer extends StatelessWidget {
                     user = snapshot.data;
                     print(snapshot.data);
                     Widget avatar = user["display_image"] == null
-                        ? CircleAvatar(child: Text(getInitials("Health Fix")))
+                        ? CircleAvatar(child: Text(getInitials(user["display_image"])))
                         : CircleAvatar(
                             backgroundImage: NetworkImage(user["display_image"]),
                           );

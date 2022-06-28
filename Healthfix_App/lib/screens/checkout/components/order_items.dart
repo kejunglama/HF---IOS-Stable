@@ -145,7 +145,7 @@ class _OrderItemsState extends State<OrderItems> {
 
   Widget buildSelectedCartItemsList() {
     return Container(
-      height: getProportionateScreenHeight(160),
+      height: getProportionateScreenHeight(140),
       child: Column(
         children: [
           // SizedBox(height: getProportionateScreenHeight(20)),

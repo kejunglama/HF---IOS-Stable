@@ -24,13 +24,8 @@ class _HealthyMealsScreenState extends State<HealthyMealsScreen> {
     children: [
       Text("Fitcal ",
           style: cusHeadingStyle(
-              fontSize: getProportionateScreenHeight(20),
-              color: Colors.purple,
-              fontWeight: FontWeight.w500)),
-      Text("Meals",
-          style: cusHeadingStyle(
-              fontSize: getProportionateScreenHeight(20),
-              fontWeight: FontWeight.w300)),
+              fontSize: getProportionateScreenHeight(20), color: Colors.purple, fontWeight: FontWeight.w500)),
+      Text("Meals", style: cusHeadingStyle(fontSize: getProportionateScreenHeight(20), fontWeight: FontWeight.w300)),
     ],
   );
   Widget bodyWidget = Body();
@@ -99,11 +94,9 @@ class _HealthyMealsScreenState extends State<HealthyMealsScreen> {
                           fillColor: kPrimaryColor.withOpacity(0.9),
                           filled: true,
                           focusedBorder: OutlineInputBorder(
-                              borderSide: BorderSide(color: kPrimaryColor),
-                              borderRadius: BorderRadius.circular(10)),
+                              borderSide: BorderSide(color: kPrimaryColor), borderRadius: BorderRadius.circular(10)),
                           enabledBorder: OutlineInputBorder(
-                              borderSide: BorderSide(color: kPrimaryColor),
-                              borderRadius: BorderRadius.circular(10)),
+                              borderSide: BorderSide(color: kPrimaryColor), borderRadius: BorderRadius.circular(10)),
                           hintText: "Search Healthy Meals",
                           hintStyle: cusHeadingStyle(
                               fontSize: getProportionateScreenHeight(14),
@@ -114,8 +107,7 @@ class _HealthyMealsScreenState extends State<HealthyMealsScreen> {
                           //   color: Colors.white,
                           //   size: getProportionateScreenHeight(24),
                           // ),
-                          contentPadding:
-                              EdgeInsets.all(getProportionateScreenHeight(10)),
+                          contentPadding: EdgeInsets.all(getProportionateScreenHeight(10)),
                         ),
                         // onSubmitted: onSubmit,
                         onChanged: (String _searchText) {
@@ -139,9 +131,8 @@ class _HealthyMealsScreenState extends State<HealthyMealsScreen> {
                               color: Colors.purple,
                               fontWeight: FontWeight.w500)),
                       Text("Meals",
-                          style: cusHeadingStyle(
-                              fontSize: getProportionateScreenHeight(20),
-                              fontWeight: FontWeight.w300)),
+                          style:
+                              cusHeadingStyle(fontSize: getProportionateScreenHeight(20), fontWeight: FontWeight.w300)),
                     ],
                   );
                   showSearchResultWidget = false;
@@ -158,8 +149,7 @@ class _HealthyMealsScreenState extends State<HealthyMealsScreen> {
       ),
       body: Stack(
         children: [
-          Visibility(
-              visible: showSearchResultWidget, child: buildSearchResult()),
+          Visibility(visible: showSearchResultWidget, child: buildSearchResult()),
           Visibility(visible: !showSearchResultWidget, child: Body()),
         ],
       ),
@@ -170,10 +160,30 @@ class _HealthyMealsScreenState extends State<HealthyMealsScreen> {
     return Visibility(
       visible: showSearchResultWidget,
       child: Container(
-        child: SingleChildScrollView(
-          child: Column(
-              children: meals.map((meal) => buildMealCard(meal)).toList()),
-        ),
+        child: meals.length > 0
+            ? SingleChildScrollView(
+                child: Column(children: meals.map((meal) => buildMealCard(meal)).toList()),
+              )
+            : Center(
+                child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Icon(
+                    Icons.search_off_rounded,
+                    size: getProportionateScreenHeight(100),
+                    color: Colors.grey,
+                  ),
+                  Text(
+                    "No Meals Found",
+                    style: cusHeadingStyle(color: Colors.grey),
+                  ),
+                  Text(
+                    "Your search did not match any meals.\nPlease try again.",
+                    style: cusBodyStyle(color: Colors.grey),
+                    textAlign: TextAlign.center,
+                  ),
+                ],
+              )),
       ),
     );
   }
@@ -219,9 +229,7 @@ class _HealthyMealsScreenState extends State<HealthyMealsScreen> {
                   // Title
                   Text(
                     meal != null ? meal.title : "Stir Brown Rice",
-                    style: cusHeadingStyle(
-                        fontSize: getProportionateScreenHeight(14),
-                        fontWeight: FontWeight.w400),
+                    style: cusHeadingStyle(fontSize: getProportionateScreenHeight(14), fontWeight: FontWeight.w400),
                     overflow: TextOverflow.ellipsis,
                     maxLines: 1,
                   ),
@@ -230,13 +238,11 @@ class _HealthyMealsScreenState extends State<HealthyMealsScreen> {
                     children: [
                       Container(
                         decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(
-                              getProportionateScreenHeight(30)),
+                          borderRadius: BorderRadius.circular(getProportionateScreenHeight(30)),
                           color: kPrimaryColor.withOpacity(0.2),
                         ),
                         padding: EdgeInsets.symmetric(
-                            horizontal: getProportionateScreenWidth(8),
-                            vertical: getProportionateScreenHeight(4)),
+                            horizontal: getProportionateScreenWidth(8), vertical: getProportionateScreenHeight(4)),
                         // Meal Portion
                         child: Text(
                           "1 Meal",
@@ -257,8 +263,7 @@ class _HealthyMealsScreenState extends State<HealthyMealsScreen> {
                           // Ratings
                           Text(
                             "4.9",
-                            style: cusBodyStyle(
-                                fontSize: getProportionateScreenHeight(12)),
+                            style: cusBodyStyle(fontSize: getProportionateScreenHeight(12)),
                           ),
                         ],
                       ),
@@ -269,17 +274,12 @@ class _HealthyMealsScreenState extends State<HealthyMealsScreen> {
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       // Price
-                      Text(
-                          meal != null
-                              ? currency.format(meal.originalPrice)
-                              : "Rs. 200",
-                          style: cusPdctDisPriceStyle(
-                              getProportionateScreenHeight(14))),
+                      Text(meal != null ? currency.format(meal.originalPrice) : "Rs. 200",
+                          style: cusPdctDisPriceStyle(getProportionateScreenHeight(14))),
                       // Add to Cart Button
                       Container(
                         decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(
-                              getProportionateScreenHeight(30)),
+                          borderRadius: BorderRadius.circular(getProportionateScreenHeight(30)),
                           color: kPrimaryColor,
                         ),
                         height: getProportionateScreenHeight(30),
