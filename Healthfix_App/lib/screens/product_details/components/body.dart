@@ -128,13 +128,15 @@ class _BodyState extends State<Body> {
               return Stack(
                 children: [
                   Scaffold(
-                    extendBodyBehindAppBar: true,
+                    backgroundColor: Colors.transparent,
 
+                    extendBodyBehindAppBar: true,
                     appBar: AppBar(
                       backgroundColor: Colors.transparent,
+                      elevation: 0,
                       systemOverlayStyle: SystemUiOverlayStyle(
                         // Status bar color
-                        statusBarColor: Colors.red,
+                        statusBarColor: Colors.teal,
                         // Status bar brightness (optional)
                         statusBarIconBrightness: Brightness.dark, // For Android (dark icons)
                         statusBarBrightness: Brightness.light, // For iOS (dark icons)
@@ -168,7 +170,7 @@ class _BodyState extends State<Body> {
                           child: Container(
                             margin: EdgeInsets.only(right: getProportionateScreenWidth(8)),
                             child: Icon(
-                              Icons.shopping_cart,
+                              Icons.shopping_bag_outlined,
                               color: Colors.black,
                             ),
                           ),
@@ -227,6 +229,8 @@ class _BodyState extends State<Body> {
                     // ),
                     body: Container(
                       color: Colors.white,
+                      // color: Color(0xFFF8F8F8),
+
                       child: Column(
                         children: [
                           // SizedBox(
@@ -298,7 +302,10 @@ class _BodyState extends State<Body> {
                               ),
                             ),
                           ),
-                          SizedBox(height: getProportionateScreenHeight(80)),
+                          // Container(
+                          //   child: SizedBox(height: getProportionateScreenHeight(80)),
+                          //   color: Colors.grey,
+                          // ),
                         ],
                       ),
                     ),
@@ -325,21 +332,20 @@ class _BodyState extends State<Body> {
     );
   }
 
-  Positioned bottomProductBar() {
+  Widget bottomProductBar() {
     UserPreferences prefs = new UserPreferences();
     bool hasDisPrice = product.discountPrice != null;
     // print("new color is set to $_selectedColor $_productDisPrice");
 
     return Positioned(
       bottom: 0,
-      left: 0,
       child: Container(
         decoration: BoxDecoration(
-          borderRadius: BorderRadius.only(topLeft: Radius.circular(10), topRight: Radius.circular(10)),
+          borderRadius: BorderRadius.only(topLeft: Radius.circular(20), topRight: Radius.circular(20)),
           color: Colors.white,
           boxShadow: [
             BoxShadow(
-              color: Colors.grey.withOpacity(0.1),
+              color: Colors.black.withOpacity(0.05),
               spreadRadius: 5,
               blurRadius: 7,
               offset: Offset(0, 3), // changes position of shadow
@@ -382,7 +388,7 @@ class _BodyState extends State<Body> {
                             visible: hasDisPrice,
                             child: Text(
                               "Rs. ${hasDisPrice ? (numFormat.format(_productDisPrice ?? 0)) : null}  ",
-                              style: cusPdctPageDisPriceStyle(getProportionateScreenHeight(26), Colors.black),
+                              style: cusPdctPageDisPriceStyle(getProportionateScreenHeight(20), Colors.black),
                             ),
                           ),
                           Row(

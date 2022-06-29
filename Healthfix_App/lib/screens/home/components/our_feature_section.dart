@@ -10,29 +10,24 @@ class OurFeaturesSection extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       color: Colors.grey.withOpacity(0.05),
-      child: Padding(
-        padding: EdgeInsets.all(getProportionateScreenWidth(8)),
+      child: Container(
+        color: Colors.white,
+        margin: EdgeInsets.all(getProportionateScreenWidth(8)),
         child: Column(
           children: [
             SizedBox(height: getProportionateScreenHeight(8)),
             OurFeatureCard(
-              Icon(Icons.verified_user_outlined,
-                  size: getProportionateScreenHeight(30),
-                  color: kSecondaryColor),
+              Icon(Icons.verified_user_outlined, size: getProportionateScreenHeight(30), color: kSecondaryColor),
               "Authentic Products",
               "We deliver authentic products to you.",
             ),
             OurFeatureCard(
-              Icon(Icons.delivery_dining_outlined,
-                  size: getProportionateScreenHeight(30),
-                  color: kSecondaryColor),
+              Icon(Icons.delivery_dining_outlined, size: getProportionateScreenHeight(30), color: kSecondaryColor),
               "Same Day Delivery",
               "We deliver on the same day you order.",
             ),
             OurFeatureCard(
-              Icon(Icons.restart_alt_rounded,
-                  size: getProportionateScreenHeight(30),
-                  color: kSecondaryColor),
+              Icon(Icons.restart_alt_rounded, size: getProportionateScreenHeight(30), color: kSecondaryColor),
               "Return Policy",
               "We have return policy on our products.",
             ),

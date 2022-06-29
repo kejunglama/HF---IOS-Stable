@@ -69,8 +69,8 @@ class _ColorvariantsBuilderState extends State<ColorvariantsBuilder> {
                 }
               },
               child: Container(
-                height: getProportionateScreenWidth(38),
-                width: getProportionateScreenWidth(38),
+                height: getProportionateScreenWidth(30),
+                width: getProportionateScreenWidth(30),
                 margin: EdgeInsets.only(
                   right: getProportionateScreenHeight(12),
                   // top: getProportionateScreenWidth(18),
@@ -80,15 +80,17 @@ class _ColorvariantsBuilderState extends State<ColorvariantsBuilder> {
                   children: [
                     Container(
                         decoration: BoxDecoration(
-                      color: Color(int.parse("0xFF" + _colors[i]["hex"])),
+                      color: Color(int.parse("0xFF" + _colors[i]["hex"])).withOpacity(0.8),
                       borderRadius: BorderRadius.circular(
                         getProportionateScreenWidth(20),
                       ),
-                      border: _selectedIndex == i && widget.selectable
-                          ? Border.all(color: kPrimaryColor, width: 1)
-                          : _colors[i]["hex"].toLowerCase() == ("ffffffff")
-                              ? Border.all(color: kPrimaryColor, width: 0.2)
-                              : null,
+                      border:
+                          Border.all(color: Colors.white, width: (_selectedIndex == i && widget.selectable) ? 1 : 0.2),
+                      // border: _selectedIndex == i && widget.selectable
+                      //     ? Border.all(color: kPrimaryColor, width: 1)
+                      //     : _colors[i]["hex"].toLowerCase() == ("ffffffff")
+                      //         ? Border.all(color: kPrimaryColor, width: 0.2)
+                      //         : null,
                     )),
                     Visibility(
                       visible: _selectedIndex == i && widget.selectable,

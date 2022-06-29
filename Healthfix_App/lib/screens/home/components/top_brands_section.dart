@@ -10,6 +10,11 @@ class TopBrandsSection extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    List<Widget> topBrandWidgetList = [];
+    for (String url in topBrandsList) {
+      topBrandWidgetList.add(TopBrandCard(url));
+    }
+
     return Container(
       child: Column(
         children: [
@@ -40,24 +45,32 @@ class TopBrandsSection extends StatelessWidget {
           //   ),
           // ),
           Container(
-            color: kPrimaryColor.withOpacity(0.1),
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                SizedBox(height: getProportionateScreenHeight(12)),
-                TopBrandCardRow(topBrandsList: topBrandsList.sublist(0)),
-                SizedBox(height: getProportionateScreenHeight(12)),
-                TopBrandCardRow(topBrandsList: topBrandsList.sublist(3)),
-                SizedBox(height: getProportionateScreenHeight(12)),
-                TopBrandCardRow(topBrandsList: [
-                  topBrandsList[2],
-                  topBrandsList[0],
-                  topBrandsList[3],
-                ]),
-                SizedBox(height: getProportionateScreenHeight(12)),
-              ],
-            ),
-          )
+            child: SingleChildScrollView(
+                scrollDirection: Axis.horizontal,
+                child: Wrap(
+                  spacing: getProportionateScreenWidth(12),
+                  children: topBrandWidgetList,
+                )),
+          ),
+          // Container(
+          //   color: kPrimaryColor.withOpacity(0.1),
+          //   child: Column(
+          //     mainAxisAlignment: MainAxisAlignment.center,
+          //     children: [
+          //       SizedBox(height: getProportionateScreenHeight(12)),
+          //       TopBrandCardRow(topBrandsList: topBrandsList.sublist(0)),
+          //       SizedBox(height: getProportionateScreenHeight(12)),
+          //       TopBrandCardRow(topBrandsList: topBrandsList.sublist(3)),
+          //       SizedBox(height: getProportionateScreenHeight(12)),
+          //       TopBrandCardRow(topBrandsList: [
+          //         topBrandsList[2],
+          //         topBrandsList[0],
+          //         topBrandsList[3],
+          //       ]),
+          //       SizedBox(height: getProportionateScreenHeight(12)),
+          //     ],
+          //   ),
+          // )
         ],
       ),
     );

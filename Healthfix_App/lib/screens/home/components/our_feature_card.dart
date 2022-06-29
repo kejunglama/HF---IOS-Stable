@@ -19,7 +19,7 @@ class OurFeatureCard extends StatelessWidget {
           decoration: BoxDecoration(
             color: Colors.white,
             borderRadius: BorderRadius.circular(5.0),
-            border: Border.all(width: 0.05, color: Colors.black12),
+            // border: Border.all(width: 0.05, color: Colors.black54),
           ),
           child: Padding(
             padding: EdgeInsets.all(getProportionateScreenHeight(15)),
@@ -51,7 +51,8 @@ class OurFeatureCard extends StatelessWidget {
                         // SizedBox(height: getProportionateScreenHeight(2)),
                         Container(
                           alignment: Alignment.centerLeft,
-                          child: Text(subHeading, style: cusBodyStyle(letterSpacing: 0.5)),
+                          child: Text(subHeading,
+                              style: cusBodyStyle(fontSize: getProportionateScreenHeight(12), letterSpacing: 0.5)),
                         ),
                       ],
                     ),

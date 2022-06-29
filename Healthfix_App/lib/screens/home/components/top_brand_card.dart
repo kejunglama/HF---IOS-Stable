@@ -33,8 +33,8 @@ class TopBrandCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-      width: getProportionateScreenHeight(90),
-      height: getProportionateScreenHeight(90),
+      width: getProportionateScreenHeight(100),
+      height: getProportionateScreenHeight(100),
       child: Container(
         decoration: BoxDecoration(
           color: Colors.white,

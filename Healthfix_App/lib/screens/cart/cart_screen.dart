@@ -11,6 +11,9 @@ class CartScreen extends StatelessWidget {
       appBar: AppBar(
         title: Text("Your Cart", style: cusCenterHeadingStyle(Colors.white)),
         backgroundColor: kPrimaryColor.withOpacity(0.9),
+        iconTheme: IconThemeData(
+          color: Colors.white, //change your color here
+        ),
       ),
       body: Body(),
     );

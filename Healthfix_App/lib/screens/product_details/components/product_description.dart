@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:healthfix/models/Product.dart';
 import 'package:healthfix/screens/product_details/provider_models/ColorVariations.dart';
 import 'package:healthfix/screens/product_details/provider_models/VariantBuilder.dart';
 import 'package:healthfix/size_config.dart';
 
 import '../../../constants.dart';
+import 'expandable_text.dart';
 
 class ProductDescription extends StatelessWidget {
   final Product product;
@@ -44,69 +46,99 @@ class ProductDescription extends StatelessWidget {
     // print(product.variations);
 
     return Container(
-      // padding: EdgeInsets.only(top: getProportionateScreenHeight(24)),
-      margin: EdgeInsets.symmetric(
-          horizontal: getProportionateScreenHeight(16), vertical: getProportionateScreenHeight(20)),
-      child: Stack(
-        children: [
-          Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Text("${product.brand?.toUpperCase()}",
+      color: Color(0xFFF8F8F8),
+      child: Container(
+        // padding: EdgeInsets.only(top: getProportionateScreenHeight(24))
+        decoration: BoxDecoration(
+            color: Colors.white,
+            borderRadius: BorderRadius.only(topLeft: Radius.circular(20), topRight: Radius.circular(20))),
+        padding: EdgeInsets.symmetric(
+            horizontal: getProportionateScreenHeight(16), vertical: getProportionateScreenHeight(20)),
+        child: Stack(
+          children: [
+            Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text("${product.brand?.toUpperCase()}",
+                    style: cusHeadingStyle(
+                        fontSize: getProportionateScreenHeight(14),
+                        color: kSecondaryColor,
+                        fontWeight: FontWeight.w500)),
+                sizedBoxOfHeight(8),
+                Text(
+                  product.title.capitalize(),
                   style: cusHeadingStyle(
-                      fontSize: getProportionateScreenHeight(14), color: kSecondaryColor, fontWeight: FontWeight.w500)),
-              sizedBoxOfHeight(8),
-              Text(
-                product.title.capitalize(),
-                style: cusHeadingStyle(
-                  fontSize: getProportionateScreenHeight(16),
-                  fontWeight: FontWeight.w500,
-                  letterSpacing: 0,
+                    fontSize: getProportionateScreenHeight(16),
+                    fontWeight: FontWeight.w500,
+                    letterSpacing: 0.25,
+                  ),
                 ),
-              ),
-
-              // Product Title
-
-              // const SizedBox(height: 16),
-              // Text(product.highlights),
-              // const SizedBox(height: 16),
-
-              // Product Variation with Price
-              ProductVariationDescription(
-                product: product,
-                sizes: sizes,
-                jsonArray: jsonArray,
-                colors: colors,
-                setSelectedVariant: setSelectedVariant,
-              ),
-
-              const SizedBox(height: 12),
-              Text(
-                product.description != null ? product.description.trim().replaceAll("\\n", "\n") : "",
-                style: cusBodyStyle(),
-              ),
-              // ExpandableText(
-              //   title: "",
-              //   content: product.description,
-              // ),
-              const SizedBox(height: 16),
-              Text.rich(
-                TextSpan(
-                  text: "By ",
-                  style: cusHeadingStyle(fontSize: getProportionateScreenHeight(14), color: kSecondaryColor),
-                  children: [
-                    TextSpan(
-                      text: "${product.seller}",
-                      style: TextStyle(
-                          // decoration: TextDecoration.underline,
-                          ),
-                    ),
-                  ],
+                sizedBoxOfHeight(8),
+                RatingBar(
+                  initialRating: 4.5,
+                  onRatingUpdate: (Rating) {},
+                  direction: Axis.horizontal,
+                  allowHalfRating: true,
+                  itemCount: 5,
+                  itemSize: 16,
+                  ratingWidget: RatingWidget(
+                    full: Icon(Icons.star_rounded, color: Colors.orange),
+                    half: Icon(Icons.star_half_rounded, color: Colors.orange),
+                    empty: Icon(Icons.star_outline_rounded, color: Colors.orange),
+                  ),
                 ),
-              ),
-            ],
-          ),
-        ],
+                sizedBoxOfHeight(12),
+
+                ExpandableText(
+                  content: product.description != null ? product.description.trim().replaceAll("\\n", "\n") : "",
+                  maxLines: 2,
+                ),
+
+                // Product Title
+
+                // const SizedBox(height: 16),
+                // Text(product.highlights),
+                // const SizedBox(height: 16),
+
+                // Product Variation with Price
+                ProductVariationDescription(
+                  product: product,
+                  sizes: sizes,
+                  jsonArray: jsonArray,
+                  colors: colors,
+                  setSelectedVariant: setSelectedVariant,
+                ),
+
+                const SizedBox(height: 12),
+                // Text(
+                // product.description != null ? product.description.trim().replaceAll("\\n", "\n") : "",
+                //   style: cusBodyStyle(),
+                // ),
+
+                const SizedBox(height: 16),
+                Text.rich(
+                  TextSpan(
+                    text: "From ",
+                    style: cusHeadingStyle(
+                        fontSize: getProportionateScreenHeight(14),
+                        color: kSecondaryColor,
+                        fontWeight: FontWeight.w300,
+                        letterSpacing: 0.5),
+                    children: [
+                      TextSpan(
+                        text: "${product.seller}",
+                        style: TextStyle(
+                            // decoration: TextDecoration.underline,
+                            ),
+                      ),
+                    ],
+                  ),
+                ),
+                sizedBoxOfHeight(80),
+              ],
+            ),
+          ],
+        ),
       ),
     );
   }
@@ -191,11 +223,12 @@ class _ProductVariationDescriptionState extends State<ProductVariationDescriptio
                       alignment: Alignment.centerLeft,
                       margin: EdgeInsets.only(right: getProportionateScreenWidth(12)),
                       child: Text(
-                        "Size: ",
+                        "Select Size :",
                         style: cusHeadingStyle(
-                            fontSize: getProportionateScreenWidth(12),
-                            fontWeight: FontWeight.w300,
-                            color: Colors.black87),
+                          fontSize: getProportionateScreenWidth(14),
+                          fontWeight: FontWeight.w400,
+                          color: Colors.black,
+                        ),
                       ),
                     ),
                     SizedBox(height: getProportionateScreenHeight(12)),
@@ -219,11 +252,12 @@ class _ProductVariationDescriptionState extends State<ProductVariationDescriptio
                       alignment: Alignment.centerLeft,
                       margin: EdgeInsets.only(right: getProportionateScreenWidth(12)),
                       child: Text(
-                        "Choose Color ",
+                        "Color :",
                         style: cusHeadingStyle(
-                            fontSize: getProportionateScreenWidth(12),
-                            fontWeight: FontWeight.w300,
-                            color: Colors.black87),
+                          fontSize: getProportionateScreenWidth(14),
+                          fontWeight: FontWeight.w400,
+                          color: Colors.black,
+                        ),
                       ),
                     ),
                     SizedBox(height: getProportionateScreenHeight(12)),

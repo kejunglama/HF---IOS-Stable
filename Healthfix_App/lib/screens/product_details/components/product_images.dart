@@ -82,8 +82,10 @@ class _ProductImagesState extends State<ProductImages> {
               // ),
               // Product Image Slider
               Container(
-                height: SizeConfig.screenWidth,
-                margin: EdgeInsets.only(top: SizeConfig.screenViewPadding),
+                height: SizeConfig.screenWidth * 0.75,
+                padding: EdgeInsets.only(top: SizeConfig.screenViewPadding),
+                color: Color(0xFFF8F8F8),
+                // color: Colors.white,
                 child: CarouselSlider(
                   options: CarouselOptions(
                     height: SizeConfig.screenWidth,
@@ -102,10 +104,15 @@ class _ProductImagesState extends State<ProductImages> {
                   items: widget.imageList
                       .map(
                         (item) => Container(
-                          height: SizeConfig.screenWidth,
-                          width: SizeConfig.screenWidth,
-                          child: Image.network(item,
-                              fit: widget.imageFit ?? BoxFit.cover),
+                          // height: SizeConfig.screenWidth,
+                          // width: SizeConfig.screenWidth,
+                          child: Image.network(
+                            item,
+                            fit: widget.imageFit ?? BoxFit.cover,
+                            loadingBuilder: (BuildContext context, Widget child, ImageChunkEvent loadingProgress) {
+                              return Center(child: CircularProgressIndicator());
+                            },
+                          ),
                         ),
                       )
                       .toList(),
@@ -121,8 +128,7 @@ class _ProductImagesState extends State<ProductImages> {
                     width: getProportionateScreenHeight(8),
                     height: getProportionateScreenHeight(8),
                     margin: EdgeInsets.symmetric(
-                        vertical: getProportionateScreenHeight(10),
-                        horizontal: getProportionateScreenHeight(2)),
+                        vertical: getProportionateScreenHeight(10), horizontal: getProportionateScreenHeight(2)),
                     decoration: BoxDecoration(
                       shape: BoxShape.circle,
                       color: productImagesSwiper.currentImageIndex == index
@@ -165,25 +171,21 @@ class _ProductImagesState extends State<ProductImages> {
     );
   }
 
-  Widget buildSmallPreview(ProductImageSwiper productImagesSwiper,
-      {@required int index}) {
+  Widget buildSmallPreview(ProductImageSwiper productImagesSwiper, {@required int index}) {
     return GestureDetector(
       onTap: () {
         productImagesSwiper.currentImageIndex = index;
       },
       child: Container(
-        margin:
-            EdgeInsets.symmetric(horizontal: getProportionateScreenWidth(8)),
+        margin: EdgeInsets.symmetric(horizontal: getProportionateScreenWidth(8)),
         padding: EdgeInsets.all(getProportionateScreenHeight(8)),
         height: getProportionateScreenWidth(48),
         width: getProportionateScreenWidth(48),
         decoration: BoxDecoration(
           color: Colors.white,
           borderRadius: BorderRadius.circular(10),
-          border: Border.all(
-              color: productImagesSwiper.currentImageIndex == index
-                  ? kPrimaryColor
-                  : Colors.transparent),
+          border:
+              Border.all(color: productImagesSwiper.currentImageIndex == index ? kPrimaryColor : Colors.transparent),
         ),
         child: Image.network(widget.imageList[index]),
       ),

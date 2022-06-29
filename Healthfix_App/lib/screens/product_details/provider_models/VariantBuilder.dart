@@ -63,12 +63,11 @@ class _variantsState extends State<variantsBuilder> {
               width: getProportionateScreenWidth(36),
               height: getProportionateScreenWidth(36),
               decoration: BoxDecoration(
-                color:
-                    i == _selected ? Colors.cyan : Colors.cyan.withOpacity(0.2),
-                // border: Border.all(
-                //   width: 1,
-                //   color: i == _selected ? kPrimaryColor : Colors.transparent,
-                // ),
+                color: i == _selected ? Colors.cyan : Colors.transparent,
+                border: Border.all(
+                  width: 1,
+                  color: i == _selected ? Colors.transparent : Colors.grey.withOpacity(0.5),
+                ),
                 borderRadius: BorderRadius.circular(4),
               ),
               child: Center(
@@ -76,8 +75,8 @@ class _variantsState extends State<variantsBuilder> {
                   _variant[i],
                   style: TextStyle(
                     fontSize: getProportionateScreenWidth(14),
-                    fontWeight: FontWeight.w600,
-                    color: i == _selected ? Colors.white : Colors.black54,
+                    fontWeight: FontWeight.w400,
+                    color: i == _selected ? Colors.white : Colors.grey,
                   ),
                 ),
               ),

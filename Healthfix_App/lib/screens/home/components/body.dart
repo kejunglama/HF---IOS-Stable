@@ -209,6 +209,9 @@ class _BodyState extends State<Body> {
             // Section - Flash Sales
             flashSalesProducts(),
 
+// Section - Diet Plan Banner
+            DietPlanBanner(dietPlanBanner),
+
             // Section - Explore Products
             exploreProducts(),
 
@@ -270,9 +273,6 @@ class _BodyState extends State<Body> {
             //     ],
             //   ),
             // ),
-
-            // Section - Diet Plan Banner
-            DietPlanBanner(dietPlanBanner),
 
             // Section - Top Brands
             TopBrandsSection(topBrandsList),
