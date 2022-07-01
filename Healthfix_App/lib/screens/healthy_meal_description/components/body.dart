@@ -1,5 +1,6 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:healthfix/constants.dart';
 import 'package:healthfix/models/Meal.dart';
 import 'package:healthfix/models/OrderedProduct.dart';
@@ -74,35 +75,49 @@ class Body extends StatelessWidget {
                       Text(
                         _meal.title.capitalize(),
                         textAlign: TextAlign.center,
-                        style: cusHeadingStyle(fontSize: getProportionateScreenHeight(22)),
+                        style: cusHeadingStyle(fontSize: getProportionateScreenHeight(20)),
                       ),
-                      sizedBoxOfHeight(12),
+                      sizedBoxOfHeight(4),
                       Row(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
                           Text(
                             "${_meal.values["calories"]} Calories - ",
                             style: cusHeadingStyle(
-                              fontSize: getProportionateScreenHeight(16),
+                              fontSize: getProportionateScreenHeight(14),
                               fontWeight: FontWeight.w300,
                             ),
                           ),
                           Text(
                             "${currency.format(_meal.originalPrice)}",
-                            style: cusPdctDisPriceStyle(getProportionateScreenHeight(16)),
+                            style: cusPdctDisPriceStyle(getProportionateScreenHeight(14)),
                           ),
                         ],
                       ),
+                      sizedBoxOfHeight(4),
+                      RatingBar(
+                        initialRating: 4.5,
+                        onRatingUpdate: (Rating) {},
+                        direction: Axis.horizontal,
+                        allowHalfRating: true,
+                        itemCount: 5,
+                        itemSize: getProportionateScreenHeight(20),
+                        ratingWidget: RatingWidget(
+                          full: Icon(Icons.star_rounded, color: Colors.orange),
+                          half: Icon(Icons.star_half_rounded, color: Colors.orange),
+                          empty: Icon(Icons.star_outline_rounded, color: Colors.orange),
+                        ),
+                      ),
+                      Container(
+                        height: getProportionateScreenHeight(200),
+                        // padding: EdgeInsets.symmetric(vertical: getProportionateScreenHeight(20)),
+                        // child: ProductImages(
+                        //     imageList: meal.images,
+                        //     imageFit: BoxFit.contain)
+                        child: Center(child: Image.network(_meal.images[0], fit: BoxFit.cover)),
+                      ),
                     ],
                   ),
-                ),
-                Container(
-                  height: getProportionateScreenHeight(280),
-                  padding: EdgeInsets.symmetric(vertical: getProportionateScreenHeight(20)),
-                  // child: ProductImages(
-                  //     imageList: meal.images,
-                  //     imageFit: BoxFit.contain)
-                  child: Center(child: Image.network(_meal.images[0], fit: BoxFit.cover)),
                 ),
 
                 buildFactValues(_meal.values),
@@ -178,28 +193,52 @@ class Body extends StatelessWidget {
     );
   }
 
-  Column buildSingleValue(var data, String key) {
-    return Column(
+  Widget buildSingleValue(var data, String key) {
+    IconData _icon = null;
+    switch (key) {
+      case "carbs":
+        _icon = Icons.local_fire_department_rounded;
+        break;
+      case "fat":
+        _icon = Icons.opacity_rounded;
+        break;
+      case "protein":
+        _icon = Icons.bolt_rounded;
+        break;
+      default:
+    }
+    return Row(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        // Icon(Icons.ene ),
-        Text(data.toString(), style: cusHeadingStyle()),
-        Text(key, style: cusBodyStyle(fontSize: getProportionateScreenHeight(16), color: kSecondaryColor)),
+        Icon(_icon, color: Colors.blue),
+        Text(" ${data.toString()} ${key.capitalize()}", style: cusBodyStyle(fontWeight: FontWeight.w300)),
+        // Text(data.toString(), style: cusHeadingStyle()),
+        // Text(key, style: cusBodyStyle(fontSize: getProportionateScreenHeight(16), color: kSecondaryColor)),
       ],
     );
+    // return Column(
+    //   crossAxisAlignment: CrossAxisAlignment.start,
+    //   children: [
+    //     // Icon(Icons.ene ),
+    //     Text(data.toString(), style: cusHeadingStyle()),
+    //     Text(key, style: cusBodyStyle(fontSize: getProportionateScreenHeight(16), color: kSecondaryColor)),
+    //   ],
+    // );
   }
 
   Widget buildFactValues(Map values) {
     return Center(
       child: Container(
-        decoration: BoxDecoration(
-          border: Border.all(width: 0.5, color: Colors.grey),
-          borderRadius: BorderRadius.circular(5),
-        ),
-        padding: EdgeInsets.all(getProportionateScreenHeight(20)),
-        child: Wrap(
-          spacing: getProportionateScreenWidth(40),
-          runSpacing: getProportionateScreenWidth(40),
+        // decoration: BoxDecoration(
+        //   border: Border.all(width: 0.5, color: Colors.grey),
+        //   borderRadius: BorderRadius.circular(5),
+        // ),
+        padding: EdgeInsets.all(getProportionateScreenHeight(12)),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          // spacing: getProportionateScreenWidth(40),
+          // runSpacing: getProportionateScreenWidth(40),
+          // direction: Axis.horizontal,
           children: [
             for (var meal in values.entries)
               if (meal.key.toString().toLowerCase() != "calories") buildSingleValue(meal.value, meal.key),
@@ -484,7 +523,7 @@ class Body extends StatelessWidget {
                   elevation: 0,
                   label: Text(
                     "Buy Now".toUpperCase(),
-                    style: cusHeadingStyle(fontSize: getProportionateScreenHeight(20), color: Colors.white),
+                    style: cusHeadingStyle(fontSize: getProportionateScreenHeight(18), color: Colors.white),
                   ),
                 ),
               ),

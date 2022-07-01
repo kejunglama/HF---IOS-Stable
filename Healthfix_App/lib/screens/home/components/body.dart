@@ -96,16 +96,17 @@ class _BodyState extends State<Body> {
       androidId: "com.siteux.healthfix",
     );
     final status = await newVersion.getVersionStatus();
-    newVersion.showUpdateDialog(
-      context: context,
-      versionStatus: status,
-      dialogTitle: "New Update Available!",
-      dismissButtonText: "LATER",
-      dialogText: "A New Version of Helathfix App is Available on Play/App Store. \n"
-          "\nAvailable Version: ${status.storeVersion}"
-          "\nVersion Installed: ${status.localVersion} ",
-      updateButtonText: "UPDATE",
-    );
+    if (status.storeVersion != status.localVersion)
+      newVersion.showUpdateDialog(
+        context: context,
+        versionStatus: status,
+        dialogTitle: "New Update Available!",
+        dismissButtonText: "LATER",
+        dialogText: "A New Version of Helathfix App is Available on Play/App Store. \n"
+            "\nAvailable Version: ${status.storeVersion}"
+            "\nVersion Installed: ${status.localVersion} ",
+        updateButtonText: "UPDATE",
+      );
 
     print("DEVICE : " + status.localVersion);
     print("STORE : " + status.storeVersion);

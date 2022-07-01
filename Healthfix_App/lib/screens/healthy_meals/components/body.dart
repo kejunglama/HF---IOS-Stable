@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/scheduler.dart';
 import 'package:healthfix/constants.dart';
 import 'package:healthfix/models/Meal.dart';
 import 'package:healthfix/screens/healthy_meal_description/healthy_meal_desc_screen.dart';
@@ -21,6 +22,7 @@ class Body extends StatefulWidget {
 
 class _BodyState extends State<Body> {
   MealsStream mealsStream = MealsStream();
+  bool isLoadingPopularMeal = true;
 
   void initState() {
     mealsStream.init();
@@ -61,6 +63,14 @@ class _BodyState extends State<Body> {
     );
   }
 
+  setIsLoadingPopularMeal(bool val) {
+    SchedulerBinding.instance.addPostFrameCallback((_) {
+      setState(() {
+        isLoadingPopularMeal = val;
+      });
+    });
+  }
+
   Widget buildPopularMeals() {
     List featuredMealsIds = [
       "7f98e5f0-f041-11ec-9970-8beccbe446e9",
@@ -75,7 +85,11 @@ class _BodyState extends State<Body> {
         FutureBuilder<Meal>(
             future: MealsDatabaseHelper().getMealsWithID(featuredMealId),
             builder: (context, snapshot) {
+              // setIsLoadingPopularMeal(true);
+
               if (snapshot.hasData) {
+                setState(() => isLoadingPopularMeal = false);
+
                 return GestureDetector(
                   onTap: () {
                     Navigator.push(
@@ -114,14 +128,18 @@ class _BodyState extends State<Body> {
         sizedBoxOfHeight(20),
         SizedBox(
           height: getProportionateScreenHeight(240),
-          child: SingleChildScrollView(
-            scrollDirection: Axis.horizontal,
-            child: Wrap(
-              spacing: getProportionateScreenWidth(12),
-              // mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: featuredCardsHori,
-            ),
-          ),
+          // width: SizeConfig.screenWidth,
+
+          child: isLoadingPopularMeal
+              ? Center(child: CircularProgressIndicator())
+              : SingleChildScrollView(
+                  scrollDirection: Axis.horizontal,
+                  child: Wrap(
+                    spacing: getProportionateScreenWidth(12),
+                    // mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: featuredCardsHori,
+                  ),
+                ),
         ),
       ],
     );
