@@ -1,22 +1,28 @@
 import 'package:flutter/material.dart';
+import 'package:healthfix/screens/healthy_meals/healthy_meals_screen.dart';
 import 'package:healthfix/size_config.dart';
 
-class DietPlanBanner extends StatelessWidget {
+class MealsBanner extends StatelessWidget {
   final String dietPlanBanner;
-  DietPlanBanner(this.dietPlanBanner, {key}) : super(key: key);
+  MealsBanner(this.dietPlanBanner, {key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: EdgeInsets.all(getProportionateScreenWidth(8)),
-      child: AspectRatio(
-        aspectRatio: 3,
-        child: ClipRRect(
-          borderRadius: BorderRadius.circular(5),
-          child: Image.network(
-            dietPlanBanner,
-            alignment: Alignment.bottomCenter,
-            fit: BoxFit.cover,
+    return GestureDetector(
+      onTap: () {
+        Navigator.push(context, MaterialPageRoute(builder: (context) => HealthyMealsScreen()));
+      },
+      child: Padding(
+        padding: EdgeInsets.all(getProportionateScreenWidth(8)),
+        child: AspectRatio(
+          aspectRatio: 2000 / 600,
+          child: ClipRRect(
+            borderRadius: BorderRadius.circular(5),
+            child: Image.asset(
+              dietPlanBanner,
+              alignment: Alignment.bottomCenter,
+              fit: BoxFit.cover,
+            ),
           ),
         ),
       ),

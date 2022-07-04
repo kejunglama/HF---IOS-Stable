@@ -62,6 +62,7 @@ flutter:
     - assets/images/menu/
     - assets/images/trainers/
     - assets/images/explore/
+    - assets/banners/
     - assets/icons/
     - assets/icons/app/
     - assets/logo/

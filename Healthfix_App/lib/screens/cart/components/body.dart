@@ -543,7 +543,7 @@ class _BodyState extends State<Body> {
         print("orderedProductsUid");
         print(orderedProductsUid);
 
-        final formatedDateTime = cusDateTimeFormatter.format(DateTime.now());
+        final formatedDateTime = DateTime.now();
         // final dateTime = DateTime.now();
         // List<OrderedProduct> orderedProducts =
         // orderedProductsUid.map((e) => OrderedProduct(null, productUid: e, orderDate: formatedDateTime)).toList();

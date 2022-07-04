@@ -177,10 +177,17 @@ class ProductDatabaseHelper {
     if (productType == ProductType.All || productType == null) {
       queryResult = await productsCollectionReference.get();
     } else if (productSubType != null) {
-      queryResult = await productsCollectionReference
-          .where(Product.PRODUCT_TYPE_KEY, isEqualTo: EnumToString.convertToString(productType))
-          .where(Product.PRODUCT_SUBTYPE_KEY, isEqualTo: productSubType)
-          .get();
+      print(productSubType);
+      if (productSubType.startsWith("All")) {
+        queryResult = await productsCollectionReference
+            .where(Product.PRODUCT_TYPE_KEY, isEqualTo: EnumToString.convertToString(productType))
+            .get();
+      } else {
+        queryResult = await productsCollectionReference
+            .where(Product.PRODUCT_TYPE_KEY, isEqualTo: EnumToString.convertToString(productType))
+            .where(Product.PRODUCT_SUBTYPE_KEY, isEqualTo: productSubType)
+            .get();
+      }
     } else {
       queryResult = await productsCollectionReference
           .where(Product.PRODUCT_TYPE_KEY, isEqualTo: EnumToString.convertToString(productType))

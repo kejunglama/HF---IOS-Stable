@@ -44,18 +44,13 @@ class OrderDetails extends StatelessWidget {
 
     Map orderStatus = orderedProduct.orderStatus ?? {};
 
-    DateTime placed = orderStatus["placed"] != null
-        ? DateTime.parse(orderStatus["placed"].toDate().toString())
-        : null;
-    DateTime preparing = orderStatus["preparing"] != null
-        ? DateTime.parse(orderStatus["preparing"].toDate().toString())
-        : null;
-    DateTime delivering = orderStatus["delivering"] != null
-        ? DateTime.parse(orderStatus["delivering"].toDate().toString())
-        : null;
-    DateTime done = orderStatus["done"] != null
-        ? DateTime.parse(orderStatus["done"].toDate().toString())
-        : null;
+    // DateTime placed = orderStatus["placed"] != null ? DateTime.parse(orderStatus["placed"].toDate().toString()) : null;
+    DateTime placed = orderedProduct.orderDate;
+    DateTime preparing =
+        orderStatus["preparing"] != null ? DateTime.parse(orderStatus["preparing"].toDate().toString()) : null;
+    DateTime delivering =
+        orderStatus["delivering"] != null ? DateTime.parse(orderStatus["delivering"].toDate().toString()) : null;
+    DateTime done = orderStatus["done"] != null ? DateTime.parse(orderStatus["done"].toDate().toString()) : null;
 
     Map _fetchedStatusTime = {
       "placed": placed,
@@ -65,6 +60,7 @@ class OrderDetails extends StatelessWidget {
     };
 
     print(orderedProduct.meals);
+    print(orderDetails);
 
     List<Widget> _widgets = [];
     if (hasOrderedProducts)
@@ -82,32 +78,26 @@ class OrderDetails extends StatelessWidget {
         child: SingleChildScrollView(
           physics: AlwaysScrollableScrollPhysics(),
           child: Padding(
-            padding: EdgeInsets.symmetric(
-                horizontal: getProportionateScreenWidth(screenPadding)),
+            padding: EdgeInsets.symmetric(horizontal: getProportionateScreenWidth(screenPadding)),
             child: SizedBox(
               width: double.infinity,
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   SizedBox(height: getProportionateScreenHeight(10)),
-                  Text("Order Details",
-                      style: cusHeadingStyle(
-                          fontSize: getProportionateScreenHeight(20))),
-                  Text(orderedProduct.id,
-                      style: cusBodyStyle(
-                          fontSize: getProportionateScreenHeight(12))),
+                  Text("Order Details", style: cusHeadingStyle(fontSize: getProportionateScreenHeight(20))),
+                  Text(orderedProduct.id, style: cusBodyStyle(fontSize: getProportionateScreenHeight(12))),
                   SizedBox(height: getProportionateScreenHeight(20)),
-                  buildOrderDetails(orderDetailsAddress, currency,
-                      orderDetailsTotals, orderDeliveryDateTime),
-                  SizedBox(height: getProportionateScreenHeight(20)),
-                  // buildStatusTimeline(_fetchedStatusTime),
+                  buildOrderDetails(orderDetailsAddress, currency, orderDetailsTotals, orderDeliveryDateTime),
                   SizedBox(height: getProportionateScreenHeight(20)),
                   SizedBox(
-                    height: SizeConfig.screenHeight * 0.75,
+                    // height: SizeConfig.screenHeight * 0.75,
                     child: Column(
                       children: _widgets,
                     ),
                   ),
+                  SizedBox(height: getProportionateScreenHeight(20)),
+                  buildStatusTimeline(_fetchedStatusTime),
                 ],
               ),
             ),
@@ -120,25 +110,31 @@ class OrderDetails extends StatelessWidget {
   Widget buildStatusTimeline(Map fetchedStatusTime) {
     num i = 0;
     return Container(
-      padding: EdgeInsets.symmetric(horizontal: 48.0, vertical: 8.0),
+      color: Colors.grey.withOpacity(0.1),
+      padding:
+          EdgeInsets.symmetric(horizontal: getProportionateScreenWidth(30), vertical: getProportionateScreenHeight(20)),
       child: Column(
-        children: fetchedStatusTime.entries.map((entry) {
-          i++;
-          return buildStatusTimelineTile(
-            entry.value != null
-                ? cusDateTimeFormatter.format(entry.value).toString()
-                : "",
-            entry.key,
-            isStart: i == 1,
-            isEnd: i == fetchedStatusTime.length,
-          );
-        }).toList(),
+        children: [
+          Text("Order Status",
+              style: cusHeadingStyle(fontSize: getProportionateScreenHeight(16), fontWeight: FontWeight.w400)),
+          sizedBoxOfHeight(4),
+          Column(
+            children: fetchedStatusTime.entries.map((entry) {
+              i++;
+              return buildStatusTimelineTile(
+                entry.value != null ? cusDateTimeFormatter.format(entry.value).toString() : "",
+                entry.key,
+                isStart: i == 1,
+                isEnd: i == fetchedStatusTime.length,
+              );
+            }).toList(),
+          ),
+        ],
       ),
     );
   }
 
-  TimelineTile buildStatusTimelineTile(String datetime, String statusID,
-      {bool isStart, bool isEnd}) {
+  TimelineTile buildStatusTimelineTile(String datetime, String statusID, {bool isStart, bool isEnd}) {
     List _status = status[statusID];
     String _statusTitle = _status[0];
     String _statusSubText = _status[1];
@@ -153,30 +149,40 @@ class OrderDetails extends StatelessWidget {
         padding: const EdgeInsets.all(8.0),
         child: Card(
           elevation: 8,
-          shadowColor: Colors.grey.withOpacity(0.6),
+          shadowColor: Colors.grey.withOpacity(0.1),
           child: Container(
             width: getProportionateScreenWidth(360),
             padding: const EdgeInsets.all(16.0),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text(_statusTitle,
-                    style: cusHeadingStyle(
-                        fontSize: getProportionateScreenHeight(16),
-                        color: datetime.isNotEmpty
-                            ? Colors.black
-                            : Colors.black38)),
-                Text(datetime,
-                    style: cusHeadingStyle(
-                        fontSize: getProportionateScreenHeight(16),
-                        color: datetime.isNotEmpty ?? false
-                            ? Colors.blue
-                            : Colors.black38)),
-                Text(_statusSubText,
-                    style: cusBodyStyle(
-                        color: datetime.isNotEmpty ?? false
-                            ? Colors.black
-                            : Colors.black38)),
+                Text(
+                  _statusTitle,
+                  style: cusHeadingStyle(
+                    fontSize: getProportionateScreenHeight(14),
+                    color: datetime.isNotEmpty ? Colors.black87 : Colors.black38,
+                    fontWeight: FontWeight.w400,
+                    letterSpacing: 0.5,
+                  ),
+                ),
+                Text(
+                  datetime,
+                  style: cusBodyStyle(
+                    fontSize: getProportionateScreenHeight(12),
+                    color: datetime.isNotEmpty ?? false ? Colors.blue : Colors.black38,
+                    fontWeight: FontWeight.w400,
+                    letterSpacing: 0.5,
+                  ),
+                ),
+                sizedBoxOfHeight(4),
+                Text(
+                  _statusSubText,
+                  style: cusBodyStyle(
+                    color: datetime.isNotEmpty ?? false ? Colors.black87 : Colors.black38,
+                    fontSize: getProportionateScreenHeight(12),
+                    letterSpacing: 0.5,
+                  ),
+                ),
               ],
             ),
           ),
@@ -190,8 +196,8 @@ class OrderDetails extends StatelessWidget {
     );
   }
 
-  Container buildOrderDetails(orderDetailsAddress, NumberFormat currency,
-      orderDetailsTotals, Timestamp orderDeliveryDateTime) {
+  Container buildOrderDetails(
+      orderDetailsAddress, NumberFormat currency, orderDetailsTotals, Timestamp orderDeliveryDateTime) {
     return Container(
       padding: EdgeInsets.symmetric(horizontal: 12),
       child: Column(
@@ -205,23 +211,19 @@ class OrderDetails extends StatelessWidget {
                 children: [
                   Text(
                     "Receiver: ${orderDetailsAddress["receiver"]}",
-                    style: cusBodyStyle(
-                        fontSize: getProportionateScreenHeight(12)),
+                    style: cusBodyStyle(fontSize: getProportionateScreenHeight(12)),
                   ),
                   Text(
                     "Phone: ${orderDetailsAddress["phone"]}",
-                    style: cusBodyStyle(
-                        fontSize: getProportionateScreenHeight(12)),
+                    style: cusBodyStyle(fontSize: getProportionateScreenHeight(12)),
                   ),
                   Text(
                     "Address: ${orderDetailsAddress["landmark"]}, ${orderDetailsAddress["address_line_1"]}",
-                    style: cusBodyStyle(
-                        fontSize: getProportionateScreenHeight(12)),
+                    style: cusBodyStyle(fontSize: getProportionateScreenHeight(12)),
                   ),
                   Text(
                     "Email: ${orderDetailsAddress["email"]}",
-                    style: cusBodyStyle(
-                        fontSize: getProportionateScreenHeight(12)),
+                    style: cusBodyStyle(fontSize: getProportionateScreenHeight(12)),
                   ),
                 ],
               ),
@@ -230,18 +232,15 @@ class OrderDetails extends StatelessWidget {
                 children: [
                   Text(
                     "Cart Total: ${currency.format(orderDetailsTotals["cartTotal"])}",
-                    style: cusBodyStyle(
-                        fontSize: getProportionateScreenHeight(12)),
+                    style: cusBodyStyle(fontSize: getProportionateScreenHeight(12)),
                   ),
                   Text(
                     "Delivery Charge: ${currency.format(orderDetailsTotals["deliveryCharge"])}",
-                    style: cusBodyStyle(
-                        fontSize: getProportionateScreenHeight(12)),
+                    style: cusBodyStyle(fontSize: getProportionateScreenHeight(12)),
                   ),
                   Text(
                     "Net Total: ${currency.format(orderDetailsTotals["netTotal"])}",
-                    style: cusBodyStyle(
-                        fontSize: getProportionateScreenHeight(12)),
+                    style: cusBodyStyle(fontSize: getProportionateScreenHeight(12)),
                   ),
                 ],
               )
@@ -373,21 +372,18 @@ class OrderDetails extends StatelessWidget {
                         ),
                         child: TextButton(
                           onPressed: () async {
-                            String currentUserUid =
-                                AuthentificationService().currentUser.uid;
+                            String currentUserUid = AuthentificationService().currentUser.uid;
                             Review prevReview;
                             try {
-                              prevReview = await ProductDatabaseHelper()
-                                  .getProductReviewWithID(
-                                      product.id, currentUserUid);
+                              prevReview =
+                                  await ProductDatabaseHelper().getProductReviewWithID(product.id, currentUserUid);
                             } on FirebaseException catch (e) {
                               Logger().w("Firebase Exception: $e");
                             } catch (e) {
                               Logger().w("Unknown Exception: $e");
                             } finally {
                               if (prevReview == null) {
-                                prevReview = Review(currentUserUid,
-                                    reviewerUid: currentUserUid);
+                                prevReview = Review(currentUserUid, reviewerUid: currentUserUid);
                               }
                             }
 
@@ -403,11 +399,9 @@ class OrderDetails extends StatelessWidget {
                               bool reviewAdded = false;
                               String snackbarMessage;
                               try {
-                                reviewAdded = await ProductDatabaseHelper()
-                                    .addProductReview(product.id, result);
+                                reviewAdded = await ProductDatabaseHelper().addProductReview(product.id, result);
                                 if (reviewAdded == true) {
-                                  snackbarMessage =
-                                      "Product review added successfully";
+                                  snackbarMessage = "Product review added successfully";
                                 } else {
                                   throw "Coulnd't add product review due to unknown reason";
                                 }
@@ -492,8 +486,7 @@ class OrderDetails extends StatelessWidget {
                           Navigator.push(
                               context,
                               MaterialPageRoute(
-                                builder: (context) =>
-                                    HealthyMealDescScreen(meal.id),
+                                builder: (context) => HealthyMealDescScreen(meal.id),
                               ));
                         },
                       ),
@@ -509,13 +502,11 @@ class OrderDetails extends StatelessWidget {
                         ),
                         child: TextButton(
                           onPressed: () async {
-                            String currentUserUid =
-                                AuthentificationService().currentUser.uid;
+                            String currentUserUid = AuthentificationService().currentUser.uid;
                             Review prevReview;
                             try {
-                              prevReview = await ProductDatabaseHelper()
-                                  .getProductReviewWithID(
-                                      meal.id, currentUserUid);
+                              prevReview =
+                                  await ProductDatabaseHelper().getProductReviewWithID(meal.id, currentUserUid);
                             } on FirebaseException catch (e) {
                               Logger().w("Firebase Exception: $e");
                             } catch (e) {
@@ -541,11 +532,9 @@ class OrderDetails extends StatelessWidget {
                               bool reviewAdded = false;
                               String snackbarMessage;
                               try {
-                                reviewAdded = await ProductDatabaseHelper()
-                                    .addProductReview(meal.id, result);
+                                reviewAdded = await ProductDatabaseHelper().addProductReview(meal.id, result);
                                 if (reviewAdded == true) {
-                                  snackbarMessage =
-                                      "Product review added successfully";
+                                  snackbarMessage = "Product review added successfully";
                                 } else {
                                   throw "Coulnd't add product review due to unknown reason";
                                 }

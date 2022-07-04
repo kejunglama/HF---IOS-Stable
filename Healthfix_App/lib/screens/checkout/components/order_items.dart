@@ -187,11 +187,12 @@ class _OrderItemsState extends State<OrderItems> {
     String cartItemId = cartItemIdMap["var_id"] ?? cartItemIdMap["product_id"];
     print(cartItemId);
 
-    CartItem cartItemFromBuyNow = widget.isBuyNow
+    CartItem cartItemFromBuyNow = widget.isBuyNow ?? false
         ? CartItem(id: cartItemId, productId: cartItemIdMap["var_id"] != null ? cartItemIdMap["product_id"] : null)
         : null;
 
-    Future<CartItem> cartItemFuture = !widget.isBuyNow ? UserDatabaseHelper().getCartItemFromId(cartItemId) : null;
+    Future<CartItem> cartItemFuture =
+        widget.isBuyNow ?? true ? null : UserDatabaseHelper().getCartItemFromId(cartItemId);
 
     // print("cartItemId $cartItemIdMap");
 
@@ -212,7 +213,7 @@ class _OrderItemsState extends State<OrderItems> {
         border: Border.all(color: kTextColor.withOpacity(0.15)),
         borderRadius: BorderRadius.circular(5),
       ),
-      child: widget.isBuyNow ? productFutureBuilder(cartItemFromBuyNow) : cartFutureBuilder(cartItemFuture),
+      child: widget.isBuyNow ?? false ? productFutureBuilder(cartItemFromBuyNow) : cartFutureBuilder(cartItemFuture),
     );
   }
 

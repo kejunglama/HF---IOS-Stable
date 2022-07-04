@@ -13,7 +13,7 @@ class OrderedProduct extends Model {
   String productUid;
   List products;
   List meals;
-  String orderDate;
+  DateTime orderDate;
   Map orderDetails;
   Map orderStatus;
 
@@ -31,7 +31,7 @@ class OrderedProduct extends Model {
     return OrderedProduct(
       id,
       // productUid: map[PRODUCT_UID_KEY],
-      orderDate: map[ORDER_DATE_KEY],
+      orderDate: map[ORDER_DATE_KEY].toDate(),
       products: map[PRODUCTS_KEY],
       meals: map[MEALS_KEY],
       orderDetails: map[ORDER_DETAILS_KEY],

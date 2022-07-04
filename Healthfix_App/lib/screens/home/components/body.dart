@@ -64,7 +64,7 @@ class _BodyState extends State<Body> {
     'https://upload.wikimedia.org/wikipedia/commons/thumb/5/53/Reebok_2019_logo.svg/1200px-Reebok_2019_logo.svg.png',
   ];
 
-  final String dietPlanBanner = "https://fitclic.net/wp-content/uploads/2021/10/custom-keto-diet-banner.png";
+  final String dietPlanBanner = "assets/banners/Fresh Healthy Meal.png";
 
   // final FavouriteProductsStream favouriteProductsStream =
   // FavouriteProductsStream();
@@ -210,8 +210,8 @@ class _BodyState extends State<Body> {
             // Section - Flash Sales
             flashSalesProducts(),
 
-// Section - Diet Plan Banner
-            DietPlanBanner(dietPlanBanner),
+            // Section - Diet Plan Banner
+            MealsBanner(dietPlanBanner),
 
             // Section - Explore Products
             exploreProducts(),

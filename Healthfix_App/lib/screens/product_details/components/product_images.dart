@@ -110,6 +110,9 @@ class _ProductImagesState extends State<ProductImages> {
                             item,
                             fit: widget.imageFit ?? BoxFit.cover,
                             loadingBuilder: (BuildContext context, Widget child, ImageChunkEvent loadingProgress) {
+                              if (loadingProgress == null) {
+                                return child;
+                              }
                               return Center(child: CircularProgressIndicator());
                             },
                           ),

@@ -300,20 +300,17 @@ class _BodyState extends State<Body> {
                     },
                   ).toList(),
                   onChanged: (val) {
-                    if (val == "Food") {
-                      Navigator.push(context, MaterialPageRoute(builder: (context) => HealthyMealsScreen()));
-                    } else {
-                      setState(() {
-                        fetchCategoryWithTypeName(val);
-                        _categoryName = category["title"];
-                        // _categoryName == "All Products"
-                        // ? _subCatList = ["Sports Nutrition", "Vitamin/Supplement", "Health Food & Drink", "Clothing Apparel", "Explore Fitness"]
-                        fetchSubCategories(_categoryName);
-                        reInitProductStream();
-                        _selectedSubCat = "";
-                        // buildProductCatalog();
-                      });
-                    }
+                    setState(() {
+                      fetchCategoryWithTypeName(val);
+                      _categoryName = category["title"];
+                      // _categoryName == "All Products"
+                      // ? _subCatList = ["Sports Nutrition", "Vitamin/Supplement", "Health Food & Drink", "Clothing Apparel", "Explore Fitness"]
+                      fetchSubCategories(_categoryName);
+                      reInitProductStream();
+                      // print(_categoryName);
+                      _selectedSubCat = _categoryName == "All Products" ? "" : _subCatList.first;
+                      // buildProductCatalog();
+                    });
                   },
                 ),
               ),
@@ -385,13 +382,13 @@ class _BodyState extends State<Body> {
         // color: Color(0xFFF5F6F9),
         borderRadius: BorderRadius.circular(15),
       ),
-      child: GridView.builder(
+      child: new GridView.builder(
         physics: BouncingScrollPhysics(),
         itemCount: productsId.length,
         shrinkWrap: true,
         itemBuilder: (context, index) {
           return Container(
-            child: ProductCard(
+            child: new ProductCard(
               productId: productsId[index],
               noSpacing: true,
               press: () {

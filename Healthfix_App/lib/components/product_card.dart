@@ -7,7 +7,7 @@ import 'package:logger/logger.dart';
 import '../constants.dart';
 
 class ProductCard extends StatefulWidget {
-  final String productId;
+  String productId;
   final GestureTapCallback press;
   final bool noSpacing;
 
@@ -23,22 +23,21 @@ class ProductCard extends StatefulWidget {
 }
 
 class _ProductCardState extends State<ProductCard> {
-  Future<Product> productFuture;
   @override
   void initState() {
-    productFuture = ProductDatabaseHelper().getProductWithID(widget.productId);
+    // productFuture = ProductDatabaseHelper().getProductWithID(widget.productId);
     super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
+    Future<Product> productFuture = ProductDatabaseHelper().getProductWithID(widget.productId);
+
     return GestureDetector(
       onTap: widget.press,
       child: Container(
         // height: 300,
-        margin: widget.noSpacing ?? false
-            ? null
-            : EdgeInsets.only(left: getProportionateScreenWidth(12)),
+        margin: widget.noSpacing ?? false ? null : EdgeInsets.only(left: getProportionateScreenWidth(12)),
         decoration: BoxDecoration(
           color: Colors.white,
           border: Border.all(color: kTextColor.withOpacity(0.15)),
@@ -46,13 +45,12 @@ class _ProductCardState extends State<ProductCard> {
         ),
         child: Padding(
           padding: EdgeInsets.symmetric(
-              horizontal: getProportionateScreenHeight(12),
-              vertical: getProportionateScreenHeight(12)),
+              horizontal: getProportionateScreenHeight(12), vertical: getProportionateScreenHeight(12)),
           child: FutureBuilder<Product>(
             future: productFuture,
             builder: (context, snapshot) {
               if (snapshot.hasData) {
-                final Product product = snapshot.data;
+                Product product = snapshot.data;
                 return buildProductCardItems(product);
               } else if (snapshot.connectionState == ConnectionState.waiting) {
                 return Center(
@@ -111,11 +109,9 @@ class _ProductCardState extends State<ProductCard> {
                   children: [
                     Text(
                       "Starting From",
-                      style: cusBodyStyle(
-                          fontSize: getProportionateScreenHeight(10)),
+                      style: cusBodyStyle(fontSize: getProportionateScreenHeight(10)),
                     ),
-                    Text(
-                        "${currency.format(product.priceRange != null ? product.priceRange : 0)}",
+                    Text("${currency.format(product.priceRange != null ? product.priceRange : 0)}",
                         style: cusPdctDisPriceStyle()),
                   ],
                 ),
@@ -137,9 +133,7 @@ class _ProductCardState extends State<ProductCard> {
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         Text("\Rs. ${product.originalPrice}",
-                            style: hasDisPrice
-                                ? cusPdctOriPriceStyle()
-                                : cusPdctDisPriceStyle()),
+                            style: hasDisPrice ? cusPdctOriPriceStyle() : cusPdctDisPriceStyle()),
                         Visibility(
                           visible: hasDisPrice,
                           child: Text(

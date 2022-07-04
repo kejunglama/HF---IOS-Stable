@@ -53,37 +53,41 @@ final PdctSubCategories = {
     "Explore Fitness",
   ],
   "Sports Nutrition": [
-    // "All Sports Nutrition",
+    "All Sports Nutrition",
     "Proteins",
     "Gainers",
     "Protein Foods",
     "Pre/Post Workout",
   ],
   "Vitamin/Supplement": [
-    // "All Vitamin/Supplement",
+    "All Vitamin/Supplement",
     "Omega Fatty Acids ",
     "Multi-Vitamins",
     "Minerals",
     "Vitamins",
-    "All Vitamins",
+    "Dietry",
+    "Herbal",
   ],
   "Health Food & Drink": [
-    // "All Health Food & Drink",
+    "All Health Food & Drink",
+    "Healthy Meals",
+    "Healthy Breakfast",
     "Weight Loss Foods",
+    "Healthy Beverages",
     "Vinegar & Health Juices",
     "Protein Foods & Bars",
     "Family Nutrition",
-    "Healthy Beverages",
   ],
   "Clothing Apparel": [
-    // "All Clothing Apparel",
+    "All Clothing Apparel",
     "Men Clothing",
     "Women Clothing",
+    "Shoes",
     "Fitness Clothing",
     "Sports Apparel",
   ],
   "Explore Fitness": [
-    // "All Explore Fitness",
+    "All Explore Fitness",
     "Gym Equipment",
     "Gym Accessories",
     "Gym Supports",
@@ -97,15 +101,13 @@ List<Map> payMethods = [
     "id": "cash",
     "heading": "Cash Payment",
     "sub": "Cash on Delivery",
-    "url":
-        "https://cdn.iconscout.com/icon/free/png-256/cash-2065963-1746112.png",
+    "url": "https://cdn.iconscout.com/icon/free/png-256/cash-2065963-1746112.png",
   },
   {
     "id": "esewa",
     "heading": "Esewa",
     "sub": "Pay with Esewa",
-    "url":
-        "https://www.nepalitimes.com/wp-content/uploads/2021/07/Esewa-Remittance-Payment.png",
+    "url": "https://www.nepalitimes.com/wp-content/uploads/2021/07/Esewa-Remittance-Payment.png",
   },
   {
     "id": "bank",
@@ -117,67 +119,24 @@ List<Map> payMethods = [
 
 Map status = {
   "done": ["Delivered", "Your Package has been Delivered."],
-  "delivering": [
-    "Out for Delivery",
-    "You Package is currently out for delivery by Spaceko Logistics."
-  ],
-  "preparing": [
-    "Package being Prepared",
-    "Your Package is being prepared by the Seller."
-  ],
+  "delivering": ["Out for Delivery", "You Package is currently out for delivery by Spaceko Logistics."],
+  "preparing": ["Package being Prepared", "Your Package is being prepared by the Seller."],
   "placed": ["Order Received", "Your Order has been placed."],
 };
 
 Map<String, List<String>> nepalZonesAndDistricts = {
-  "Bagmati": [
-    "Bhaktapur",
-    "Dhading",
-    "Kathmandu",
-    "Kavrepalanchok",
-    "Lalitpur",
-    "Nuwakot",
-    "Rasuwa",
-    "Sindhupalchok"
-  ],
+  "Bagmati": ["Bhaktapur", "Dhading", "Kathmandu", "Kavrepalanchok", "Lalitpur", "Nuwakot", "Rasuwa", "Sindhupalchok"],
   "Bheri": ["Banke", "Bardiya", "Dailekh", "Jajarkot", "Surkhet"],
   "Dhawalagiri": ["Baglung", "Mustang", "Myagdi", "Parbat"],
   "Gandaki": ["Gorkha", "Kaski", "Lamjung", "Manang", "Syangja", "Tanahu"],
-  "Janakpur": [
-    "Dhanusa",
-    "Dholkha",
-    "Mahottari",
-    "Ramechhap",
-    "Sarlahi",
-    "Sindhuli"
-  ],
+  "Janakpur": ["Dhanusa", "Dholkha", "Mahottari", "Ramechhap", "Sarlahi", "Sindhuli"],
   "Karnali": ["Dolpa", "Humla", "Jumla", "Kalikot", "Mugu"],
-  "Koshi": [
-    "Bhojpur",
-    "Dhankuta",
-    "Morang",
-    "Sankhuwasabha",
-    "Sunsari",
-    "Terhathum"
-  ],
-  "Lumbini": [
-    "Arghakhanchi",
-    "Gulmi",
-    "Kapilvastu",
-    "Nawalparasi",
-    "Palpa",
-    "Rupandehi"
-  ],
+  "Koshi": ["Bhojpur", "Dhankuta", "Morang", "Sankhuwasabha", "Sunsari", "Terhathum"],
+  "Lumbini": ["Arghakhanchi", "Gulmi", "Kapilvastu", "Nawalparasi", "Palpa", "Rupandehi"],
   "Mahakali": ["Baitadi", "Dadeldhura", "Darchula", "Kanchanpur"],
   "Mechi": ["Ilam", "Jhapa", "Panchthar", "Taplejung"],
   "Narayani": ["Bara", "Chitwan", "Makwanpur", "Parsa", "Rautahat"],
   "Rapti": ["Dang Deukhuri", "Pyuthan", "Rolpa", "Rukum", "Salyan"],
-  "Sagarmatha": [
-    "Khotang",
-    "Okhaldhunga",
-    "Saptari",
-    "Siraha",
-    "Solukhumbu",
-    "Udayapur"
-  ],
+  "Sagarmatha": ["Khotang", "Okhaldhunga", "Saptari", "Siraha", "Solukhumbu", "Udayapur"],
   "Seti": ["Achham", "Bajhang", "Bajura", "Doti", "Kailali"],
 };

@@ -12,8 +12,7 @@ class OrderProductShortDetailCard extends StatelessWidget {
   String variantId;
   Product product;
   num itemCount;
-  Function(DismissDirection direction, dynamic cartItemId)
-      buildConfirmationToDelete;
+  Function(DismissDirection direction, dynamic cartItemId) buildConfirmationToDelete;
 
   OrderProductShortDetailCard({
     Key key,
@@ -39,9 +38,7 @@ class OrderProductShortDetailCard extends StatelessWidget {
     print("product ${product.variations}");
     print("variantId ${variantId}");
     if (hasVariations) {
-      variation = product.variations
-          .where((variant) => variant["var_id"] == variantId)
-          .first;
+      variation = product.variations.where((variant) => variant["var_id"] == variantId).first;
 
       hasSizeVariation = variation["size"] != null;
       hasColorVariation = variation["color"] != null;
@@ -132,9 +129,8 @@ class OrderProductShortDetailCard extends StatelessWidget {
                           width: getProportionateScreenHeight(10),
                           decoration: BoxDecoration(
                             color: variation != null && variation.isNotEmpty
-                                ? Color(int.parse(hasColorVariation
-                                    ? "0xFF" + variation["color"]["hex"]
-                                    : "0xFFFFFFFF"))
+                                ? Color(
+                                    int.parse(hasColorVariation ? "0xFF" + variation["color"]["hex"] : "0xFFFFFFFF"))
                                 : null,
                             borderRadius: BorderRadius.circular(
                               getProportionateScreenWidth(20),
@@ -157,10 +153,8 @@ class OrderProductShortDetailCard extends StatelessWidget {
                       TextSpan(
                           text: variation != null && variation.isNotEmpty
                               ? "\Rs. ${variation != null ? (variation["dis_price"] ?? variation["price"] * 1.2) : product.originalPrice}"
-                              : "",
-                          style: product.discountPrice != null
-                              ? cusPdctOriPriceStyle()
-                              : cusPdctDisPriceStyle()),
+                              : "\Rs. ${product.originalPrice} ",
+                          style: product.discountPrice != null ? cusPdctOriPriceStyle() : cusPdctDisPriceStyle()),
                     ],
                   ),
                 ),

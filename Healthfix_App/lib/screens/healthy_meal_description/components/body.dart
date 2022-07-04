@@ -77,6 +77,10 @@ class Body extends StatelessWidget {
                         textAlign: TextAlign.center,
                         style: cusHeadingStyle(fontSize: getProportionateScreenHeight(20)),
                       ),
+                      Text(
+                        _meal.desc,
+                        style: cusBodyStyle(),
+                      ),
                       sizedBoxOfHeight(4),
                       Row(
                         mainAxisAlignment: MainAxisAlignment.center,
@@ -143,7 +147,7 @@ class Body extends StatelessWidget {
                   child: CusTabs(
                     tabsHeader: [
                       Tab(text: 'About'),
-                      Tab(text: 'Ingredients'),
+                      // Tab(text: 'Ingredients'),
                       Tab(text: 'Reviews'),
                     ],
                     tabsBody: [
@@ -163,8 +167,8 @@ class Body extends StatelessWidget {
                           ),
                         ],
                       ),
-                      Text(_meal.ingredients != null ? _meal.ingredients.trim().replaceAll("\\n", "\n") : "",
-                          style: cusBodyStyle()),
+                      // Text(_meal.ingredients != null ? _meal.ingredients.trim().replaceAll("\\n", "\n") : "",
+                      //     style: cusBodyStyle()),
                       Text("No Reviews yet.", style: cusBodyStyle()),
                     ],
                   ),
@@ -315,7 +319,7 @@ class Body extends StatelessWidget {
 
     // print("new color is set to $_selectedColor $_productDisPrice");
     Future<void> selectedCheckoutButtonCallbackForMeals(Map orderDetails, List selectedCartItems) async {
-      final formatedDateTime = cusDateTimeFormatter.format(DateTime.now());
+      final formatedDateTime = DateTime.now();
 
       OrderedProduct order = OrderedProduct(
         null,
@@ -356,7 +360,7 @@ class Body extends StatelessWidget {
       if (selectedProductsUid != null) {
         // print(orderedProductsUid);
 
-        final formatedDateTime = cusDateTimeFormatter.format(DateTime.now()).toString();
+        final formatedDateTime = DateTime.now();
 
         List orderedProducts = [];
         orderedProducts.add({

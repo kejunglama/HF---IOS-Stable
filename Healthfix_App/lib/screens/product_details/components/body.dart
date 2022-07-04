@@ -475,7 +475,7 @@ class _BodyState extends State<Body> {
 
   Future<void> selectedCheckoutButtonFromBuyNowCallback(Map orderDetails, List selectedProductsUid) async {
     if (selectedProductsUid != null) {
-      final formatedDateTime = cusDateTimeFormatter.format(DateTime.now()).toString();
+      final formatedDateTime = DateTime.now();
 
       List orderedProducts = [];
       orderedProducts.add({

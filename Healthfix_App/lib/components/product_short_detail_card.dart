@@ -14,8 +14,7 @@ class ProductShortDetailCard extends StatelessWidget {
   final VoidCallback onPressed;
   String variantId;
   num itemCount;
-  Function(DismissDirection direction, dynamic cartItemId)
-      buildConfirmationToDelete;
+  Function(DismissDirection direction, dynamic cartItemId) buildConfirmationToDelete;
 
   ProductShortDetailCard({
     Key key,
@@ -56,9 +55,7 @@ class ProductShortDetailCard extends StatelessWidget {
             bool hasColorVariation = false;
             String variantText = "";
             if (hasVariations && variantId != null) {
-              variation = product.variations
-                  .where((variant) => variant["var_id"] == variantId)
-                  .first;
+              variation = product.variations.where((variant) => variant["var_id"] == variantId).first;
 
               hasSizeVariation = variation["size"] != null;
               hasColorVariation = variation["color"] != null;
@@ -140,11 +137,9 @@ class ProductShortDetailCard extends StatelessWidget {
                                 height: getProportionateScreenHeight(10),
                                 width: getProportionateScreenHeight(10),
                                 decoration: BoxDecoration(
-                                  color: variation != null &&
-                                          variation.isNotEmpty
-                                      ? Color(int.parse(hasColorVariation
-                                          ? "0xFF" + variation["color"]["hex"]
-                                          : "0xFFFFFFFF"))
+                                  color: variation != null && variation.isNotEmpty
+                                      ? Color(int.parse(
+                                          hasColorVariation ? "0xFF" + variation["color"]["hex"] : "0xFFFFFFFF"))
                                       : null,
                                   borderRadius: BorderRadius.circular(
                                     getProportionateScreenWidth(20),
@@ -167,10 +162,8 @@ class ProductShortDetailCard extends StatelessWidget {
                             TextSpan(
                                 text: variation != null && variation.isNotEmpty
                                     ? "\Rs. ${variation != null ? (variation["dis_price"] ?? variation["price"] * 1.2) : product.originalPrice}"
-                                    : "",
-                                style: product.discountPrice != null
-                                    ? cusPdctOriPriceStyle()
-                                    : cusPdctDisPriceStyle()),
+                                    : "\Rs. ${product.originalPrice} ",
+                                style: product.discountPrice != null ? cusPdctOriPriceStyle() : cusPdctDisPriceStyle()),
                           ],
                         ),
                       ),
