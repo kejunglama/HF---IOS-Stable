@@ -4,6 +4,7 @@ import 'package:healthfix/exceptions/firebaseauth/messeged_firebaseauth_exceptio
 import 'package:healthfix/exceptions/firebaseauth/signin_exceptions.dart';
 import 'package:healthfix/screens/forgot_password/forgot_password_screen.dart';
 import 'package:healthfix/services/authentification/authentification_service.dart';
+import 'package:healthfix/services/authentification/google_sign_in.dart';
 import 'package:logger/logger.dart';
 
 import '../../../components/custom_suffix_icon.dart';
@@ -44,6 +45,14 @@ class _SignInFormState extends State<SignInForm> {
           DefaultButton(
             text: "Sign in",
             press: signInButtonCallback,
+          ),
+          sizedBoxOfHeight(12),
+          DefaultButton(
+            text: "Sign in with Google",
+            press: () async {
+              print("runn");
+              await AuthentificationService().signInWithGoogle();
+            },
           ),
         ],
       ),

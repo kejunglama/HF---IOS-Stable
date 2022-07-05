@@ -11,9 +11,9 @@ class HealthyMealDescScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Colors.purple,
-        toolbarHeight: 0,
-      ),
+          // backgroundColor: Colors.purple,
+          // toolbarHeight: 0,
+          ),
       body: Body(mealId, meal),
     );
   }

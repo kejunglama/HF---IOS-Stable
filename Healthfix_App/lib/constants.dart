@@ -6,6 +6,7 @@ import 'package:intl/intl.dart';
 const String appName = "Healthfix";
 
 const kPrimaryColor = Color(0xFF01B2C6);
+const kFitCalColor = Color(0xFF6e278e);
 const kPrimaryLightColor = Color(0xFFFFECDF);
 const kPrimaryGradientColor = LinearGradient(
   begin: Alignment.topLeft,

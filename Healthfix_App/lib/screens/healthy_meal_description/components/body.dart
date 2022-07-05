@@ -66,24 +66,25 @@ class Body extends StatelessWidget {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                IconButton(onPressed: () => Navigator.pop(context), icon: Icon(Icons.arrow_back_ios_outlined)),
+                // IconButton(onPressed: () => Navigator.pop(context), icon: Icon(Icons.arrow_back_ios_outlined)),
                 Align(
-                  alignment: Alignment.center,
+                  alignment: Alignment.centerLeft,
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.center,
+                    crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
                         _meal.title.capitalize(),
-                        textAlign: TextAlign.center,
+                        textAlign: TextAlign.left,
                         style: cusHeadingStyle(fontSize: getProportionateScreenHeight(20)),
                       ),
                       Text(
                         _meal.desc,
                         style: cusBodyStyle(),
                       ),
-                      sizedBoxOfHeight(4),
+                      sizedBoxOfHeight(12),
                       Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
+                        // mainAxisAlignment: MainAxisAlignment.center,
                         children: [
                           Text(
                             "${_meal.values["calories"]} Calories - ",
@@ -94,22 +95,24 @@ class Body extends StatelessWidget {
                           ),
                           Text(
                             "${currency.format(_meal.originalPrice)}",
-                            style: cusPdctDisPriceStyle(getProportionateScreenHeight(14)),
+                            style: cusPdctDisPriceStyle(getProportionateScreenHeight(14), Colors.purple),
                           ),
                         ],
                       ),
                       sizedBoxOfHeight(4),
-                      RatingBar(
-                        initialRating: 4.5,
-                        onRatingUpdate: (Rating) {},
-                        direction: Axis.horizontal,
-                        allowHalfRating: true,
-                        itemCount: 5,
-                        itemSize: getProportionateScreenHeight(20),
-                        ratingWidget: RatingWidget(
-                          full: Icon(Icons.star_rounded, color: Colors.orange),
-                          half: Icon(Icons.star_half_rounded, color: Colors.orange),
-                          empty: Icon(Icons.star_outline_rounded, color: Colors.orange),
+                      Container(
+                        child: RatingBar(
+                          initialRating: 4.5,
+                          onRatingUpdate: (Rating) {},
+                          direction: Axis.horizontal,
+                          allowHalfRating: true,
+                          itemCount: 5,
+                          itemSize: getProportionateScreenHeight(20),
+                          ratingWidget: RatingWidget(
+                            full: Icon(Icons.star_rounded, color: Colors.orange),
+                            half: Icon(Icons.star_half_rounded, color: Colors.orange),
+                            empty: Icon(Icons.star_outline_rounded, color: Colors.orange),
+                          ),
                         ),
                       ),
                       Container(
@@ -214,7 +217,7 @@ class Body extends StatelessWidget {
     return Row(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Icon(_icon, color: Colors.blue),
+        Icon(_icon, color: Colors.purple),
         Text(" ${data.toString()} ${key.capitalize()}", style: cusBodyStyle(fontWeight: FontWeight.w300)),
         // Text(data.toString(), style: cusHeadingStyle()),
         // Text(key, style: cusBodyStyle(fontSize: getProportionateScreenHeight(16), color: kSecondaryColor)),

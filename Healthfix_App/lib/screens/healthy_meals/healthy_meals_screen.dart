@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:healthfix/constants.dart';
 import 'package:healthfix/models/Meal.dart';
 import 'package:healthfix/screens/healthy_meal_description/healthy_meal_desc_screen.dart';
@@ -18,20 +19,22 @@ class _HealthyMealsScreenState extends State<HealthyMealsScreen> {
   MealsSearchStream mealsSearchStream = MealsSearchStream(searchString: "sand");
 
   Icon seachIcon = const Icon(Icons.search);
-  Color searchBarColor = kPrimaryColor.withOpacity(0.05);
+  Color searchBarColor = kFitCalColor;
   Widget searchBarWidget = Row(
     mainAxisAlignment: MainAxisAlignment.center,
     children: [
       Text("Fitcal ",
           style: cusHeadingStyle(
-              fontSize: getProportionateScreenHeight(20), color: Colors.purple, fontWeight: FontWeight.w500)),
-      Text("Meals", style: cusHeadingStyle(fontSize: getProportionateScreenHeight(20), fontWeight: FontWeight.w300)),
+              fontSize: getProportionateScreenHeight(20), color: Colors.white, fontWeight: FontWeight.w500)),
+      Text("Meals",
+          style: cusHeadingStyle(
+              fontSize: getProportionateScreenHeight(20), fontWeight: FontWeight.w300, color: Colors.white)),
     ],
   );
   Widget bodyWidget = Body();
   bool showSearchResultWidget = false;
   String searchText;
-  Color iconColor;
+  Color iconColor = Colors.white;
 
   List<Meal> meals = [];
 
@@ -69,8 +72,12 @@ class _HealthyMealsScreenState extends State<HealthyMealsScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        systemOverlayStyle: SystemUiOverlayStyle(
+          statusBarBrightness: Brightness.dark,
+        ),
         title: searchBarWidget,
         titleSpacing: 0,
+        backgroundColor: searchBarColor,
         iconTheme: IconThemeData(color: iconColor ?? Colors.black),
         actions: [
           IconButton(
@@ -120,19 +127,21 @@ class _HealthyMealsScreenState extends State<HealthyMealsScreen> {
                   showSearchResultWidget = true;
                 } else {
                   seachIcon = const Icon(Icons.search);
-                  searchBarColor = kPrimaryColor.withOpacity(0.05);
-                  iconColor = Colors.black;
+                  searchBarColor = kFitCalColor;
+                  iconColor = Colors.white;
                   searchBarWidget = Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       Text("Fitcal ",
                           style: cusHeadingStyle(
                               fontSize: getProportionateScreenHeight(20),
-                              color: Colors.purple,
+                              color: Colors.white,
                               fontWeight: FontWeight.w500)),
                       Text("Meals",
-                          style:
-                              cusHeadingStyle(fontSize: getProportionateScreenHeight(20), fontWeight: FontWeight.w300)),
+                          style: cusHeadingStyle(
+                              fontSize: getProportionateScreenHeight(20),
+                              fontWeight: FontWeight.w300,
+                              color: Colors.white)),
                     ],
                   );
                   showSearchResultWidget = false;
@@ -145,7 +154,6 @@ class _HealthyMealsScreenState extends State<HealthyMealsScreen> {
             ),
           ),
         ],
-        backgroundColor: searchBarColor,
       ),
       body: Stack(
         children: [

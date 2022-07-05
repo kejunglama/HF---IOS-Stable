@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:google_sign_in/google_sign_in.dart';
 import 'package:healthfix/exceptions/firebaseauth/messeged_firebaseauth_exception.dart';
 import 'package:healthfix/exceptions/firebaseauth/credential_actions_exceptions.dart';
 import 'package:healthfix/exceptions/firebaseauth/reauth_exceptions.dart';
@@ -12,27 +13,21 @@ import 'package:flutter/cupertino.dart';
 class AuthentificationService {
   static const String USER_NOT_FOUND_EXCEPTION_CODE = "user-not-found";
   static const String WRONG_PASSWORD_EXCEPTION_CODE = "wrong-password";
-  static const String EMAIL_ALREADY_IN_USE_EXCEPTION_CODE =
-      "email-already-in-use";
-  static const String OPERATION_NOT_ALLOWED_EXCEPTION_CODE =
-      "operation-not-allowed";
+  static const String EMAIL_ALREADY_IN_USE_EXCEPTION_CODE = "email-already-in-use";
+  static const String OPERATION_NOT_ALLOWED_EXCEPTION_CODE = "operation-not-allowed";
   static const String WEAK_PASSWORD_EXCEPTION_CODE = "weak-password";
   static const String USER_MISMATCH_EXCEPTION_CODE = "user-mismatch";
   static const String INVALID_CREDENTIALS_EXCEPTION_CODE = "invalid-credential";
   static const String INVALID_EMAIL_EXCEPTION_CODE = "invalid-email";
   static const String USER_DISABLED_EXCEPTION_CODE = "user-disabled";
-  static const String INVALID_VERIFICATION_CODE_EXCEPTION_CODE =
-      "invalid-verification-code";
-  static const String INVALID_VERIFICATION_ID_EXCEPTION_CODE =
-      "invalid-verification-id";
-  static const String REQUIRES_RECENT_LOGIN_EXCEPTION_CODE =
-      "requires-recent-login";
+  static const String INVALID_VERIFICATION_CODE_EXCEPTION_CODE = "invalid-verification-code";
+  static const String INVALID_VERIFICATION_ID_EXCEPTION_CODE = "invalid-verification-id";
+  static const String REQUIRES_RECENT_LOGIN_EXCEPTION_CODE = "requires-recent-login";
 
   FirebaseAuth _firebaseAuth;
 
   AuthentificationService._privateConstructor();
-  static AuthentificationService _instance =
-      AuthentificationService._privateConstructor();
+  static AuthentificationService _instance = AuthentificationService._privateConstructor();
 
   FirebaseAuth get firebaseAuth {
     if (_firebaseAuth == null) {
@@ -57,10 +52,8 @@ class AuthentificationService {
   Future<bool> reauthCurrentUser(password) async {
     try {
       UserCredential userCredential =
-          await firebaseAuth.signInWithEmailAndPassword(
-              email: currentUser.email, password: password);
-      userCredential = await currentUser
-          .reauthenticateWithCredential(userCredential.credential);
+          await firebaseAuth.signInWithEmailAndPassword(email: currentUser.email, password: password);
+      userCredential = await currentUser.reauthenticateWithCredential(userCredential.credential);
     } on FirebaseAuthException catch (e) {
       if (e.code == WRONG_PASSWORD_EXCEPTION_CODE) {
         throw FirebaseSignInAuthWrongPasswordException();
@@ -75,8 +68,8 @@ class AuthentificationService {
 
   Future<bool> signIn({String email, String password}) async {
     try {
-      final UserCredential userCredential = await firebaseAuth
-          .signInWithEmailAndPassword(email: email, password: password);
+      final UserCredential userCredential =
+          await firebaseAuth.signInWithEmailAndPassword(email: email, password: password);
       if (userCredential.user.emailVerified) {
         return true;
       } else {
@@ -109,8 +102,8 @@ class AuthentificationService {
 
   Future<bool> signUp({String email, String password}) async {
     try {
-      final UserCredential userCredential = await firebaseAuth
-          .createUserWithEmailAndPassword(email: email, password: password);
+      final UserCredential userCredential =
+          await firebaseAuth.createUserWithEmailAndPassword(email: email, password: password);
       final String uid = userCredential.user.uid;
       if (userCredential.user.emailVerified == false) {
         await userCredential.user.sendEmailVerification();
@@ -177,13 +170,11 @@ class AuthentificationService {
     }
   }
 
-  Future<bool> changePasswordForCurrentUser(
-      {String oldPassword, @required String newPassword}) async {
+  Future<bool> changePasswordForCurrentUser({String oldPassword, @required String newPassword}) async {
     try {
       bool isOldPasswordProvidedCorrect = true;
       if (oldPassword != null) {
-        isOldPasswordProvidedCorrect =
-            await verifyCurrentUserPassword(oldPassword);
+        isOldPasswordProvidedCorrect = await verifyCurrentUserPassword(oldPassword);
       }
       if (isOldPasswordProvidedCorrect) {
         await firebaseAuth.currentUser.updatePassword(newPassword);
@@ -208,8 +199,7 @@ class AuthentificationService {
     }
   }
 
-  Future<bool> changeEmailForCurrentUser(
-      {String password, String newEmail}) async {
+  Future<bool> changeEmailForCurrentUser({String password, String newEmail}) async {
     try {
       bool isPasswordProvidedCorrect = true;
       if (password != null) {
@@ -238,8 +228,7 @@ class AuthentificationService {
         password: password,
       );
 
-      final authCredentials =
-          await currentUser.reauthenticateWithCredential(authCredential);
+      final authCredentials = await currentUser.reauthenticateWithCredential(authCredential);
       return authCredentials != null;
     } on MessagedFirebaseAuthException {
       rethrow;
@@ -264,6 +253,23 @@ class AuthentificationService {
       }
     } catch (e) {
       rethrow;
+    }
+  }
+
+  final _googleSignIn = GoogleSignIn();
+
+  signInWithGoogle() async {
+    try {
+      final GoogleSignInAccount googleSignInAccount = await _googleSignIn.signIn();
+      if (googleSignInAccount != null) {
+        final GoogleSignInAuthentication googleSignInAuthentication = await googleSignInAccount.authentication;
+        final AuthCredential authCredential = GoogleAuthProvider.credential(
+            accessToken: googleSignInAuthentication.accessToken, idToken: googleSignInAuthentication.idToken);
+        await firebaseAuth.signInWithCredential(authCredential);
+      }
+    } on FirebaseAuthException catch (e) {
+      print(e.message);
+      throw e;
     }
   }
 }

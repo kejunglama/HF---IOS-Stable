@@ -39,24 +39,28 @@ class _BodyState extends State<Body> {
   Widget build(BuildContext context) {
     return SafeArea(
       child: SingleChildScrollView(
+        physics: ClampingScrollPhysics(),
         child: Container(
           color: kPrimaryColor.withOpacity(0.05),
-          child: Padding(
-            padding: EdgeInsets.symmetric(horizontal: getProportionateScreenHeight(12)),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                // Text("Healthy Meals",
-                //     style: cusHeadingStyle(getProportionateScreenHeight(28))),
-                // Text("What do you want to find",
-                //     style: cusHeadingStyle(null, null, null, FontWeight.w300)),
-                ClipRRect(
-                    borderRadius: BorderRadius.circular(10), child: Image.asset("assets/images/banner-fitcal.png")),
-                sizedBoxOfHeight(20),
-                buildPopularMeals(),
-                buildOurMeals(),
-              ],
-            ),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              // Text("Healthy Meals",
+              //     style: cusHeadingStyle(getProportionateScreenHeight(28))),
+              // Text("What do you want to find",
+              //     style: cusHeadingStyle(null, null, null, FontWeight.w300)),
+              Image.asset("assets/banners/Fitcal - Healthy Protein Meal.png"),
+              Padding(
+                padding: EdgeInsets.symmetric(horizontal: getProportionateScreenHeight(12)),
+                child: Column(
+                  children: [
+                    sizedBoxOfHeight(20),
+                    buildPopularMeals(),
+                    buildOurMeals(),
+                  ],
+                ),
+              ),
+            ],
           ),
         ),
       ),
