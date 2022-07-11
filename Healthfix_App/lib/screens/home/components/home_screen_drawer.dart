@@ -223,8 +223,15 @@ class HomeScreenDrawer extends StatelessWidget {
   String getInitials(String name) => name.isNotEmpty ? name.trim().split(' ').map((l) => l[0]).take(2).join() : 'HF';
 
   Widget buildUserAccountsHeader(BuildContext context) {
-    UserPreferences prefs = new UserPreferences();
-    Map user;
+    // UserPreferences prefs = new UserPreferences();
+    // Map user;
+    User user = AuthentificationService().currentUser;
+    print(user);
+    Widget avatar = user.photoURL == null
+        ? CircleAvatar(child: Text(getInitials(user.displayName)))
+        : CircleAvatar(
+            backgroundImage: NetworkImage(user.photoURL),
+          );
 
     return Container(
       width: double.infinity,
@@ -258,47 +265,58 @@ class HomeScreenDrawer extends StatelessWidget {
                 ),
               ),
               // pp
-              FutureBuilder(
-                future: prefs.getUser(),
-                builder: (context, snapshot) {
-                  if (snapshot.hasData) {
-                    user = snapshot.data;
-                    print(snapshot.data);
-                    Widget avatar = user["display_image"] == null
-                        ? CircleAvatar(child: Text(getInitials(user["display_image"])))
-                        : CircleAvatar(
-                            backgroundImage: NetworkImage(user["display_image"]),
-                          );
-                    ;
-                    return Column(
-                      children: [
-                        Container(
-                            height: getProportionateScreenHeight(100),
-                            width: getProportionateScreenHeight(100),
-                            margin: EdgeInsets.all(getProportionateScreenHeight(20)),
-                            child: avatar),
-                        buildUserNameWidget(user),
-                      ],
-                    );
-                  } else if (snapshot.connectionState == ConnectionState.waiting) {
-                    return Center(
-                      child: CircularProgressIndicator(),
-                    );
-                  } else if (snapshot.hasError) {
-                    final error = snapshot.error;
-                    Logger().w(error.toString());
-                  }
-                  return Column(
-                    children: [
-                      // CircleAvatar(
-                      //     // backgroundColor: kTextColor,
-                      //     backgroundColor: kPrimaryColor.withOpacity(0.2),
-                      //     child: Text(getInitials("Health Fix"))),
-                      CircularProgressIndicator(),
-                    ],
-                  );
-                },
+              Column(
+                children: [
+                  Container(
+                      height: getProportionateScreenHeight(100),
+                      width: getProportionateScreenHeight(100),
+                      margin: EdgeInsets.all(getProportionateScreenHeight(20)),
+                      child: avatar),
+                  buildUserNameWidget(user),
+                ],
               ),
+              // FutureBuilder(
+              //   future: prefs.getUser(),
+              //   builder: (context, snapshot) {
+              //     if (snapshot.hasData) {
+              //       user = snapshot.data;
+              //       print(snapshot.data);
+              //       print("snapshot.data");
+              //       Widget avatar = user["display_image"] == null
+              //           ? CircleAvatar(child: Text(getInitials(user["display_image"])))
+              //           : CircleAvatar(
+              //               backgroundImage: NetworkImage(user["display_image"]),
+              //             );
+              //       ;
+              //       return Column(
+              //         children: [
+              //           Container(
+              //               height: getProportionateScreenHeight(100),
+              //               width: getProportionateScreenHeight(100),
+              //               margin: EdgeInsets.all(getProportionateScreenHeight(20)),
+              //               child: avatar),
+              //           buildUserNameWidget(user),
+              //         ],
+              //       );
+              //     } else if (snapshot.connectionState == ConnectionState.waiting) {
+              //       return Center(
+              //         child: CircularProgressIndicator(),
+              //       );
+              //     } else if (snapshot.hasError) {
+              //       final error = snapshot.error;
+              //       Logger().w(error.toString());
+              //     }
+              //     return Column(
+              //       children: [
+              //         // CircleAvatar(
+              //         //     // backgroundColor: kTextColor,
+              //         //     backgroundColor: kPrimaryColor.withOpacity(0.2),
+              //         //     child: Text(getInitials("Health Fix"))),
+              //         CircularProgressIndicator(),
+              //       ],
+              //     );
+              //   },
+              // ),
               // Logout
               Container(
                 decoration: BoxDecoration(
@@ -378,13 +396,13 @@ class HomeScreenDrawer extends StatelessWidget {
     // );
   }
 
-  Column buildUserNameWidget(Map<dynamic, dynamic> user) {
+  Column buildUserNameWidget(User user) {
     return Column(
       children: [
         Visibility(
-          visible: user["name"].isNotEmpty,
+          visible: user.displayName.isNotEmpty,
           child: Text(
-            user["name"],
+            user.displayName,
             style: cusHeadingStyle(
               fontSize: getProportionateScreenHeight(18),
               color: kSecondaryColor,
@@ -394,8 +412,8 @@ class HomeScreenDrawer extends StatelessWidget {
           ),
         ),
         Text(
-          user["email"] ?? "No Email",
-          style: user["name"].isNotEmpty
+          user.email ?? "No Email",
+          style: user.email.isNotEmpty
               ? cusBodyStyle(
                   fontSize: getProportionateScreenHeight(12),
                   color: Colors.black87,

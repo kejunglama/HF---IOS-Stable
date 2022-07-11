@@ -49,6 +49,8 @@ class _SignInFormState extends State<SignInForm> {
           sizedBoxOfHeight(12),
           DefaultButton(
             text: "Sign in with Google",
+            color: Colors.white,
+            iconImageURL: "assets/logo/google-logo-bgless.png",
             press: () async {
               print("runn");
               await AuthentificationService().signInWithGoogle();

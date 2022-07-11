@@ -67,8 +67,8 @@ class Body extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 // IconButton(onPressed: () => Navigator.pop(context), icon: Icon(Icons.arrow_back_ios_outlined)),
-                Align(
-                  alignment: Alignment.centerLeft,
+                Container(
+                  padding: EdgeInsets.all(getProportionateScreenHeight(12)),
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.center,
                     crossAxisAlignment: CrossAxisAlignment.start,
@@ -78,29 +78,8 @@ class Body extends StatelessWidget {
                         textAlign: TextAlign.left,
                         style: cusHeadingStyle(fontSize: getProportionateScreenHeight(20)),
                       ),
-                      Text(
-                        _meal.desc,
-                        style: cusBodyStyle(),
-                      ),
-                      sizedBoxOfHeight(12),
-                      Row(
-                        // mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          Text(
-                            "${_meal.values["calories"]} Calories - ",
-                            style: cusHeadingStyle(
-                              fontSize: getProportionateScreenHeight(14),
-                              fontWeight: FontWeight.w300,
-                            ),
-                          ),
-                          Text(
-                            "${currency.format(_meal.originalPrice)}",
-                            style: cusPdctDisPriceStyle(getProportionateScreenHeight(14), Colors.purple),
-                          ),
-                        ],
-                      ),
-                      sizedBoxOfHeight(4),
                       Container(
+                        padding: EdgeInsets.symmetric(vertical: getProportionateScreenHeight(6)),
                         child: RatingBar(
                           initialRating: 4.5,
                           onRatingUpdate: (Rating) {},
@@ -115,14 +94,35 @@ class Body extends StatelessWidget {
                           ),
                         ),
                       ),
+                      Text(
+                        _meal.desc,
+                        style: cusBodyStyle(),
+                      ),
                       Container(
-                        height: getProportionateScreenHeight(200),
+                        height: getProportionateScreenHeight(260),
                         // padding: EdgeInsets.symmetric(vertical: getProportionateScreenHeight(20)),
                         // child: ProductImages(
                         //     imageList: meal.images,
                         //     imageFit: BoxFit.contain)
                         child: Center(child: Image.network(_meal.images[0], fit: BoxFit.cover)),
                       ),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Text(
+                            "${_meal.values["calories"]} Calories - ",
+                            style: cusHeadingStyle(
+                              fontSize: getProportionateScreenHeight(16),
+                              fontWeight: FontWeight.w300,
+                            ),
+                          ),
+                          Text(
+                            "${currency.format(_meal.originalPrice)}",
+                            style: cusPdctDisPriceStyle(getProportionateScreenHeight(16), Colors.purple),
+                          ),
+                        ],
+                      ),
+                      sizedBoxOfHeight(4),
                     ],
                   ),
                 ),
@@ -146,37 +146,37 @@ class Body extends StatelessWidget {
                 // ),
                 sizedBoxOfHeight(20),
                 // buildInfoTabs(meal.desc, meal.highlights),
-                Container(
-                  child: CusTabs(
-                    tabsHeader: [
-                      Tab(text: 'About'),
-                      // Tab(text: 'Ingredients'),
-                      Tab(text: 'Reviews'),
-                    ],
-                    tabsBody: [
-                      Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text(_meal.desc != null ? _meal.desc.trim().replaceAll("\\n", "\n") : "",
-                              style: cusBodyStyle()),
-                          sizedBoxOfHeight(20),
-                          GestureDetector(
-                            onTap: () =>
-                                Navigator.push(context, MaterialPageRoute(builder: (context) => SellerScreen())),
-                            child: Text(
-                              "By Fitcal",
-                              style: cusHeadingStyle(fontSize: getProportionateScreenHeight(14), color: Colors.purple),
-                            ),
-                          ),
-                        ],
-                      ),
-                      // Text(_meal.ingredients != null ? _meal.ingredients.trim().replaceAll("\\n", "\n") : "",
-                      //     style: cusBodyStyle()),
-                      Text("No Reviews yet.", style: cusBodyStyle()),
-                    ],
-                  ),
-                ),
-                // Text(
+                // Container(
+                //   child: CusTabs(
+                //     tabsHeader: [
+                //       Tab(text: 'About'),
+                //       // Tab(text: 'Ingredients'),
+                //       Tab(text: 'Reviews'),
+                //     ],
+                //     tabsBody: [
+                //       Column(
+                //         crossAxisAlignment: CrossAxisAlignment.start,
+                //         children: [
+                //           Text(_meal.desc != null ? _meal.desc.trim().replaceAll("\\n", "\n") : "",
+                //               style: cusBodyStyle()),
+                //           sizedBoxOfHeight(20),
+                //           GestureDetector(
+                //             onTap: () =>
+                //                 Navigator.push(context, MaterialPageRoute(builder: (context) => SellerScreen())),
+                //             child: Text(
+                //               "By Fitcal",
+                //               style: cusHeadingStyle(fontSize: getProportionateScreenHeight(14), color: Colors.purple),
+                //             ),
+                //           ),
+                //         ],
+                //       ),
+                //       // Text(_meal.ingredients != null ? _meal.ingredients.trim().replaceAll("\\n", "\n") : "",
+                //       //     style: cusBodyStyle()),
+                //       Text("No Reviews yet.", style: cusBodyStyle()),
+                //     ],
+                //   ),
+                // ),
+                // // Text(
                 //   "${meal.highlights}",
                 //   style: cusHeadingStyle(
                 //       fontSize: getProportionateScreenHeight(14),
