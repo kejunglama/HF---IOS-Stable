@@ -38,9 +38,16 @@ class Body extends StatefulWidget {
 
 class _BodyState extends State<Body> {
   final List<String> adsBannerImagesList = [
-    'https://firebasestorage.googleapis.com/v0/b/siteux-healthfix.appspot.com/o/offer_banners%2FHF-Banner-1.jpg?alt=media&token=2b8a7851-6276-4a7d-8468-1baf79e45882',
-    'https://firebasestorage.googleapis.com/v0/b/siteux-healthfix.appspot.com/o/offer_banners%2FHF-Banner-3.jpg?alt=media&token=8d9a44c2-94d3-4b5d-95b5-1ccc0ebb1020',
-    'https://firebasestorage.googleapis.com/v0/b/siteux-healthfix.appspot.com/o/offer_banners%2FHF-Banner-2.jpg?alt=media&token=cb242636-d7de-4b0f-adfb-75fbd2f059e6'
+    'assets/banners/Swanson - Launch Offer.png',
+  ];
+
+  final List adsBannerNavigation = [
+    CategoryProductsScreen(
+      productType: ProductType.Supplements,
+      productTypes: pdctCategories,
+      subProductType: "",
+      searchString: "swanson",
+    ),
   ];
 
   final List<String> offerImagesList = [
@@ -188,7 +195,7 @@ class _BodyState extends State<Body> {
             sizedBoxOfHeight(12),
 
             // Section - Offer Banners
-            AdsBanners(adsBannerImagesList),
+            AdsBanners(adsBannerImagesList, adsBannerNavigation),
 
             sizedBoxOfHeight(5),
 

@@ -27,17 +27,17 @@ class HomeScreenDrawer extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text(
-          "My Account",
-          style: cusCenterHeadingStyle(),
-        ),
-        // leading: BackButton(
-        //   color: kPrimaryColor,
-        // ),
-      ),
-      body: Container(
+    return Drawer(
+      // appBar: AppBar(
+      //   title: Text(
+      //     "My Account",
+      //     style: cusCenterHeadingStyle(),
+      //   ),
+      //   // leading: BackButton(
+      //   //   color: kPrimaryColor,
+      //   // ),
+      // ),
+      child: Container(
         child: ListView(
           physics: BouncingScrollPhysics(),
           children: [
@@ -54,9 +54,9 @@ class HomeScreenDrawer extends StatelessWidget {
                         "My Addresses",
                         style: cusHeadingStyle(
                           color: Colors.black,
-                          fontSize: getProportionateScreenHeight(14),
+                          fontSize: 13,
                           fontWeight: FontWeight.w300,
-                          letterSpacing: 0.6,
+                          letterSpacing: 0.25,
                         ),
                       ),
                       onTap: () async {
@@ -95,9 +95,9 @@ class HomeScreenDrawer extends StatelessWidget {
                         "My Orders",
                         style: cusHeadingStyle(
                           color: Colors.black,
-                          fontSize: getProportionateScreenHeight(14),
+                          fontSize: 13,
                           fontWeight: FontWeight.w300,
-                          letterSpacing: 0.6,
+                          letterSpacing: 0.25,
                         ),
                       ),
                       onTap: () async {
@@ -173,9 +173,9 @@ class HomeScreenDrawer extends StatelessWidget {
                         "About Developer",
                         style: cusHeadingStyle(
                           color: Colors.black,
-                          fontSize: getProportionateScreenHeight(14),
+                          fontSize: 13,
                           fontWeight: FontWeight.w300,
-                          letterSpacing: 0.6,
+                          letterSpacing: 0.25,
                         ),
                       ),
                       onTap: () async {
@@ -195,9 +195,9 @@ class HomeScreenDrawer extends StatelessWidget {
                         "Sign out",
                         style: cusHeadingStyle(
                           color: Colors.black,
-                          fontSize: getProportionateScreenHeight(14),
+                          fontSize: 13,
                           fontWeight: FontWeight.w300,
-                          letterSpacing: 0.6,
+                          letterSpacing: 0.25,
                         ),
                       ),
                       onTap: () async {
@@ -260,21 +260,16 @@ class HomeScreenDrawer extends StatelessWidget {
                   },
                   icon: Icon(
                     Icons.camera_alt_rounded,
-                    color: kPrimaryColor.withOpacity(0.6),
+                    color: kPrimaryColor,
                   ),
                 ),
               ),
-              // pp
-              Column(
-                children: [
-                  Container(
-                      height: getProportionateScreenHeight(100),
-                      width: getProportionateScreenHeight(100),
-                      margin: EdgeInsets.all(getProportionateScreenHeight(20)),
-                      child: avatar),
-                  buildUserNameWidget(user),
-                ],
-              ),
+              Container(
+                  height: getProportionateScreenHeight(80),
+                  width: getProportionateScreenHeight(80),
+                  margin: EdgeInsets.all(getProportionateScreenHeight(20)),
+                  child: avatar),
+
               // FutureBuilder(
               //   future: prefs.getUser(),
               //   builder: (context, snapshot) {
@@ -341,12 +336,13 @@ class HomeScreenDrawer extends StatelessWidget {
                   },
                   icon: Icon(
                     Icons.logout_rounded,
-                    color: kPrimaryColor.withOpacity(0.6),
+                    color: kPrimaryColor,
                   ),
                 ),
               ),
             ],
           ),
+          buildUserNameWidget(user),
         ],
       ),
     );
@@ -404,10 +400,10 @@ class HomeScreenDrawer extends StatelessWidget {
           child: Text(
             user.displayName,
             style: cusHeadingStyle(
-              fontSize: getProportionateScreenHeight(18),
+              fontSize: 16,
               color: kSecondaryColor,
-              letterSpacing: 0.5,
-              fontWeight: FontWeight.w300,
+              letterSpacing: 0.25,
+              fontWeight: FontWeight.w400,
             ),
           ),
         ),
@@ -415,12 +411,12 @@ class HomeScreenDrawer extends StatelessWidget {
           user.email ?? "No Email",
           style: user.email.isNotEmpty
               ? cusBodyStyle(
-                  fontSize: getProportionateScreenHeight(12),
+                  fontSize: 12,
                   color: Colors.black87,
                   fontWeight: FontWeight.w300,
-                  letterSpacing: 0.5,
+                  letterSpacing: 0.25,
                 )
-              : cusHeadingStyle(fontSize: getProportionateScreenHeight(22), color: kPrimaryColor),
+              : cusHeadingStyle(fontSize: 12, color: kPrimaryColor),
         ),
       ],
     );
@@ -433,9 +429,9 @@ class HomeScreenDrawer extends StatelessWidget {
         "Account Details",
         style: cusHeadingStyle(
           color: Colors.black,
-          fontSize: getProportionateScreenHeight(14),
+          fontSize: 13,
           fontWeight: FontWeight.w300,
-          letterSpacing: 0.6,
+          letterSpacing: 0.25,
         ),
       ),
       children: [
@@ -460,9 +456,9 @@ class HomeScreenDrawer extends StatelessWidget {
             "Change Display Name",
             style: cusHeadingStyle(
               color: Colors.black,
-              fontSize: getProportionateScreenHeight(14),
+              fontSize: 13,
               fontWeight: FontWeight.w300,
-              letterSpacing: 0.6,
+              letterSpacing: 0.25,
             ),
           ),
           onTap: () {
@@ -478,9 +474,9 @@ class HomeScreenDrawer extends StatelessWidget {
             "Change Phone Number",
             style: cusHeadingStyle(
               color: Colors.black,
-              fontSize: getProportionateScreenHeight(14),
+              fontSize: 13,
               fontWeight: FontWeight.w300,
-              letterSpacing: 0.6,
+              letterSpacing: 0.25,
             ),
           ),
           onTap: () {
@@ -496,9 +492,9 @@ class HomeScreenDrawer extends StatelessWidget {
             "Change Email",
             style: cusHeadingStyle(
               color: Colors.black,
-              fontSize: getProportionateScreenHeight(14),
+              fontSize: 13,
               fontWeight: FontWeight.w300,
-              letterSpacing: 0.6,
+              letterSpacing: 0.25,
             ),
           ),
           onTap: () {
@@ -514,9 +510,9 @@ class HomeScreenDrawer extends StatelessWidget {
             "Change Password",
             style: cusHeadingStyle(
               color: Colors.black,
-              fontSize: getProportionateScreenHeight(14),
+              fontSize: 13,
               fontWeight: FontWeight.w300,
-              letterSpacing: 0.6,
+              letterSpacing: 0.25,
             ),
           ),
           onTap: () {
@@ -622,7 +618,7 @@ class CardDesign extends StatelessWidget {
       margin: EdgeInsets.only(bottom: 8),
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(10),
-        color: kPrimaryColor.withOpacity(0.05),
+        // color: kPrimaryColor.withOpacity(0.05),
       ),
       child: child,
     );

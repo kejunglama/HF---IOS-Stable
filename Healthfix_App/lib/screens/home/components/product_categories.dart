@@ -19,35 +19,33 @@ class ProductCategories extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     List<Map> _pdctCategories = new List.from(pdctCategories);
-    if (_pdctCategories[0]["product_type"] == ProductType.All)
-      _pdctCategories.removeAt(0);
+    if (_pdctCategories[0]["product_type"] == ProductType.All) _pdctCategories.removeAt(0);
     // print(_pdctCategories);
     // print(pdctCategories);
 
     return Column(
       children: [
         Padding(
-          padding: EdgeInsets.symmetric(
-              horizontal: getProportionateScreenHeight(10)),
+          padding: EdgeInsets.symmetric(horizontal: getProportionateScreenHeight(10)),
           child: Padding(
-            padding: EdgeInsets.only(bottom: getProportionateScreenHeight(12)),
+            padding: EdgeInsets.only(bottom: getProportionateScreenHeight(12), top: getProportionateScreenHeight(8)),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Text("Category",
                     style: cusHeadingStyle(
-                      fontSize: getProportionateScreenHeight(16),
-                      fontWeight: FontWeight.w400,
+                      fontSize: 16,
+                      letterSpacing: 0.25,
+                      fontWeight: FontWeight.w500,
+                      color: Colors.black87,
                     )),
-                GestureDetector(
-                    onTap: goToCategory,
-                    child: Text("See More", style: cusHeadingLinkStyle)),
+                GestureDetector(onTap: goToCategory, child: Text("See More", style: cusHeadingLinkStyle())),
               ],
             ),
           ),
         ),
         SizedBox(
-          height: getProportionateScreenHeight(110),
+          height: 120,
           child: ListView(
             scrollDirection: Axis.horizontal,
             physics: BouncingScrollPhysics(),
@@ -63,8 +61,7 @@ class ProductCategories extends StatelessWidget {
                         context,
                         MaterialPageRoute(
                           builder: (context) => CategoryProductsScreen(
-                            productType: _pdctCategories[index]
-                                [PRODUCT_TYPE_KEY],
+                            productType: _pdctCategories[index][PRODUCT_TYPE_KEY],
                             productTypes: _pdctCategories,
                             subProductType: "",
                           ),

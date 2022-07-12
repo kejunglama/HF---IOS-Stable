@@ -59,7 +59,7 @@ class ProductDescription extends StatelessWidget {
             Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text("${product.brand?.toUpperCase()}",
+                Text("${product.brand != null ? product.brand.toUpperCase() : ""}",
                     style: cusHeadingStyle(
                         fontSize: getProportionateScreenHeight(14),
                         color: kSecondaryColor,
@@ -68,8 +68,8 @@ class ProductDescription extends StatelessWidget {
                 Text(
                   product.title.capitalize(),
                   style: cusHeadingStyle(
-                    fontSize: getProportionateScreenHeight(16),
-                    fontWeight: FontWeight.w500,
+                    fontSize: 16,
+                    fontWeight: FontWeight.w400,
                     letterSpacing: 0.25,
                   ),
                 ),
@@ -120,10 +120,7 @@ class ProductDescription extends StatelessWidget {
                   TextSpan(
                     text: "From ",
                     style: cusHeadingStyle(
-                        fontSize: getProportionateScreenHeight(14),
-                        color: kSecondaryColor,
-                        fontWeight: FontWeight.w300,
-                        letterSpacing: 0.5),
+                        fontSize: 14, color: kSecondaryColor, fontWeight: FontWeight.w400, letterSpacing: 0.25),
                     children: [
                       TextSpan(
                         text: "${product.seller}",

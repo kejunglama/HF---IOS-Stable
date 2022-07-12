@@ -25,22 +25,23 @@ class NothingToShowContainer extends StatelessWidget {
           SvgPicture.asset(
             iconPath,
             color: kTextColor,
-            width: getProportionateScreenWidth(75),
+            width: getProportionateScreenWidth(50),
           ),
           SizedBox(height: getProportionateScreenHeight(16)),
           Text(
             "$primaryMessage",
-            style: TextStyle(
+            style: cusHeadingStyle(
               color: kTextColor,
-              fontSize: getProportionateScreenHeight(15),
+              fontSize: 16,
             ),
           ),
           Text(
             "$secondaryMessage",
-            style: TextStyle(
+            style: cusHeadingStyle(
               color: kTextColor,
-              fontSize: getProportionateScreenHeight(18),
-              fontWeight: FontWeight.bold,
+              fontSize: 14,
+              fontWeight: FontWeight.w300,
+              letterSpacing: 0.5,
             ),
           ),
         ],

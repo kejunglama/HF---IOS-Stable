@@ -31,6 +31,30 @@ class HomeHeader extends StatelessWidget {
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
+              // Btn - Account
+              Container(
+                width: getProportionateScreenWidth(35),
+                child: IconButton(
+                  onPressed: () {
+                    // UserPreferences prefs = new UserPreferences();
+
+                    AuthentificationService().currentUser != null
+                        ? Scaffold.of(context).openDrawer()
+                        //  Navigator.push(
+                        //     context,
+                        //     MaterialPageRoute(builder: (context) => HomeScreenDrawer()),
+                        //   )
+                        : Navigator.push(
+                            context,
+                            MaterialPageRoute(builder: (context) => AuthenticationWrapper()),
+                          );
+                  },
+                  // onPressed: () => Scaffold.of(context).openDrawer(),
+                  icon: Icon(Icons.menu),
+                  color: Colors.black.withOpacity(0.7),
+                  splashRadius: 20,
+                ),
+              ),
               // Logo
               GestureDetector(
                 onTap: () {
@@ -47,6 +71,7 @@ class HomeHeader extends StatelessWidget {
               // Icons
               Container(
                 margin: EdgeInsets.symmetric(horizontal: getProportionateScreenWidth(8)),
+                width: getProportionateScreenWidth(35),
                 child: Row(
                   children: [
                     // Btn - Cart
@@ -75,29 +100,6 @@ class HomeHeader extends StatelessWidget {
                     //     splashRadius: 20,
                     //   ),
                     // ),
-
-                    // Btn - Account
-                    Container(
-                      width: getProportionateScreenWidth(35),
-                      child: IconButton(
-                        onPressed: () {
-                          UserPreferences prefs = new UserPreferences();
-
-                          AuthentificationService().currentUser != null
-                              ? Navigator.push(
-                                  context,
-                                  MaterialPageRoute(builder: (context) => HomeScreenDrawer()),
-                                )
-                              : Navigator.push(
-                                  context,
-                                  MaterialPageRoute(builder: (context) => AuthenticationWrapper()),
-                                );
-                        },
-                        icon: Icon(Icons.menu),
-                        color: Colors.black.withOpacity(0.7),
-                        splashRadius: 20,
-                      ),
-                    ),
                   ],
                 ),
               ),
@@ -159,25 +161,26 @@ class HomeHeader extends StatelessWidget {
         ),
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(5),
-          border: Border.all(width: 0.3, color: Colors.grey),
+          // border: Border.all(width: 0.3, color: Colors.grey),
+          color: Color(0xfff3f3f3),
         ),
         child: Container(
           padding: EdgeInsets.symmetric(horizontal: getProportionateScreenHeight(4)),
           height: getProportionateScreenHeight(40),
           child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              Icon(
-                Icons.search_rounded,
-                color: Colors.cyan,
-                size: getProportionateScreenHeight(28),
-              ),
               Container(
                 margin: EdgeInsets.only(left: getProportionateScreenWidth(10)),
                 child: Text(
                   "Search Products, Brands, Vendors",
-                  style: cusHeadingStyle(
-                      fontSize: getProportionateScreenHeight(14), color: Colors.grey, fontWeight: FontWeight.w300),
+                  style: cusHeadingStyle(fontSize: 12, color: Colors.grey, fontWeight: FontWeight.w300),
                 ),
+              ),
+              Icon(
+                Icons.search,
+                color: Colors.grey,
+                size: getProportionateScreenHeight(24),
               ),
             ],
           ),

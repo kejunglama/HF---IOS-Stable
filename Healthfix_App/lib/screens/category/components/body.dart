@@ -137,14 +137,14 @@ class CategoryList extends StatelessWidget {
         left: getProportionateScreenWidth(12),
       ),
       decoration: BoxDecoration(
-        boxShadow: [
-          BoxShadow(
-            color: Colors.grey.withOpacity(0.1),
-            spreadRadius: 5,
-            blurRadius: 7,
-            offset: Offset(-5, 0),
-          ),
-        ],
+        // boxShadow: [
+        //   BoxShadow(
+        //     color: Colors.grey.withOpacity(0.1),
+        //     spreadRadius: 5,
+        //     blurRadius: 7,
+        //     offset: Offset(-5, 0),
+        //   ),
+        // ],
         border: Border(
           right: BorderSide(width: 1.0, color: Colors.grey.shade100),
         ),

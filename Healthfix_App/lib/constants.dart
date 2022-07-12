@@ -70,12 +70,13 @@ cusBodyStyle({double fontSize, FontWeight fontWeight, Color color, double letter
       ),
     );
 
-var cusHeadingLinkStyle = GoogleFonts.roboto(
-  textStyle: TextStyle(
-    color: kPrimaryColor,
-    fontSize: getProportionateScreenHeight(12),
-  ),
-);
+cusHeadingLinkStyle() => GoogleFonts.roboto(
+      textStyle: TextStyle(
+        color: kPrimaryColor,
+        fontSize: (12),
+        fontWeight: FontWeight.w300,
+      ),
+    );
 
 cusCenterHeadingStyle([Color color, FontWeight fw, num fs]) => GoogleFonts.poppins(
       textStyle: TextStyle(
@@ -95,17 +96,17 @@ cusCenterHeadingAccentStyle() => GoogleFonts.poppins(
 
 cusPdctCatNameStyle() => GoogleFonts.poppins(
       textStyle: TextStyle(
-        letterSpacing: getProportionateScreenHeight(0.5),
+        letterSpacing: 0.25,
         color: kSecondaryColor,
-        fontSize: getProportionateScreenHeight(10),
+        fontSize: 12,
         // fontSize: getProportionateScreenHeight(8),
-        fontWeight: FontWeight.w400,
+        fontWeight: FontWeight.w300,
       ),
     );
 
 cusPdctDisPriceStyle([double fs, Color color]) => GoogleFonts.poppins(
       textStyle: TextStyle(
-        color: color ?? kSecondaryColor,
+        color: color ?? Colors.black,
         // fontWeight: FontWeight.w600,
         fontSize: fs ?? getProportionateScreenHeight(12),
         letterSpacing: 0.5,
@@ -133,9 +134,9 @@ cusPdctOriPriceStyle([double fs]) => GoogleFonts.poppins(
 cusPdctNameStyle() => GoogleFonts.poppins(
       textStyle: TextStyle(
         color: Colors.black,
-        fontWeight: FontWeight.w400,
-        fontSize: getProportionateScreenHeight(10),
-        letterSpacing: getProportionateScreenHeight(0.5),
+        fontWeight: FontWeight.w300,
+        fontSize: 12,
+        letterSpacing: 0.5,
       ),
     );
 

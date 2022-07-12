@@ -22,9 +22,7 @@ num breakHeight = 700;
 double getProportionateScreenHeight(double inputHeight) {
   double screenHeight = SizeConfig.screenHeight;
   // 812 is the layout height that designer use
-  return screenHeight > breakHeight
-      ? (inputHeight / 812.0) * screenHeight
-      : inputHeight;
+  return screenHeight > breakHeight ? (inputHeight / 812.0) * screenHeight : inputHeight;
 }
 
 // Get the proportionate height as per screen size

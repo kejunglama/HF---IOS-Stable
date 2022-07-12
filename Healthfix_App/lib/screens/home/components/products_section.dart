@@ -59,9 +59,7 @@ class _ProductsSectionState extends State<ProductsSection> {
             ),
           ),
           sizedBoxOfHeight(12),
-          Container(
-              height: getProportionateScreenHeight(200),
-              child: buildProductsList()),
+          Container(height: getProportionateScreenHeight(200), child: buildProductsList()),
         ],
       ),
     );
@@ -76,8 +74,7 @@ class _ProductsSectionState extends State<ProductsSection> {
         if (snapshot.hasData) {
           if (snapshot.data.length == 0) {
             return Center(
-              child: NothingToShowContainer(
-                  secondaryMessage: widget.emptyListMessage),
+              child: NothingToShowContainer(secondaryMessage: widget.emptyListMessage),
             );
           }
           return buildProductGrid(snapshot.data);
@@ -108,7 +105,7 @@ class _ProductsSectionState extends State<ProductsSection> {
       gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
         crossAxisCount: 1,
         // childAspectRatio: 1,
-        mainAxisExtent: getProportionateScreenWidth(132),
+        mainAxisExtent: 150,
         // mainAxisSpacing: getProportionateScreenWidth(12),
       ),
       itemCount: productsId.length,

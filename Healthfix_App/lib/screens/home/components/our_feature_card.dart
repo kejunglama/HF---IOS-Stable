@@ -42,7 +42,7 @@ class OurFeatureCard extends StatelessWidget {
                             heading,
                             textAlign: TextAlign.start,
                             style: cusHeadingStyle(
-                              fontSize: getProportionateScreenWidth(14),
+                              fontSize: 14,
                               color: kSecondaryColor,
                               fontWeight: FontWeight.w300,
                             ),
@@ -51,8 +51,7 @@ class OurFeatureCard extends StatelessWidget {
                         // SizedBox(height: getProportionateScreenHeight(2)),
                         Container(
                           alignment: Alignment.centerLeft,
-                          child: Text(subHeading,
-                              style: cusBodyStyle(fontSize: getProportionateScreenHeight(12), letterSpacing: 0.5)),
+                          child: Text(subHeading, style: cusBodyStyle(fontSize: 13, letterSpacing: 0.5)),
                         ),
                       ],
                     ),

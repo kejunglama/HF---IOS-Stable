@@ -5,8 +5,9 @@ import 'package:healthfix/size_config.dart';
 // Cleaned
 class AdsBanners extends StatelessWidget {
   final List imagesList;
+  final List naviagationList;
 
-  AdsBanners(this.imagesList, {key}) : super(key: key);
+  AdsBanners(this.imagesList, this.naviagationList, {key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -16,12 +17,12 @@ class AdsBanners extends StatelessWidget {
           itemCount: imagesList.length,
           options: CarouselOptions(
             viewportFraction: 1,
-            height: getProportionateScreenHeight(172),
+            // height: getProportionateScreenHeight(200),
             autoPlay: true,
             autoPlayInterval: Duration(milliseconds: 2500),
             autoPlayAnimationDuration: Duration(milliseconds: 500),
             reverse: false,
-            aspectRatio: 5.0,
+            aspectRatio: 2,
           ),
           itemBuilder: (context, i, id) {
             return GestureDetector(
@@ -30,7 +31,7 @@ class AdsBanners extends StatelessWidget {
                 // decoration: BoxDecoration(borderRadius: BorderRadius.circular(5)),
                 child: ClipRRect(
                   // borderRadius: BorderRadius.circular(5),
-                  child: Image.network(
+                  child: Image.asset(
                     imagesList[i],
                     width: getProportionateScreenWidth(500),
                     fit: BoxFit.cover,
@@ -38,8 +39,12 @@ class AdsBanners extends StatelessWidget {
                 ),
               ),
               onTap: () {
-                var url = imagesList[i];
-                print(url.toString());
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => naviagationList[i]),
+                );
+                // var url = imagesList[i];
+                // print(url.toString());
               },
             );
           },

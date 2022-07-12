@@ -22,8 +22,19 @@ class TopBrandsSection extends StatelessWidget {
           Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              Text("Top Brands | ", style: cusCenterHeadingStyle()),
-              Text("We Trust", style: cusCenterHeadingAccentStyle()),
+              Text("Top Brands | ",
+                  style: cusHeadingStyle(
+                    fontSize: 16,
+                    letterSpacing: 0.25,
+                    fontWeight: FontWeight.w500,
+                  )),
+              Text("We Trust",
+                  style: cusHeadingStyle(
+                    fontSize: 16,
+                    letterSpacing: 0.25,
+                    fontWeight: FontWeight.w500,
+                    color: Colors.blue,
+                  )),
             ],
           ),
 

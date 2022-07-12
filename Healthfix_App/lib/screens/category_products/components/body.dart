@@ -62,6 +62,9 @@ class _BodyState extends State<Body> {
     fetchSubCategories(_categoryName);
     _selectedSubCat = (widget.subProductType != null) ? widget.subProductType : "";
     // if (category["product_type"] == ProductType.All) {}
+
+    // Fetch from Search String if not null
+    if (widget.searchString != null) reInitProductStream("", widget.searchString);
   }
 
   @override
@@ -72,6 +75,7 @@ class _BodyState extends State<Body> {
 
   @override
   Widget build(BuildContext context) {
+    print(widget.searchString);
     return SafeArea(
       child: RefreshIndicator(
         onRefresh: refreshPage,
@@ -115,6 +119,7 @@ class _BodyState extends State<Body> {
   Container searchBar() {
     return Container(
       child: SearchField(
+        searchQuery: widget.searchString ?? "",
         onSubmit: (value) {
           setState(() {
             widget.searchString = value;
@@ -294,7 +299,7 @@ class _BodyState extends State<Body> {
                         value: val[0],
                         child: Text(
                           val[1],
-                          style: cusHeadingLinkStyle,
+                          style: cusHeadingLinkStyle(),
                         ),
                       );
                     },
@@ -375,7 +380,7 @@ class _BodyState extends State<Body> {
   Widget buildProductsGrid(List<String> productsId) {
     return Container(
       padding: EdgeInsets.symmetric(
-        vertical: getProportionateScreenHeight(16),
+        vertical: getProportionateScreenHeight(4),
         horizontal: getProportionateScreenWidth(8),
       ),
       decoration: BoxDecoration(

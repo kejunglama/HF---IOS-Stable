@@ -22,10 +22,10 @@ class Body extends StatefulWidget {
 
 class _BodyState extends State<Body> {
   MealsStream mealsStream = MealsStream();
-  bool isLoadingPopularMeal = true;
 
   void initState() {
     mealsStream.init();
+
     super.initState();
   }
 
@@ -67,19 +67,23 @@ class _BodyState extends State<Body> {
     );
   }
 
-  setIsLoadingPopularMeal(bool val) {
-    SchedulerBinding.instance.addPostFrameCallback((_) {
-      setState(() {
-        isLoadingPopularMeal = val;
-      });
-    });
-  }
+  // setIsLoadingPopularMeal(bool val) {
+  //   SchedulerBinding.instance.addPostFrameCallback((_) {
+  //     setState(() {
+  //       isLoadingPopularMeal = val;
+  //     });
+  //   });
+  // }
 
   Widget buildPopularMeals() {
     List featuredMealsIds = [
-      "7f98e5f0-f041-11ec-9970-8beccbe446e9",
-      "7f7e8020-f041-11ec-9970-8beccbe446e9",
-      "7fa6efb0-f041-11ec-9970-8beccbe446e9",
+      "7bb124f0-fb38-11ec-abbd-fd6a652ee328",
+      "7bc04020-fb38-11ec-abbd-fd6a652ee328",
+      "7bff6c00-fb38-11ec-abbd-fd6a652ee328",
+      "7bd0bae0-fb38-11ec-abbd-fd6a652ee328",
+      "7c477180-fb38-11ec-abbd-fd6a652ee328",
+      "7c7d0070-fb38-11ec-abbd-fd6a652ee328",
+      "7c306710-fb38-11ec-abbd-fd6a652ee328",
     ];
 
     List<Widget> featuredCardsHori = [];
@@ -91,9 +95,8 @@ class _BodyState extends State<Body> {
             builder: (context, snapshot) {
               // setIsLoadingPopularMeal(true);
 
+              print("dasdad");
               if (snapshot.hasData) {
-                setState(() => isLoadingPopularMeal = false);
-
                 return GestureDetector(
                   onTap: () {
                     Navigator.push(
@@ -124,26 +127,27 @@ class _BodyState extends State<Body> {
       crossAxisAlignment: CrossAxisAlignment.start,
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
-        Text("Popular Meals",
-            style: cusHeadingStyle(
-              fontSize: getProportionateScreenHeight(16),
-              fontWeight: FontWeight.w400,
-            )),
+        Text(
+          "Popular Meals",
+          style: cusHeadingStyle(
+            fontSize: 16,
+            letterSpacing: 0.25,
+            fontWeight: FontWeight.w500,
+          ),
+        ),
         sizedBoxOfHeight(20),
         SizedBox(
           height: getProportionateScreenHeight(240),
           // width: SizeConfig.screenWidth,
 
-          child: isLoadingPopularMeal
-              ? Center(child: CircularProgressIndicator())
-              : SingleChildScrollView(
-                  scrollDirection: Axis.horizontal,
-                  child: Wrap(
-                    spacing: getProportionateScreenWidth(12),
-                    // mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: featuredCardsHori,
-                  ),
-                ),
+          child: SingleChildScrollView(
+            scrollDirection: Axis.horizontal,
+            child: Wrap(
+              spacing: getProportionateScreenWidth(12),
+              // mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: featuredCardsHori,
+            ),
+          ),
         ),
       ],
     );
@@ -362,11 +366,14 @@ class _BodyState extends State<Body> {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         sizedBoxOfHeight(28),
-        Text("Our Healthy Meals",
-            style: cusHeadingStyle(
-              fontSize: getProportionateScreenHeight(16),
-              fontWeight: FontWeight.w400,
-            )),
+        Text(
+          "Our Healthy Meals",
+          style: cusHeadingStyle(
+            fontSize: 16,
+            letterSpacing: 0.25,
+            fontWeight: FontWeight.w500,
+          ),
+        ),
         sizedBoxOfHeight(20),
         StreamBuilder(
           stream: mealsStream.stream,

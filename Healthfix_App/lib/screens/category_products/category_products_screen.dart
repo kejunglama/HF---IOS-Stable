@@ -7,12 +7,14 @@ import 'components/body.dart';
 class CategoryProductsScreen extends StatelessWidget {
   final ProductType productType;
   final String subProductType;
+  final String searchString;
   final List<Map> productTypes;
 
   const CategoryProductsScreen({
     Key key,
     this.productType,
     this.productTypes,
+    this.searchString,
     this.subProductType,
   }) : super(key: key);
 
@@ -29,6 +31,7 @@ class CategoryProductsScreen extends StatelessWidget {
           productType: productType,
           productTypes: productTypes,
           subProductType: subProductType,
+          searchString: searchString ?? "",
         ),
       ),
     );

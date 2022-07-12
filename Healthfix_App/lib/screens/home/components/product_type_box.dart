@@ -50,10 +50,8 @@ class ProductTypeBox extends StatelessWidget {
           ),
           // SizedBox(height: 2),
           Container(
-            margin: EdgeInsets.only(
-                left: getProportionateScreenHeight(12),
-                top: getProportionateScreenHeight(5)),
-            width: getProportionateScreenWidth(70),
+            margin: EdgeInsets.only(left: getProportionateScreenHeight(12), top: getProportionateScreenHeight(5)),
+            width: 80,
             child: Text(
               title,
               textAlign: TextAlign.center,

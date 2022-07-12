@@ -18,8 +18,21 @@ class OngoingOffers extends StatelessWidget {
           Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              Text("Ongoing Offers | ", style: cusCenterHeadingStyle()),
-              Text("November Deals", style: cusCenterHeadingAccentStyle()),
+              Text(
+                "Ongoing Offers | ",
+                style: cusHeadingStyle(
+                  fontSize: 16,
+                  letterSpacing: 0.25,
+                  fontWeight: FontWeight.w500,
+                ),
+              ),
+              Text("November Deals",
+                  style: cusHeadingStyle(
+                    fontSize: 16,
+                    letterSpacing: 0.25,
+                    color: Colors.blue,
+                    fontWeight: FontWeight.w500,
+                  )),
             ],
           ),
           sizedBoxOfHeight(8),

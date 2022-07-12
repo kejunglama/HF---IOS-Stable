@@ -5,6 +5,7 @@ import 'package:healthfix/constants.dart';
 import 'package:healthfix/screens/cart/cart_screen.dart';
 import 'package:healthfix/screens/category/category_screen.dart';
 import 'package:healthfix/screens/explore_fitness/explore_screen.dart';
+import 'package:healthfix/screens/home/components/home_screen_drawer.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../size_config.dart';
@@ -149,6 +150,7 @@ class _HomeScreenState extends State<HomeScreen> {
         statusBarBrightness: Brightness.dark,
       ),
       child: Scaffold(
+        drawer: HomeScreenDrawer(),
         appBar: AppBar(
           // foregroundColor: Colors.white,
           backgroundColor: kPrimaryColor.withOpacity(0.9),
@@ -186,33 +188,34 @@ class _HomeScreenState extends State<HomeScreen> {
 
   BottomNavigationBar buildBottomNavigationBar() {
     return BottomNavigationBar(
-      selectedLabelStyle: cusBodyStyle(),
-      unselectedLabelStyle: cusBodyStyle(),
+      selectedLabelStyle: cusBodyStyle(fontSize: getProportionateScreenHeight(12)),
+      unselectedLabelStyle: cusBodyStyle(fontSize: getProportionateScreenHeight(12)),
       items: <BottomNavigationBarItem>[
         BottomNavigationBarItem(
-          icon: Icon(Icons.storefront_outlined),
-          activeIcon: Icon(Icons.storefront_rounded),
+          icon: Icon(Icons.home_filled),
+          activeIcon: Icon(Icons.home_filled),
           label: ('Home'),
         ),
         BottomNavigationBarItem(
-          icon: Icon(Icons.inventory_2_outlined),
-          activeIcon: Icon(Icons.inventory_2_rounded),
+          icon: Icon(Icons.grid_view_rounded),
+          activeIcon: Icon(Icons.grid_view_rounded),
           label: 'Categories',
         ),
         BottomNavigationBarItem(
-          icon: Icon(Icons.loyalty_outlined),
-          activeIcon: Icon(Icons.loyalty),
+          icon: Icon(Icons.verified_rounded),
+          activeIcon: Icon(Icons.verified_rounded),
           label: 'Explore',
         ),
         BottomNavigationBarItem(
-          icon: Icon(Icons.shopping_bag_outlined),
+          icon: Icon(Icons.shopping_bag_rounded),
           activeIcon: Icon(Icons.shopping_bag_rounded),
           label: 'Cart',
         ),
       ],
       currentIndex: _selectedIndex,
-      selectedItemColor: Colors.cyan,
-      unselectedItemColor: Colors.black54,
+      selectedItemColor: Colors.black.withOpacity(0.6),
+      unselectedItemColor: Colors.black.withOpacity(0.6),
+      selectedIconTheme: IconThemeData(color: Colors.cyan),
       backgroundColor: Colors.white,
       type: BottomNavigationBarType.fixed,
       onTap: _onItemTapped,

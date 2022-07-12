@@ -75,7 +75,7 @@ class _SignInFormState extends State<SignInForm> {
           },
           child: Text(
             "Forgot Password?",
-            style: cusHeadingLinkStyle,
+            style: cusHeadingLinkStyle(),
           ),
         )
       ],
