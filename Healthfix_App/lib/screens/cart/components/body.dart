@@ -11,6 +11,7 @@ import 'package:healthfix/models/OrderedProduct.dart';
 import 'package:healthfix/models/Product.dart';
 import 'package:healthfix/screens/checkout/checkout_screen.dart';
 import 'package:healthfix/screens/product_details/product_details_screen.dart';
+import 'package:healthfix/screens/sign_in/sign_in_screen.dart';
 import 'package:healthfix/services/authentification/authentification_service.dart';
 import 'package:healthfix/services/data_streams/cart_items_stream.dart';
 
@@ -171,10 +172,11 @@ class _BodyState extends State<Body> {
                 );
               },
               child: Text(
-                "Login to Continue",
+                "Please Login to Continue",
                 style: cusHeadingStyle(
                   color: kPrimaryColor,
-                  fontWeight: FontWeight.w300,
+                  fontWeight: FontWeight.w400,
+                  fontSize: 20,
                 ),
               ),
             ),

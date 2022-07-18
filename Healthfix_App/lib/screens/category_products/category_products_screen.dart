@@ -31,7 +31,7 @@ class CategoryProductsScreen extends StatelessWidget {
           productType: productType,
           productTypes: productTypes,
           subProductType: subProductType,
-          searchString: searchString ?? "",
+          searchString: searchString ?? null,
         ),
       ),
     );

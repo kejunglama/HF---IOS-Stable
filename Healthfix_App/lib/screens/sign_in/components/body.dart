@@ -16,7 +16,7 @@ class Body extends StatelessWidget {
           child: SingleChildScrollView(
             physics: BouncingScrollPhysics(),
             child: Container(
-              height: SizeConfig.screenHeight * 0.95,
+              // height: SizeConfig.screenHeight * 0.95,
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.spaceAround,
                 children: [
@@ -34,16 +34,20 @@ class Body extends StatelessWidget {
                       // Title and Subtitle
                       Text(
                         "Welcome to Healthfix",
-                        style: headingStyle,
+                        style: cusHeadingStyle(),
                       ),
                       Text(
                         "Log in with your Email and Password",
+                        style: cusBodyStyle(),
                         textAlign: TextAlign.center,
                       ),
+                      sizedBoxOfHeight(20),
                     ],
                   ),
                   SignInForm(),
-                  SizedBox(height: SizeConfig.screenHeight * 0.08),
+                  // SizedBox(height: SizeConfig.screenHeight * 0.08),
+                  sizedBoxOfHeight(20),
+
                   NoAccountText(),
                 ],
               ),

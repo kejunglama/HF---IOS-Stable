@@ -100,7 +100,7 @@ cusPdctCatNameStyle() => GoogleFonts.poppins(
         color: kSecondaryColor,
         fontSize: 12,
         // fontSize: getProportionateScreenHeight(8),
-        fontWeight: FontWeight.w300,
+        fontWeight: FontWeight.w400,
       ),
     );
 
@@ -134,7 +134,7 @@ cusPdctOriPriceStyle([double fs]) => GoogleFonts.poppins(
 cusPdctNameStyle() => GoogleFonts.poppins(
       textStyle: TextStyle(
         color: Colors.black,
-        fontWeight: FontWeight.w300,
+        fontWeight: FontWeight.w400,
         fontSize: 12,
         letterSpacing: 0.5,
       ),
