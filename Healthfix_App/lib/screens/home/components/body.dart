@@ -39,6 +39,8 @@ class Body extends StatefulWidget {
 class _BodyState extends State<Body> {
   final List<String> adsBannerImagesList = [
     'assets/banners/Swanson - Launch Offer.png',
+    'assets/banners/Feature Banner - Skullcandy.png',
+    'assets/banners/Feature Banner - True Elements.png',
   ];
 
   final List adsBannerNavigation = [
@@ -47,6 +49,18 @@ class _BodyState extends State<Body> {
       productTypes: pdctCategories,
       subProductType: "",
       searchString: "swanson",
+    ),
+    CategoryProductsScreen(
+      productType: ProductType.Supplements,
+      productTypes: pdctCategories,
+      subProductType: "",
+      searchString: "skullcandy",
+    ),
+    CategoryProductsScreen(
+      productType: ProductType.Supplements,
+      productTypes: pdctCategories,
+      subProductType: "",
+      searchString: "true elements",
     ),
   ];
 

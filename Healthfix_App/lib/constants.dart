@@ -136,7 +136,7 @@ cusPdctNameStyle() => GoogleFonts.poppins(
         color: Colors.black,
         fontWeight: FontWeight.w400,
         fontSize: 12,
-        letterSpacing: 0.5,
+        letterSpacing: 0.25,
       ),
     );
 
